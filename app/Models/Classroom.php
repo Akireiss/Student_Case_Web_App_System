@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Admin\Student;
 use App\Models\Section;
 use App\Models\Employee;
 use App\Models\GradeLevel;
@@ -36,6 +37,10 @@ class Classroom extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function student(){
+        return $this->hasMany(Student::class, 'classroom_id', 'id');
+        }
 
 
 }

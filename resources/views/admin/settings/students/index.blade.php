@@ -7,9 +7,9 @@
       Students
     </h4>
     <div class="flex-grow flex justify-end">
-      <x-button>
+      <x-link href="{{ url('admin/settings/students/create') }}">
         Add
-      </x-button>
+      </x-link>
     </div>
   </div>
 

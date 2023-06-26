@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\StudentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -35,7 +36,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-Route::prefix('admin/settings')->group(function () {
+Route::prefix('admin/settings')->middleware(['auth'])->group(function () {
     //offenses
     Route::get('offenses', [OffensesController::class, 'index']);
     Route::get('offenses/create', [OffensesController::class, 'create']);
@@ -64,9 +65,19 @@ Route::prefix('admin/settings')->group(function () {
 
 
     Route::get('admin/student-profile', function () { return view('admin.student-profile.index');});
+
+
+
     // Temporary as the backend is still in development
-    Route::get('students', function () { return view('admin.settings.students.index');});
     Route::get('audit-trail', function () { return view('admin.settings.audit-trail.index');});
+
+    // Students Area
+    Route::get('students',[StudentController::class, 'index']);
+    Route::get('students/create',[StudentController::class, 'create']);
+    Route::post('students/store', [ClassroomController::class, 'store']);
+
+
+
 
 
 });
