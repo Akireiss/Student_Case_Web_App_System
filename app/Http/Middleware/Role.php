@@ -17,15 +17,15 @@ class Role
      */
     public function handle(Request $request, Closure $next): Response
     {
-            if (Auth::check()) {
-                $user = Auth::user();
+        if (Auth::check()) {
+            $user = Auth::user();
 
-                if ($user->role === User::ROLE_ADMIN) {
-                    return redirect()->route('admin/dashboard');
-                } elseif ($user->role === User::ROLE_STAFF) {
-                    return redirect()->route('admin/dashboard');
-                }
+            if (!$user->role === User::ROLE_ADMIN) {
+                return redirect('admin/dashboard');
+            } elseif (!$user->role === User::ROLE_STAFF) {
+                return redirect('adviser/dashboard');
             }
+        }
         return $next($request);
     }
 }

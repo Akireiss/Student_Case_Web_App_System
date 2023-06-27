@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Adviser\StudentReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -37,11 +38,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-Route::prefix('admin')->middleware(['auth', 'role'])->group(function () {
+Route::middleware(['auth', 'role'])->group(function () {
 
     /*Admin Access*/
     Route::middleware(['can:admin-access'])->group(function () {
-        Route::prefix('settings')->group(function () {
+        Route::prefix('admin/settings')->group(function () {
 
             /*Settings Area*/
             /*offenses*/
@@ -78,15 +79,18 @@ Route::prefix('admin')->middleware(['auth', 'role'])->group(function () {
         });
     });
 
-});
 
-/*Adviser | Staff Area */
 
-Route::prefix('adviser')->middleware(['auth', 'role'])->group(function () {
+
+    /*Adviser | Staff Area */
     Route::middleware(['can:adviser-access'])->group(function () {
-        Route::get('dashboard', [AdvisorDashboardController::class, 'index']);
+        Route::prefix('adviser')->group(function () {
+            Route::get('dashboard',[AdvisorDashboardController::class, 'index']);
+        Route::get('report/student',[StudentReportController::class, 'index']);
+        });
     });
 });
+
 
 
 
@@ -94,12 +98,10 @@ Route::prefix('adviser')->middleware(['auth', 'role'])->group(function () {
 
 
 //Still neeed fix for this area
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::get('dashboard', function () {
-        return view('admin.dashboard.dashboard');
-    });
-
+Route::get('dashboard', function () {
+    return view('admin.dashboard.dashboard');
 });
+
 
 Route::get('admin/student-profile', function () {
     return view('admin.student-profile.index');

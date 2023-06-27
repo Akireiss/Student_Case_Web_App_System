@@ -3,6 +3,7 @@
 namespace App\Models\Admin;
 
 use App\Models\Classroom;
+use App\Models\Report;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,4 +25,10 @@ class Student extends Model
     public function classrooom(){
     return $this->belongsTo(Classroom::class);
     }
+
+
+
+    public function report(){
+        return $this->hasMany(Report::class);
+        }
 }
