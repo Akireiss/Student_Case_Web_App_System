@@ -14,7 +14,7 @@ class Report extends Component
 
     public function getSearchResults()
     {
-        if (strlen($this->search) >= 5) {
+        if (strlen($this->search) >= 3) {
             return Student::where('first_name', 'like', '%' . $this->search . '%')
                 ->orWhere('last_name', 'like', '%' . $this->search . '%')
                 ->get(['first_name', 'last_name']);
