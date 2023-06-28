@@ -15,6 +15,8 @@
                         </h6>
                         <!-- Step 1 form fields -->
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+
                             <div class="w-full px-4">
                                 <div x-data="{ open: false, selected: '', last_name: '' }" class="relative">
                                     <div class="relative">
@@ -139,13 +141,49 @@
 
 
 
-</div>
+
+    @if ($recentReports && $recentReports->count() > 0)
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-left text-sm font-light">
+                            <thead class="border-b font-medium dark:border-neutral-500">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Student Name</th>
+                                    <th scope="col" class="px-6 py-4">Case Status</th>
+                                    <th scope="col" class="px-6 py-4">Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($recentReports as $report)
+                                    <tr class="border-b dark:border-neutral-500">
+                                        <td class="whitespace-nowrap px-6 py-4 font-medium">
+                                            {{ $report->anecdotal->student->first_name }}   {{ $report->anecdotal->student->last_name }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            @if ($report->user)
+                                                {{ $report->user->name }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 
 
 
-{{-- exception it only give bugs(may need in the future) --}}
-{{-- document.addEventListener('livewire:load', function () {
+
+    {{-- exception it only give bugs(may need in the future) --}}
+    {{-- document.addEventListener('livewire:load', function () {
     Livewire.on('lastNameUpdated', function (lastName) {
         document.getElementById('last_name').value = lastName;
     });
