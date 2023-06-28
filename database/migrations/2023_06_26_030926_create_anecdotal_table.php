@@ -14,19 +14,23 @@ return new class extends Migration
         Schema::create('anecdotal', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->integer('grave_offense');
-            $table->integer('minor_offense');
+            $table->unsignedBigInteger('grave_offense_id')->nullable();
+            $table->unsignedBigInteger('minor_offense_id')->nullable();
             $table->string('gravity');
             $table->mediumText('short_description');
-            $table->mediumText('obervation');
+            $table->mediumText('observation');
             $table->mediumText('desired');
             $table->mediumText('outcome');
             $table->integer('letter');
-            $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
+            $table->tinyInteger('status')->default(0)->comment('0: active | 1: inactive');
 
             $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('grave_offense_id')->references('id')->on('offenses')->onDelete('set null');
+            $table->foreign('minor_offense_id')->references('id')->on('offenses')->onDelete('set null');
+
             $table->timestamps();
         });
+
     }
 
     /**

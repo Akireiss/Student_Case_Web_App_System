@@ -11,6 +11,7 @@ class Report extends Component
     public $search;
     public $selectedResult;
     public $last_name;
+    public $recentReports; // Holds the recent reports for the selected student
 
     public function getSearchResults()
     {
@@ -43,6 +44,9 @@ class Report extends Component
             // Update the last_name property with the retrieved last name
             $this->last_name = $student->last_name;
             $this->emit('lastNameUpdated', $this->last_name);
+
+            // Fetch the recent reports for the selected student
+            $this->recentReports = $student->reports()->orderByDesc('created_at')->get();
         }
     }
 
