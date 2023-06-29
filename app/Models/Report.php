@@ -22,6 +22,22 @@ class Report extends Model
         'status'
     ];
 
+    public function getCaseStatusAttribute($value)
+    {
+        switch ($value) {
+            case 0:
+                return 'Pending';
+            case 1:
+                return 'Active';
+            case 2:
+                return 'InProgress';
+            case 3:
+                return 'Closed';
+            default:
+                return 'unknown';
+        }
+    }
+
     // public function students()
     // {
     //     return $this->belongsTo(Student::class);
@@ -33,9 +49,9 @@ class Report extends Model
     }
 
     public function anecdotal()
-     {
-         return $this->belongsTo(Anecdotal::class);
-     }
+    {
+        return $this->belongsTo(Anecdotal::class);
+    }
 
 
 

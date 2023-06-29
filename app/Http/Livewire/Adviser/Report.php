@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Adviser;
 
+use App\Models\Offenses;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Admin\Student;
@@ -27,11 +28,14 @@ class Report extends Component
     public function render()
     {
         $searchResults = $this->getSearchResults();
+        $offenses = Offenses::pluck('offenses', 'id')->all();
 
         return view('livewire.adviser.report', [
             'searchResults' => $searchResults,
+            'offenses' => $offenses,
         ]);
     }
+
 
     public function selectResult($result)
     {
@@ -49,6 +53,8 @@ class Report extends Component
             $this->recentReports = $student->reports()->orderByDesc('created_at')->get();
         }
     }
+
+
 
 
 }
