@@ -243,33 +243,41 @@
 
     @if ($selectedResult)
     @if ($recentReports && $recentReports->count() > 0)
-    <x-table>
-        <x-slot name="header">
-                                    <th class="px-4 py-3">Student Name</th>
-                                    <th class="px-4 py-3">Date</th>
-                                    <th class="px-4 py-3">Case Status</th>
-                                    <th class="px-4 py-3">Anecdotal</th>
-                                </x-slot>
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-left text-sm font-light">
+                            <thead class="border-b font-medium dark:border-neutral-500">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Student Name</th>
+                                    <th scope="col" class="px-6 py-4">Date</th>
+                                    <th scope="col" class="px-6 py-4">Case Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
                                 @foreach ($recentReports as $report)
-                                <tr class="text-gray-700 dark:text-gray-400">
-                                    <td class="px-4 py-3">
+                                    <tr class="border-b dark:border-neutral-500">
+                                        <td class="whitespace-nowrap px-6 py-4 font-medium">
                                             {{ $report->anecdotal->student->first_name }} {{ $report->anecdotal->student->last_name }}
                                         </td>
-                                       <td class="px-4 py-3">
+                                        <td class="whitespace-nowrap px-6 py-4">
                                             @if ($report->user)
                                                 {{ $report->user->name }}
                                             @endif
                                         </td>
-                                       <td class="px-4 py-3">
+                                        <td class="whitespace-nowrap px-6 py-4">
                                             {{ $report->case_status }}
-                                        </td>
-                                       <td class="px-4 py-3">
-                                        <x-link>View</x-link>
                                         </td>
                                     </tr>
                                 @endforeach
-    </x-table>
-
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     @else
         <div class="flex justify-center">
             <h1 class="text-center">No Reports Found For This Student</h1>
