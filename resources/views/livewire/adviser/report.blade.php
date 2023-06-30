@@ -1,5 +1,4 @@
 <div>
-
     <x-form title="Add Offenses">
         <x-slot name="actions">
             {{-- None Here --}}
@@ -14,7 +13,8 @@
                             Report Student
                         </h6>
                         <!-- Step 1 form fields -->
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+                    <x-grid columns="2" gap="4" px="0" mt="0">
 
 
                             <div class="w-full px-4">
@@ -38,7 +38,7 @@
                                                         <span
                                                             x-text="selected === '{{ $result['first_name'] }}' ? '✓' : ''"
                                                             class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600"></span>
-                                                        {{ $result['first_name'] }}
+                                                        {{ $result['first_name'] }} {{ $result['last_name'] }}
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -62,7 +62,7 @@
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Offense Information
+                                        Current Grade Level
                                     </x-label>
                                     <x-input type="text" name="offenses" />
                                 </div>
@@ -76,152 +76,156 @@
                                     <x-input type="text" name="offenses" value="{{ Auth()->user()->name }}" />
                                 </div>
                             </div>
-                        </div>
+
+
+                    </x-grid>
 
                         <div class="flex justify-end mx-4 mt-2">
                             <x-button type="button" x-on:click="step = 2">Next</x-button>
                         </div>
                 </div>
 
-
                 <div x-show="step === 2" x-cloak>
+                    <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                        Report Student
+                    </h6>
 
-                  <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                    Report Student
-                </h6>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                        Case Information
+                    </h6>
 
-                    <div class="w-full px-4">
-                        <x-label>Offenses</x-label>
-                        <div x-data="{ open: false, selectedOption: '' }" class="relative">
-                            <div class="h-10 bg-white flex border border-gray-200 rounded items-center">
-                                <div class="relative flex-grow">
-                                    <input x-model="selectedOption" name="select" id="select" class="px-4 appearance-none outline-none text-gray-800 w-full" readonly />
-                                    <input type="hidden" name="offenses_id" x-bind:value="selectedOption" /> <!-- Add a hidden input to store the selected offense ID -->
-                                    <button @click="open = !open" class="absolute inset-y-0 right-0 px-2 text-gray-300 hover:text-gray-600">
-                                        <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="6 9 12 15 18 9"></polyline>
-                                        </svg>
-                                    </button>
+                    <x-grid columns="2" gap="4" px="0" mt="4">
+                        <div class="w-full px-4">
+                            <x-label>
+                                Minor Offenses
+                            </x-label>
+                            <x-selectdrop name="select" hidden-input-name="offenses_id"
+                                wire:model="selectedMinorOffense">
+                                @if ($minorOffenses)
+                                    @foreach ($minorOffenses as $id => $minorOffense)
+                                        <li x-on:click="selectedOption = '{{ $minorOffense }}'; open = false"
+                                            data-value="{{ $id }}"
+                                            class="px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                            {{ $minorOffense }}
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li class="px-4 py-2">No minor offenses available.</li>
+                                @endif
+                            </x-selectdrop>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <x-label>
+                                Grave Offenses
+                            </x-label>
+                            <x-selectdrop name="select" hidden-input-name="offenses_id"
+                                wire:model="selectedGraveOffense">
+                                @if ($graveOffenses)
+                                    @foreach ($graveOffenses as $id => $graveOffense)
+                                        <li x-on:click="selectedOption = '{{ $graveOffense }}'; open = false"
+                                            data-value="{{ $id }}"
+                                            class="px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                            {{ $graveOffense }}
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li class="px-4 py-2">No grave offenses available.</li>
+                                @endif
+                            </x-selectdrop>
+                        </div>
+                    </x-grid>
+
+
+                    <x-grid columns="3" gap="4" px="0" mt="4">
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Observation
+                                </x-label>
+                                <x-input type="text" name="offenses" />
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Desired
+                                </x-label>
+                                <x-input type="text" name="offenses" />
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Outcome
+                                </x-label>
+                                <x-input type="text" name="offenses" />
+                            </div>
+                        </div>
+                    </x-grid>
+
+
+
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
+                        Additional Information
+                    </h6>
+
+                    <x-grid columns="3" gap="4" px="0" mt="4">
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Gravity of offense
+                                </x-label>
+                                <x-input type="text" name="offenses" />
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Remarks
+                                </x-label>
+                                <x-input type="text" name="offenses" />
+                            </div>
+                        </div>
+                        <div class="w-full px-4">
+                            <x-label>Letter</x-label>
+                            <input type="file"
+                                class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
+                              file:bg-transparent file:border-0
+                              file:bg-gray-100 file:mr-4
+                              file:py-2.5 file:px-4">
+                        </div>
+                    </x-grid>
+
+
+                    <h6 class="text-sm my-6 px-4 font-bold uppercase ">
+                        Actions Taken
+                    </h6>
+
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+                        @foreach ($actions as $id => $label)
+                            <div class="relative mb-3">
+                                <div class="flex items-center space-x-2">
+                                    <x-checkbox wire:model="selectedActions" value="{{ $id }}" />
+                                    <x-label>{{ $label }}</x-label>
                                 </div>
                             </div>
-                            <ul x-show="open" @click.away="open = false" class="absolute z-10 py-1 mt-1 overflow-auto bg-white rounded shadow-md border border-gray-200 max-h-48 w-full">
-                                @foreach($offenses as $id => $offense)
-                                <li x-on:click="selectedOption = '{{ $offense }}'; open = false"
-                                data-value="{{ $id }}" class="px-4 py-2 cursor-pointer hover:bg-gray-100">
-                                {{ $offense }}</li>
 
-                                @endforeach
-                            </ul>
-                        </div>
+                            @if ($loop->iteration % 4 === 0)
                     </div>
 
-                      <div class="w-full px-4 ">
-                        <x-label>
-                          Offenses
-                        </x-label>
-                        <div x-data="{ open: false, selectedOption: '' }" class="relative">
-                          <div class="h-10 bg-white flex border border-gray-200 rounded items-center">
-                            <div class="relative flex-grow">
-                              <input x-model="selectedOption" name="select" id="select" class="px-4 appearance-none outline-none text-gray-800
-                               w-full" readonly />
-
-                              <button @click="open = !open" class="absolute inset-y-0 right-0 px-2 text-gray-300 hover:text-gray-600">
-                                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-
-                          <ul x-show="open" @click.away="open = false" class="absolute z-10 py-1 mt-1 overflow-auto bg-white rounded shadow-md border border-gray-200 max-h-48 w-full">
-                            @foreach($offenses as $id => $offense)
-                            <li x-on:click="selectedOption = '{{ $offense }}'; open = false"
-                            data-value="{{ $id }}" class="px-4 py-2 cursor-pointer hover:bg-gray-100">
-                            {{ $offense }}</li>
-
-                            @endforeach
-                        </ul>
-
-                        </div>
-                      </div>
-                  </div>
-
-                      <h6 class="text-sm mt-4 mb-6 px-4 font-bold uppercase ">
-                        Interventions Tried
-                      </h6>
-
-                      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 ">
-
-                        <div>
-                          <div class="relative mb-3">
-                            <div class="flex items-center space-x-2">
-                              <x-checkbox/>
-                              <x-label>
-                                Teacher-Student Conference
-                              </x-label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <div class="relative mb-3">
-                            <div class="flex items-center space-x-2">
-                                <x-checkbox/>
-                              <x-label>
-                                Notify Parent
-                              </x-label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <div class="relative mb-3">
-                            <div class="flex items-center space-x-2">
-                                <x-checkbox/>
-                              <x-label>
-                                Written Explanation
-                              </x-label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <div class="relative mb-3">
-                            <div class="flex items-center space-x-2">
-                                <x-checkbox/>
-                              <x-label>
-                                Document Action Taken
-                              </x-label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <div class="relative mb-3">
-                            <div class="flex items-center space-x-2">
-                                <x-checkbox/>
-                              <x-label>
-                                Parent-Teacher-Discipline Committe Conference
-                              </x-label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <div class="relative mb-3">
-                            <div class="flex items-center space-x-2">
-                                <x-checkbox/>
-                              <x-label>
-                                Written Agreement
-                              </x-label>
-                            </div>
-                          </div>
-                        </div>
-
-
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+                        @endif
+                        @endforeach
 
                     </div>
+
                     <div class="flex justify-end mx-4 mt-2 space-x-2">
                         <x-button type="button" x-on:click="step = 1">Previous</x-button>
                         <x-button type="submit">Submit</x-button>
@@ -231,56 +235,45 @@
             </div>
 
         </x-slot>
+
     </x-form>
 
 
 
-
-
-
-
-
-
     @if ($selectedResult)
-    @if ($recentReports && $recentReports->count() > 0)
-    <x-table>
-        <x-slot name="header">
-                                    <th class="px-4 py-3">Student Name</th>
-                                    <th class="px-4 py-3">Date</th>
-                                    <th class="px-4 py-3">Case Status</th>
-                                    <th class="px-4 py-3">Anecdotal</th>
-                                </x-slot>
-                                @foreach ($recentReports as $report)
-                                <tr class="text-gray-700 dark:text-gray-400">
-                                    <td class="px-4 py-3">
-                                            {{ $report->anecdotal->student->first_name }} {{ $report->anecdotal->student->last_name }}
-                                        </td>
-                                       <td class="px-4 py-3">
-                                            @if ($report->user)
-                                                {{ $report->user->name }}
-                                            @endif
-                                        </td>
-                                       <td class="px-4 py-3">
-                                            {{ $report->case_status }}
-                                        </td>
-                                       <td class="px-4 py-3">
-                                        <x-link>View</x-link>
-                                        </td>
-                                    </tr>
-                                @endforeach
-    </x-table>
+        @if ($recentReports && $recentReports->count() > 0)
+            <x-table>
+                <x-slot name="header">
+                    <th class="px-4 py-3">Student Name</th>
+                    <th class="px-4 py-3">Date</th>
+                    <th class="px-4 py-3">Case Status</th>
+                    <th class="px-4 py-3">Anecdotal</th>
+                </x-slot>
+                @foreach ($recentReports as $report)
+                    <tr class="text-gray-700 dark:text-gray-400">
+                        <td class="px-4 py-3">
+                            {{ $report->anecdotal->student->first_name }} {{ $report->anecdotal->student->last_name }}
+                        </td>
+                        <td class="px-4 py-3">
+                            @if ($report->user)
+                                {{ $report->user->name }}
+                            @endif
+                        </td>
+                        <td class="px-4 py-3">
+                            {{ $report->case_status }}
+                        </td>
+                        <td class="px-4 py-3">
+                            <x-link target="_blank"
+                                href="{{ url('adviser/student/anecdotal/' . $report->anecdotal->id) }}">
+                                View</x-link>
 
-    @else
-        <div class="flex justify-center">
-            <h1 class="text-center">No Reports Found For This Student</h1>
-        </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </x-table>
+        @else
+            <div class="flex justify-center">
+                <h1 class="text-center">No Reports Found For This Student</h1>
+            </div>
+        @endif
     @endif
-@endif
-
-
-
-
-
-
-
-

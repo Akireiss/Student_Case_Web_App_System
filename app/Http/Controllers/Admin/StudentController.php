@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StudentFormRequest;
+use App\Models\Anecdotal;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
 use App\Models\Admin\Student;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StudentFormRequest;
 
 class StudentController extends Controller
 {
@@ -48,9 +49,12 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $anecdotal = Anecdotal::findOrFail($id);
+// Continution Here
+        dd($anecdotal);
+        return view('anecdotal.show', ['anecdotal' => $anecdotal]);
     }
 
     /**

@@ -85,8 +85,10 @@ Route::middleware(['auth', 'role'])->group(function () {
     /*Adviser | Staff Area */
     Route::middleware(['can:adviser-access'])->group(function () {
         Route::prefix('adviser')->group(function () {
-            Route::get('dashboard',[AdvisorDashboardController::class, 'index']);
+        Route::get('dashboard',[AdvisorDashboardController::class, 'index']);
         Route::get('report/student',[StudentReportController::class, 'index']);
+        Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
+
         });
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Adviser;
 
+use App\Models\Action;
 use App\Models\Offenses;
 use App\Models\User;
 use Livewire\Component;
@@ -13,6 +14,8 @@ class Report extends Component
     public $selectedResult;
     public $last_name;
     public $recentReports; // Holds the recent reports for the selected student
+
+    public $selectedActions = [];
 
     public function getSearchResults()
     {
@@ -28,13 +31,23 @@ class Report extends Component
     public function render()
     {
         $searchResults = $this->getSearchResults();
-        $offenses = Offenses::pluck('offenses', 'id')->all();
+
+        $actions = Action::pluck('actions', 'id');
+        $offenses = Offenses::whereIn('category', [0, 1])
+            ->pluck('offenses', 'id')
+            ->groupBy('category');
+
+        $minorOffenses = $offenses->pluck(0); // Fetch offenses from category 0 (minor offenses)
+        $graveOffenses = $offenses->pluck(1); // Fetch offenses from category 1 (grave offenses)
 
         return view('livewire.adviser.report', [
             'searchResults' => $searchResults,
-            'offenses' => $offenses,
+            'minorOffenses' => $minorOffenses,
+            'graveOffenses' => $graveOffenses,
+            'actions' => $actions
         ]);
     }
+
 
 
     public function selectResult($result)
