@@ -25,12 +25,12 @@ class StudentController extends Controller
     public function create()
     {
         $classrooms = Classroom::all();
-        return view('admin.settings.students.create', compact('classrooms'));
+        return view('admin.settings.students.index', compact('classrooms'));
     }
 
     /**
      * Store a newly created resource in storage.
-     */
+
     public function store(StudentFormRequest $request)
     {
         $validatedData = $request->validated();
@@ -48,7 +48,7 @@ class StudentController extends Controller
 
     /**
      * Display the specified resource.
-     */
+
     public function show($id)
     {
         $anecdotal = Anecdotal::findOrFail($id);
@@ -56,28 +56,7 @@ class StudentController extends Controller
         dd($anecdotal);
         return view('anecdotal.show', ['anecdotal' => $anecdotal]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

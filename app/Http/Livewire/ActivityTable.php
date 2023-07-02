@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Employee;
+use App\Models\Activity;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
@@ -10,7 +10,7 @@ use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
 use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
-final class EmployeeTable extends PowerGridComponent
+final class ActivityTable extends PowerGridComponent
 {
     use ActionButton;
     use WithExport;
@@ -33,7 +33,7 @@ final class EmployeeTable extends PowerGridComponent
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
-                ->showRecordCount(mode: 'full')
+                ->showRecordCount(),
         ];
     }
 
@@ -48,11 +48,11 @@ final class EmployeeTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Employee>
+     * @return Builder<\App\Models\Activity>
      */
     public function datasource(): Builder
     {
-        return Employee::query();
+        return Activity::query();
     }
 
     /*
@@ -88,14 +88,14 @@ final class EmployeeTable extends PowerGridComponent
     {
         return PowerGrid::columns()
             ->addColumn('id')
-            ->addColumn('employees')
+            ->addColumn('log_name')
 
            /** Example of custom column using a closure **/
-            ->addColumn('employees_lower', fn (Employee $model) => strtolower(e($model->employees)))
+            ->addColumn('log_name_lower', fn (Activity $model) => strtolower(e($model->log_name)))
 
-            ->addColumn('refference_number')
-            ->addColumn('status')
-            ->addColumn('created_at_formatted', fn (Employee $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('description')
+            ->addColumn('event')
+            ->addColumn('created_at_formatted', fn (Activity $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -115,14 +115,18 @@ final class EmployeeTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id')->sortable(),
-            Column::make('Employees', 'employees')
+            Column::make('Id', 'id'),
+            Column::make('Log name', 'log_name')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Refference number', 'refference_number'),
-            Column::make('Status', 'status')
-                ->toggleable(),
+            Column::make('Description', 'description')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Event', 'event')
+                ->sortable()
+                ->searchable(),
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->sortable(),
@@ -138,8 +142,8 @@ final class EmployeeTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('employees')->operators(['contains']),
-            Filter::boolean('status'),
+            Filter::inputText('log_name')->operators(['contains']),
+            Filter::inputText('event')->operators(['contains']),
             Filter::datetimepicker('created_at'),
         ];
     }
@@ -153,7 +157,7 @@ final class EmployeeTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Employee Action Buttons.
+     * PowerGrid Activity Action Buttons.
      *
      * @return array<int, Button>
      */
@@ -164,13 +168,13 @@ final class EmployeeTable extends PowerGridComponent
        return [
            Button::make('edit', 'Edit')
                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('employee.edit', function(\App\Models\Employee $model) {
+               ->route('activity.edit', function(\App\Models\Activity $model) {
                     return $model->id;
                }),
 
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('employee.destroy', function(\App\Models\Employee $model) {
+               ->route('activity.destroy', function(\App\Models\Activity $model) {
                     return $model->id;
                })
                ->method('delete')
@@ -187,7 +191,7 @@ final class EmployeeTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Employee Action Rules.
+     * PowerGrid Activity Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -199,7 +203,7 @@ final class EmployeeTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($employee) => $employee->id === 1)
+                ->when(fn($activity) => $activity->id === 1)
                 ->hide(),
         ];
     }

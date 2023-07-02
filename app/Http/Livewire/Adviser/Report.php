@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Adviser;
 
-use App\Models\Action;
-use App\Models\Offenses;
+use App\Models\Students;
 use App\Models\User;
+use App\Models\Action;
 use Livewire\Component;
-use App\Models\Admin\Student;
+use App\Models\Offenses;
+use App\Http\Livewire\Admin\Student;
 
 class Report extends Component
 {
@@ -55,7 +56,7 @@ class Report extends Component
         $this->selectedResult = $result;
 
         // Fetch the student record based on the selected first name
-        $student = Student::where('first_name', $this->selectedResult)->first();
+        $student = Students::where('first_name', $this->selectedResult)->first();
 
         if ($student) {
             // Update the last_name property with the retrieved last name
@@ -66,8 +67,6 @@ class Report extends Component
             $this->recentReports = $student->reports()->orderByDesc('created_at')->get();
         }
     }
-
-
 
 
 }

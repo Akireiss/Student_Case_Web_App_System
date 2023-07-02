@@ -34,7 +34,7 @@ class User extends Component
         $user->update($validatedData);
 
 
-     $this->successMessage = 'Updated';
+        session()->flash('message', 'Updated Successfully');
     }
 
     public function render()
@@ -64,8 +64,7 @@ class User extends Component
         $this->currentPassword = '';
         $this->newPassword = '';
         $this->passwordConfirmation = '';
-
-        $this->successMessage = 'Updated';
+        session()->flash('message', 'Updated Successfully');
     }
 
 

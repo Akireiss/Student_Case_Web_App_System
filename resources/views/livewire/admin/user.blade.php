@@ -1,4 +1,5 @@
 <div>
+    <x-flashalert/>
     <div class="mx-auto py-8">
 
         <h3 class="font-semibold mb-6 dark:text-gray-200 text-gray-600">Update your information here</h3>
@@ -30,17 +31,12 @@
                             </div>
 
                             <div class="md:col-span-5 text-right">
-                                <div class="inline-flex items-end">
-                                    @if ($successMessage)
-                                    <div class=" text-green-800 p-2">
-                                        {{ $successMessage }}
-                                    </div>
-                                @endif
+
                                     <x-button type="submit" wire:loading.attr="disabled">
                                         Update
                                     </x-button>
 
-                                </div>
+
                             </div>
                         </div>
                     </form>

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Models\Admin;
+namespace App\Models;
 
 use App\Models\Classroom;
-use App\Models\Report;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Student extends Model
+class Students extends Model
 {
+    use HasFactory;
+
+
     use HasFactory;
 
     protected $table = 'students';

@@ -37,61 +37,55 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-
+// Group for admin access
 Route::middleware(['auth', 'role'])->group(function () {
 
-    /*Admin Access*/
+    // Admin Access
     Route::middleware(['can:admin-access'])->group(function () {
         Route::prefix('admin/settings')->group(function () {
 
-            /*Settings Area*/
-            /*offenses*/
+            // Settings Area - Offenses
             Route::get('offenses', [OffensesController::class, 'index']);
             Route::get('offenses/create', [OffensesController::class, 'create']);
             Route::post('offenses/store', [OffensesController::class, 'store']);
             Route::get('offenses/{offense}/edit', [OffensesController::class, 'edit'])->name('offenses.edit');
             Route::put('offenses/{id}', [OffensesController::class, 'update'])->name('admin.settings.offenses.update');
 
-            /*EMPLOYEE*/
+            // Employees
             Route::get('teachers', [EmployeeController::class, 'index']);
-            Route::get('teacher/create', [EmployeeController::class, 'create']);
-            Route::post('employee/store', [EmployeeController::class, 'store']);
+          //  Route::get('teachers/create', [EmployeeController::class, 'create']);
+           // Route::post('employees/store', [EmployeeController::class, 'store']);
             Route::get('employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
 
-            /*CLASSROOMS*/
+            // Classrooms
             Route::get('classrooms', [ClassroomController::class, 'index']);
-            Route::get('classroom/create', [ClassroomController::class, 'create']);
-            Route::post('classroom/store', [ClassroomController::class, 'store']);
+            Route::get('classrooms/create', [ClassroomController::class, 'create']);
+            Route::post('classrooms/store', [ClassroomController::class, 'store']);
             Route::get('classrooms/{id}/edit', [ClassroomController::class, 'edit']);
             Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
 
-
-            /* Temporary as the backend is still in development*/
+            // Temporary as the backend is still in development
             Route::get('audit-trail', function () {
                 return view('admin.settings.audit-trail.index');
             });
 
-            /* Students Area*/
+            // Students Area
             Route::get('students', [StudentController::class, 'index']);
             Route::get('students/create', [StudentController::class, 'create']);
-            Route::post('students/store', [ClassroomController::class, 'store']);
-
+            Route::post('students/store', [StudentController::class, 'store']);
         });
     });
 
-
-
-
-    /*Adviser | Staff Area */
+    // Adviser | Staff Area
     Route::middleware(['can:adviser-access'])->group(function () {
         Route::prefix('adviser')->group(function () {
-        Route::get('dashboard',[AdvisorDashboardController::class, 'index']);
-        Route::get('report/student',[StudentReportController::class, 'index']);
-        Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
-
+            Route::get('dashboard', [AdvisorDashboardController::class, 'index']);
+            Route::get('report/student', [StudentReportController::class, 'index']);
+            Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
         });
     });
 });
+
 
 
 
@@ -115,3 +109,8 @@ Route::get('admin/student-profile', function () {
 Route::get('admin/reports', [ReportController::class, 'index']);
 Route::get('admin/update-acc', [UserController::class, 'update_acc']);
 Route::get('admin/add-acc', [UserController::class, 'index']);
+
+
+Route::get('test', function () {
+    return view('test');
+});
