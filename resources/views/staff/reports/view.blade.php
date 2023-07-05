@@ -1,13 +1,13 @@
 @extends('layouts.dashboard.index')
 @section('content')
-    <x-form title="Add Offenses">
+    <x-form title="Anecdotal">
         <x-slot name="actions">
             {{-- Button Here --}}
         </x-slot>
 
         <x-slot name="slot">
         <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-            Report Student
+           Student Anecdotal
         </h6>
 
         <h6 class="text-sm my-1 px-4 font-bold uppercase ">
@@ -20,17 +20,16 @@
                     Minor Offenses
                 </x-label>
                 <x-input type="text" name="observation" disabled
-                         value="{{ $anecdotal->offense ? $anecdotal->offense->offenses: '' }}" />
-
-
+                         value="{{ optional($anecdotal->Minoroffenses)->offenses }}" />
             </div>
 
             <div class="w-full px-4">
                 <x-label>
                     Grave Offenses
                 </x-label>
+
                 <x-input type="text" name="observation" disabled
-                         value="{{ $anecdotal->offense ? $anecdotal->offense->offenses: '' }}" />
+                         value="{{ optional($anecdotal->Graveoffenses)->offenses }}" />
             </div>
         </x-grid>
 
@@ -106,25 +105,27 @@
         <h6 class="text-sm my-6 px-4 font-bold uppercase ">
             Actions Taken
         </h6>
-
-
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
-{{--            @foreach ($actions as $id => $label)--}}
+            @foreach ($actions as $action)
                 <div class="relative mb-3">
                     <div class="flex items-center space-x-2">
-                        <x-checkbox  disabled    />
-                        <x-label>d</x-label>
+                        <input type="checkbox" class="form-checkbox" checked disabled>
+                        <x-label>{{ $action->actions }}</x-label>
                     </div>
                 </div>
-{{--                @if ($loop->iteration % 4 === 0)--}}
+                @if ($loop->iteration % 4 === 0)
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+                @endif
+            @endforeach
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
-{{--            @endif--}}
-{{--            @endforeach--}}
 
-        </div>
+
+
 
         </x-slot>
     </x-form>
+
+
 @endsection

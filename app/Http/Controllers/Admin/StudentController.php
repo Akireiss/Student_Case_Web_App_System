@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Action;
+use App\Models\Offenses;
 use App\Models\Anecdotal;
 use App\Models\Classroom;
-use App\Models\Offenses;
+use App\Models\ActionsTaken;
 use Illuminate\Http\Request;
 use App\Models\Admin\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentFormRequest;
+use PowerComponents\LivewirePowerGrid\Helpers\Actions;
 
 class StudentController extends Controller
 {
@@ -46,15 +49,19 @@ class StudentController extends Controller
     }
 
 
-
-
-
     public function show($id)
     {
         $anecdotal = Anecdotal::findOrFail($id);
-        $offenses = Offenses::all();
-        return view('staff.reports.view', ['anecdotal' => $anecdotal,
-            'offenses' => $offenses]);
+        $actionsTaken = ActionsTaken::where('anecdotal_id', $id)->get();
+
+        // Get the actions IDs from actions_taken table
+        $actionsIds = $actionsTaken->pluck('actions_id');
+
+        // Fetch the actions based on the IDs
+        $actions = Action::whereIn('id', $actionsIds)->get();
+
+        return view('staff.reports.view', compact('anecdotal', 'actions'));
     }
+
 
 }

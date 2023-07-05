@@ -27,7 +27,8 @@ class Anecdotal extends Model
     ];
 
 
-    public function student() {
+    public function student()
+    {
         return $this->belongsTo(Students::class);
     }
 
@@ -35,8 +36,19 @@ class Anecdotal extends Model
     {
         return $this->hasMany(Report::class, 'anecdotal_id');
     }
-    public function offense() {
-        return $this->belongsTo(Offenses::class);
+    public function Minoroffenses()
+    {
+        return $this->belongsTo(Offenses::class, 'minor_offense_id');
     }
+    public function Graveoffenses()
+    {
+        return $this->belongsTo(Offenses::class, 'grave_offense_id');
+    }
+    public function ActionTaken()
+    {
+        return $this->hasMany(ActionsTaken::class, 'anecdotal_id');
+    }
+
+
 
 }
