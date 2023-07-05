@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Adviser;
 
+use App\Http\Requests\StudentFormRequest;
 use App\Models\Students;
 use App\Models\User;
 use App\Models\Action;
@@ -18,10 +19,17 @@ class Report extends Component
 
     public $selectedActions = [];
 
+
+    //Test Here
+    public $grade_level_id, $user_id, $minor_offenses_id,
+    $grave_offenses_id, $observation, $desired, $outcome, $gravity, $short_description,
+    $letter;
+
+
     public function getSearchResults()
     {
         if (strlen($this->search) >= 3) {
-            return Student::where('first_name', 'like', '%' . $this->search . '%')
+            return Students::where('first_name', 'like', '%' . $this->search . '%')
                 ->orWhere('last_name', 'like', '%' . $this->search . '%')
                 ->get(['first_name', 'last_name']);
         }
@@ -66,6 +74,13 @@ class Report extends Component
             // Fetch the recent reports for the selected student
             $this->recentReports = $student->reports()->orderByDesc('created_at')->get();
         }
+    }
+
+
+    public function store(StudentFormRequest $id)
+    {
+    $this->validated();
+    dd(validated());
     }
 
 

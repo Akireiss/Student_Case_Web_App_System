@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Admin\Student;
+use App\Models\Students;
+use App\Models\Offenses;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -27,7 +28,15 @@ class Anecdotal extends Model
 
 
     public function student() {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Students::class);
+    }
+
+    public function report()
+    {
+        return $this->hasMany(Report::class, 'anecdotal_id');
+    }
+    public function offense() {
+        return $this->belongsTo(Offenses::class);
     }
 
 }

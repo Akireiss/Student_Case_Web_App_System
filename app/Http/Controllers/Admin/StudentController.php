@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Anecdotal;
 use App\Models\Classroom;
+use App\Models\Offenses;
 use Illuminate\Http\Request;
 use App\Models\Admin\Student;
 use App\Http\Controllers\Controller;
@@ -28,8 +29,7 @@ class StudentController extends Controller
         return view('admin.settings.students.index', compact('classrooms'));
     }
 
-    /**
-     * Store a newly created resource in storage.
+
 
     public function store(StudentFormRequest $request)
     {
@@ -46,17 +46,15 @@ class StudentController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
+
+
 
     public function show($id)
     {
         $anecdotal = Anecdotal::findOrFail($id);
-// Continution Here
-        dd($anecdotal);
-        return view('anecdotal.show', ['anecdotal' => $anecdotal]);
+        $offenses = Offenses::all();
+        return view('staff.reports.view', ['anecdotal' => $anecdotal,
+            'offenses' => $offenses]);
     }
-     */
-
 
 }

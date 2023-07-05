@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Adviser\StudentReportController;
+use App\Http\Livewire\Adviser\StudentProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -81,7 +82,13 @@ Route::middleware(['auth', 'role'])->group(function () {
         Route::prefix('adviser')->group(function () {
             Route::get('dashboard', [AdvisorDashboardController::class, 'index']);
             Route::get('report/student', [StudentReportController::class, 'index']);
+            Route::post('report/student', [StudentReportController::class, 'store']);
+
             Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
+
+            //Livewire
+            Route::get('students-profile', StudentProfile::class);
+
         });
     });
 });

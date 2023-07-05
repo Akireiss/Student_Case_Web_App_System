@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Adviser;
 
-use App\Http\Controllers\Controller;
+use App\Models\Students;
+use App\Models\Anecdotal;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AnecdotalRequest;
 
 class StudentReportController extends Controller
 {
@@ -15,21 +19,15 @@ class StudentReportController extends Controller
         return view('staff.reports.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(AnecdotalRequest $request)
+{
+    dd($request);
+}
+
 
     /**
      * Display the specified resource.

@@ -26,6 +26,25 @@
         </ul>
         <ul>
 
+            @can('admin-access')
+            <li class="relative px-6 py-3">
+                <span
+                    class=" {{ request()->is('admin/reports') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+                aria-hidden="true"></span>
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    href="{{ url('admin/reports') }}">
+                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                        </path>
+                    </svg>
+                    <span class="ml-4">Reports</span>
+                </a>
+            </li>
+        @endcan
+
+
 
             @can('adviser-access')
                 <li class="relative px-6 py-3">
@@ -49,22 +68,21 @@
             @can('adviser-access')
                 <li class="relative px-6 py-3">
                     <span
-                        class=" {{ request()->is('admin/reports') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+                        class=" {{ request()->is('adviser/students-profile') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                     aria-hidden="true"></span>
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        href="{{ url('admin/reports') }}">
-                        <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        href="{{ url('adviser/students-profile') }}">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path
-                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2
-                             0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14
+                          15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972
+                          5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
                             </path>
                         </svg>
-                        <span class="ml-4">Advisory Class</span>
+                        <span class="ml-4">Class Profile</span>
                     </a>
                 </li>
             @endcan
-
 
 
             @can('admin-access')
@@ -195,8 +213,19 @@
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="cards.html">
                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0-6H3" />
+                        <!-- Clock face -->
+                        <circle cx="12" cy="12" r="10" stroke-width="2" />
+
+                        <!-- Hour hand -->
+                        <line x1="12" y1="12" x2="12" y2="7" stroke-linecap="round" stroke-width="2" />
+
+                        <!-- Minute hand -->
+                        <line x1="12" y1="12" x2="16" y2="12" stroke-linecap="round" stroke-width="2" />
+
+                        <!-- Center dot -->
+                        <circle cx="12" cy="12" r="2" fill="currentColor" />
                       </svg>
+
 
 
                     <span class="ml-4">Report History</span>
@@ -210,8 +239,15 @@
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="cards.html">
                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19.39V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14.39M5 15.39V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v10.39M15 5v14.39M9 19.39h6" />
+                        <!-- Book cover -->
+                        <path d="M5 4.268v15.464c0 .757.636 1.368 1.423 1.368h11.154c.787 0 1.423-.611 1.423-1.368V4.268C18 3.617 17.364 3 16.577 3H6.423C5.636 3 5 3.617 5 4.268zM5.25 2h11.5C17.89 2 19 2.895 19 4.268V20.23c0 1.374-1.11 2.268-2.25 2.268h-11.5C4.11 22.498 3 21.603 3 20.23V4.268C3 2.895 4.11 2 5.25 2z" stroke-width="2" />
+
+                        <!-- Book pages -->
+                        <path d="M5.5 2v20" stroke-width="2" />
+                        <path d="M18.5 2v20" stroke-width="2" />
                       </svg>
+
+
                     <span class="ml-4">Help</span>
                 </a>
             </li>

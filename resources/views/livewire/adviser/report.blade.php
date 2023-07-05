@@ -8,7 +8,8 @@
 
             <div x-data="{ step: 1 }">
                 <div x-show="step === 1" x-cloak>
-                    <form>
+                    <form wire:submit="store">
+                        @csrf
                         <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                             Report Student
                         </h6>
@@ -24,7 +25,7 @@
                                             First Name
                                         </x-label>
                                         <x-input x-on:input.debounce.300ms="open = true" x-model="selected"
-                                            wire:model.debounce.500ms="search" type="text" name="input"
+                                        wire:model.debounce.500ms="search" type="text" name="student_id"
                                             id="input" placeholder="Type to search..." />
                                     </div>
                                     <div x-show="open && selected.length >= 3" x-on:click.away="open = false"
@@ -64,7 +65,7 @@
                                     <x-label>
                                         Current Grade Level
                                     </x-label>
-                                    <x-input type="text" name="offenses" />
+                                    <x-input type="text" name="offenses" wire:model="grade_level_id"/>
                                 </div>
                             </div>
 
@@ -73,7 +74,7 @@
                                     <x-label>
                                         Reffered By
                                     </x-label>
-                                    <x-input type="text" name="offenses" value="{{ Auth()->user()->name }}" />
+                                    <x-input type="text" name="offenses" value="{{ Auth()->user()->id }}" wire:model="user_id"/>
                                 </div>
                             </div>
 
@@ -99,40 +100,27 @@
                             <x-label>
                                 Minor Offenses
                             </x-label>
-                            <x-selectdrop name="select" hidden-input-name="offenses_id"
-                                wire:model="selectedMinorOffense">
+                            <x-select name="minor_offense_id" wire:model="minor_offenses_id">
                                 @if ($minorOffenses)
                                     @foreach ($minorOffenses as $id => $minorOffense)
-                                        <li x-on:click="selectedOption = '{{ $minorOffense }}'; open = false"
-                                            data-value="{{ $id }}"
-                                            class="px-4 py-2 cursor-pointer hover:bg-gray-100">
-                                            {{ $minorOffense }}
-                                        </li>
+                                        <option value="{{ $id }}">{{ $minorOffense }}</option>
                                     @endforeach
-                                @else
-                                    <li class="px-4 py-2">No minor offenses available.</li>
                                 @endif
-                            </x-selectdrop>
+                            </x-select>
+
                         </div>
 
                         <div class="w-full px-4">
                             <x-label>
                                 Grave Offenses
                             </x-label>
-                            <x-selectdrop name="select" hidden-input-name="offenses_id"
-                                wire:model="selectedGraveOffense">
+                            <x-select name="grave_offense_id" wire:model="grave_offenses_id">
                                 @if ($graveOffenses)
                                     @foreach ($graveOffenses as $id => $graveOffense)
-                                        <li x-on:click="selectedOption = '{{ $graveOffense }}'; open = false"
-                                            data-value="{{ $id }}"
-                                            class="px-4 py-2 cursor-pointer hover:bg-gray-100">
-                                            {{ $graveOffense }}
-                                        </li>
+                                        <option value="{{ $id }}">{{ $graveOffense }}</option>
                                     @endforeach
-                                @else
-                                    <li class="px-4 py-2">No grave offenses available.</li>
                                 @endif
-                            </x-selectdrop>
+                            </x-select>
                         </div>
                     </x-grid>
 
@@ -143,7 +131,7 @@
                                 <x-label>
                                     Observation
                                 </x-label>
-                                <x-input type="text" name="offenses" />
+                                <x-input type="text" name="observation" wire:model="observation" />
                             </div>
                         </div>
 
@@ -152,7 +140,7 @@
                                 <x-label>
                                     Desired
                                 </x-label>
-                                <x-input type="text" name="offenses" />
+                                <x-input type="text" name="desired" wire:model="desired" />
                             </div>
                         </div>
 
@@ -161,7 +149,7 @@
                                 <x-label>
                                     Outcome
                                 </x-label>
-                                <x-input type="text" name="offenses" />
+                                <x-input type="text" name="outcome" wire:model="outcome"/>
                             </div>
                         </div>
                     </x-grid>
@@ -180,21 +168,21 @@
                                 <x-label>
                                     Gravity of offense
                                 </x-label>
-                                <x-input type="text" name="offenses" />
+                                <x-input type="text" name="gravity" wire:model="gravity" />
                             </div>
                         </div>
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>
-                                    Remarks
+                                    Remarks (Short Description)
                                 </x-label>
-                                <x-input type="text" name="offenses" />
+                                <x-input type="text" name="short_description" wire:model="short_description"/>
                             </div>
                         </div>
                         <div class="w-full px-4">
                             <x-label>Letter</x-label>
-                            <input type="file"
+                            <input type="file" name="letter" wire:model="letter"
                                 class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
                               file:bg-transparent file:border-0
                               file:bg-gray-100 file:mr-4
@@ -212,11 +200,10 @@
                         @foreach ($actions as $id => $label)
                             <div class="relative mb-3">
                                 <div class="flex items-center space-x-2">
-                                    <x-checkbox wire:model="selectedActions" value="{{ $id }}" />
+                                    <x-checkbox wire:model="selectedActions" value="{{ $id }}"  />
                                     <x-label>{{ $label }}</x-label>
                                 </div>
                             </div>
-
                             @if ($loop->iteration % 4 === 0)
                     </div>
 
@@ -230,9 +217,9 @@
                         <x-button type="button" x-on:click="step = 1">Previous</x-button>
                         <x-button type="submit">Submit</x-button>
                     </div>
-                    </form>
                 </div>
             </div>
+        </form>
 
         </x-slot>
 
