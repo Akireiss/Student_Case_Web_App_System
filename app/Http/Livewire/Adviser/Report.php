@@ -77,55 +77,56 @@ class Report extends Component
         $this->allReports = $student->anecdotal()->with('student')->get();
     }
 }
+public function store()
+{
+    $this->validate([
+        'student_id' => 'required',
+        'minor_offenses_id' => 'nullable',
+        'grave_offenses_id' => 'nullable',
+        'gravity' => 'required',
+        'short_description' => 'required',
+        'observation' => 'required',
+        'desired' => 'required',
+        'outcome' => 'required',
+        'letter' => 'nullable|file|max:2048',
+    ]);
 
+    $letterPath = null;
 
-
-    public function store()
-    {
-        $this->validate([
-            'student_id' => 'required',
-            'minor_offenses_id' => 'nullable',
-            'grave_offenses_id' => 'nullable',
-            'gravity' => 'required',
-            'short_description' => 'required',
-            'observation' => 'required',
-            'desired' => 'required',
-            'outcome' => 'required',
-            'letter' => 'nullable|file|max:2048',
-        ]);
-
-        $letterPath = null;
-
-        if ($this->letter) {
-            $letterPath = $this->letter->store('letter');
-        }
-
-        Anecdotal::create([
-            'student_id' => $this->student_id,
-            'minor_offense_id' => $this->minor_offenses_id,
-            'grave_offense_id' => $this->grave_offenses_id,
-            'gravity' => $this->gravity,
-            'short_description' => $this->short_description,
-            'observation' => $this->observation,
-            'desired' => $this->desired,
-            'outcome' => $this->outcome,
-            'letter' => $letterPath,
-        ]);
-
-        // Clear form fields after successful submission
-        $this->reset([
-            'student_id',
-            'minor_offenses_id',
-            'grave_offenses_id',
-            'gravity',
-            'short_description',
-            'observation',
-            'desired',
-            'outcome',
-            'letter',
-        ]);
-
-        session()->flash('message', 'Report Successfully Added');
+    if ($this->letter) {
+        $letterPath = $this->letter->store('letter');
     }
+
+    Anecdotal::create([
+        'student_id' => $this->student_id,
+        'minor_offense_id' => $this->minor_offenses_id,
+        'grave_offense_id' => $this->grave_offenses_id,
+        'gravity' => $this->gravity,
+        'short_description' => $this->short_description,
+        'observation' => $this->observation,
+        'desired' => $this->desired,
+        'outcome' => $this->outcome,
+        'letter' => $letterPath,
+    ]);
+
+    // Clear form fields after successful submission
+    // $this->reset([
+    //     'student_id',
+    //     'minor_offenses_id',
+    //     'grave_offenses_id',
+    //     'gravity',
+    //     'short_description',
+    //     'observation',
+    //     'desired',
+    //     'outcome',
+    //     'letter',
+    // ]);
+
+    $this->selectedResult = null; // Reset the selectedResult
+
+
+    return redirect()->back();
+}
+
 
 }

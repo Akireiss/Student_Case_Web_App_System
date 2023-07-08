@@ -1,14 +1,15 @@
 <div>
-    <x-flashalert />
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+
+@if ($errors->any())
+<div class="mt-4">
+    <ul class="text-sm text-red-500">
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
+
 
     <x-form title="Add Offenses">
         <x-slot name="actions">
@@ -19,7 +20,7 @@
 
             <div x-data="{ step: 1 }">
                 <div x-show="step === 1" x-cloak>
-                    <form wire:submit.prevent="store">
+                    <form wire:submit="store">
                         @csrf
 
                         <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
@@ -37,7 +38,13 @@
                                         </x-label>
                                         <x-input x-on:input.debounce.300ms="open = true" x-model="selected"
                                             wire:model.debounce.100ms="student_id" type="text" id="input"
-                                            placeholder="Type to search..." :value="$student_id" />
+                                            placeholder="Type to search..." :value="$student_id" required/>
+                                            @error('student_id')
+    <span class="text-red-500 text-xs mt-1" role="alert">
+        {{ $message }}
+    </span>
+@enderror
+
 
                                     </div>
                                     <div x-show="open && selected.length >= 3" x-on:click.away="open = false"
