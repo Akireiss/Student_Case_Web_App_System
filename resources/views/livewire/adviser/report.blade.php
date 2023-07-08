@@ -1,4 +1,15 @@
 <div>
+    <x-flashalert />
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <x-form title="Add Offenses">
         <x-slot name="actions">
             {{-- None Here --}}
@@ -8,25 +19,26 @@
 
             <div x-data="{ step: 1 }">
                 <div x-show="step === 1" x-cloak>
-                    <form wire:submit="store">
+                    <form wire:submit.prevent="store">
                         @csrf
+
                         <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                             Report Student
                         </h6>
                         <!-- Step 1 form fields -->
 
-                    <x-grid columns="2" gap="4" px="0" mt="0">
-
+                        <x-grid columns="2" gap="4" px="0" mt="0">
 
                             <div class="w-full px-4">
-                                <div x-data="{ open: false, selected: '', last_name: '' }" class="relative">
+                                <div x-data="{ open: false, selected: '' }" class="relative">
                                     <div class="relative">
                                         <x-label>
-                                            First Name
+                                            Full Name
                                         </x-label>
                                         <x-input x-on:input.debounce.300ms="open = true" x-model="selected"
-                                        wire:model.debounce.500ms="search" type="text" name="student_id"
-                                            id="input" placeholder="Type to search..." />
+                                            wire:model.debounce.100ms="student_id" type="text" id="input"
+                                            placeholder="Type to search..." :value="$student_id" />
+
                                     </div>
                                     <div x-show="open && selected.length >= 3" x-on:click.away="open = false"
                                         class="absolute z-50 w-full mt-2 bg-white rounded-md shadow-lg max-h-60 overflow-y-auto">
@@ -34,7 +46,7 @@
                                             <ul
                                                 class="rounded-md py-1 text-base leading-6 shadow-xs overflow-au text-black to focus:outline-none sm:text-sm sm:leading-5">
                                                 @foreach ($searchResults as $result)
-                                                    <li x-on:click="selected = '{{ $result['first_name'] }}'; last_name = '{{ $result['last_name'] }}'; open = false; $wire.selectResult('{{ $result['first_name'] }}')"
+                                                    <li x-on:click="selected = '{{ $result['first_name'] }} {{ $result['last_name'] }}'; open = false; $wire.selectResult('{{ $result['first_name'] }}')"
                                                         class="cursor-pointer text-black select-none relative py-2 pl-3 pr-9 {{ $selectedResult == $result['first_name'] ? 'bg-blue-100' : 'hover:bg-gray-100' }}">
                                                         <span
                                                             x-text="selected === '{{ $result['first_name'] }}' ? '✓' : ''"
@@ -50,36 +62,18 @@
                                 </div>
                             </div>
 
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Last Name
-                                    </x-label>
-                                    <x-input type="text" name="offenses" wire:model="last_name" disabled />
-                                </div>
-                            </div>
-
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Current Grade Level
+                                        Referred By
                                     </x-label>
-                                    <x-input type="text" name="offenses" wire:model="grade_level_id"/>
+                                    <x-input type="text" name="offenses" placeholder="{{ Auth()->user()->name }}"
+                                        wire:model="user_id" value="{{ Auth()->user()->id }}" disabled />
                                 </div>
                             </div>
 
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Reffered By
-                                    </x-label>
-                                    <x-input type="text" name="offenses" value="{{ Auth()->user()->id }}" wire:model="user_id"/>
-                                </div>
-                            </div>
-
-
-                    </x-grid>
+                        </x-grid>
 
                         <div class="flex justify-end mx-4 mt-2">
                             <x-button type="button" x-on:click="step = 2">Next</x-button>
@@ -101,9 +95,10 @@
                                 Minor Offenses
                             </x-label>
                             <x-select name="minor_offense_id" wire:model="minor_offenses_id">
+                                <option value="" selected disabled hidden>Select an option</option>
                                 @if ($minorOffenses)
                                     @foreach ($minorOffenses as $id => $minorOffense)
-                                        <option value="{{ $id }}">{{ $minorOffense }}</option>
+                                        <option value="{{ $id }}">{{ $minorOffense }} {{ $id }}</option>
                                     @endforeach
                                 @endif
                             </x-select>
@@ -117,7 +112,7 @@
                             <x-select name="grave_offense_id" wire:model="grave_offenses_id">
                                 @if ($graveOffenses)
                                     @foreach ($graveOffenses as $id => $graveOffense)
-                                        <option value="{{ $id }}">{{ $graveOffense }}</option>
+                                        <option value="{{ $id }}">{{ $graveOffense }} {{ $id }}</option>
                                     @endforeach
                                 @endif
                             </x-select>
@@ -149,7 +144,7 @@
                                 <x-label>
                                     Outcome
                                 </x-label>
-                                <x-input type="text" name="outcome" wire:model="outcome"/>
+                                <x-input type="text" name="outcome" wire:model="outcome" />
                             </div>
                         </div>
                     </x-grid>
@@ -177,7 +172,7 @@
                                 <x-label>
                                     Remarks (Short Description)
                                 </x-label>
-                                <x-input type="text" name="short_description" wire:model="short_description"/>
+                                <x-input type="text" name="short_description" wire:model="short_description" />
                             </div>
                         </div>
                         <div class="w-full px-4">
@@ -200,7 +195,7 @@
                         @foreach ($actions as $id => $label)
                             <div class="relative mb-3">
                                 <div class="flex items-center space-x-2">
-                                    <x-checkbox wire:model="selectedActions" value="{{ $id }}"  />
+                                    <x-checkbox wire:model="selectedActions" value="{{ $id }}" />
                                     <x-label>{{ $label }}</x-label>
                                 </div>
                             </div>
@@ -219,42 +214,43 @@
                     </div>
                 </div>
             </div>
-        </form>
+            </form>
 
         </x-slot>
 
     </x-form>
 
 
-
     @if ($selectedResult)
-        @if ($recentReports && $recentReports->count() > 0)
+        @if ($allReports && $allReports->count() > 0)
+
             <x-table>
                 <x-slot name="header">
                     <th class="px-4 py-3">Student Name</th>
-                    <th class="px-4 py-3">Date</th>
                     <th class="px-4 py-3">Case Status</th>
-                    <th class="px-4 py-3">Anecdotal</th>
+                    <th class="px-4 py-3">Date</th>
+                    <th class="px-4 py-3">Manage</th>
+
                 </x-slot>
-                @foreach ($recentReports as $report)
+                @foreach ($allReports as $report)
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3">
-                            {{ $report->anecdotal->student->first_name }} {{ $report->anecdotal->student->last_name }}
+                            {{ $selectedResult }}
                         </td>
                         <td class="px-4 py-3">
-                            @if ($report->user)
-                                {{ $report->user->name }}
-                            @endif
+                            {{ $report->status }}
                         </td>
                         <td class="px-4 py-3">
-                            {{ $report->case_status }}
+                            {{ $report->created_at }}
                         </td>
                         <td class="px-4 py-3">
-                            <x-link target="_blank"
-                                href="{{ url('adviser/student/anecdotal/' . $report->anecdotal->id) }}">
-                                View</x-link>
+
+                            <x-link target="_blank" href="{{ url('adviser/student/anecdotal/' . $report->id) }}">
+                                View
+                            </x-link>
 
                         </td>
+
                     </tr>
                 @endforeach
             </x-table>
@@ -263,4 +259,5 @@
                 <h1 class="text-center">No Reports Found For This Student</h1>
             </div>
         @endif
+
     @endif

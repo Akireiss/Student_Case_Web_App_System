@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('offenses', function (Blueprint $table) {
-            $table->integer('category')->comment('0:minor | 1:grave');
+            $table->integer('category')->comment('0:minorr | 1:grave');
         });
     }
 

@@ -16,7 +16,6 @@
             <div class="text-gray-700">
                 <livewire:employee-table />
             </div>
-            <!-- Add Button to show the Form -->
 
         </div>
         <!-- Form Section -->

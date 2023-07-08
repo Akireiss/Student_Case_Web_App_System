@@ -29,7 +29,7 @@ class Anecdotal extends Model
 
     public function student()
     {
-        return $this->belongsTo(Students::class);
+        return $this->belongsTo(\App\Models\Students::class, 'student_id');
     }
 
     public function report()
@@ -49,6 +49,20 @@ class Anecdotal extends Model
         return $this->hasMany(ActionsTaken::class, 'anecdotal_id');
     }
 
-
+    public function getStatusAttribute($value)
+    {
+        switch ($value) {
+            case 0:
+                return 'Pending';
+            case 1:
+                return 'Active';
+            case 2:
+                return 'InProgress';
+            case 3:
+                return 'Closed';
+            default:
+                return 'unknown';
+        }
+    }
 
 }

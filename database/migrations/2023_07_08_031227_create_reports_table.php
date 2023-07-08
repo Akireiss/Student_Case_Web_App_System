@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('anecdotal_id');
             $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
-            $table->tinyInteger('case_status')->default('0')->comment('0:pending | 1: accept | 2: inprogress | 3: closed');
 
 
 

@@ -35,5 +35,11 @@ class Students extends Model
         return $this->hasMany(Report::class, 'anecdotal_id');
     }
 
+    public function anecdotal()
+    {
+        return $this->hasMany(Anecdotal::class, 'student_id');
+    }
+
+
 
 }
