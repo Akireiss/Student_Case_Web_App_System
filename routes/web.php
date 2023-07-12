@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Adviser\StudentReportController;
+use App\Http\Livewire\Admin\StudentsProfile;
 use App\Http\Livewire\Adviser\StudentProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,14 @@ Route::middleware(['auth', 'role'])->group(function () {
 
     // Admin Access
     Route::middleware(['can:admin-access'])->group(function () {
+
+        Route::prefix('admin')->group(function () {
+        //Students Profile Area
+        Route::get('student-profile', function () {
+            return view('admin.student-profile.index');
+        });
+        Route::get('student-profile/add', StudentsProfile::class);
+        });
         Route::prefix('admin/settings')->group(function () {
 
             // Settings Area - Offenses
@@ -89,6 +98,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             //Livewire
             Route::get('students-profile', StudentProfile::class);
 
+
         });
     });
 });
@@ -108,9 +118,7 @@ Route::middleware(['auth', 'role'])->group(function () {
 Route::get('dashboard', \App\Http\Livewire\Admin\Dashboard::class);
 
 
-Route::get('admin/student-profile', function () {
-    return view('admin.student-profile.index');
-});
+
 
 
 
