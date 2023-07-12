@@ -101,9 +101,11 @@ Route::middleware(['auth', 'role'])->group(function () {
 
 
 //Still neeed fix for this area
-Route::get('dashboard', function () {
-    return view('admin.dashboard.dashboard');
-});
+//Route::get('dashboard', function () {
+//    return view('admin.dashboard.dashboard');
+//});
+
+Route::get('dashboard', \App\Http\Livewire\Admin\Dashboard::class);
 
 
 Route::get('admin/student-profile', function () {
@@ -112,8 +114,10 @@ Route::get('admin/student-profile', function () {
 
 
 
-
 Route::get('admin/reports', [ReportController::class, 'index']);
+Route::get('admin/reports/add', [ReportController::class, 'create']);
+
+
 Route::get('admin/update-acc', [UserController::class, 'update_acc']);
 Route::get('admin/add-acc', [UserController::class, 'index']);
 

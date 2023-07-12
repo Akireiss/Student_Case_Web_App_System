@@ -25,7 +25,7 @@ const barConfig = {
   options: {
     responsive: true,
     legend: {
-      display: false,
+      display: true,
     },
   },
 }

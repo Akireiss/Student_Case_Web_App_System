@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Adviser;
 
 use App\Http\Requests\StudentFormRequest;
+use App\Models\ActionsTaken;
 use App\Models\Anecdotal;
 use App\Models\Students;
 use App\Models\User;
 use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Offenses;
 use App\Http\Livewire\Admin\Student;
@@ -31,6 +33,7 @@ class Report extends Component
     public $outcome;
     public $letter;
 
+    public $user_id;
     public function getSearchResults()
     {
         if (strlen($this->student_id) >= 3) {
@@ -59,10 +62,6 @@ class Report extends Component
         ]);
     }
 
-
-
-
-
     public function selectResult($result)
 {
     $this->selectedResult = $result;
@@ -88,16 +87,20 @@ public function store()
         'observation' => 'required',
         'desired' => 'required',
         'outcome' => 'required',
-        'letter' => 'nullable|file|max:2048',
+        'letter' => 'nullable|file|max:2048'
+    ], [
+        'student_id.required' => 'Please select a student.',
     ]);
 
+    if (!$this->student_id) {
+        session()->flash('error', 'Please select a student.');
+    }
     $letterPath = null;
 
     if ($this->letter) {
         $letterPath = $this->letter->store('letter');
     }
-
-    Anecdotal::create([
+    $anecdotal = Anecdotal::create([
         'student_id' => $this->student_id,
         'minor_offense_id' => $this->minor_offenses_id,
         'grave_offense_id' => $this->grave_offenses_id,
@@ -109,24 +112,26 @@ public function store()
         'letter' => $letterPath,
     ]);
 
-    // Clear form fields after successful submission
-    // $this->reset([
-    //     'student_id',
-    //     'minor_offenses_id',
-    //     'grave_offenses_id',
-    //     'gravity',
-    //     'short_description',
-    //     'observation',
-    //     'desired',
-    //     'outcome',
-    //     'letter',
-    // ]);
+    foreach ($this->selectedActions as $actionId) {
+        $anecdotal->actionsTaken()->create([
+            'actions_id' => $actionId,
+        ]);
+    }
 
-    $this->selectedResult = null; // Reset the selectedResult
+    $loggedInUserId = Auth::id();
 
-
-    return redirect()->back();
+    if (!is_null($loggedInUserId)) {
+        $anecdotal->report()->create([
+            'user_id' => $loggedInUserId,
+        ]);
+    }
+    $this->resetForm();
+    session()->flash('message', 'Successfully Added');
 }
 
+public function resetForm() {
+        $this->student_id = '';
+        $this->selectResult = null;
+}
 
 }

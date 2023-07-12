@@ -17,7 +17,6 @@ class Report extends Model
         'user_id',
         'anecdotal_id',
         'status',
-        'case_status'
     ];
 
 

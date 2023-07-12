@@ -6,10 +6,13 @@ use App\Models\Students;
 use App\Models\Offenses;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Anecdotal extends Model
 {
     use HasFactory;
+    use LogsActivity;
 
     protected $table = 'anecdotal';
 
@@ -18,7 +21,7 @@ class Anecdotal extends Model
         'grave_offense_id',
         'minor_offense_id',
         'gravity',
-        'short_description',
+       'short_description',
         'observation',
         'desired',
         'outcome',
@@ -29,7 +32,7 @@ class Anecdotal extends Model
 
     public function student()
     {
-        return $this->belongsTo(\App\Models\Students::class, 'student_id');
+        return $this->belongsTo(Students::class, 'student_id');
     }
 
     public function report()
@@ -44,25 +47,41 @@ class Anecdotal extends Model
     {
         return $this->belongsTo(Offenses::class, 'grave_offense_id');
     }
-    public function ActionTaken()
+    public function actionsTaken()
     {
         return $this->hasMany(ActionsTaken::class, 'anecdotal_id');
     }
 
-    public function getStatusAttribute($value)
+
+    public function getActivitylogOptions(): LogOptions
     {
-        switch ($value) {
-            case 0:
-                return 'Pending';
-            case 1:
-                return 'Active';
-            case 2:
-                return 'InProgress';
-            case 3:
-                return 'Closed';
-            default:
-                return 'unknown';
-        }
+        return LogOptions::defaults()
+            ->logOnly(['student_id', 'short_description', 'outcome']);
+    }
+
+    public function getStatusTextAttribute()
+    {
+        $statusCodes = [
+            0 => 'Active',
+            1 => 'Inactive',
+            2 => 'Pending',
+            3 => 'Resolved',
+        ];
+
+        return $statusCodes[$this->attributes['status']] ?? '';
+    }
+
+
+    public static function status()
+    {
+        return collect(
+            [
+                ['code' => 0,  'label' => 'Active'],
+                ['code' => 1,  'label' => 'Inactive'],
+                ['code' => 2,  'label' => 'Pending'],
+                ['code' => 3,  'label' => 'Resolved'],
+            ]
+        );
     }
 
 }

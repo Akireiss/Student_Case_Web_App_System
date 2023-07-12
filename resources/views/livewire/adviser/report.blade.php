@@ -1,16 +1,12 @@
 <div>
 
-@if ($errors->any())
-<div class="mt-4">
-    <ul class="text-sm text-red-500">
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+    @if (session()->has('error'))
+        <div class="text-black text-xl bg-red-300">
+            {{ session('error') }}
+        </div>
+    @endif
 
-
+<x-alert/>
     <x-form title="Add Offenses">
         <x-slot name="actions">
             {{-- None Here --}}
@@ -20,7 +16,7 @@
 
             <div x-data="{ step: 1 }">
                 <div x-show="step === 1" x-cloak>
-                    <form wire:submit="store">
+                    <form wire:submit.prevent="store">
                         @csrf
 
                         <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
@@ -39,11 +35,6 @@
                                         <x-input x-on:input.debounce.300ms="open = true" x-model="selected"
                                             wire:model.debounce.100ms="student_id" type="text" id="input"
                                             placeholder="Type to search..." :value="$student_id" required/>
-                                            @error('student_id')
-    <span class="text-red-500 text-xs mt-1" role="alert">
-        {{ $message }}
-    </span>
-@enderror
 
 
                                     </div>
@@ -67,6 +58,8 @@
                                         @endif
                                     </div>
                                 </div>
+
+
                             </div>
 
 
@@ -88,6 +81,11 @@
                 </div>
 
                 <div x-show="step === 2" x-cloak>
+                    @error('student_id')
+                    <span class="text-red-500 text-xs mt-1" role="alert">
+        {{ $message }}
+    </span>
+                    @enderror
                     <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                         Report Student
                     </h6>
@@ -193,10 +191,9 @@
                     </x-grid>
 
 
-                    <h6 class="text-sm my-6 px-4 font-bold uppercase ">
+                    <h6 class="text-sm my-6 px-4 font-bold uppercase">
                         Actions Taken
                     </h6>
-
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
                         @foreach ($actions as $id => $label)
@@ -212,8 +209,8 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
                         @endif
                         @endforeach
-
                     </div>
+
 
                     <div class="flex justify-end mx-4 mt-2 space-x-2">
                         <x-button type="button" x-on:click="step = 1">Previous</x-button>

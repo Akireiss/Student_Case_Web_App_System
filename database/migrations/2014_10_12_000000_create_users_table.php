@@ -21,9 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger('classroom_id')->nullable()->comment('0: w/o advisee');
 
             $table->foreign('classroom_id')->references('id')->on('classrooms');
-
-
-
             $table->rememberToken();
             $table->timestamps();
         });
