@@ -87,12 +87,19 @@ final class AnecdotaTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('student_name', fn (Anecdotal $model) => $model->student->first_name.' '.$model->student->last_name)
-            ->addColumn('grave_offense', fn (Anecdotal $model) => optional($model->Graveoffenses)->offenses)
-            ->addColumn('minor_offense', fn (Anecdotal $model) => optional($model->Minoroffenses)->offenses)
+            ->addColumn('student_first_name', function (Anecdotal $model) {
+                return $model->student->first_name;
+            })
+            ->addColumn('student_last_name', function (Anecdotal $model) {
+                return $model->student->last_name;
+            })
+
+            // Existing columns...
+            ->addColumn('grave_offense', fn (Anecdotal $model) => $model->Graveoffenses ? $model->Graveoffenses->offenses : 'N/A')
+            ->addColumn('minor_offense', fn (Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'N/A')
+
             ->addColumn('gravity_lower', fn (Anecdotal $model) => strtolower(e($model->gravity)))
             ->addColumn('created_at_formatted', fn (Anecdotal $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-
             ->addColumn('status', function (Anecdotal $model) {
                 $statusText = $model->status_text;
                 $textColorClass = $model->status === 2 ? 'text-red-500' : '';
@@ -100,6 +107,7 @@ final class AnecdotaTable extends PowerGridComponent
                 return "<span class='$textColorClass'>$statusText</span>";
             });
     }
+
 
 
     /*
@@ -116,23 +124,18 @@ final class AnecdotaTable extends PowerGridComponent
       *
       * @return array<int, Column>
       */
-      public function columns(): array
-      {
-          return [
-              Column::make('Student Name', 'student_name'),
-              Column::make('Grave Offense', 'grave_offense'),
-              Column::make('Minor Offense', 'minor_offense'),
-              Column::make('Seriousness', 'gravity')
-                  ->sortable()
-                  ->searchable(),
-
-              Column::make('Created at', 'created_at_formatted', 'created_at')
-                  ->sortable(),
-                Column::make('Status', 'status')
-                ->sortable()
-
-          ];
-      }
+    public function columns(): array
+    {
+        return [
+            Column::make('First Name', 'student_first_name')->sortable(),
+            Column::make('Last Name', 'student_last_name')->sortable(), // New column for last name
+            Column::make('Grave Offense', 'grave_offense'),
+            Column::make('Minor Offense', 'minor_offense'),
+            Column::make('Seriousness', 'gravity')->sortable()->searchable(),
+            Column::make('Created at', 'created_at_formatted', 'created_at')->sortable(),
+            Column::make('Status', 'status')->sortable()
+        ];
+    }
 
     /**
      * PowerGrid Filters.
@@ -142,6 +145,7 @@ final class AnecdotaTable extends PowerGridComponent
     public function filters(): array
     {
         return [
+
             Filter::inputText('gravity')->operators(['contains']),
             Filter::datetimepicker('created_at'),
 

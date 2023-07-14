@@ -422,12 +422,179 @@ Monthly Income
                 </div>
 
 
+            </x-grid>
 
+
+
+
+            <div x-data="{ siblings: [] }">
+
+
+                <div class="flex items-center justify-between mt-4 mx-4">
+                    <h6 class="text-sm font-bold uppercase">
+                        List down the names of Siblings that are studying at CZCMNHS?
+                    </h6>
+                    <div class="relative mb-3 px-4">
+                    <x-button @click="siblings.push({ name: '', age: '' })">
+                        Add Sibling
+                    </x-button>
+
+                        <x-button @click="siblings.pop()" class="bg-red-500 text-white">
+                            Remove
+                        </x-button>
+                    </div>
+                </div>
+
+
+                <template x-for="(sibling, index) in siblings" :key="index">
+                    <x-grid columns="3" gap="4" px="0" mt="0">
+                        <div class="relative mb-3 px-4">
+                            <x-label>
+                                Name
+                            </x-label>
+                            <x-input x-model="sibling.name" />
+                        </div>
+
+                        <div class="relative mb-3 px-4">
+                            <x-label>
+                                Age
+                            </x-label>
+                            <x-input x-model="sibling.age" />
+                        </div>
+
+                        <div class="relative mb-3 px-4">
+                            <x-label>
+                                Grade and Section
+                            </x-label>
+                            <x-input x-model="sibling.gradeSection" />
+                        </div>
+
+                    </x-grid>
+                </template>
+
+
+            </div>
+
+
+            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+                You are currently living with:
+            </h6>
+            <x-grid columns="1 md:grid-cols-4" gap="4" px="0" mt="0">
+                <div class="relative mb-3 px-4">
+                    <x-checkbox/>
+                    <x-label class="inline-block">both Parents</x-label>
+                </div>
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Father only</x-label>
+                </div>
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Mother only</x-label>
+                </div>
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">N/A</x-label>
+                </div>
+            </x-grid>
+
+
+
+
+            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+                Parent are currently: (check which applies below)
+            </h6>
+            <x-grid columns="3" gap="4" px="0" mt="0">
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox  />
+                    <x-label class="inline-block">Living together</x-label>
+                </div>
+
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Separated</x-label>
+                </div>
+
+
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Legally Separated</x-label>
+                </div>
+
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">With another partner</x-label>
+                </div>
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox/>
+                    <x-label class="inline-block">Father is OFW</x-label>
+                </div>
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Mother is OFW</x-label>
+                </div>
 
 
             </x-grid>
+
+
+
+
+            <x-grid columns="3" gap="4" px="0" mt="0">
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Guardian's Name
+                    </x-label>
+                    <x-input />
+                </div>
+
+
+
+
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Relationship with the guardian
+                    </x-label>
+                    <x-input />
+                </div>
+
+
+
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                    Contact No.
+                    </x-label>
+                    <x-input />
+                </div>
+
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                    Age
+                    </x-label>
+                    <x-input />
+                </div>
+
+            </x-grid>
+
+
             <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500 ">
-                Workplace Address
+                Address
             </h6>
 
 
@@ -440,10 +607,6 @@ Monthly Income
                     <x-input />
                 </div>
 
-
-
-
-
                 <div class="relative mb-3 px-4">
                     <x-label>
                         Municipality
@@ -451,18 +614,318 @@ Monthly Income
                     <x-input />
                 </div>
 
-
-
-
                 <div class="relative mb-3 px-4">
                     <x-label>
                         Barangay
                     </x-label>
                     <x-input />
                 </div>
+</x-grid>
+
+
+
+
+            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
+                Educational Background
+            </h6>
+            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                Grade 7
+            </h6>
+
+
+
+                <x-grid columns="3" gap="4" px="0" mt="0">
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Name of school
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Section
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        School Year
+                    </x-label>
+                    <x-input />
+                </div>
+                </x-grid>
+
+
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                    Grade 8
+                </h6>
+                <x-grid columns="3" gap="4" px="0" mt="0">
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Name of school
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Section
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        School Year
+                    </x-label>
+                    <x-input />
+                </div>
+                </x-grid>
+
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                    Grade 9
+                </h6>
+                <x-grid columns="3" gap="4" px="0" mt="0">
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Name of school
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Section
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        School Year
+                    </x-label>
+                    <x-input />
+                </div>
+                </x-grid>
+
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                    Grade 10
+                </h6>
+
+                <x-grid columns="3" gap="4" px="0" mt="0">
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Name of school
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Section
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        School Year
+                    </x-label>
+                    <x-input />
+                </div>
+                </x-grid>
+
+
+
+
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                    Grade 11
+                </h6>
+                <x-grid columns="3" gap="4" px="0" mt="0">
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Name of school
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        Section
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        School Year
+                    </x-label>
+                    <x-input />
+                </div>
+            </x-grid>
+
+
+
+
+
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                    Grade 12
+                </h6>
+                <x-grid columns="3" gap="4" px="0" mt="0">
+                    <div class="relative mb-3 px-4">
+                        <x-label>
+                            Name of school
+                        </x-label>
+                        <x-input />
+                    </div>
+
+                    <div class="relative mb-3 px-4">
+                        <x-label>
+                            Section
+                        </x-label>
+                        <x-input />
+                    </div>
+
+                    <div class="relative mb-3 px-4">
+                        <x-label>
+                            School Year
+                        </x-label>
+                        <x-input />
+                    </div>
+                </x-grid>
+
+
+            <div x-data="{ siblings: [] }">
+                <div class="flex items-center justify-between mt-4 mx-4">
+                    <h6 class="text-sm font-bold uppercase">
+                        Name some of your Academic and Extra-Curricular Awards
+                    </h6>
+                    <div class="relative mb-3 px-4">
+                    <x-button @click="siblings.push({ name: '', age: '' })" >
+                        Add Award
+                    </x-button>
+                        <x-button @click="siblings.pop()" class="bg-red-500 text-white">
+                            Remove
+                        </x-button>
+                    </div>
+                </div>
+
+                <template x-for="(sibling, index) in siblings" :key="index">
+                    <x-grid columns="2" gap="4" px="0" mt="0">
+                        <div class="relative mb-3 px-4">
+                            <x-label>
+                                Name of Award
+                            </x-label>
+                            <x-input x-model="sibling.name" />
+                        </div>
+
+                        <div class="relative mb-3 px-4">
+                            <x-label>
+                                Year Achieved
+                            </x-label>
+                            <x-input x-model="sibling.age" />
+                        </div>
+                    </x-grid>
+                </template>
+            </div>
+        </x-grid/>
+
+
+            <x-grid columns="3" gap="4" px="0" mt="0">
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        What is your favorite subject/s:
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        What subject do you find difficult
+                    </x-label>
+                    <x-input />
+                </div>
+
+                <div class="relative mb-3 px-4">
+                    <x-label>
+                        What school organizations are you afiliated?
+                    </x-label>
+                    <x-input />
+                </div>
+            </x-grid>
+
+
+
+
+
+            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+               What do you plan to do after graduating Senior high School?
+            </h6>
+            <x-grid columns="3" gap="4" px="0" mt="0">
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox  />
+                    <x-label class="inline-block">Go to College</x-label>
+                </div>
+
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Work as a skilled
+                        worker</x-label>
+                </div>
+
+
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Pursue TESDA
+                        certificates</x-label>
+                </div>
+
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Engage in
+                        Business</x-label>
+                </div>
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox/>
+                    <x-label class="inline-block">Work to help
+                        parents</x-label>
+                </div>
+
+
+                <div class="relative mb-3 px-4">
+                    <x-checkbox />
+                    <x-label class="inline-block">Undecided</x-label>
+                </div>
 
 
             </x-grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
