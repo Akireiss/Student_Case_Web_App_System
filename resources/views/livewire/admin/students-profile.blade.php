@@ -147,10 +147,12 @@
                     <x-label>
                         Province
                     </x-label>
-                    <x-input />
+                    <x-select class="form-control" id="city-select" wire:model="selectedCity">
+                        @foreach($cities as $city)
+                            <option value="{{ $city->id }}">{{ $city->city }}</option>
+                        @endforeach
+                    </x-select>
                 </div>
-
-
 
 
 
@@ -158,21 +160,24 @@
                     <x-label>
                         Municipality
                     </x-label>
-                    <x-input />
+                    <x-select class="form-control" id="municipality-select" wire:model="selectedMunicipality">
+                        @foreach($municipalities as $municipality)
+                            <option value="{{ $municipality->id }}">{{ $municipality->municipality }}</option>
+                        @endforeach
+                    </x-select>
                 </div>
-
-
 
 
                 <div class="relative mb-3 px-4">
                     <x-label>
                         Barangay
                     </x-label>
-                    <x-input />
+                    <x-select class="form-control" id="barangay-select" wire:model="selectedBarangay">
+                        @foreach($barangays as $barangay)
+                            <option value="{{ $barangay->id }}">{{ $barangay->barangay }}</option>
+                        @endforeach
+                    </x-select>
                 </div>
-
-
-
 
 
             </x-grid>
@@ -257,7 +262,9 @@ Monthly Income
                     <x-label>
                         Province
                     </x-label>
-                    <x-input />
+                    <x-select>
+                        <option>La Union</option>
+                    </x-select>
                 </div>
 
 
@@ -268,7 +275,9 @@ Monthly Income
                     <x-label>
                         Municipality
                     </x-label>
-                    <x-input />
+                    <x-select >
+                        <option>La Union</option>
+                    </x-select>
                 </div>
 
 
@@ -278,9 +287,10 @@ Monthly Income
                     <x-label>
                         Barangay
                     </x-label>
-                    <x-input />
+                    <x-select >
+                        <option>La Union</option>
+                    </x-select>
                 </div>
-
 
 
 
@@ -297,7 +307,9 @@ Monthly Income
                     <x-label>
                         Province
                     </x-label>
-                    <x-input />
+                    <x-select >
+                        <option>La Union</option>
+                    </x-select>
                 </div>
 
 
@@ -308,7 +320,9 @@ Monthly Income
                     <x-label>
                         Municipality
                     </x-label>
-                    <x-input />
+                    <x-select>
+                        <option>La Union</option>
+                    </x-select>
                 </div>
 
 
@@ -318,13 +332,12 @@ Monthly Income
                     <x-label>
                         Barangay
                     </x-label>
-                    <x-input />
+                    <x-select>
+                        <option>La Union</option>
+                    </x-select>
                 </div>
 
-
             </x-grid>
-
-
 
             <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
                 Mother
@@ -397,7 +410,9 @@ Monthly Income
                     <x-label>
                         Province
                     </x-label>
-                    <x-input />
+                    <x-select>
+                        <option>La Union</option>
+                    </x-select>
                 </div>
 
 
@@ -408,7 +423,9 @@ Monthly Income
                     <x-label>
                         Municipality
                     </x-label>
-                    <x-input />
+                    <x-select >
+                        <option>La Union</option>
+                    </x-select>
                 </div>
 
 
@@ -418,9 +435,10 @@ Monthly Income
                     <x-label>
                         Barangay
                     </x-label>
-                    <x-input />
+                    <x-select >
+                        <option>La Union</option>
+                    </x-select>
                 </div>
-
 
             </x-grid>
 
@@ -604,22 +622,37 @@ Monthly Income
                     <x-label>
                         Province
                     </x-label>
-                    <x-input />
+                    <x-select >
+                        <option>La Union</option>
+                    </x-select>
                 </div>
+
+
+
+
 
                 <div class="relative mb-3 px-4">
                     <x-label>
                         Municipality
                     </x-label>
-                    <x-input />
+                    <x-select >
+                        <option>La Union</option>
+                    </x-select>
                 </div>
+
+
+
 
                 <div class="relative mb-3 px-4">
                     <x-label>
                         Barangay
                     </x-label>
-                    <x-input />
+                    <x-select>
+                        <option>La Union</option>
+                    </x-select>
                 </div>
+
+
 </x-grid>
 
 
@@ -910,27 +943,41 @@ Monthly Income
                     <x-label class="inline-block">Undecided</x-label>
                 </div>
 
-
             </x-grid>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <div class="flex justify-end">
+                <x-button>Submit</x-button>
+            </div>
 
 
         </x-slot>
     </x-form>
 </div>
+
+
+@push('scripts')
+
+<script>
+    document.addEventListener('livewire:load', function () {
+        Livewire.on('municipalitiesUpdated', function (municipalities) {
+            $('#municipality-select').empty();
+            $('#municipality-select').append('<option value="">Select A Municipality</option>');
+
+            municipalities.forEach(function (municipality) {
+                $('#municipality-select').append('<option value="' + municipality.id + '">' + municipality.municipality + '</option>');
+            });
+        });
+
+        Livewire.on('barangaysUpdated', function (barangays) {
+            $('#barangay-select').empty();
+            $('#barangay-select').append('<option value="">Select A Barangay</option>');
+
+            barangays.forEach(function (barangay) {
+                $('#barangay-select').append('<option value="' + barangay.id + '">' + barangay.barangay + '</option>');
+            });
+        });
+    });
+</script>
+
+@endpush
