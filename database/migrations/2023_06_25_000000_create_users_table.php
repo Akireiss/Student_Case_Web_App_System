@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('role')->default('0')->comment('0: User | 1: Admin');
+            $table->integer('role')->default('0')->comment('0: User | 1: Admin |2:advise' );
             $table->unsignedBigInteger('classroom_id')->nullable()->comment('0: w/o advisee');
 
             $table->foreign('classroom_id')->references('id')->on('classrooms');

@@ -16,9 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('classroom_id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->unsignedBigInteger('lrn')->nullable();
+            $table->string('lrn')->nullable();
             $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
-
 
             $table->foreign('classroom_id')->references('id')->on('classrooms');
             $table->timestamps();

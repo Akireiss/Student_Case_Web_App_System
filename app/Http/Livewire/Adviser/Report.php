@@ -19,8 +19,8 @@ class Report extends Component
     public $student_id; //full name
     public $selectedResult;
     public $recentReports; // Holds the recent reports for the selected student
-    public $selectedActions = [];
 
+    public $actions;
     // Test Here
     use WithFileUploads;
 
@@ -48,7 +48,6 @@ class Report extends Component
     public function render()
     {
         $searchResults = $this->getSearchResults();
-        $actions = Action::pluck('actions', 'id');
         $offenses = Offenses::whereIn('category', [0, 1])->get();
 
         $minorOffenses = $offenses->where('category', 0)->pluck('offenses', 'id');
@@ -57,8 +56,7 @@ class Report extends Component
         return view('livewire.adviser.report', [
             'searchResults' => $searchResults,
             'minorOffenses' => $minorOffenses,
-            'graveOffenses' => $graveOffenses,
-            'actions' => $actions
+            'graveOffenses' => $graveOffenses
         ]);
     }
 
@@ -112,11 +110,11 @@ public function store()
         'letter' => $letterPath,
     ]);
 
-    foreach ($this->selectedActions as $actionId) {
+
         $anecdotal->actionsTaken()->create([
-            'actions_id' => $actionId,
+            'actions' =>  $this->actions
         ]);
-    }
+
 
     $loggedInUserId = Auth::id();
 

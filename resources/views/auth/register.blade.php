@@ -4,9 +4,15 @@
 
     <x-authentication-card>
         <section>
-            <h3 class="font-bold text-2xl">Welcome </h3>
-            <p class="text-gray-600 pt-2"> Register here.</p>
-        </section>
+
+                        <a href="/">
+                            <img src="assets/image/logo.png" alt="" class="w-40 mx-auto mb-2">
+                         </a>
+                    </section>
+
+            <div>
+                <p class="text-gray-600 pt-2 font-bold">Register here.</p>
+            </div>
 
         <form method="POST" action="{{ route('register') }}" x-data="{ showPassword: false, passwordMismatch: false }"
         x-on:submit="checkPasswordsMatch()" class="flex flex-col">
@@ -62,12 +68,8 @@
                 <p x-show="passwordMismatch" class="text-red-500 text-xs mt-1 ">Passwords do not match.</p>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900
-                rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="{{ route('login') }}">
-                    {{ __('Terms and policies') }}
-                </a>
+            <div class="flex justify-end mt-4">
+
 
                 <x-button class="ml-4">
                     {{ __('Register') }}

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('municipal', function (Blueprint $table) {
             $table->id();
             $table->string('municipality');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('province_id');
 
-            $table->foreign('city_id')->references('id')->on('city')->onDelete('cascade');
+            $table->foreign('province_id')->references('id')->on('province')->onDelete('cascade');
             $table->timestamps();
         });
     }

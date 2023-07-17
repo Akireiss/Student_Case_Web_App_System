@@ -1,19 +1,18 @@
 @extends('layouts.app')
 @section('content')
-    @if (session('status'))
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ session('status') }}
-        </div>
-    @endif
-
-    <x-authentication-card>
+    <x-authentication-card class="mt-36">
 
         <section>
-            <h3 class="font-bold text-2xl">Welcome </h3>
-            <p class="text-gray-600 pt-2">Login to your account.</p>
+            {{-- <h3 class="font-bold text-2xl">Login your account</h3> --}}
+            {{-- <p class="text-gray-600 pt-2">Login to your account.</p> --}}
+            <a href="/">
+                <img src="assets/image/logo.png" alt="" class="w-40 mx-auto mb-2">
+            </a>
         </section>
 
-
+        <div>
+            <p class="text-gray-600 pt-2 font-bold">Login here.</p>
+        </div>
         <form method="POST" action="{{ route('login') }}" class="flex flex-col">
             @csrf
 
@@ -41,8 +40,6 @@
 
             </div>
 
-
-
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -61,7 +58,6 @@
     </x-authentication-card>
 
     <div class="max-w-lg mx-auto text-center mt-12 mb-6">
-        <p class="text-black">Don't have an account? <a href="/register"
-                class="font-bold hover:underline">Register</a>.</p>
+        <p class="text-black">Don't have an account? <a href="/register" class="font-bold hover:underline">Register</a>.</p>
     </div>
 @endsection

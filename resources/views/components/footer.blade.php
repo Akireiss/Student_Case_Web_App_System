@@ -1,7 +1,7 @@
 
-<footer id="footer" class="flex justify-center py-5">
+<footer id="footer" class="flex justify-center py-5 align-center">
     <span class="block text-sm text-gray-700 sm:text-center dark:text-gray-400 bottom-0 text-center">© 2023 <a
-        href="https://github.com/Akireiss/Student_Web_Case_CZCMHS" target="_blank" class="hover:underline">
+        href="https://github.com/Akireiss/Student_Web_Case_CZCMHS" target="_blank" class="hover:underline text-center">
         Capstone Project</a> | Don Mariano Marcos Memorial State University</span>
 </footer>
 

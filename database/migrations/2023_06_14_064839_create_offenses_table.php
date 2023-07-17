@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('offenses', function (Blueprint $table) {
             $table->id();
+            $table->integer('category')->comment('0:minor | 1:grave');
             $table->string('offenses');
-            $table->string('description');
+            $table->mediumText('description');
             $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
             $table->timestamps();
         });

@@ -18,10 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedBigInteger('barangay_id');
             $table->unsignedBigInteger('municipal_id');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('province_id');
             $table->foreign('barangay_id')->references('id')->on('barangay')->onDelete('cascade');
             $table->foreign('municipal_id')->references('id')->on('municipal')->onDelete('cascade');
-            $table->foreign('city_id')->references('id')->on('city')->onDelete('cascade');
+            $table->foreign('province_id')->references('id')->on('province')->onDelete('cascade');
             $table->foreign('profile_id')->references('id')->on('profile')->onDelete('set null');
             $table->foreign('parent_id')->references('id')->on('parents')->onDelete('set null');
             $table->timestamps();

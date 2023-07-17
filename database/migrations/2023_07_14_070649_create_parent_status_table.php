@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('parent_status', function (Blueprint $table) {
             $table->id();
-            $table->integer('parent_status');
+            $table->string('parent_status');
             $table->timestamps();
         });
     }

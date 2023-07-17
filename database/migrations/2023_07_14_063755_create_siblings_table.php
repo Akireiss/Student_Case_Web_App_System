@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('siblings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('profile_id');
-            $table->string('sibling_name');
-            $table->string('sibling_age');
-            $table->string('sibling_grade_section');
+            $table->unsignedBigInteger('profile_id')->nullable();;
+            $table->string('sibling_name')->nullable();
+            $table->string('sibling_age')->nullable();
+            $table->string('sibling_grade_section')->nullable();
 
 
 
-            $table->foreign('profile_id')->references('id')->on('profile')->onDelete('cascade');
+            $table->foreign('profile_id')->references('id')->on('profile')->onDelete('set null');
 
             $table->timestamps();
         });

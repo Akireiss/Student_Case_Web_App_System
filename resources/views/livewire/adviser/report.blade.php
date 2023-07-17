@@ -196,20 +196,15 @@
                     </h6>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
-                        @foreach ($actions as $id => $label)
+
                             <div class="relative mb-3">
                                 <div class="flex items-center space-x-2">
-                                    <x-checkbox wire:model="selectedActions" value="{{ $id }}" />
-                                    <x-label>{{ $label }}</x-label>
+                                    <x-checkbox wire:model="actions" value="Parent Teacher Meeting" />
+                                    <x-label>Parent Teacher Meeting</x-label>
                                 </div>
                             </div>
-                            @if ($loop->iteration % 4 === 0)
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
-                        @endif
-                        @endforeach
-                    </div>
 
 
                     <div class="flex justify-end mx-4 mt-2 space-x-2">

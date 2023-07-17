@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Students;
 use App\Models\Offenses;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Students;
+use App\Models\ActionsTaken;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Anecdotal extends Model
 {
@@ -21,7 +22,7 @@ class Anecdotal extends Model
         'grave_offense_id',
         'minor_offense_id',
         'gravity',
-       'short_description',
+        'short_description',
         'observation',
         'desired',
         'outcome',

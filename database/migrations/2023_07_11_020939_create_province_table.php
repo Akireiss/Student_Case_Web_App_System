@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('province', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
+            $table->string('province');
+
+            $table->unsignedBigInteger('region_id');
+            $table->foreign('region_id')->references('id')->on('region')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('section');
+        Schema::dropIfExists('province');
     }
 };

@@ -14,7 +14,7 @@ class ActionsTaken extends Model
 
     protected $fillable = [
       'anectodal_id',
-      'actions_id',
+      'actions',
     ];
 
     public function action()

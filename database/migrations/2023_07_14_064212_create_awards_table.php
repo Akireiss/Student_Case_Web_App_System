@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('awards', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('profile_id');
-            $table->string('award_name');
-            $table->integer('award_year');
-            $table->foreign('profile_id')->references('id')->on('profile')->onDelete('cascade');
+            $table->unsignedBigInteger('profile_id')->nullable();
+            $table->string('award_name')->nullable();
+            $table->integer('award_year')->nullable();
+            $table->foreign('profile_id')->references('id')->on('profile')->onDelete('set null');
             $table->timestamps();
         });
     }
