@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('content')
+@include('layouts.header')
     <x-authentication-card class="mt-36">
 
         <section>
@@ -60,4 +59,4 @@
     <div class="max-w-lg mx-auto text-center mt-12 mb-6">
         <p class="text-black">Don't have an account? <a href="/register" class="font-bold hover:underline">Register</a>.</p>
     </div>
-@endsection
+@include('components.footer')

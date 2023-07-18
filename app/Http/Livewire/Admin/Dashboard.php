@@ -32,8 +32,8 @@ class Dashboard extends Component
     {
         $this->totalStudents = Students::count();
         $this->totalCases = Anecdotal::count();
-        $this->pendingCases = Anecdotal::where('status', 0)->count();
-        $this->resolvedCases = Anecdotal::where('status', 3)->count();
+        $this->pendingCases = Anecdotal::where('case_status', 0)->count();
+        $this->resolvedCases = Anecdotal::where('case_status', 3)->count();
     }
 
     public function render()

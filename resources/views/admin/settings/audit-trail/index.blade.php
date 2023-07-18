@@ -7,9 +7,7 @@
 Audit Trail
     </h4>
     <div class="flex-grow flex justify-end">
-      <x-button>
-        Add
-      </x-button>
+
     </div>
   </div>
 <div>

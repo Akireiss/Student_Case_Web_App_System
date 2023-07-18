@@ -40,18 +40,20 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 // Group for admin access
+// Group for admin access
 Route::middleware(['auth', 'role'])->group(function () {
 
     // Admin Access
     Route::middleware(['can:admin-access'])->group(function () {
 
         Route::prefix('admin')->group(function () {
-        //Students Profile Area
-        Route::get('student-profile', function () {
-            return view('admin.student-profile.index');
+            // Students Profile Area
+            Route::get('student-profile', function () {
+                return view('admin.student-profile.index');
+            });
+            Route::get('student-profile/add', [StudentsProfileController::class, 'add']); // Replace 'StudentsProfile' with the correct controller name
         });
-        Route::get('student-profile/add', StudentsProfile::class);
-        });
+
         Route::prefix('admin/settings')->group(function () {
 
             // Settings Area - Offenses
@@ -63,14 +65,16 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             // Employees
             Route::get('teachers', [EmployeeController::class, 'index']);
-          //  Route::get('teachers/create', [EmployeeController::class, 'create']);
-           // Route::post('employees/store', [EmployeeController::class, 'store']);
+            // Route::get('teachers/create', [EmployeeController::class, 'create']);
+            // Route::post('employees/store', [EmployeeController::class, 'store']);
             Route::get('employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
 
             // Classrooms
             Route::get('classrooms', [ClassroomController::class, 'index']);
-            Route::get('classrooms/create', [ClassroomController::class, 'create']);
-            Route::post('classrooms/store', [ClassroomController::class, 'store']);
+            Route::get('classroom/create', [ClassroomController::class, 'create']);
+            Route::get('classrooms/show', [ClassroomController::class, 'show']);
+            Route::post('classroom/store', [ClassroomController::class, 'store'])->name('admin.classroom.store');
+
             Route::get('classrooms/{id}/edit', [ClassroomController::class, 'edit']);
             Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
 
@@ -95,19 +99,11 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
 
-            //Livewire
+            // Livewire
             Route::get('students-profile', StudentProfile::class);
-
-
         });
     });
 });
-
-
-
-
-
-
 
 
 //Still neeed fix for this area

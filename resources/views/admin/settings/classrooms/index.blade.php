@@ -32,10 +32,10 @@ Classrooms
                 {{ $classroom->employee->employees }}
               </td>
               <td class="px-4 py-3 text-sm">
-                {{ $classroom->section->name }}
+                {{ $classroom->section }}
               </td>
               <td class="px-4 py-3 text-sm">
-                {{ $classroom->gradeLevel->grade_level }}
+                Grade: {{ $classroom->grade_level }}
               </td>
               <td class="px-4 py-3 text-xs">
                 <span class="px-2 py-1 font-semibold leading-tight

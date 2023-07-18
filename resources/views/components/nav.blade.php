@@ -6,6 +6,7 @@
                     <a class="text-2xl font-bold transition-colors duration-300 transform text-green-400 lg:text-3xl dark:hover:text-green-500"
                         href="{{ url('/') }}">CZCMNHS</a>
                 </div>
+
                 <!-- Mobile menu button -->
                 <div class="flex lg:hidden">
                     <button x-cloak @click="isOpen = !isOpen" type="button"
@@ -30,7 +31,7 @@
                 <div class="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
 
 
-
+                    @if (auth()->check() && auth()->user()->role == 0)
                         <a href="{{ url('dashboard') }}"
                             class=" {{ request()->is('dashboard')
                                 ? 'px-2 py-y mt-2 transition-colors duration-300
@@ -42,30 +43,41 @@
                     lg:mt-0 text-black  hover:text-white">
                             Dashboard
                         </a>
+                    @endif
 
+
+
+                    @if (auth()->check() && auth()->user()->role == 0)
+                        <a href="{{ url('recent') }}"
+                            class=" {{ request()->is('recent')
+                                ? 'px-2 py-y mt-2 transition-colors duration-300
+                                                transform rounded-full lg:mt-0 text-black
+                                                hover:bg-green-600 hover:text-white bg-green-500'
+                                : '' }}
+                    hover:bg-green-500
+                    px-3 py-2  mt-2 transition-colors duration-300 transform rounded-full
+                    lg:mt-0 text-black  hover:text-white">
+                            Recent Report
+                        </a>
+                    @endif
                     @guest
                         @if (Route::has('login'))
                             <a href="{{ url('login') }}"
-                                class=" {{ request()->is('login')
-                                    ? 'px-3 py-2 mx-2 mt-2 transition-colors duration-300 transform rounded-full
-                                                        lg:mt-0 text-gray-500 hover:bg-green-60 '
-                                    : '' }} mx-6 hover:
-                        px-3 py-2  mt-2 transition-colors duration-300 transform rounded-full
-                        lg:mt-0 text-gray-500
-                        ">
-                                Login</a>
+                                class="{{ request()->is('login') ? 'px-3 py-2 mx-2 mt-2 transition-colors duration-300 transform rounded-full lg:mt-0 text-gray-700 hover:bg-green-600
+                                 hover:text-gray-900 bg-green-500' : 'px-3 py-2 mx-2 mt-2 transition-colors duration-300 transform rounded-full lg:mt-0 text-black' }}">
+                                Login
+                            </a>
                         @endif
+
                         @if (Route::has('register'))
                             <a href="{{ url('register') }}"
-                                class=" {{ request()->is('register')
-                                    ? 'px-2 py-y mt-2 transition-colors duration-300 transform rounded-full lg:mt-0 text-gray-500
-                                                    '
-                                    : '' }}
-                    px-3 py-2  mt-2 transition-colors duration-300 transform rounded-full
-                    lg:mt-0 text-gray-500">
-                                Register</a>
+                                class="{{ request()->is('register') ? 'px-3 py-2 mx-2 mt-2 transition-colors duration-300 transform rounded-full lg:mt-0 text-gray-700
+                                 hover:bg-green-600 hover:text-white bg-green-500' : 'px-3 py-2 mx-2 mt-2 transition-colors duration-300 transform rounded-full lg:mt-0 text-black hover:tex-gray-900' }}">
+                                Register
+                            </a>
                         @endif
                     @else
+                        {{-- px-3 py-2 mx-3 mt-2 transition-colors duration-300 transform rounded-full lg:mt-0 text-black hover:bg-gray-100 dark:hover:bg-green-500 hover:text-white --}}
                         <div x-data="{ open: false }" class="relative">
                             <button @click="open = !open"
                                 class="inline-flex items-center justify-center px-3 py-2 mx-3 mt-2 transition-colors duration-300 transform rounded-full lg:mt-0 text-black hover:bg-gray-100 dark:hover:bg-green-500 hover:text-white">
@@ -83,12 +95,20 @@
                                 role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                 <div class="py-1" role="none">
 
-                                    <a href="{{ url('dashboard') }}"
+                                    <a href="{{ route('dashboard') }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                         role="menuitem">Dashboard</a>
 
+                                    {{-- @if (auth()->check() && auth()->user()->role == 0)
+                                <a  href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem">Dashboard</a>
+                                @endif --}}
+                                    {{-- @if (auth()->check() && auth()->user()->role == 1)
+                                <a  href="{{ route('admin/dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem">Dashboard</a>
+                                @endif --}}
 
-                                    <a href=""
+                                    <a href="{{ route('profile.show') }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                         role="menuitem">Manage Account</a>
                                     <a class="block px-4 py-2 text-sm text-red-700 hover:bg-red-100 hover:text-red-900"

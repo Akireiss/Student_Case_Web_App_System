@@ -1,3 +1,4 @@
+
 @extends('layouts.dashboard.index')
 @section('content')
 {{-- Form --}}
@@ -10,12 +11,9 @@
         </x-slot>
 
         <x-slot name="slot">
-            <form action="{{ route('admin.classroom.store') }}" method="POST">
-                @csrf
-
 
                 <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                Add New Classroom
+               Classroom Details
                 </h6>
                 <!-- Personal information form fields -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -24,13 +22,8 @@
                             {{-- Label --}}
                             <x-label>Grade Level</x-label>
                             {{-- Input Select --}}
-                            <x-select name="grade_level">
+                            <x-select name="grade_level_id">
                                     <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
                             </x-select>
                         </div>
                     </div>
@@ -40,12 +33,6 @@
                             <x-label>Section</x-label>
                             <x-select name="section">
                                     <option value="Jupiter">Jupiter</option>
-                                    <option value="Akasya">Akasya</option>
-                                    <option value="Earth">Earth</option>
-                                    <option value="Sun">Sun</option>
-                                    <option value="Neptune">Neptune</option>
-                                    <option value="Pluto">Pluto</option>
-                                    <option value="Venus">Venus</option>
                             </x-select>
                         </div>
                     </div>
@@ -72,14 +59,36 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end">
-                    <x-button type="submit">Add</x-button>
-                </div>
-
-                </form>
-
 
             <!-- Add any additional sections or form fields here -->
         </x-slot>
     </x-form>
+
+    <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+        Classroom Details
+         </h6>
+         <x-table>
+            <x-slot name="header">
+                <th class="px-4 py-3">Student Name</th>
+                <th class="px-4 py-3">Case Status</th>
+                <th class="px-4 py-3">Date</th>
+                <th class="px-4 py-3">Manage</th>
+            </x-slot>
+                <tr class="text-gray-700 dark:text-gray-400">
+                    <td class="px-4 py-3">
+
+                    </td>
+                    <td class="px-4 py-3">
+
+                    </td>
+                    <td class="px-4 py-3">
+
+                    </td>
+                    <td class="px-4 py-3">
+
+                    </td>
+
+                </tr>
+        </x-table>
 @endsection
+

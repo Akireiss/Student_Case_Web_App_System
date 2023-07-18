@@ -4,21 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Employee;
 use App\Models\Classroom;
-use App\Models\GradeLevel;
-use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ClassroomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-
     public function index()
     {
-        $classrooms = Classroom::with(['employee', 'section', 'gradeLevel'])->get();
+        $classrooms = Classroom::with(['employee'])->get();
         return view('admin.settings.classrooms.index', compact('classrooms'));
     }
 
@@ -28,9 +21,7 @@ class ClassroomController extends Controller
     public function create()
     {
         $employees = Employee::pluck('employees', 'id');
-        $grade_levels = GradeLevel::pluck('grade_level', 'id');
-        $sections = Section::pluck('name', 'id');
-        return view('admin.settings.classrooms.create', compact('employees', 'grade_levels', 'sections'));
+        return view('admin.settings.classrooms.create', compact('employees'));
     }
 
     /**
@@ -38,23 +29,21 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'grade_level_id' => 'required',
-            'section_id' => 'required',
-            'employee_id' => 'required',
-            'status' => 'required',
+        $classroom = Classroom::create([
+            'grade_level' => $request->input('grade_level'),
+            'section' => $request->input('section'),
+            'employee_id' => $request->input('employee_id'),
         ]);
 
-        Classroom::create($validatedData);
-
-        return redirect('admin/settings/classrooms')->with('message', 'Classroom created successfully');
+        return redirect('admin/settings/classrooms')->with('success', 'Classroom added successfully!');
     }
+
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        return 'sample';
     }
 
     /**
@@ -64,10 +53,8 @@ class ClassroomController extends Controller
     {
         $classroom = Classroom::findOrFail($id);
         $employees = Employee::pluck('employees', 'id');
-        $grade_levels = GradeLevel::pluck('grade_level', 'id');
-        $sections = Section::pluck('name', 'id');
 
-        return view('admin.settings.classrooms.edit', compact('classroom', 'employees', 'grade_levels', 'sections'));
+        return view('admin.settings.classrooms.edit', compact('classroom', 'employees'));
     }
 
 
@@ -91,11 +78,4 @@ class ClassroomController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
