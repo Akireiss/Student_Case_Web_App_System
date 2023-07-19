@@ -11,9 +11,9 @@
             <x-label>
                 Province
             </x-label>
-            <x-select class="form-control" id="city-select-birth" wire:model="selectedCityBirth">
-                @foreach($cities as $city)
-                    <option value="{{ $city->id }}">{{ $city->city }}</option>
+            <x-select class="form-control" id="city-select-birth" wire:model="selectedProvinceBirth">
+                @foreach($provinces as $province)
+                    <option value="{{ $province->id }}">{{ $province->province }}</option>
                 @endforeach
             </x-select>
         </div>

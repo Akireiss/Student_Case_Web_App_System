@@ -51,7 +51,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('student-profile', function () {
                 return view('admin.student-profile.index');
             });
-            Route::get('student-profile/add', [StudentsProfileController::class, 'add']); // Replace 'StudentsProfile' with the correct controller name
+            Route::get('student-profile/add', StudentsProfile::class);
         });
 
         Route::prefix('admin/settings')->group(function () {
@@ -72,7 +72,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             // Classrooms
             Route::get('classrooms', [ClassroomController::class, 'index']);
             Route::get('classroom/create', [ClassroomController::class, 'create']);
-            Route::get('classrooms/show', [ClassroomController::class, 'show']);
+            Route::get('classroom/{id}', [ClassroomController::class, 'show']);
             Route::post('classroom/store', [ClassroomController::class, 'store'])->name('admin.classroom.store');
 
             Route::get('classrooms/{id}/edit', [ClassroomController::class, 'edit']);

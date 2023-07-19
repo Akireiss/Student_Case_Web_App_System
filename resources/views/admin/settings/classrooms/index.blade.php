@@ -63,6 +63,9 @@ Classrooms
                 class="flex items-center justify-between px-1 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                 aria-label="Delete"
               >
+              <a href="{{ url('admin/settings/classroom/' . $classroom->id) }}">
+
+
                 <svg
                   class="w-5 h-5"
                   aria-hidden="true"
@@ -76,6 +79,7 @@ Classrooms
 
 
                 </svg>
+              </a>
               </button>
                 </div>
               </td>

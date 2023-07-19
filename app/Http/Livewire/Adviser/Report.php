@@ -37,13 +37,14 @@ class Report extends Component
     public function getSearchResults()
     {
         if (strlen($this->student_id) >= 3) {
-            return Students::where('first_name', 'like', '%' . $this->student_id . '%')
-                ->orWhere('last_name', 'like', '%' . $this->student_id . '%')
+            $searchTerm = '%' . strtolower($this->student_id) . '%';
+            return Students::whereRaw('LOWER(CONCAT(first_name, " ", last_name)) LIKE ?', [$searchTerm])
                 ->get(['id', 'first_name', 'last_name']);
         }
 
         return collect([]);
     }
+
 
     public function render()
     {
@@ -61,75 +62,76 @@ class Report extends Component
     }
 
     public function selectResult($result)
-{
-    $this->selectedResult = $result;
+    {
+        $this->selectedResult = $result;
 
-    // Fetch the student record based on the selected first name
-    $student = Students::with('anecdotal')->where('first_name', $this->selectedResult)->first();
+        // Fetch the student record based on the selected first name
+        $student = Students::with('anecdotal')->where('first_name', $this->selectedResult)->first();
 
-    if ($student) {
-        $this->selectedName = $student->first_name . ' ' . $student->last_name;
-        $this->student_id = $student->id; // Set the student_id with the ID of the selected student
-        // Fetch all reports for the selected student
-        $this->allReports = $student->anecdotal()->with('student')->get();
+        if ($student) {
+            $this->selectedName = $student->first_name . ' ' . $student->last_name;
+            $this->student_id = $student->id; // Set the student_id with the ID of the selected student
+            // Fetch all reports for the selected student
+            $this->allReports = $student->anecdotal()->with('student')->get();
+        }
     }
-}
-public function store()
-{
-    $this->validate([
-        'student_id' => 'required',
-        'minor_offenses_id' => 'nullable',
-        'grave_offenses_id' => 'nullable',
-        'gravity' => 'required',
-        'short_description' => 'required',
-        'observation' => 'required',
-        'desired' => 'required',
-        'outcome' => 'required',
-        'letter' => 'nullable|file|max:2048'
-    ], [
-        'student_id.required' => 'Please select a student.',
-    ]);
+    public function store()
+    {
+        $this->validate([
+            'student_id' => 'required',
+            'minor_offenses_id' => 'nullable',
+            'grave_offenses_id' => 'nullable',
+            'gravity' => 'required',
+            'short_description' => 'required',
+            'observation' => 'required',
+            'desired' => 'required',
+            'outcome' => 'required',
+            'letter' => 'nullable|file|max:2048'
+        ], [
+            'student_id.required' => 'Please select a student.',
+        ]);
 
-    if (!$this->student_id) {
-        session()->flash('error', 'Please select a student.');
-    }
-    $letterPath = null;
+        if (!$this->student_id) {
+            session()->flash('error', 'Please select a student.');
+        }
+        $letterPath = null;
 
-    if ($this->letter) {
-        $letterPath = $this->letter->store('letter');
-    }
-    $anecdotal = Anecdotal::create([
-        'student_id' => $this->student_id,
-        'minor_offense_id' => $this->minor_offenses_id,
-        'grave_offense_id' => $this->grave_offenses_id,
-        'gravity' => $this->gravity,
-        'short_description' => $this->short_description,
-        'observation' => $this->observation,
-        'desired' => $this->desired,
-        'outcome' => $this->outcome,
-        'letter' => $letterPath,
-    ]);
+        if ($this->letter) {
+            $letterPath = $this->letter->store('letter');
+        }
+        $anecdotal = Anecdotal::create([
+            'student_id' => $this->student_id,
+            'minor_offense_id' => $this->minor_offenses_id,
+            'grave_offense_id' => $this->grave_offenses_id,
+            'gravity' => $this->gravity,
+            'short_description' => $this->short_description,
+            'observation' => $this->observation,
+            'desired' => $this->desired,
+            'outcome' => $this->outcome,
+            'letter' => $letterPath,
+        ]);
 
 
         $anecdotal->actionsTaken()->create([
-            'actions' =>  $this->actions
+            'actions' => $this->actions
         ]);
 
 
-    $loggedInUserId = Auth::id();
+        $loggedInUserId = Auth::id();
 
-    if (!is_null($loggedInUserId)) {
-        $anecdotal->report()->create([
-            'user_id' => $loggedInUserId,
-        ]);
+        if (!is_null($loggedInUserId)) {
+            $anecdotal->report()->create([
+                'user_id' => $loggedInUserId,
+            ]);
+        }
+        $this->resetForm();
+        session()->flash('message', 'Successfully Added');
     }
-    $this->resetForm();
-    session()->flash('message', 'Successfully Added');
-}
 
-public function resetForm() {
+    public function resetForm()
+    {
         $this->student_id = '';
         $this->selectResult = null;
-}
+    }
 
 }

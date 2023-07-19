@@ -16,57 +16,63 @@
                     Edit Classroom
                 </h6>
 
-                <!-- Personal information form fields -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="w-full px-4">
-                        <div class="relative mb-3">
-                            <x-label>Grade Level</x-label>
-                            <x-select name="grade_level_id">
-                                @foreach ($grade_levels as $id => $grade_level)
-                                    <option value="{{ $id }}" {{ $classroom->grade_level_id == $id ? 'selected' : '' }}>
-                                        {{ $grade_level }}
-                                    </option>
-                                @endforeach
-                            </x-select>
-                        </div>
-                    </div>
+     <!-- Personal information form fields -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="w-full px-4">
+        <div class="relative mb-3">
+            {{-- Label --}}
+            <x-label>Grade Level</x-label>
+            {{-- Input Select --}}
+            <x-select name="grade_level">
+                <option value="7" {{ $classroom->grade_level == '7' ? 'selected' : '' }}>7</option>
+                <option value="8" {{ $classroom->grade_level == '8' ? 'selected' : '' }}>8</option>
+                <option value="9" {{ $classroom->grade_level == '9' ? 'selected' : '' }}>9</option>
+                <option value="10" {{ $classroom->grade_level == '10' ? 'selected' : '' }}>10</option>
+                <option value="11" {{ $classroom->grade_level == '11' ? 'selected' : '' }}>11</option>
+                <option value="12" {{ $classroom->grade_level == '12' ? 'selected' : '' }}>12</option>
+            </x-select>
+        </div>
+    </div>
 
-                    <div class="w-full px-4">
-                        <div class="relative mb-3">
-                            <x-label>Section</x-label>
-                            <x-select name="section_id">
-                                @foreach ($sections as $id => $section)
-                                    <option value="{{ $id }}" {{ $classroom->section_id == $id ? 'selected' : '' }}>
-                                        {{ $section }}
-                                    </option>
-                                @endforeach
-                            </x-select>
-                        </div>
-                    </div>
+    <div class="w-full px-4">
+        <div class="relative mb-3">
+            <x-label for="section">Section</x-label>
+            <x-select name="section" id="section" >
+                <option value="Jupiter" {{ $classroom->section == 'Jupiter' ? 'selected' : '' }}>Jupiter</option>
+                <option value="Akasya" {{ $classroom->section == 'Akasya' ? 'selected' : '' }}>Akasya</option>
+                <option value="Earth" {{ $classroom->section == 'Earth' ? 'selected' : '' }}>Earth</option>
+                <option value="Sun" {{ $classroom->section == 'Sun' ? 'selected' : '' }}>Sun</option>
+                <option value="Neptune" {{ $classroom->section == 'Neptune' ? 'selected' : '' }}>Neptune</option>
+                <option value="Pluto" {{ $classroom->section == 'Pluto' ? 'selected' : '' }}>Pluto</option>
+                <option value="Venus" {{ $classroom->section == 'Venus' ? 'selected' : '' }}>Venus</option>
+            </x-select>
+        </div>
+    </div>
 
-                    <div class="w-full px-4">
-                        <div class="relative mb-3">
-                            <x-label>Adviser</x-label>
-                            <x-select name="employee_id">
-                                @foreach ($employees as $id => $name)
-                                    <option value="{{ $id }}" {{ $classroom->employee_id == $id ? 'selected' : '' }}>
-                                        {{ $name }}
-                                    </option>
-                                @endforeach
-                            </x-select>
-                        </div>
-                    </div>
 
-                    <div class="w-full px-4">
-                        <div class="relative mb-3">
-                            <x-label>Status</x-label>
-                            <x-select name="status">
-                                <option value="0" {{ $classroom->status == 0 ? 'selected' : '' }}>Active</option>
-                                <option value="1" {{ $classroom->status == 1 ? 'selected' : '' }}>Inactive</option>
-                            </x-select>
-                        </div>
-                    </div>
-                </div>
+    <div class="w-full px-4">
+        <div class="relative mb-3">
+            <x-label>Adviser</x-label>
+            <x-select name="employee_id">
+                @foreach ($employees as $id => $name)
+                    <option value="{{ $id }}" {{ $classroom->employee_id == $id ? 'selected' : '' }}>
+                        {{ $name }}
+                    </option>
+                @endforeach
+            </x-select>
+        </div>
+    </div>
+
+    <div class="w-full px-4">
+        <div class="relative mb-3">
+            <x-label>Status</x-label>
+            <x-select name="status">
+                <option value="0" {{ $classroom->status == 0 ? 'selected' : '' }}>Active</option>
+                <option value="1" {{ $classroom->status == 1 ? 'selected' : '' }}>Inactive</option>
+            </x-select>
+        </div>
+    </div>
+</div>
 
                 <div class="flex justify-end">
                     <x-button type="submit">Update</x-button>

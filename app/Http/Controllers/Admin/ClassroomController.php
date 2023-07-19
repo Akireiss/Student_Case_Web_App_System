@@ -41,9 +41,11 @@ class ClassroomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        return 'sample';
+        $classroom = Classroom::findOrFail($id);
+        $employees = Employee::pluck('employees', 'id');
+      return view('admin.settings.classrooms.view', compact('classroom', 'employees'));
     }
 
     /**
