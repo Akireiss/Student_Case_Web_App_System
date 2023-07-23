@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('grade_level');
             $table->string('section');
             $table->unsignedBigInteger('employee_id');
+            $table->string('status')->default('0');
+            $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
         });

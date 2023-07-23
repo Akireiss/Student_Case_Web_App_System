@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('role')->default('0')->comment('0: User | 1: Admin |2:advise' );
             $table->unsignedBigInteger('classroom_id')->nullable()->comment('0: w/o advisee');
+            $table->string('status')->default('0')->nullable();
 
             $table->foreign('classroom_id')->references('id')->on('classrooms');
             $table->rememberToken();

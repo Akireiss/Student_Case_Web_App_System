@@ -26,7 +26,7 @@
             <div>
                 <!-- Back Button to show the Table -->
                 <x-form title="Add Students">
-                    <x-slot name="actions">
+                <x-slot name="actions">
                         <x-button x-on:click="showForm = false; showTable = true">
                             Back
                         </x-button>

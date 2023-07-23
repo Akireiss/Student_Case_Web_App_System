@@ -124,6 +124,7 @@ class Report extends Component
                 'user_id' => $loggedInUserId,
             ]);
         }
+
         $this->resetForm();
         session()->flash('message', 'Successfully Added');
     }

@@ -21,19 +21,25 @@ return new class extends Migration
             $table->string('sex');
             $table->date('birthdate');
             $table->string('contact');
-            //Address Here
+            $table->unsignedBigInteger('barangay_id');
+            $table->unsignedBigInteger('municipal_id');
+            $table->unsignedBigInteger('province_id');
+            $table->string('birth_place');
             $table->string('religion');
             $table->string('mother_tongue');
             $table->boolean('4ps');
+            $table->string('birth_order');
+            $table->string('no_of_siblings');
+
 
             $table->string('living_with');
             //Parent are currently: here
             $table->string('guardian_name');
-            $table->string('relationship');
+            $table->string('guardian_relationship');
             $table->string('guardian_contact');
-            $table->string('occupation')->nullable();
+            $table->string('guardian_occupation')->nullable();
             $table->string('guardian_age')->nullable();
-            //Guardian address here
+            $table->string('guardian_address')->nullable();
             //Education Background
             //Award Here
             $table->string('favorite_subject');
@@ -46,14 +52,15 @@ return new class extends Migration
             $table->decimal('bmi')->nullable();
             $table->string('disability');
             $table->string('food_allergy');
-
-
+            $table->string('status')->default('0');
 
 
 
 
             $table->foreign('student_id')->references('id')->on('students')->onDelete('set null');
-
+            $table->foreign('barangay_id')->references('id')->on('barangay')->onDelete('cascade');
+            $table->foreign('municipal_id')->references('id')->on('municipal')->onDelete('cascade');
+            $table->foreign('province_id')->references('id')->on('province')->onDelete('cascade');
             $table->timestamps();
         });
     }

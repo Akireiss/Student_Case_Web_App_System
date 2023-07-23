@@ -210,7 +210,7 @@
     <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
     <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
     <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
-
+    <script src="{{ asset('assets/js/livewire.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/main.js') }}"></script> --}}
 {{-- Ajax Here
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}

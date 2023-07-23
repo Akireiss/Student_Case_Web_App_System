@@ -10,7 +10,7 @@ class ActionsTaken extends Model
 {
     use HasFactory;
 
-    protected $table = 'action_taken';
+    protected $table = 'actions_taken';
 
     protected $fillable = [
       'anectodal_id',

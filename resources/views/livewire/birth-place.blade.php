@@ -1,10 +1,4 @@
 <div>
-
-    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
-        Place of Birth
-    </h6>
-
-
     <x-grid columns="3" gap="4" px="0" mt="0">
 
         <div class="relative mb-3 px-4">
@@ -17,7 +11,6 @@
                 @endforeach
             </x-select>
         </div>
-
 
 
         <div class="relative mb-3 px-4">

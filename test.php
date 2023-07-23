@@ -3,12 +3,11 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Profile;
+use App\Models\Students;
 use Livewire\Component;
 use App\Models\Barangay;
 use App\Models\Province;
-use App\Models\Students;
 use App\Models\Municipal;
-use Faker\Provider\sv_SE\Municipality;
 
 class StudentsProfile extends Component
 {
@@ -16,89 +15,60 @@ class StudentsProfile extends Component
     public $last_name;
     public $selectedResult;
     public $recentReports;
-    //profile
-    public $m_name, $suffix, $nickname, $age, $sex, $birthdate,
-    $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps,
-    $guardian_name, $relationship, $guardian_contact, $occupation, $guardian_address,
-    $guardian_age, $favorite_subject, $difficult_subject, $school_organization, $graduation_plan,
-    $height, $weight, $bmi;
-    //father
-    public $father_type, $father_name, $father_age, $father_occupation, $father_contact, $father_office_contact,
-    $father_monthly_income, $father_birth_place, $father_work_address;
-    //mother
-    public $mother_type, $mother_name, $mother_age, $mother_occupation, $mother_contact, $mother_office_contact,
-    $mother_monthly_income, $mother_birth_place, $mother_work_address;
-    public $medicines;
-    public $parent_statuses = [];
-    public $vitamins = [];
-    public $education = [];
-    public $operations = [];
-    public $accidents = [];
-    public $hasDisability = 'No'; //
-    public $disability;
-    public $hasFoodAllergy = 'No';
-    public $foodAllergy;
-    public $plans = [];
-    public $selectedCity;
+    public $selectedProvince;
     public $selectedMunicipality;
     public $selectedBarangay;
-    public $municipalities = []; // Initialize as empty array
+    public $municipalities = [];
     public $barangays = [];
-    public $rewards = [];
-    public $siblings = [
-        ['name' => '', 'age' => '', 'gradeSection' => ''],
-    ];
-    public $living_with = null;
 
-    public function updatedLivingWith($value)
+    //profile
+    public $m_name, $suffix, $nickname, $age, $sex, $birthdate,
+    $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps, $living_with,
+    $guardian_name, $relationship, $guardian_contact, $occupation,
+    $guardian_age, $favorite_subject, $difficult_subject, $school_organization, $graduation_plan,
+    $height, $weight, $bmi;
+
+    //parent
+    public $type, $parent_name, $parent_age, $parent_occupation, $parent_contact, $parent_office_contact,
+    $parent_monthly_income;
+
+    //award
+    public $award_name, $award_year;
+    //siblings
+    public $sibling_name, $sibling_age, $sibling_grade_section;
+    //status
+    public $parent_status;
+    //medicines
+    public $medicines;
+    //vitamins
+    public $vitamins;
+    //operations
+    public $operations;
+
+    public $plans;
+    public $hasDisability = 'No';
+    public $disability = '';
+    public $hasFoodAllergy = false;
+    public $foodAllergy = '';
+
+    public $education;
+    public $accidents;
+
+    //Birth
+    public $selectedProvinceBirth;
+    public $selectedMunicipalityBirth;
+    public $selectedBarangayBirth;
+
+
+    protected $listeners = ['birthDataUpdated' => 'handleBirthDataUpdated'];
+
+    public function handleBirthDataUpdated($data)
     {
-        // Set the other checkboxes to null when one is selected
-        if ($value === 'both-parents') {
-            $this->living_with = 'both-parents';
-        } elseif ($value === 'father-only') {
-            $this->living_with = 'father-only';
-        } elseif ($value === 'mother-only') {
-            $this->living_with = 'mother-only';
-        } elseif ($value === 'na') {
-            $this->living_with = 'na';
-        }
+        $this->selectedProvinceBirth = $data['provinceId'];
+        $this->selectedMunicipalityBirth = $data['municipalityId'];
+        $this->selectedBarangayBirth = $data['barangayId'];
     }
 
-    public function mount()
-    {
-
-        if (empty($this->rewards)) {
-            $this->rewards = [['award' => '', 'year' => '']];
-        }
-        // Check if there are existing siblings, if not, add an initial empty sibling
-        if (empty($this->siblings)) {
-            $this->siblings = [['name' => '', 'age' => '', 'gradeSection' => '']];
-        }
-    }
-
-    public function addSibling()
-    {
-        $this->siblings[] = ['name' => '', 'age' => '', 'gradeSection' => ''];
-    }
-
-    public function removeSibling($index)
-    {
-        unset($this->siblings[$index]);
-        $this->siblings = array_values($this->siblings); // Re-index the array after removing a sibling
-    }
-
-    public function updatedSelectedCity($cityId)
-    {
-        $this->municipalities = Municipality::where('city_id', $cityId)->get();
-        $this->selectedMunicipality = null;
-        $this->selectedBarangay = null;
-        $this->barangays = [];
-    }
-    public function updatedSelectedMunicipality($municipalityId)
-    {
-        $this->barangays = Barangay::where('municipality_id', $municipalityId)->get();
-        $this->selectedBarangay = null;
-    }
 
     public function getSearchResults()
     {
@@ -110,6 +80,7 @@ class StudentsProfile extends Component
 
         return collect([]);
     }
+
     public function selectResult($result)
     {
         $this->selectedResult = $result;
@@ -124,14 +95,15 @@ class StudentsProfile extends Component
             $this->allReports = $student->anecdotal()->with('student')->get();
         }
     }
+
     public function render()
     {
-        $provinces = Province::all();
         $searchResults = $this->getSearchResults();
-        return view('livewire.admin.students-profile', compact('searchResults', 'provinces'))
+        return view('livewire.admin.students-profile', compact('searchResults'))
             ->extends('layouts.dashboard.index')
             ->section('content');
     }
+
     public function save()
     {
         $combinedDisability = $this->hasDisability === 'Yes' ? 'Yes: ' . $this->disability : 'No';
@@ -200,7 +172,27 @@ class StudentsProfile extends Component
             'operations' => $this->operations
         ]);
 
-        $this->redirect('dashboard');
+        if ($this->type === 'birth') {
+            $profile->birth_address()->create([
+                'barangay_id' => $this->selectedBarangayBirth,
+                'municipality_id' => $this->selectedMunicipalityBirth,
+                'province_id' => $this->selectedProvinceBirth,
+            ]);
+        } elseif ($this->type === 'address') {
+            $profile->address()->create([
+                'barangay_id' => $this->selectedBarangayBirth,
+                'municipality_id' => $this->selectedMunicipalityBirth,
+                'province_id' => $this->selectedProvinceBirth,
+            ]);
+        } elseif ($this->type === 'work_address') {
+            $profile->work_address()->create([
+                'barangay_id' => $this->selectedBarangayBirth,
+                'municipality_id' => $this->selectedMunicipalityBirth,
+                'province_id' => $this->selectedProvinceBirth,
+            ]);
+        }
+
+
 
     }
 

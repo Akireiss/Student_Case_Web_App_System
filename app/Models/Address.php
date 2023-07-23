@@ -10,6 +10,12 @@ class Address extends Model
     use HasFactory;
 
     protected $table = 'address';
-
-    protected $fillable = [];
+    protected $fillable = [
+       // 'type',
+        'profile_id',
+        'parent_id',
+        'barangay_id',
+        'municipal_id',
+        'barangay_id'
+    ];
 }

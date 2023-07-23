@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Livewire\BirthPlace;
 use App\Models\Award;
 use App\Models\Parent;
 use App\Models\Sibling;
@@ -18,7 +19,40 @@ class Profile extends Model
 
     protected $table = 'profile';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'student_id',
+        'm_name',
+        'suffix',
+        'nickname',
+        'age',
+        'birthdate',
+        'contact',
+        'barangay_id',
+        'munucipal_id',
+        'province_id',
+        'birth_place',
+        'religion',
+        'mother_tongue',
+        '4ps',
+        'birth_order',
+        'no_of_siblings',
+        'guardian_name',
+        'guardian_relationship',
+        'guardian_contact',
+        'guardian_occupation',
+        'guardian_age',
+        'guardian_address',
+        'favorite_subject',
+        'difficult_subject',
+        'school_organization',
+        'graduation_plan',
+        'height',
+        'weight',
+        'bmi',
+        'disability',
+        'food_allergy',
+        'status'
+    ];
 
 
     public function parents() {
@@ -46,5 +80,10 @@ class Profile extends Model
     public function operations() {
         return $this->hasMany(Operation::class);
     }
+
+    public function address() {
+        return $this->hasMany(Address::class);
+    }
+
 
 }

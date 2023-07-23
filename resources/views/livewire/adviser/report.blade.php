@@ -100,7 +100,6 @@
                                 Minor Offenses
                             </x-label>
                             <x-select name="minor_offense_id" wire:model="minor_offenses_id">
-                                <option value="" selected disabled hidden>Select an option</option>
                                 @if ($minorOffenses)
                                     @foreach ($minorOffenses as $id => $minorOffense)
                                         <option value="{{ $id }}">{{ $minorOffense }} {{ $id }}</option>
@@ -237,7 +236,7 @@
                             {{ $selectedResult }}
                         </td>
                         <td class="px-4 py-3">
-                            {{ $report->status }}
+                            {{ $report->case_status }}
                         </td>
                         <td class="px-4 py-3">
                             {{ $report->created_at }}

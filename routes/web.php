@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Adviser\StudentReportController;
-use App\Http\Livewire\Admin\StudentsProfile;
-use App\Http\Livewire\Adviser\StudentProfile;
+use App\Http\Livewire\Admin\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Livewire\Admin\StudentsProfile;
+use App\Http\Livewire\Adviser\StudentProfile;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\StudentController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\OffensesController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Adviser\DashboardController;
+use App\Http\Controllers\Adviser\StudentReportController;
 use App\Http\Controllers\Adviser\AdvisorDashboardController;
 
 /*
@@ -129,3 +130,5 @@ Route::get('admin/add-acc', [UserController::class, 'index']);
 Route::get('test', function () {
     return view('test');
 });
+
+

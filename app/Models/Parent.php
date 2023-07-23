@@ -10,5 +10,17 @@ class Parent extends Model
     use HasFactory;
     protected $table = 'parents';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'profile_id',
+        'type',
+        'parent_name',
+        'parent_age',
+        'parent_occupation',
+        'parent_contact',
+        'parent_office_contact',
+        'parent_birth_place',
+        'parent_work_address',
+        'parent_monthly_income',
+
+    ];
 }
