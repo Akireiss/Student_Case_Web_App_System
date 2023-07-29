@@ -10,5 +10,9 @@ class Award extends Model
     use HasFactory;
     protected $table = 'awards';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'profile_id',
+        'award_name',
+        'award_year'
+    ];
 }

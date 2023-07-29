@@ -10,5 +10,8 @@ class Medicine extends Model
     use HasFactory;
     protected $table = 'medicines';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'profile_id',
+        'medicine'
+    ];
 }

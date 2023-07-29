@@ -10,5 +10,8 @@ class Accident extends Model
     use HasFactory;
     protected $table = 'accidents';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'profile_id',
+        'accidents'
+    ];
 }

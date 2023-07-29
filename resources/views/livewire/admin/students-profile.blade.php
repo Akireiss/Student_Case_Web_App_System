@@ -12,7 +12,7 @@
                 Personal Information
             </h6>
 
-            <form wire:submit="save">
+            <form wire:submit.prevent="save">
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
 
@@ -87,7 +87,7 @@
                             <x-label>
                                 Age
                             </x-label>
-                            <x-input wire:model="age" />
+                            <x-input wire:model="age"  type="number"/>
                         </div>
 
                     </div>
@@ -155,18 +155,6 @@
 
 
 
-
-
-                    <div class="relative mb-3 px-4">
-                        <x-label>
-                            Mother Tongue
-                        </x-label>
-                        <x-input wire:model="mother_tongue" />
-                    </div>
-
-
-
-
                     <div class="relative mb-3 px-4">
                         <x-label>
                             4Ps Receipient:
@@ -177,13 +165,27 @@
                         </x-select>
                     </div>
 
+
+
+                            <div class="relative mb-3 px-4">
+                        <x-label>
+                            Mother Tongue
+                        </x-label>
+                        <x-input wire:model="mother_tongue" />
+                    </div>
+
+
+                    <div class="relative mb-3 px-4">
+                        <x-label>
+                           Place of birth
+                        </x-label>
+                    <x-input wire:model="birth_place" />
+
+                    </div>
+
                 </x-grid>
 
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
-                    Place of Birth
-                </h6>
 
-                <x-input wire:model="birth_place" />
 
                 <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500 ">
                     Address
@@ -236,12 +238,9 @@
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
-                    <div class="relative mb-3 px-4 hidden ">
-                        <x-label>
-                            Type
-                        </x-label>
-                        <x-input wire:model="father_type" value="father" />
-                    </div>
+
+                 <input type="hidden" value="father" wire:model="father_type">
+
 
 
                     <div class="relative mb-3 px-4">
@@ -257,7 +256,7 @@
                         <x-label>
                             Age
                         </x-label>
-                        <x-input wire:model="father__age" />
+                        <x-input wire:model="father_age" type="number" />
                     </div>
 
 
@@ -268,12 +267,13 @@
                         <x-input wire:model="father_occupation" />
                     </div>
 
-                    <div class="relative mb-3 px-4">
+                    <div x-data="{ phoneNumber: '' }" class="relative mb-3 px-4">
                         <x-label>
-                            Contaact No.
+                            Contact No.
                         </x-label>
-                        <x-input wire:model="father_contact" />
+                        <x-input wire:model="father_contact" type="number"  />
                     </div>
+
 
                     <div class="relative mb-3 px-4">
                         <x-label>
@@ -302,7 +302,7 @@
                     <div class="relative mb-3 px-4">
                         Place of Work
 
-                        <x-input wire:model="father_work_place" />
+                        <x-input wire:model="father_work_address" />
                     </div>
                 </x-grid>
 
@@ -312,12 +312,7 @@
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
-                    <div class="relative mb-3 px-4 hidden">
-                        <x-label>
-                            Type
-                        </x-label>
-                        <x-input wire:model="mother_type" value="mother"  />
-                    </div>
+                    <input type="hidden" value="mother" wire:model="mother_type">
 
                     <div class="relative mb-3 px-4">
                         <x-label>
@@ -330,7 +325,7 @@
                         <x-label>
                             Age
                         </x-label>
-                        <x-input wire:model="mother_age" />
+                        <x-input wire:model="mother_age"  type="number" />
                     </div>
 
 
@@ -374,7 +369,7 @@
                     <div class="relative mb-3 px-4">
                         Place of Work
 
-                        <x-input wire:model="mother_work_place" />
+                        <x-input wire:model="mother_work_address" />
                     </div>
                 </x-grid>
 
@@ -408,7 +403,7 @@
                                 <x-label>
                                     Age
                                 </x-label>
-                                <x-input x-model="sibling.age" />
+                                <x-input x-model="sibling.age"   type="number"/>
                             </div>
 
                             <div class="relative mb-3 px-4">
@@ -547,17 +542,20 @@
                         <x-label>
                             Age
                         </x-label>
-                        <x-input wire:model="guardian_age" />
+                        <x-input  type="number" wire:model="guardian_age" />
+                    </div>
+
+
+
+                    <div class="relative mb-3 px-4">
+                        <x-label>
+                        Addresss
+                        </x-label>
+                        <x-input wire:model="guardian_address" />
                     </div>
 
                 </x-grid>
 
-
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500 ">
-                    Address
-                </h6>
-
-                <x-input wire:model="guardian_address" />
 
 
 
@@ -622,7 +620,7 @@
                                 <x-label>
                                     Year Achieved
                                 </x-label>
-                                <x-input x-model="reward.age" />
+                                <x-input x-model="reward.year" type="number"/>
                             </div>
                         </x-grid>
                     </template>
@@ -698,21 +696,21 @@
                         <x-label>
                             Height
                         </x-label>
-                        <x-input wire:model="height" />
+                        <x-input wire:model="height" type="number" />
                     </div>
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Weight
                         </x-label>
-                        <x-input wire:model="weight" />
+                        <x-input wire:model="weight"  type="number"/>
                     </div>
 
-                    <div class="relative mb-3 px-4">
+                    <div class="relative mb-3 px-4" >
                         <x-label>
                             BMI
                         </x-label>
-                        <x-input wire:model="bmi" />
+                        <x-input wire:model="bmi"  type="number"/>
                     </div>
 
 
@@ -758,6 +756,23 @@
 
 
                 </x-grid>
+
+                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+                   Medicine taken in
+                </h6>
+
+                <x-grid columns="3" gap="4" px="0" mt="0">
+                    @for ($i = 1; $i <= 3; $i++)
+                        <div class="relative mb-3 px-4">
+                            <x-label for="medicine_{{ $i }}">
+                                {{ $i }}
+                            </x-label>
+                            <x-input wire:model="medicines.{{ $i }}" id="medicine_{{ $i }}" />
+                        </div>
+                    @endfor
+                </x-grid>
+
+
 
                 <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
                     Vitamins taken in

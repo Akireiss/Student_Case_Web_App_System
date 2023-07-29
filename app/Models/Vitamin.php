@@ -10,5 +10,8 @@ class Vitamin extends Model
     use HasFactory;
     protected $table = 'vitamins';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'profile_id',
+        'vitamins'
+    ];
 }

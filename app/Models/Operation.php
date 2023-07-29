@@ -10,5 +10,8 @@ class Operation extends Model
     use HasFactory;
     protected $table = 'operations';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'profile_id',
+        'operations'
+    ];
 }

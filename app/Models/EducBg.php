@@ -10,5 +10,9 @@ class EducBg extends Model
     use HasFactory;
     protected $table = 'education_background';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'school_name',
+        'school_year',
+        'grade_section'
+    ];
 }

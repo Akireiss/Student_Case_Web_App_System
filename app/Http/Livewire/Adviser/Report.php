@@ -16,14 +16,14 @@ use Livewire\WithFileUploads;
 
 class Report extends Component
 {
-    public $student_id; //full name
-    public $selectedResult;
-    public $recentReports; // Holds the recent reports for the selected student
-
+    public $studentName = '';
+    public $studentId = null;
+    public $isOpen = false;
+    public $showError = false;
+    public $cases = [];
     public $actions;
-    // Test Here
-    use WithFileUploads;
 
+    use WithFileUploads;
     public $minor_offenses_id;
     public $grave_offenses_id;
     public $gravity;
@@ -34,73 +34,61 @@ class Report extends Component
     public $letter;
 
     public $user_id;
-    public function getSearchResults()
-    {
-        if (strlen($this->student_id) >= 3) {
-            $searchTerm = '%' . strtolower($this->student_id) . '%';
-            return Students::whereRaw('LOWER(CONCAT(first_name, " ", last_name)) LIKE ?', [$searchTerm])
-                ->get(['id', 'first_name', 'last_name']);
-        }
 
-        return collect([]);
+    public function mount()
+    {
+        $this->showError = false;
     }
 
-
-    public function render()
+    public function selectStudent($id, $name)
     {
-        $searchResults = $this->getSearchResults();
-        $offenses = Offenses::whereIn('category', [0, 1])->get();
 
-        $minorOffenses = $offenses->where('category', 0)->pluck('offenses', 'id');
-        $graveOffenses = $offenses->where('category', 1)->pluck('offenses', 'id');
-
-        return view('livewire.adviser.report', [
-            'searchResults' => $searchResults,
-            'minorOffenses' => $minorOffenses,
-            'graveOffenses' => $graveOffenses
-        ]);
-    }
-
-    public function selectResult($result)
-    {
-        $this->selectedResult = $result;
-
-        // Fetch the student record based on the selected first name
-        $student = Students::with('anecdotal')->where('first_name', $this->selectedResult)->first();
-
+        $this->studentId = $id;
+        $this->studentName = $name;
+        //  $this->last_name = Students::find($id)->last_name;
+        $this->isOpen = false;
+        $student = Students::find($id);
         if ($student) {
-            $this->selectedName = $student->first_name . ' ' . $student->last_name;
-            $this->student_id = $student->id; // Set the student_id with the ID of the selected student
-            // Fetch all reports for the selected student
-            $this->allReports = $student->anecdotal()->with('student')->get();
+            $this->cases = $student->anecdotal;
+        } else {
+            $this->cases = [];
+        }
+
+    }
+
+    public function toggleDropdown()
+    {
+        $this->isOpen = !$this->isOpen; // Toggle the dropdown visibility.
+    }
+
+    public function updatedStudentName($value)
+    {
+        if (empty($value)) {
+            $this->resetForm();
         }
     }
+
+    public function updated()
+    {
+        $this->showError = false;
+    }
+
     public function store()
     {
-        $this->validate([
-            'student_id' => 'required',
-            'minor_offenses_id' => 'nullable',
-            'grave_offenses_id' => 'nullable',
-            'gravity' => 'required',
-            'short_description' => 'required',
-            'observation' => 'required',
-            'desired' => 'required',
-            'outcome' => 'required',
-            'letter' => 'nullable|file|max:2048'
-        ], [
-            'student_id.required' => 'Please select a student.',
-        ]);
-
-        if (!$this->student_id) {
-            session()->flash('error', 'Please select a student.');
+        if (empty($this->studentId)) {
+            $this->addError('studentId', 'Please select a student');
+            $this->showError = true;
+            return;
         }
+
         $letterPath = null;
 
         if ($this->letter) {
             $letterPath = $this->letter->store('letter');
         }
+
         $anecdotal = Anecdotal::create([
-            'student_id' => $this->student_id,
+            'student_id' => $this->studentId,
             'minor_offense_id' => $this->minor_offenses_id,
             'grave_offense_id' => $this->grave_offenses_id,
             'gravity' => $this->gravity,
@@ -111,11 +99,9 @@ class Report extends Component
             'letter' => $letterPath,
         ]);
 
-
         $anecdotal->actionsTaken()->create([
             'actions' => $this->actions
         ]);
-
 
         $loggedInUserId = Auth::id();
 
@@ -124,15 +110,38 @@ class Report extends Component
                 'user_id' => $loggedInUserId,
             ]);
         }
-
         $this->resetForm();
         session()->flash('message', 'Successfully Added');
     }
 
     public function resetForm()
     {
-        $this->student_id = '';
-        $this->selectResult = null;
+        $this->studentName = '';
+        $this->studentId = '';
     }
+
+    public function render()
+    {
+        $students = [];
+
+        if (strlen($this->studentName) >= 3) {
+            $students = Students::where(function ($query) {
+                $query->where('first_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
+            })->get();
+        }
+
+        $offenses = Offenses::whereIn('category', [0, 1])->get();
+        $minorOffenses = $offenses->where('category', 0)->pluck('offenses', 'id');
+        $graveOffenses = $offenses->where('category', 1)->pluck('offenses', 'id');
+
+        return view('livewire.adviser.report', [
+            'minorOffenses' => $minorOffenses,
+            'graveOffenses' => $graveOffenses,
+            'students' => $students
+        ]);
+    }
+
 
 }

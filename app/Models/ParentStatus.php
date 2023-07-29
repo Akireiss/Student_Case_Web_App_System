@@ -10,5 +10,9 @@ class ParentStatus extends Model
     use HasFactory;
     protected $table = 'parent_status';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'profile_id',
+        'parent_status'
+
+    ];
 }

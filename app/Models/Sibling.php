@@ -11,5 +11,10 @@ class Sibling extends Model
 
     protected $table = 'siblings';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'profile_id',
+        'sibling_name',
+        'sibling_age',
+        'sibling_grade_section'
+    ];
 }

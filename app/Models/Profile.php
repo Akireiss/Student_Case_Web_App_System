@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use App\Http\Livewire\BirthPlace;
 use App\Models\Award;
-use App\Models\Parent;
+use App\Models\EducBg;
 use App\Models\Sibling;
 use App\Models\Vitamin;
+use App\Models\Accident;
 use App\Models\Medicine;
 use App\Models\Operation;
 use App\Models\ParentStatus;
+use App\Http\Livewire\BirthPlace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -25,10 +26,11 @@ class Profile extends Model
         'suffix',
         'nickname',
         'age',
+        'sex',
         'birthdate',
         'contact',
         'barangay_id',
-        'munucipal_id',
+        'municipal_id',
         'province_id',
         'birth_place',
         'religion',
@@ -36,6 +38,7 @@ class Profile extends Model
         '4ps',
         'birth_order',
         'no_of_siblings',
+        'living_with',
         'guardian_name',
         'guardian_relationship',
         'guardian_contact',
@@ -55,8 +58,8 @@ class Profile extends Model
     ];
 
 
-    public function parents() {
-        return $this->hasMany(Parent::class);
+    public function family() {
+        return $this->hasMany(Family::class);
     }
 
     public function siblings() {
@@ -81,9 +84,17 @@ class Profile extends Model
         return $this->hasMany(Operation::class);
     }
 
-    public function address() {
-        return $this->hasMany(Address::class);
+    public function education() {
+        return $this->hasMany(EducBg::class);
     }
+
+    public function accidents() {
+        return $this->hasMany(Accident::class);
+    }
+
+    // public function address() {
+    //     return $this->hasMany(Address::class);
+    // }
 
 
 }
