@@ -73,6 +73,7 @@ class Report extends Component
         $this->showError = false;
     }
 
+
     public function store()
     {
         if (empty($this->studentId)) {
@@ -84,7 +85,7 @@ class Report extends Component
         $letterPath = null;
 
         if ($this->letter) {
-            $letterPath = $this->letter->store('letter');
+            $letterPath = $this->letter->store('uploads', 'public');
         }
 
         $anecdotal = Anecdotal::create([

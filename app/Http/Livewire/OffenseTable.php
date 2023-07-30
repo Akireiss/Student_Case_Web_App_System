@@ -95,7 +95,7 @@ final class OffenseTable extends PowerGridComponent
 
             ->addColumn('description')
             ->addColumn('status')
-            ->addColumn('created_at_formatted', fn (Offenses $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('created_at_formatted', fn (Offenses $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
     /*

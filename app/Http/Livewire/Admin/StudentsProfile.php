@@ -11,11 +11,13 @@ use App\Models\Municipal;
 
 class StudentsProfile extends Component
 {
-    public $student_id;
-    public $last_name;
-    public $selectedResult;
-    public $recentReports;
-    //profile
+    public $showError = false;
+    public $cases = [];
+    public $last_name = '';
+    public $studentName = '';
+    public $studentId = null;
+    public $isOpen = false;
+
     public $m_name, $suffix, $nickname, $age, $sex, $birthdate, $birth_place,
     $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps,
     $guardian_name, $relationship, $guardian_contact, $occupation, $guardian_address,
@@ -33,11 +35,7 @@ class StudentsProfile extends Component
     public $education = [];
     public $operations = [];
     public $accidents = [];
-    // public $hasDisability = 'No';
-    // public $disability;
-    // public $hasFoodAllergy = 'No';
-    // public $foodAllergy;
-    public $hasDisability; // Set default value to 'No'
+    public $hasDisability;
     public $disability;
     public $hasFoodAllergy;
     public $foodAllergy;
@@ -52,6 +50,10 @@ class StudentsProfile extends Component
         ['name' => '', 'age' => '', 'gradeSection' => ''],
     ];
     public $living_with = null;
+
+    protected $listeners = [
+        'resetName'
+    ];
 
     public function updatedLivingWith($value)
     {
@@ -70,6 +72,7 @@ class StudentsProfile extends Component
     public function mount()
     {
 
+        $this->showError = false;
 
         if (empty($this->rewards)) {
             $this->rewards = [['award' => '', 'year' => '']];
@@ -103,43 +106,76 @@ class StudentsProfile extends Component
         $this->barangays = Barangay::where('municipal_id', $municipalityId)->get();
         $this->selectedBarangay = null;
     }
-
-    public function getSearchResults()
+    public function selectStudent($id, $name)
     {
-        if (strlen($this->student_id) >= 3) {
-            $searchTerm = '%' . strtolower($this->student_id) . '%';
-            return Students::whereRaw('LOWER(CONCAT(first_name, " ", last_name)) LIKE ?', [$searchTerm])
-                ->get(['id', 'first_name', 'last_name']);
-        }
 
-        return collect([]);
-    }
-    public function selectResult($result)
-    {
-        $this->selectedResult = $result;
+        $this->studentId = $id;
+        $this->studentName = $name;
+        //for the last name
+        $this->last_name = Students::find($id)->last_name;
+        $this->isOpen = false;
 
-        // Fetch the student record based on the selected first name
-        $student = Students::with('anecdotal')->where('first_name', $this->selectedResult)->first();
-
+        $student = Students::find($id);
         if ($student) {
-            $this->selectedName = $student->first_name . ' ' . $student->last_name;
-            $this->student_id = $student->id; // Set the student_id with the ID of the selected student
-            // Fetch all reports for the selected student
-            $this->allReports = $student->anecdotal()->with('student')->get();
+            $this->cases = $student->anecdotal;
+        } else {
+            $this->cases = [];
+        }
+
+    }
+
+    public function toggleDropdown()
+    {
+        $this->isOpen = !$this->isOpen; // Toggle the dropdown visibility.
+    }
+
+    public function updatedStudentName($value)
+    {
+        if (empty($value)) {
+            $this->resetName();
         }
     }
+    public function updated()
+    {
+        $this->showError = false;
+    }
+
     public function render()
     {
+
+        $students = [];
+
+        if (strlen($this->studentName) >= 3) {
+            $students = Students::where(function ($query) {
+                $query->where('first_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
+            })->get();
+        }
+
         $provinces = Province::all();
-        $searchResults = $this->getSearchResults();
-        return view('livewire.admin.students-profile', compact('searchResults', 'provinces'))
+        return view('livewire.admin.students-profile', compact( 'provinces', 'students'))
             ->extends('layouts.dashboard.index')
             ->section('content');
     }
     public function save()
     {
+        if (empty($this->studentId)) {
+            $this->addError('studentId', 'Please select a student.');
+            $this->showError = true; // Set the showError variable to true to show the error message.
+            return;
+        }
+
+        $selectedStudent = Students::find($this->studentId);
+
+        if (!$selectedStudent) {
+            $this->addError('studentId', 'Invalid student selected.');
+            $this->showError = true; // Set the showError variable to true to show the error message.
+            return;
+        }
+
         $profile = Profile::create([
-            'student_id' => $this->student_id,
+            'student_id' => $this->studentId,
             'm_name' => $this->m_name,
             'suffix' => $this->suffix,
             'nickname' => $this->nickname,
@@ -251,7 +287,86 @@ class StudentsProfile extends Component
                 'accidents' => $accident,
             ]);
         }
+        $this->resetForm();
 
+        session()->flash('message', 'Succesfully Save');
+
+    }
+
+    public function resetName() {
+        $this->studentName = '';
+        $this->studentId = '';
+    }
+
+    private function resetForm()
+    {
+        $this->studentName = '';
+        $this->studentId = '';
+        $this->last_name = '';
+        $this->suffix = '';
+        $this->nickname = '';
+        $this->age = '';
+        $this->sex       = '';
+        $this->birthdate = '';
+        $this->contact = '';
+        $this->religion = '';
+        $this->mother_tongue = '';
+        $this->four_ps  = '';
+        $this->birth_order = '';
+        $this->number_of_siblings = '';
+        $this->selectedBarangay = '';
+        $this->selectedCity = '';
+        $this->selectedMunicipality = '';
+        $this->selectedBarangay = '';
+        $this->birth_place = '';
+        $this->living_with = '';
+        $this->guardian_name = '';
+        $this->relationship = '';
+        $this->guardian_contact = '';
+        $this->occupation = '';
+        $this->guardian_age = '';
+        $this->favorite_subject = '';
+        $this->difficult_subject  = '';
+        $this->school_organization = '';
+        $this->plans = '';
+        $this->height = '';
+        $this->weight = '';
+        $this->bmi = '';
+        $this->disability = '';
+        $this->foodAllergy  = '';
+        $this->hasDisability = '';
+        $this->hasFoodAllergy = '';
+        $this->father_type = '';
+        $this->father_name = '';
+        $this->father_age = '';
+        $this->father_occupation = '';
+        $this->father_contact = '';
+        $this->father_contact = '';
+        $this->father_office_contact = '';
+        $this->father_birth_place  = '';
+        $this->father_work_address = '';
+        $this->father_monthly_income = '';
+        $this->mother_type = '';
+        $this->mother_name = '';
+        $this->mother_age = '';
+        $this->mother_occupation = '';
+        $this->mother_contact = '';
+        $this->mother_contact = '';
+        $this->mother_office_contact = '';
+        $this->mother_birth_place  = '';
+        $this->mother_work_address = '';
+        $this->mother_monthly_income = '';
+        $this->siblings= '';
+        $this->parent_statuses = [];
+        $this->medicines = [];
+        $this->vitamins = [];
+        $this->education = [];
+        $this->operations = [];
+        $this->accidents = [];
+        $this->plans = [];
+        $this->municipalities = [];
+        $this->barangays = [];
+        $this->rewards = [];
 
 
     }

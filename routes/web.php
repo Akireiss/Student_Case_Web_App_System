@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\StudentProfileController;
 use App\Http\Livewire\Admin\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -49,9 +50,12 @@ Route::middleware(['auth', 'role'])->group(function () {
 
         Route::prefix('admin')->group(function () {
             // Students Profile Area
-            Route::get('student-profile', function () {
-                return view('admin.student-profile.index');
-            });
+            //students-profile here
+            Route::get('student-profile', [StudentProfileController::class, 'index']);
+
+            Route::get('student-profile/{profile}/view', [StudentProfileController::class, 'show'])->name('admin.profile.edit');
+
+
             Route::get('student-profile/add', StudentsProfile::class);
         });
 
@@ -121,6 +125,7 @@ Route::get('dashboard', \App\Http\Livewire\Admin\Dashboard::class);
 
 Route::get('admin/reports', [ReportController::class, 'index']);
 Route::get('admin/reports/add', [ReportController::class, 'create']);
+Route::get('admin/reports/{anecdotal}/view', [ReportController::class, 'view'])->name('anecdotal.edit');
 
 
 Route::get('admin/update-acc', [UserController::class, 'update_acc']);

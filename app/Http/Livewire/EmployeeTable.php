@@ -95,7 +95,7 @@ final class EmployeeTable extends PowerGridComponent
 
             ->addColumn('refference_number')
             ->addColumn('status')
-            ->addColumn('created_at_formatted', fn (Employee $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('created_at_formatted', fn (Employee $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
     /*

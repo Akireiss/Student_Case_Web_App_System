@@ -1,5 +1,6 @@
 <div>
-
+    <x-validation/>
+    <x-flashalert/>
     <x-form title="Add Student Profile">
 
         <x-slot name="actions">
@@ -17,48 +18,75 @@
 
 
                     <div class="w-full px-4">
-                        <div x-data="{ open: false, selected: '' }" class="relative">
+
+
+
+
+                        <div x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
+                            <x-label for="studentName">
+                              First Name
+                            </x-label>
                             <div class="relative">
-                                <x-label>
-                                    Full Name
-                                </x-label>
-                                <x-input x-on:input.debounce.300ms="open = true" x-model="selected"
-                                    wire:model.debounce.100ms="student_id" type="text" id="input"
-                                    placeholder="Type to search..." :value="$student_id" required />
-
-
-                            </div>
-                            <div x-show="open && selected.length >= 3" x-on:click.away="open = false"
-                                class="absolute z-50 w-full mt-2 bg-white rounded-md shadow-lg max-h-60 overflow-y-auto">
-                                @if ($searchResults && $searchResults->count() > 0)
+                                <x-input
+                                    wire:model.debounce.300ms="studentName"
+                                    @focus="isOpen = true"
+                                    @click.away="isOpen = false"
+                                    @keydown.escape="isOpen = false"
+                                    @keydown="isOpen = true"
+                                    type="text"
+                                    id="studentName"
+                                    name="studentName"
+                                    placeholder="Start typing to search."
+                                />
+                                @error('studentId')
+    <p class="text-red-500 text-sm">{{ $message }}</p>
+    @enderror
+                                <span
+                                    x-show="studentName !== ''"
+                                    @click="studentName = ''; isOpen = false"
+                                    class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold"
+                                >
+                                    &times;
+                                </span>
+                                @if ($studentName && count($students) > 0)
                                     <ul
-                                        class="rounded-md py-1 text-base leading-6 shadow-xs overflow-au text-black to focus:outline-none sm:text-sm sm:leading-5">
-                                        @foreach ($searchResults as $result)
-                                            <li x-on:click="selected = '{{ $result['first_name'] }} {{ $result['last_name'] }}'; open = false; $wire.selectResult('{{ $result['first_name'] }}')"
-                                                class="cursor-pointer text-black select-none relative py-2 pl-3 pr-9 {{ $selectedResult == $result['first_name'] ? 'bg-blue-100' : 'hover:bg-gray-100' }}">
-                                                <span x-text="selected === '{{ $result['first_name'] }}' ? '✓' : ''"
-                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600"></span>
-                                                {{ $result['first_name'] }} {{ $result['last_name'] }}
+                                        class="bg-white border border-gray-300 mt-2 rounded-md w-full max-h-48 overflow-auto absolute z-10"
+                                        x-show="isOpen"
+                                    >
+                                        @foreach ($students as $student)
+                                            <li
+                                                class="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                                                wire:click="selectStudent('{{ $student->id }}', '{{ $student->first_name }} ')"
+                                                x-on:click="isOpen = false"
+                                            >
+                                                {{ $student->first_name }} {{ $student->last_name }}
                                             </li>
                                         @endforeach
                                     </ul>
-                                @else
-                                    <div class="p-3">No results found.</div>
                                 @endif
                             </div>
+                            <input type="hidden" name="studentId" wire:model="studentId">
                         </div>
-
 
                     </div>
 
 
                     <div class="relative mb-3 px-4">
                         <x-label>
-                            Middle Name
+                            Last Name
                         </x-label>
-                        <x-input wire:model="" wire:model="m_name" />
+                        <x-input wire:model="last_name" readonly/>
                     </div>
 
+
+
+
+                    <div class="relative mb-3 px-4">
+                        <x-label>
+                            Middle Name
+                        </x-label>
+                        <x-input wire:model="m_name" />
+                    </div>
 
 
 

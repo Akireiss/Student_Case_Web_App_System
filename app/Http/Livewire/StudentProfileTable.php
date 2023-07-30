@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Students;
+use App\Models\Profile;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
@@ -10,7 +10,7 @@ use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
 use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
-final class StudentTable extends PowerGridComponent
+final class StudentProfileTable extends PowerGridComponent
 {
     use ActionButton;
     use WithExport;
@@ -48,12 +48,25 @@ final class StudentTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Students>
+     * @return Builder<\App\Models\Profile>
      */
-    public function datasource(): Builder
-    {
-        return Students::query();
-    }
+
+
+
+public function datasource(): Builder
+{
+    return Profile::query()
+        ->join('students', 'profile.student_id', '=', 'students.id')
+        ->join('barangay', 'profile.barangay_id', '=', 'barangay.id')
+        ->join('municipal', 'profile.municipal_id', '=', 'municipal.id')
+        ->select(
+            'profile.*',
+            'students.first_name as student_first_name',
+            'students.last_name as student_last_name',
+            'barangay.barangay as barangay',
+            'municipal.municipality as municipal'
+        );
+}
 
     /*
     |--------------------------------------------------------------------------
@@ -87,17 +100,17 @@ final class StudentTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('id')
-            ->addColumn('classroom_id')
-            ->addColumn('first_name')
+            ->addColumn('student_first_name')
+            ->addColumn('student_last_name')
+            ->addColumn('sex')
 
            /** Example of custom column using a closure **/
-            ->addColumn('first_name_lower', fn (Students $model) => strtolower(e($model->first_name)))
+            ->addColumn('sex_lower', fn (Profile $model) => strtolower(e($model->sex)))
 
-            ->addColumn('last_name')
-            ->addColumn('lrn')
-            ->addColumn('status')
-            ->addColumn('created_at_formatted', fn (Students $model) => Carbon::parse($model->created_at)->format('F j, Y'));
+            ->addColumn('contact')
+            ->addColumn('barangay')
+            ->addColumn('municipal')
+            ->addColumn('status');
     }
 
     /*
@@ -117,22 +130,23 @@ final class StudentTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Classroom id', 'classroom_id'),
-            Column::make('First name', 'first_name')
+            Column::make('First Name', 'student_first_name')
+            ->sortable(),
+            Column::make('Last Name', 'student_last_name')
+            ->sortable(),
+            Column::make('Sex', 'sex')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Last name', 'last_name')
+            Column::make('Contact', 'contact')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Lrn', 'lrn'),
+            Column::make('Barangay', 'barangay'),
+            Column::make('Municipal', 'municipal'),
             Column::make('Status', 'status')
-                ->toggleable(),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
 
         ];
     }
@@ -145,10 +159,7 @@ final class StudentTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('first_name')->operators(['contains']),
-            Filter::inputText('last_name')->operators(['contains']),
-            Filter::boolean('status'),
-            Filter::datetimepicker('created_at'),
+            Filter::inputText('sex')->operators(['contains']),
         ];
     }
 
@@ -161,30 +172,30 @@ final class StudentTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Student Action Buttons.
+     * PowerGrid Profile Action Buttons.
      *
      * @return array<int, Button>
      */
 
-    /*
+
     public function actions(): array
     {
        return [
            Button::make('edit', 'Edit')
                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('student.edit', function(\App\Models\Admin\Student $model) {
-                    return $model->id;
+               ->route('admin.profile.edit', function(\App\Models\Profile $model) {
+                    return['profile' =>$model->id];
                }),
 
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('student.destroy', function(\App\Models\Admin\Student $model) {
-                    return $model->id;
-               })
-               ->method('delete')
+        //    Button::make('destroy', 'Delete')
+        //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+        //        ->route('profile.destroy', function(\App\Models\Profile $model) {
+        //             return $model->id;
+        //        })
+        //        ->method('delete')
         ];
     }
-    */
+
 
     /*
     |--------------------------------------------------------------------------
@@ -195,7 +206,7 @@ final class StudentTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Student Action Rules.
+     * PowerGrid Profile Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -207,7 +218,7 @@ final class StudentTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($student) => $student->id === 1)
+                ->when(fn($profile) => $profile->id === 1)
                 ->hide(),
         ];
     }

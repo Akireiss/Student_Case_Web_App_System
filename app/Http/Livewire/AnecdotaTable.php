@@ -29,7 +29,7 @@ final class AnecdotaTable extends PowerGridComponent
         return [
             Exportable::make('export')
                 ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+                ->type(Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -52,7 +52,12 @@ final class AnecdotaTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Anecdotal::query();
+        return Anecdotal::query()
+        ->join('students', 'anecdotal.student_id', '=', 'students.id')
+        ->select(
+            'anecdotal.*',
+            'students.first_name as student_first_name',
+            'students.last_name as student_last_name');
     }
 
     /*
@@ -99,10 +104,10 @@ final class AnecdotaTable extends PowerGridComponent
             ->addColumn('minor_offense', fn (Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'N/A')
 
             ->addColumn('gravity_lower', fn (Anecdotal $model) => strtolower(e($model->gravity)))
-            ->addColumn('created_at_formatted', fn (Anecdotal $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('status', function (Anecdotal $model) {
+            ->addColumn('created_at_formatted', fn (Anecdotal $model) => Carbon::parse($model->created_at)->format('F j, Y'))
+            ->addColumn('case_status', function (Anecdotal $model) {
                 $statusText = $model->status_text;
-                $textColorClass = $model->status === 2 ? 'text-red-500' : '';
+                $textColorClass = $model->case_status === 2 ? 'text-red-500' : '';
 
                 return "<span class='$textColorClass'>$statusText</span>";
             });
@@ -133,7 +138,7 @@ final class AnecdotaTable extends PowerGridComponent
             Column::make('Minor Offense', 'minor_offense'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
             Column::make('Created at', 'created_at_formatted', 'created_at')->sortable(),
-            Column::make('Status', 'status')->sortable()
+            Column::make('Status', 'case_status')->sortable()
         ];
     }
 
@@ -167,25 +172,25 @@ final class AnecdotaTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
+
     public function actions(): array
     {
        return [
-           Button::make('edit', 'Edit')
+           Button::make('view', 'View')
                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
                ->route('anecdotal.edit', function(\App\Models\Anecdotal $model) {
-                    return $model->id;
+                return ['anecdotal' => $model->id];
                }),
 
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('anecdotal.destroy', function(\App\Models\Anecdotal $model) {
-                    return $model->id;
-               })
-               ->method('delete')
+        //    Button::make('destroy', 'Delete')
+        //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+        //        ->route('anecdotal.destroy', function(\App\Models\Anecdotal $model) {
+        //             return $model->id;
+        //        })
+        //        ->method('delete')
         ];
     }
-    */
+
 
     /*
     |--------------------------------------------------------------------------

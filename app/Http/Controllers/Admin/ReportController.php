@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\Anecdotal;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -22,43 +23,12 @@ class ReportController extends Controller
         return view('admin.reports.add');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function view(Anecdotal $anecdotal) {
+        $cases = Anecdotal::where('student_id', $anecdotal->student_id)
+                        ->latest('created_at')
+                        ->get();
+        return view('admin.reports.view', compact('anecdotal', 'cases'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

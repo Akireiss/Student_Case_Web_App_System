@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Offenses;
 use App\Models\Students;
 use App\Models\ActionsTaken;
@@ -69,7 +70,7 @@ class Anecdotal extends Model
             3 => 'Resolved',
         ];
 
-        return $statusCodes[$this->attributes['status']] ?? '';
+        return $statusCodes[$this->attributes['case_status']] ?? '';
     }
 
 

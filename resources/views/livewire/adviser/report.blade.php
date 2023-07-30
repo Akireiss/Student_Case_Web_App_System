@@ -16,7 +16,7 @@
                         <div class="flex-auto px-6 lg:px-10 py-10 pt-0"> --}}
 
 
-            <form wire:submit.prevent="store">
+            <form wire:submit.prevent="store" enctype="multipart/form-data" >
                 @csrf
                 <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                     Report Student
@@ -84,6 +84,7 @@
                             Minor Offenses
                         </x-label>
                         <x-select name="minor_offense_id" wire:model="minor_offenses_id">
+                            <option value="" >Choose from below</option>
                             @if ($minorOffenses)
                                 @foreach ($minorOffenses as $id => $minorOffense)
                                     <option value="{{ $id }}">{{ $minorOffense }} {{ $id }}</option>
@@ -98,13 +99,14 @@
                             Grave Offenses
                         </x-label>
                         <x-select name="grave_offense_id" wire:model="grave_offenses_id">
+                            <option value="">Choose from below</option>
                             @if ($graveOffenses)
                                 @foreach ($graveOffenses as $id => $graveOffense)
-                                    <option value="{{ $id }}">{{ $graveOffense }} {{ $id }}
-                                    </option>
+                                    <option value="{{ $id }}">{{ $graveOffense }} {{ $id }}</option>
                                 @endforeach
                             @endif
                         </x-select>
+
                     </div>
                 </x-grid>
 

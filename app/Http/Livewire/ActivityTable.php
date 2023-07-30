@@ -95,7 +95,7 @@ final class ActivityTable extends PowerGridComponent
 
             ->addColumn('description')
             ->addColumn('event')
-            ->addColumn('created_at_formatted', fn (Activity $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('created_at_formatted', fn (Activity $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
     /*

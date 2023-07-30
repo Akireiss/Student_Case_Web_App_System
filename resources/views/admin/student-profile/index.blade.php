@@ -13,6 +13,10 @@
     </div>
   </div>
 
+<div>
+    <livewire:student-profile-table/>
+  </div>
+
 @endsection
 
 
