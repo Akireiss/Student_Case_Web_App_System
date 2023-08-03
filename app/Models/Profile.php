@@ -8,6 +8,7 @@ use App\Models\Sibling;
 use App\Models\Vitamin;
 use App\Models\Accident;
 use App\Models\Medicine;
+use App\Models\Students;
 use App\Models\Operation;
 use App\Models\ParentStatus;
 use App\Http\Livewire\BirthPlace;
@@ -56,6 +57,13 @@ class Profile extends Model
         'food_allergy',
         'status'
     ];
+
+
+    public function student()
+    {
+        return $this->belongsTo(Students::class, 'student_id');
+    }
+
 
 
     public function family() {

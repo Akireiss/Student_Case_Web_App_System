@@ -39,10 +39,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
-// Group for admin access
-// Group for admin access
 Route::middleware(['auth', 'role'])->group(function () {
 
     // Admin Access
@@ -52,10 +48,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             // Students Profile Area
             //students-profile here
             Route::get('student-profile', [StudentProfileController::class, 'index']);
-
             Route::get('student-profile/{profile}/view', [StudentProfileController::class, 'show'])->name('admin.profile.edit');
-
-
             Route::get('student-profile/add', StudentsProfile::class);
         });
 
@@ -82,11 +75,7 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             Route::get('classrooms/{id}/edit', [ClassroomController::class, 'edit']);
             Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
-
-            // Temporary as the backend is still in development
-            Route::get('audit-trail', function () {
-                return view('admin.settings.audit-trail.index');
-            });
+            Route::get('audit-trail', function () { return view('admin.settings.audit-trail.index');});
 
             // Students Area
             Route::get('students', [StudentController::class, 'index']);
@@ -117,11 +106,6 @@ Route::middleware(['auth', 'role'])->group(function () {
 //});
 
 Route::get('dashboard', \App\Http\Livewire\Admin\Dashboard::class);
-
-
-
-
-
 
 Route::get('admin/reports', [ReportController::class, 'index']);
 Route::get('admin/reports/add', [ReportController::class, 'create']);

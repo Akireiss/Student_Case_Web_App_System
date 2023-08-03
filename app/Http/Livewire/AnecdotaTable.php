@@ -104,7 +104,10 @@ final class AnecdotaTable extends PowerGridComponent
             ->addColumn('minor_offense', fn (Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'N/A')
 
             ->addColumn('gravity_lower', fn (Anecdotal $model) => strtolower(e($model->gravity)))
-            ->addColumn('created_at_formatted', fn (Anecdotal $model) => Carbon::parse($model->created_at)->format('F j, Y'))
+            ->addColumn('created_at_formatted', function (Anecdotal $model) {
+                return Carbon::parse($model->created_at)->format('F j, Y');
+            })
+
             ->addColumn('case_status', function (Anecdotal $model) {
                 $statusText = $model->status_text;
                 $textColorClass = $model->case_status === 2 ? 'text-red-500' : '';

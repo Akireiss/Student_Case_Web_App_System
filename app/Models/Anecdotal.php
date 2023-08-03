@@ -7,6 +7,7 @@ use App\Models\Offenses;
 use App\Models\Students;
 use App\Models\ActionsTaken;
 use Spatie\Activitylog\LogOptions;
+use App\Http\Livewire\Admin\Student;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,11 +32,11 @@ class Anecdotal extends Model
         'status'
     ];
 
-
     public function student()
     {
         return $this->belongsTo(Students::class, 'student_id');
     }
+
 
     public function report()
     {

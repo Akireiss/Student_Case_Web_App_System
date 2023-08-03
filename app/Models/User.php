@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Report;
+use App\Models\Classroom;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Notifications\Notifiable;
@@ -28,7 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'classroom_id'
     ];
 
     /**
@@ -65,5 +67,18 @@ class User extends Authenticatable
     {
         return LogOptions::defaults()
             ->logOnly(['name', 'email', 'password']);
+    }
+
+    // public function student() {
+    //     return $this->hasMany(Students::class, 'classroom_id', 'classroom_id');
+    // }
+
+//for adviser
+    public function students() {
+        return $this->hasMany(Students::class, 'classroom_id', 'classroom_id');
+    }
+
+    public function classroom() {
+        return $this->belongsTo(Classroom::class, 'classroom_id');
     }
 }
