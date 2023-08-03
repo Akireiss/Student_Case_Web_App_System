@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\StudentProfileController;
-use App\Http\Livewire\Admin\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Admin\StudentsProfile;
 use App\Http\Livewire\Adviser\StudentProfile;
 use App\Http\Controllers\Admin\UserController;
@@ -13,8 +10,8 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\OffensesController;
 use App\Http\Controllers\Admin\ClassroomController;
-use App\Http\Controllers\Adviser\DashboardController;
 use App\Http\Controllers\Adviser\StudentReportController;
+use App\Http\Controllers\Adviser\StudentProfileController;
 use App\Http\Controllers\Adviser\AdvisorDashboardController;
 
 /*
@@ -91,10 +88,12 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('report/student', [StudentReportController::class, 'index']);
             Route::post('report/student', [StudentReportController::class, 'store']);
 
-            Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
 
+            Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
             // Livewire
             Route::get('students-profile', StudentProfile::class);
+            Route::get('student-profile/{id}/view', [StudentProfileController::class, 'show']);
+
         });
     });
 });

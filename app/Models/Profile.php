@@ -7,8 +7,10 @@ use App\Models\EducBg;
 use App\Models\Sibling;
 use App\Models\Vitamin;
 use App\Models\Accident;
+use App\Models\Barangay;
 use App\Models\Medicine;
 use App\Models\Students;
+use App\Models\Municipal;
 use App\Models\Operation;
 use App\Models\ParentStatus;
 use App\Http\Livewire\BirthPlace;
@@ -66,43 +68,58 @@ class Profile extends Model
 
 
 
-    public function family() {
+    public function family()
+    {
         return $this->hasMany(Family::class);
     }
 
-    public function siblings() {
+    public function siblings()
+    {
         return $this->hasMany(Sibling::class);
     }
-    public function parent_status() {
+    public function parent_status()
+    {
         return $this->hasMany(ParentStatus::class);
     }
-    public function awards() {
+    public function awards()
+    {
         return $this->hasMany(Award::class);
     }
 
-    public function vitamins() {
+    public function vitamins()
+    {
         return $this->hasMany(Vitamin::class);
     }
 
-    public function medicines() {
+    public function medicines()
+    {
         return $this->hasMany(Medicine::class);
     }
 
-    public function operations() {
+    public function operations()
+    {
         return $this->hasMany(Operation::class);
     }
 
-    public function education() {
+    public function education()
+    {
         return $this->hasMany(EducBg::class);
     }
 
-    public function accidents() {
+    public function accidents()
+    {
         return $this->hasMany(Accident::class);
     }
 
-    // public function address() {
-    //     return $this->hasMany(Address::class);
-    // }
-
+    //Address
+    public function barangay() {
+        return $this->belongsTo(Barangay::class);
+    }
+    public function municipal() {
+        return $this->belongsTo(Municipal::class);
+    }
+    public function province() {
+        return $this->belongsTo(Province::class);
+    }
 
 }
