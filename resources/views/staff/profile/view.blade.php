@@ -135,7 +135,7 @@
                         <x-label>
                             4Ps Receipient:
                         </x-label>
-                        <x-input disabled value="{{ $profile->4ps}}" />
+                        <x-input disabled value="" />
                     </div>
 
 
@@ -197,20 +197,21 @@
                     Father
                 </h6>
 
-
-
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
 
+                    @foreach ($profile->family as $familyMember)
+                    @if ($familyMember->type === 'father')
+
                     <input type="hidden" value="father">
-
-
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Name
                         </x-label>
-                        <x-input disabled value="" />
+                        <x-input disabled
+                        value="{{ $familyMember->parent_name ?? 'No Data' }}"
+                        />
                     </div>
 
 
@@ -219,7 +220,7 @@
                         <x-label>
                             Age
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $familyMember->parent_age ?? 'No Data' }}" />
                     </div>
 
 
@@ -227,14 +228,14 @@
                         <x-label>
                             Occupation
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $familyMember->parent_occupation ?? 'No Data' }}" />
                     </div>
 
                     <div x-data="{ phoneNumber: '' }" class="relative mb-3 px-4">
                         <x-label>
                             Contact No.
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $familyMember->parent_contact ?? 'No Data' }}" />
                     </div>
 
 
@@ -242,38 +243,45 @@
                         <x-label>
                             Office Contact No.
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled vavalue="{{ $familyMember->parent_office_contact ?? 'No Data' }}" />
                     </div>
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Monthly Income
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $familyMember->parent_monthly_income ?? 'No Data' }}" />
                     </div>
 
-                </x-grid>
-
-
-                <x-grid columns="2" gap="4" px="0" mt="0">
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Place of Birth
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled
+                        value="{{ $familyMember->parent_birthplace ?? 'No Data' }}"
+                         />
                     </div>
                     <div class="relative mb-3 px-4">
                         Place of Work
 
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled
+                        value="{{ $familyMember->parent_work_address ?? 'No Data' }}"
+                         />
                     </div>
+                    @endif
+                    @endforeach
                 </x-grid>
+
+
+
 
                 <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
                     Mother
                 </h6>
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
+                    @foreach ($profile->family as $familyMember)
+                    @if ($familyMember->type === 'mother')
 
                     <input type="hidden" value="mother">
 
@@ -281,14 +289,18 @@
                         <x-label>
                             Name
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled
+                        value="{{ $familyMember->parent_name ?? 'No Data' }}"
+                        />
                     </div>
+
+
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Age
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $familyMember->parent_age ?? 'No Data' }}" />
                     </div>
 
 
@@ -296,75 +308,78 @@
                         <x-label>
                             Occupation
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $familyMember->parent_occupation ?? 'No Data' }}" />
                     </div>
 
-                    <div class="relative mb-3 px-4">
+                    <div x-data="{ phoneNumber: '' }" class="relative mb-3 px-4">
                         <x-label>
-                            Contaact No.
+                            Contact No.
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $familyMember->parent_contact ?? 'No Data' }}" />
                     </div>
+
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Office Contact No.
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled vavalue="{{ $familyMember->parent_office_contact ?? 'No Data' }}" />
                     </div>
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Monthly Income
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $familyMember->parent_monthly_income ?? 'No Data' }}" />
                     </div>
 
-                </x-grid>
-
-                <x-grid columns="2" gap="4" px="0" mt="0">
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Place of Birth
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled
+                        value="{{ $familyMember->parent_birthplace ?? 'No Data' }}"
+                         />
                     </div>
                     <div class="relative mb-3 px-4">
                         Place of Work
 
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled
+                        value="{{ $familyMember->parent_work_address ?? 'No Data' }}"
+                         />
                     </div>
+
+                    @endif
+                    @endforeach
                 </x-grid>
 
 
-                {{-- //need loop here --}}
-                <div>
 
+                <div>
                     <template x-for="(sibling, index) in siblings" :key="index">
                         <x-grid columns="3" gap="4" px="0" mt="0">
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Name
                                 </x-label>
-                                <x-input disabled value="{{ $profile->}}" />
+                                <x-input disabled :value="sibling.sibling_name" />
                             </div>
-
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Age
                                 </x-label>
-                                <x-input disabled value="{{ $profile->}}" type="number" />
+                                <x-input disabled :value="sibling.sibling_age" type="number" />
                             </div>
-
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Grade and Section
                                 </x-label>
-                                <x-input disabled value="{{ $profile->}}" />
+                                <x-input disabled :value="sibling.sibling_grade_section" />
                             </div>
                         </x-grid>
                     </template>
                 </div>
+
 
 
 
@@ -375,12 +390,11 @@
                         You are currently living with:
                     </h6>
                     <x-grid columns="1 md:grid-cols-4" gap="4" px="0" mt="0">
+
                         <div class="relative mb-3 px-4">
-                            <x-checkbox
-                                name="living-with
-                                    />
+                            <x-checkbox checked/>
                                 <x-label class="inline-block"
-                                for="living-with" value="Both Parents" />
+                                for="living-with">{{ $profile->living_with }}</x-label>
                         </div>
                     </x-grid>
                 </div>
@@ -388,18 +402,21 @@
 
 
                 <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
-                    Parent are currently: (check which applies below)
+                    Parent statuses are currently: (check which applies below)
                 </h6>
                 <x-grid columns="3" gap="4" px="0" mt="0">
-
-                    <div class="relative mb-3 px-4">
-                        <x-checkbox />
-                        <x-label class="inline-block">
-                            together
-                        </x-label>
-                    </div>
-
+                    @foreach($profile->parent_status as $status)
+                        <div class="relative mb-3 px-4">
+                            <input type="checkbox"
+                            name="status[]" value="{{ $status->id }}"
+                             {{ $status->parent_status ? 'checked' : '' }}>
+                            <x-label class="inline-block">
+                                {{ $status->parent_status }}
+                            </x-label>
+                        </div>
+                    @endforeach
                 </x-grid>
+
 
 
 
@@ -452,54 +469,62 @@
 
 
 
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
-                    Educational Background
-                </h6>
+                <div>
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+                        Educational Background
+                    </h6>
 
+                    @if($profile->education->isNotEmpty())
+                        @foreach($profile->education as $education)
+                            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                                Grade Level: {{ $education->calculateGradeLevel() }}
+                            </h6>
 
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
-                    Grade
-                </h6>
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    <div class="relative mb-3 px-4">
-                        <x-label for="name">Name of school</x-label>
-                        <x-input disabled value="{{ $profile->}}" id="name" />
-                    </div>
+                            <x-grid columns="3" gap="4" px="0" mt="0">
+                                <div class="relative mb-3 px-4">
+                                    <x-label for="name">Name of school</x-label>
+                                    <x-input disabled value="{{ $education->school_name }}" id="name" />
+                                </div>
 
-                    <div class="relative mb-3 px-4">
-                        <x-label for="section">Section</x-label>
-                        <x-input disabled value="{{ $profile->}}" id="section" />
-                    </div>
+                                <div class="relative mb-3 px-4">
+                                    <x-label for="section">Section</x-label>
+                                    <x-input disabled value="{{ $education->grade_section }}" id="section" />
+                                </div>
 
-                    <div class="relative mb-3 px-4">
-                        <x-label for="school_year">School Year</x-label>
-                        <x-input disabled value="{{ $profile->}}" id="school_year" />
-                    </div>
-                </x-grid>
+                                <div class="relative mb-3 px-4">
+                                    <x-label for="school_year">School Year</x-label>
+                                    <x-input disabled value="{{ $education->school_year }}" id="school_year" />
+                                </div>
+                            </x-grid>
+                        @endforeach
+                    @else
+                        <p>No educational background found.</p>
+                    @endif
+                </div>
+
 
 
 
                 <div>
-
-                    <template>
-                        <x-grid columns="2" gap="4" px="0" mt="0"
-                            x-show="index === 0 || rewards.length > 1">
+                    <template x-for="(award, index) in @json($profile->awards)" :key="index">
+                        <x-grid columns="2" gap="4" px="0" mt="0" x-show="index === 0 || @json($profile->awards).length > 1">
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Name of Award
                                 </x-label>
-                                <x-input disabled value="{{ $profile->}}" x-model="reward.name" />
+                                <x-input disabled :value="award.award_name" x-model="award.name" />
                             </div>
 
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Year Achieved
                                 </x-label>
-                                <x-input disabled value="{{ $profile->}}" x-model="reward.year" type="number" />
+                                <x-input disabled :value="award.award_year" x-model="award.year" type="number" />
                             </div>
                         </x-grid>
                     </template>
                 </div>
+
 
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
@@ -508,21 +533,21 @@
                         <x-label>
                             What is your favorite subject/s:
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $profile->favorite_subject}}" />
                     </div>
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             What subject do you find difficult
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $profile->difficult_subject}}" />
                     </div>
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             What school organizations are you afiliated?
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $profile->school_organization}}" />
                     </div>
                 </x-grid>
 
@@ -532,29 +557,10 @@
                     </h6>
                     <x-grid columns="3" gap="4" px="0" mt="0">
                         <div class="relative mb-3 px-4">
-                            <input type="radio" />
-                            <x-label class="inline-block">Go to College</x-label>
+                            <input type="checkbox" checked/>
+                            <x-label class="inline-block">{{ $profile->graduation_plan}}</x-label>
                         </div>
-                        <div class="relative mb-3 px-4">
-                            <input type="radio" />
-                            <x-label class="inline-block">Work as a skilled worker</x-label>
-                        </div>
-                        <div class="relative mb-3 px-4">
-                            <input type="radio" />
-                            <x-label class="inline-block">Pursue TESDA certificates</x-label>
-                        </div>
-                        <div class="relative mb-3 px-4">
-                            <input type="radio" />
-                            <x-label class="inline-block">Engage in Business</x-label>
-                        </div>
-                        <div class="relative mb-3 px-4">
-                            <input type="radio" />
-                            <x-label class="inline-block">Work to help parents</x-label>
-                        </div>
-                        <div class="relative mb-3 px-4">
-                            <input type="radio" />
-                            <x-label class="inline-block">Undecided</x-label>
-                        </div>
+
                     </x-grid>
                 </div>
 
@@ -571,21 +577,21 @@
                         <x-label>
                             Height
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $profile->height}}" />
                     </div>
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Weight
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $profile->weight}}" />
                     </div>
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             BMI
                         </x-label>
-                        <x-input disabled value="{{ $profile->}}" />
+                        <x-input disabled value="{{ $profile->bmi}}" />
                     </div>
 
 
@@ -594,35 +600,23 @@
                             <x-label>
                                 Do you have a disability?
                             </x-label>
-                            <x-input disabled value="{{ $profile->}}" />
+                            <x-input disabled value="{{ $profile->dissability}}" />
                         </div>
 
-                        <div class="relative mb-3 px-4">
-                            <x-label>
-                                If yes, what is it?
-                            </x-label>
-                            <x-input disabled value="{{ $profile->}}" />
-                        </div>
+
 
                         <div class="relative mb-3 px-4">
                             <x-label>
                                 Do you have a food allergy?
                             </x-label>
-                            <x-input disabled value="{{ $profile->}}" />
+                            <x-input disabled value="{{ $profile->food_allergy}}" />
                         </div>
 
-                        <div class="relative mb-3 px-4">
-                            <x-label>
-                                If yes, what is your food allergy?
-                            </x-label>
-                            <x-input disabled value="{{ $profile->}}" />
-                        </div>
+
                     </div>
 
-
-
-
                 </x-grid>
+
 
                 <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
                     Medicine taken in

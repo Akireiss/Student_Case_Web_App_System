@@ -21,3 +21,5 @@ class StudentProfileController extends Controller
     }
 
 }
+
+
