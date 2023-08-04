@@ -32,16 +32,18 @@ class Anecdotal extends Model
         'status'
     ];
 
-    public function student()
-    {
-        return $this->belongsTo(Students::class, 'student_id');
-    }
-
 
     public function report()
     {
         return $this->hasMany(Report::class, 'anecdotal_id');
     }
+
+
+    public function student()
+    {
+        return $this->belongsTo(Students::class, 'student_id');
+    }
+
     public function Minoroffenses()
     {
         return $this->belongsTo(Offenses::class, 'minor_offense_id');
@@ -65,8 +67,8 @@ class Anecdotal extends Model
     public function getStatusTextAttribute()
     {
         $statusCodes = [
-            0 => 'Active',
-            1 => 'Inactive',
+            0 => 'Pending',
+            1 => 'In Process',
             2 => 'Pending',
             3 => 'Resolved',
         ];
@@ -74,17 +76,5 @@ class Anecdotal extends Model
         return $statusCodes[$this->attributes['case_status']] ?? '';
     }
 
-
-    public static function status()
-    {
-        return collect(
-            [
-                ['code' => 0,  'label' => 'Active'],
-                ['code' => 1,  'label' => 'Inactive'],
-                ['code' => 2,  'label' => 'Pending'],
-                ['code' => 3,  'label' => 'Resolved'],
-            ]
-        );
-    }
 
 }

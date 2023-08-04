@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Adviser\ReportHistoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\StudentsProfile;
@@ -72,7 +73,8 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             Route::get('classrooms/{id}/edit', [ClassroomController::class, 'edit']);
             Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
-            Route::get('audit-trail', function () { return view('admin.settings.audit-trail.index');});
+            Route::get('audit-trail', function () {
+                return view('admin.settings.audit-trail.index'); });
 
             // Students Area
             Route::get('students', [StudentController::class, 'index']);
@@ -87,12 +89,13 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('dashboard', [AdvisorDashboardController::class, 'index']);
             Route::get('report/student', [StudentReportController::class, 'index']);
             Route::post('report/student', [StudentReportController::class, 'store']);
-
-
             Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
-            // Livewire
+            // Student Profile
             Route::get('students-profile', StudentProfile::class);
             Route::get('student-profile/{id}/view', [StudentProfileController::class, 'show']);
+            //History
+            Route::get('report/history', [ReportHistoryController::class, 'index']);
+            Route::get('report/history/{id}/view', [ReportHistoryController::class, 'show']);
 
         });
     });
@@ -118,5 +121,3 @@ Route::get('admin/add-acc', [UserController::class, 'index']);
 Route::get('test', function () {
     return view('test');
 });
-
-

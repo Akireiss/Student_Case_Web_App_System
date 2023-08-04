@@ -91,7 +91,8 @@
                         <x-label>
                             Birthdate
                         </x-label>
-                        <x-input disabled value="{{ $profile->birthdate}}" type="date" />
+                        <x-input disabled value="{{ date('F d Y', strtotime($profile->birthdate)) }}" />
+
                     </div>
 
 
@@ -118,7 +119,7 @@
                         <x-label>
                             Number of Siblings
                         </x-label>
-                        <x-input disabled value="{{ $profile->number_of_siblings}}" />
+                        <x-input disabled value="{{ $profile->no_of_siblings}}" />
                     </div>
 
 
@@ -135,7 +136,7 @@
                         <x-label>
                             4Ps Receipient:
                         </x-label>
-                        <x-input disabled value="" />
+                        <x-input disabled value="4ps" />
                     </div>
 
 
@@ -356,30 +357,37 @@
 
 
                 <div>
-                    <template x-for="(sibling, index) in siblings" :key="index">
-                        <x-grid columns="3" gap="4" px="0" mt="0">
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Name
-                                </x-label>
-                                <x-input disabled :value="sibling.sibling_name" />
-                            </div>
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Age
-                                </x-label>
-                                <x-input disabled :value="sibling.sibling_age" type="number" />
-                            </div>
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Grade and Section
-                                </x-label>
-                                <x-input disabled :value="sibling.sibling_grade_section" />
-                            </div>
-                        </x-grid>
-                    </template>
-                </div>
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+                        Siblings Information
+                    </h6>
 
+                    @if($profile->siblings->isNotEmpty())
+                        @foreach($profile->siblings as $sibling)
+                            <x-grid columns="3" gap="4" px="0" mt="0">
+                                <div class="relative mb-3 px-4">
+                                    <x-label for="name">
+                                        Name
+                                    </x-label>
+                                    <x-input disabled :value="$sibling->sibling_name" />
+                                </div>
+                                <div class="relative mb-3 px-4">
+                                    <x-label for="age">
+                                        Age
+                                    </x-label>
+                                    <x-input disabled :value="$sibling->sibling_age" type="number" />
+                                </div>
+                                <div class="relative mb-3 px-4">
+                                    <x-label for="grade_section">
+                                        Grade and Section
+                                    </x-label>
+                                    <x-input disabled :value="$sibling->sibling_grade_section" />
+                                </div>
+                            </x-grid>
+                        @endforeach
+                    @else
+                        <p>No sibling information found.</p>
+                    @endif
+                </div>
 
 
 
@@ -402,7 +410,7 @@
 
 
                 <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
-                    Parent statuses are currently: (check which applies below)
+                    Parent status are currently: (check which applies below)
                 </h6>
                 <x-grid columns="3" gap="4" px="0" mt="0">
                     @foreach($profile->parent_status as $status)
@@ -462,7 +470,7 @@
                         <x-label>
                             Addresss
                         </x-label>
-                        <x-input disabled value="{{ $profile->guardian_address}}" />
+                        <x-input disabled value="{{ $profile->guardian_addresss}}" />
                     </div>
 
                 </x-grid>
@@ -483,17 +491,17 @@
                             <x-grid columns="3" gap="4" px="0" mt="0">
                                 <div class="relative mb-3 px-4">
                                     <x-label for="name">Name of school</x-label>
-                                    <x-input disabled value="{{ $education->school_name }}" id="name" />
+                                    <x-input disabled :value="$education->school_name" id="name" />
                                 </div>
 
                                 <div class="relative mb-3 px-4">
                                     <x-label for="section">Section</x-label>
-                                    <x-input disabled value="{{ $education->grade_section }}" id="section" />
+                                    <x-input disabled :value="$education->grade_section" id="section" />
                                 </div>
 
                                 <div class="relative mb-3 px-4">
                                     <x-label for="school_year">School Year</x-label>
-                                    <x-input disabled value="{{ $education->school_year }}" id="school_year" />
+                                    <x-input disabled :value="$education->school_year" id="school_year" />
                                 </div>
                             </x-grid>
                         @endforeach
@@ -504,26 +512,34 @@
 
 
 
-
                 <div>
-                    <template x-for="(award, index) in @json($profile->awards)" :key="index">
-                        <x-grid columns="2" gap="4" px="0" mt="0" x-show="index === 0 || @json($profile->awards).length > 1">
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Name of Award
-                                </x-label>
-                                <x-input disabled :value="award.award_name" x-model="award.name" />
-                            </div>
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+                        Awards
+                    </h6>
 
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Year Achieved
-                                </x-label>
-                                <x-input disabled :value="award.award_year" x-model="award.year" type="number" />
-                            </div>
-                        </x-grid>
-                    </template>
+                    @if($profile->awards->isNotEmpty())
+                        @foreach($profile->awards as $award)
+                            <x-grid columns="2" gap="4" px="0" mt="0">
+                                <div class="relative mb-3 px-4">
+                                    <x-label>
+                                        Name of Award
+                                    </x-label>
+                                    <x-input disabled :value="$award->award_name" />
+                                </div>
+
+                                <div class="relative mb-3 px-4">
+                                    <x-label>
+                                        Year Achieved
+                                    </x-label>
+                                    <x-input disabled :value="$award->award_year" type="number" />
+                                </div>
+                            </x-grid>
+                        @endforeach
+                    @else
+                        <p>No awards found.</p>
+                    @endif
                 </div>
+
 
 
 
@@ -600,7 +616,7 @@
                             <x-label>
                                 Do you have a disability?
                             </x-label>
-                            <x-input disabled value="{{ $profile->dissability}}" />
+                            <x-input disabled value="{{ $profile->disability}}" />
                         </div>
 
 
@@ -617,22 +633,29 @@
 
                 </x-grid>
 
-
                 <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
                     Medicine taken in
                 </h6>
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
+                    @foreach($profile->medicines as $medicine)
+                        <div class="relative mb-3 px-4">
+                            <x-label for="medicine_{{ $loop->index + 1 }}">
+                                {{ $loop->index + 1 }}
+                            </x-label>
+                            <x-input disabled :value="$medicine->medicine" />
+                        </div>
+                    @endforeach
+
+                    @for ($i = count($profile->medicines) + 1; $i <= 3; $i++)
                         <div class="relative mb-3 px-4">
                             <x-label for="medicine_{{ $i }}">
                                 {{ $i }}
                             </x-label>
-                            <x-input disabled value="{{ $profile->}}" />
+                            <x-input disabled />
                         </div>
                     @endfor
                 </x-grid>
-
 
 
                 <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
@@ -640,45 +663,76 @@
                 </h6>
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
+                    @foreach($profile->vitamins as $vitamin)
+                        <div class="relative mb-3 px-4">
+                            <x-label for="vitamin_{{ $loop->index + 1 }}">
+                                {{ $loop->index + 1 }}
+                            </x-label>
+                            <x-input disabled :value="$vitamin->vitamins" />
+                        </div>
+                    @endforeach
+
+                    @for ($i = count($profile->vitamins) + 1; $i <= 3; $i++)
                         <div class="relative mb-3 px-4">
                             <x-label for="vitamin_{{ $i }}">
                                 {{ $i }}
                             </x-label>
-                            <x-input disabled value="{{ $profile->}}" />
+                            <x-input disabled />
                         </div>
                     @endfor
                 </x-grid>
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500 ">
+
+                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
                     Accidents experienced
                 </h6>
+
                 <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
+                    @foreach($profile->accidents as $accident)
+                        <div class="relative mb-3 px-4">
+                            <x-label for="accident_{{ $loop->index + 1 }}">
+                                {{ $loop->index + 1 }}
+                            </x-label>
+                            <x-input disabled :value="$accident->accidents" />
+                        </div>
+                    @endforeach
+
+                    @for ($i = count($profile->accidents) + 1; $i <= 3; $i++)
                         <div class="relative mb-3 px-4">
                             <x-label for="accident_{{ $i }}">
                                 {{ $i }}
                             </x-label>
-                            <x-input disabled value="{{ $profile->}}" id="accidents_{{ $i }}" />
+                            <x-input disabled />
                         </div>
                     @endfor
                 </x-grid>
 
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500 ">
+
+                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
                     Operations experienced
                 </h6>
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
+                    @foreach($profile->operations as $operation)
+                        <div class="relative mb-3 px-4">
+                            <x-label for="operation_{{ $loop->index + 1 }}">
+                                {{ $loop->index + 1 }}
+                            </x-label>
+                            <x-input disabled :value="$operation->operations" />
+                        </div>
+                    @endforeach
+
+                    @for ($i = count($profile->operations) + 1; $i <= 3; $i++)
                         <div class="relative mb-3 px-4">
                             <x-label for="operation_{{ $i }}">
                                 {{ $i }}
                             </x-label>
-                            <x-input disabled value="{{ $profile->}}" id="operations_{{ $i }}" />
+                            <x-input disabled />
                         </div>
                     @endfor
                 </x-grid>
+
 
             </x-slot>
         </x-form>

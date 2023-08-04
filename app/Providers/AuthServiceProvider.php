@@ -4,6 +4,8 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use App\Models\Report;
+use App\Policies\ReportPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -15,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+      Report::class => ReportPolicy::class
     ];
 
     /**
@@ -32,5 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('adviser-access', function ($user) {
             return $user->role === User::ROLE_STAFF;
         });
+
     }
+
 }

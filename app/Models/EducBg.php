@@ -15,4 +15,11 @@ class EducBg extends Model
         'school_year',
         'grade_section'
     ];
+
+    public function calculateGradeLevel()
+{
+
+    return 'Grade ' . $this->school_year;
+}
+
 }

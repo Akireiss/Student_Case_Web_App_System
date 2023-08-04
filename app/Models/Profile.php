@@ -59,17 +59,17 @@ class Profile extends Model
         'food_allergy',
         'status'
     ];
+    public function siblings()
+    {
+        return $this->hasMany(Sibling::class);
+    }
+
+
     public function parent_status()
     {
         return $this->hasMany(ParentStatus::class);
     }
 
-
-
-    public function siblings()
-    {
-        return $this->hasMany(Sibling::class);
-    }
 
     public function family()
     {
@@ -114,13 +114,16 @@ class Profile extends Model
     }
 
     //Address
-    public function barangay() {
+    public function barangay()
+    {
         return $this->belongsTo(Barangay::class);
     }
-    public function municipal() {
+    public function municipal()
+    {
         return $this->belongsTo(Municipal::class);
     }
-    public function province() {
+    public function province()
+    {
         return $this->belongsTo(Province::class);
     }
 
