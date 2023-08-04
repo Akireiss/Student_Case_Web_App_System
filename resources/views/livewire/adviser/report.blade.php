@@ -1,8 +1,7 @@
 <div>
     <x-validation />
     <x-flashalert />
-
-            {{-- <div class="mx-auto">
+<div class="mx-auto">
                 <div class="flex justify-between items-center ">
                     <h6 class="text-xl font-bold px-4 text-left ">
                     Report Student
@@ -13,7 +12,7 @@
                 <div class="w-full mx-auto mt-6">
                     <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-lg rounded-lg border-0 ">
 
-                        <div class="flex-auto px-6 lg:px-10 py-10 pt-0"> --}}
+                        <div class="flex-auto px-6 lg:px-10 py-10 pt-0">
 
 
             <form wire:submit.prevent="store" enctype="multipart/form-data" >
@@ -47,7 +46,7 @@
                                         x-show="isOpen">
                                         @foreach ($students as $student)
                                             <li class="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                                                wire:click="selectStudent('{{ $student->id }}', '{{ $student->first_name }} ')"
+                                                wire:click="selectStudent('{{ $student->id }}', '{{ $student->first_name }} {{ $student->last_name }}')"
                                                 x-on:click="isOpen = false">
                                                 {{ $student->first_name }} {{ $student->last_name }}
                                             </li>
@@ -196,11 +195,11 @@
                 </div>
             </form>
 
-{{--
+
         </div>
     </div>
 </div>
-</div> --}}
+</div>
 
 
 <h6 class="text-lg font-bold px-4 text-left mb-3">

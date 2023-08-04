@@ -92,7 +92,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
             // Student Profile
             Route::get('students-profile', StudentProfile::class);
-            Route::get('student-profile/{id}/view', [StudentProfileController::class, 'show']);
+            Route::get('student-profile/{id}/view', [StudentProfile::class, 'show']);
             //History
             Route::get('report/history', [ReportHistoryController::class, 'index']);
             Route::get('report/history/{id}/view', [ReportHistoryController::class, 'show']);

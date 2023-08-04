@@ -24,7 +24,7 @@
                 </td>
 
                 <td class="px-4 py-2">
-                    <x-link href="{{ url('adviser/student-profile/' . $profile->id . '/view') }}">View</x-link>
+                    <x-link href="{{ url('adviser/student-profile/' . $profile->id . '/view') }}" target="_blank">View</x-link>
                 </td>
             </tr>
         @empty

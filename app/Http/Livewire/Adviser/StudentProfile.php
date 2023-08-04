@@ -21,5 +21,16 @@ class StudentProfile extends Component
             ->section('content');
     }
 
+    public function show($id)
+    {
+
+        $profile = Profile::find($id);
+        if (!$profile) {
+            return redirect()->route('error')->with('message', 'Student Profile not found.');
+        };
+
+        return view('staff.profile.view', compact('profile'));
+    }
+
 
 }
