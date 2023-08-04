@@ -39,7 +39,9 @@ class User extends Component
 
     public function render()
     {
-        return view('livewire.admin.user');
+        return view('livewire.admin.user')
+        ->extends('layouts.dashboard.index')
+        ->section('content');
     }
 
     public function updatePassword()
