@@ -43,13 +43,6 @@ class OffensesController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -59,12 +52,6 @@ class OffensesController extends Controller
         return view('admin.settings.offenses.edit', compact('offense'));
     }
 
-
-
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
       // Validate the form data

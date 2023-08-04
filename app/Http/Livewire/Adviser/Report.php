@@ -141,7 +141,8 @@ class Report extends Component
             'minorOffenses' => $minorOffenses,
             'graveOffenses' => $graveOffenses,
             'students' => $students
-        ]);
+        ])->extends('layouts.dashboard.index')
+        ->section('content');
     }
 
 

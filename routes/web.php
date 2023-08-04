@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Adviser\ReportHistoryController;
+use App\Http\Livewire\Admin\Student;
+use App\Http\Livewire\Admin\Teacher;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Livewire\Adviser\Report;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\StudentsProfile;
 use App\Http\Livewire\Adviser\StudentProfile;
@@ -11,8 +13,9 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\OffensesController;
 use App\Http\Controllers\Admin\ClassroomController;
+use App\Http\Controllers\Admin\StudentProfileController;
+use App\Http\Controllers\Adviser\ReportHistoryController;
 use App\Http\Controllers\Adviser\StudentReportController;
-use App\Http\Controllers\Adviser\StudentProfileController;
 use App\Http\Controllers\Adviser\AdvisorDashboardController;
 
 /*
@@ -60,37 +63,34 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::put('offenses/{id}', [OffensesController::class, 'update'])->name('admin.settings.offenses.update');
 
             // Employees
-            Route::get('teachers', [EmployeeController::class, 'index']);
-            // Route::get('teachers/create', [EmployeeController::class, 'create']);
-            // Route::post('employees/store', [EmployeeController::class, 'store']);
-            Route::get('employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
+            Route::get('teachers', Teacher::class);
 
             // Classrooms
             Route::get('classrooms', [ClassroomController::class, 'index']);
             Route::get('classroom/create', [ClassroomController::class, 'create']);
             Route::get('classroom/{id}', [ClassroomController::class, 'show']);
             Route::post('classroom/store', [ClassroomController::class, 'store'])->name('admin.classroom.store');
-
             Route::get('classrooms/{id}/edit', [ClassroomController::class, 'edit']);
             Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
+
+
             Route::get('audit-trail', function () {
-                return view('admin.settings.audit-trail.index'); });
+                 return view('admin.settings.audit-trail.index'); });
 
             // Students Area
-            Route::get('students', [StudentController::class, 'index']);
-            Route::get('students/create', [StudentController::class, 'create']);
-            Route::post('students/store', [StudentController::class, 'store']);
+            Route::get('students', Student::class);
         });
     });
 
     // Adviser | Staff Area
     Route::middleware(['can:adviser-access'])->group(function () {
         Route::prefix('adviser')->group(function () {
-            Route::get('dashboard', [AdvisorDashboardController::class, 'index']);
-            Route::get('report/student', [StudentReportController::class, 'index']);
-            Route::post('report/student', [StudentReportController::class, 'store']);
-            Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
-            // Student Profile
+            //Livewire Report Student
+            Route::get('report/student', Report::class);
+
+        //    Route::get('student/anecdotal/{id}', [StudentController::class, 'show']);
+
+            // Student Profile//livewire
             Route::get('students-profile', StudentProfile::class);
             Route::get('student-profile/{id}/view', [StudentProfile::class, 'show']);
             //History

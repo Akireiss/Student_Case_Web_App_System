@@ -27,7 +27,10 @@ class Student extends Component
     public function render()
     {
         $classrooms = Classroom::all();
-        return view('livewire.admin.student', compact('classrooms'));
+        return view('livewire.admin.student', compact('classrooms'))
+        ->extends('layouts.dashboard.index')
+        ->section('content');
+
     }
 
     public function store()
