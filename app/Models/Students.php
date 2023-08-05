@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Students extends Model
 {
+    public $timestamps = false;
     use HasFactory;
 
 
@@ -25,11 +26,6 @@ class Students extends Model
         'lrn',
         'status'
     ];
-
-    // public function classrooom()
-    // {
-    //     return $this->belongsTo(Classroom::class);
-    // }
 
 
     public function reports()
@@ -56,11 +52,6 @@ class Students extends Model
     {
         return $this->hasMany(Anecdotal::class, 'student_id');
     }
-
-    // public function anecdotal()
-    // {
-    //     return $this->hasMany(Anecdotal::class, 'student_id');
-    // }
 
 
 

@@ -59,17 +59,14 @@ class ClassroomController extends Controller
         return view('admin.settings.classrooms.edit', compact('classroom', 'employees'));
     }
 
-
-
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Classroom $classroom)
     {
         $validatedData = $request->validate([
-            'grade_level_id' => 'required',
-            'section_id' => 'required',
+            'grade_level' => 'required',
+            'section' => 'required',
             'employee_id' => 'required',
             'status' => 'required',
         ]);

@@ -16,14 +16,15 @@ class Offenses extends Model
         'description',
         'status'
         ];
-        public static function codes()
+
+        public static function status()
         {
             return collect(
                 [
-                    ['code' => 0,  'label' => 'Active'],
-                    ['code' => 1,  'label' => 'Inactive'],
-
+                    ['statu' => 0,  'label' => 'Active'],
+                    ['statu' => 1,  'label' => 'Inactive'],
                 ]
             );
         }
+
 }

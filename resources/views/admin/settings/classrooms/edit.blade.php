@@ -31,6 +31,8 @@
                 <option value="11" {{ $classroom->grade_level == '11' ? 'selected' : '' }}>11</option>
                 <option value="12" {{ $classroom->grade_level == '12' ? 'selected' : '' }}>12</option>
             </x-select>
+            <x-error fieldName="grade_level_id" />
+
         </div>
     </div>
 
@@ -46,6 +48,8 @@
                 <option value="Pluto" {{ $classroom->section == 'Pluto' ? 'selected' : '' }}>Pluto</option>
                 <option value="Venus" {{ $classroom->section == 'Venus' ? 'selected' : '' }}>Venus</option>
             </x-select>
+            <x-error fieldName="section" />
+
         </div>
     </div>
 
@@ -60,6 +64,7 @@
                     </option>
                 @endforeach
             </x-select>
+            <x-error fieldName="employee_id" />
         </div>
     </div>
 
@@ -70,6 +75,7 @@
                 <option value="0" {{ $classroom->status == 0 ? 'selected' : '' }}>Active</option>
                 <option value="1" {{ $classroom->status == 1 ? 'selected' : '' }}>Inactive</option>
             </x-select>
+            <x-error fieldName="status" />
         </div>
     </div>
 </div>

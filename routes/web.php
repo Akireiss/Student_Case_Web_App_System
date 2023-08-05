@@ -73,7 +73,9 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('classroom/create', [ClassroomController::class, 'create']);
             Route::get('classroom/{id}', [ClassroomController::class, 'show']);
             Route::post('classroom/store', [ClassroomController::class, 'store'])->name('admin.classroom.store');
-            Route::get('classrooms/{id}/edit', [ClassroomController::class, 'edit']);
+
+            Route::get('classrooms/{classroom}/edit', [ClassroomController::class, 'edit'])->name('classroom.edit');
+
             Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
 
             Route::get('audit-trail', function () {

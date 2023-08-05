@@ -1,6 +1,5 @@
 <div>
     <div x-data="{ showTable: true, showForm: false }">
-        <!-- Table Section -->
         <div x-show="showTable">
             <div class="flex items-center justify-between my-6">
                 <h4 class="text-lg font-semibold text-gray-600 dark:text-gray-300 flex-shrink-0">
@@ -20,8 +19,8 @@
         </div>
         <!-- Form Section -->
         <div x-cloak x-show="showForm">
-
-            <x-flashalert />
+{{-- The fuking problem is hereee --}}
+            {{-- <x-flashalert /> --}}
 
             <div>
                 <!-- Back Button to show the Table -->
@@ -44,7 +43,7 @@
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
                                         <x-label>Employee Name</x-label>
-                                        <x-input type="text" name="employees" wire:model="employees" />
+                                        <x-input type="text" name="employees" wire:model="employees" required />
                                         @error('employees')
                                             <span class="text-red-500">{{ $message }}</span>
                                         @enderror
@@ -55,7 +54,7 @@
                                     <div class="relative mb-3">
                                         <x-label>Employee Number</x-label>
                                         <x-input type="text" name="refference_number"
-                                            wire:model="refference_number" />
+                                            wire:model="refference_number" required  />
                                         @error('refference_number')
                                             <span class="text-red-500">{{ $message }}</span>
                                         @enderror
@@ -65,7 +64,8 @@
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
                                         <x-label>Status</x-label>
-                                        <x-select name="status" wire:model="status">
+                                        <x-select name="status" wire:model="status" required >
+                                            <option value="" selected>Select from the rest</option>
                                             <option value="0">Active</option>
                                             <option value="1">Inactive</option>
                                         </x-select>

@@ -52,7 +52,14 @@ final class StudentTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Students::query();
+        return Students::query()
+            ->join('classrooms', 'students.classroom_id', '=', 'classrooms.id')
+            ->select(
+                'students.*',
+                'classrooms.grade_level as grade_level',
+                'classrooms.section as section'
+
+            );
     }
 
     /*
@@ -87,17 +94,19 @@ final class StudentTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('id')
-            ->addColumn('classroom_id')
+
             ->addColumn('first_name')
 
-           /** Example of custom column using a closure **/
-            ->addColumn('first_name_lower', fn (Students $model) => strtolower(e($model->first_name)))
+            /** Example of custom column using a closure **/
+            ->addColumn('first_name_lower', fn(Students $model) => strtolower(e($model->first_name)))
 
             ->addColumn('last_name')
+
+            ->addColumn('classroom', fn(Students $model) => "{$model->grade_level} - {$model->section}")
+
             ->addColumn('lrn')
-            ->addColumn('status')
-            ->addColumn('created_at_formatted', fn (Students $model) => Carbon::parse($model->created_at)->format('F j, Y'));
+            ->addColumn('status', fn(Students $model) => $model?->getStatusTextAttribute())
+            ->addColumn('created_at_formatted', fn(Students $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
     /*
@@ -109,27 +118,37 @@ final class StudentTable extends PowerGridComponent
     |
     */
 
-     /**
-      * PowerGrid Columns.
-      *
-      * @return array<int, Column>
-      */
+    /**
+     * PowerGrid Columns.
+     *
+     * @return array<int, Column>
+     */
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Classroom id', 'classroom_id'),
             Column::make('First name', 'first_name')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->editOnClick(),
 
             Column::make('Last name', 'last_name')
                 ->sortable()
+                ->editOnClick()
                 ->searchable(),
 
-            Column::make('Lrn', 'lrn'),
+            Column::make('Grade Level', 'grade_level')
+                ->sortable(),
+
+            Column::make('Section', 'section')
+                ->sortable(),
+
+            Column::make('Lrn', 'lrn')
+                ->editOnClick()
+                ->sortable(),
+
+
             Column::make('Status', 'status')
-                ->toggleable(),
+                ->sortable(),
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->sortable(),
@@ -147,7 +166,7 @@ final class StudentTable extends PowerGridComponent
         return [
             Filter::inputText('first_name')->operators(['contains']),
             Filter::inputText('last_name')->operators(['contains']),
-            Filter::boolean('status'),
+            Filter::boolean('status')->label('Inactive', 'Active'),
             Filter::datetimepicker('created_at'),
         ];
     }
@@ -212,4 +231,21 @@ final class StudentTable extends PowerGridComponent
         ];
     }
     */
+
+    public array $first_name = [];
+    public array $last_name = [];
+
+
+    protected array $rules = [
+        'first_name.*' => ['required'],
+        'last_name.*' => ['required'],
+    ];
+
+    public function onUpdatedEditable($id, $field, $value): void
+    {
+        $this->validate();
+        Students::query()->find($id)->update([
+            $field => $value,
+        ]);
+    }
 }

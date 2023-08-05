@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Employee;
+use App\Models\Classroom;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
@@ -10,7 +10,7 @@ use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
 use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
-final class EmployeeTable extends PowerGridComponent
+final class ClassroomTable extends PowerGridComponent
 {
     use ActionButton;
     use WithExport;
@@ -29,11 +29,11 @@ final class EmployeeTable extends PowerGridComponent
         return [
             Exportable::make('export')
                 ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+                ->type(Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
-                ->showRecordCount(mode: 'full')
+                ->showRecordCount(),
         ];
     }
 
@@ -48,11 +48,16 @@ final class EmployeeTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Employee>
+     * @return Builder<\App\Models\Classroom>
      */
     public function datasource(): Builder
     {
-        return Employee::query();
+        return Classroom::query()
+        ->join('employees', 'classrooms.employee_id', '=', 'employees.id')
+        ->select(
+            'classrooms.*',
+            'employees.employees as employee_name'
+        );
     }
 
     /*
@@ -87,15 +92,14 @@ final class EmployeeTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('employees')
+            ->addColumn('employee_name')
+            ->addColumn('section')
 
            /** Example of custom column using a closure **/
-            ->addColumn('employees_lower', fn (Employee $model) => strtolower(e($model->employees)))
+           ->addColumn('grade_level')
+            ->addColumn('section_lower', fn (Classroom $model) => strtolower(e($model->section)))
 
-            ->addColumn('refference_number')
-            ->addColumn('status', fn (Employee $model) => $model?->getStatusTextAttribute() ?? 'No Data')
-
-            ->addColumn('created_at_formatted', fn (Employee $model) => Carbon::parse($model->created_at)->format('F j, Y'));
+            ->addColumn('status', fn (Classroom $model) => $model?->getStatusTextAttribute() ?? 'No Data');
     }
 
     /*
@@ -115,20 +119,26 @@ final class EmployeeTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Employees', 'employees')
-                ->sortable()
-                ->editOnClick()
-                ->searchable(),
-
-            Column::make('Refference number', 'refference_number')
-            ->sortable()
-            ->editOnClick(),
-
-            Column::make('Status', 'status')
+            Column::make('Adviser', 'employee_name')
             ->sortable(),
 
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
+
+            Column::make('Grade level', 'grade_level')
+                ->sortable()
+                ->searchable()
+                ->editOnClick(),
+
+
+                Column::make('Section', 'section')
+                ->sortable()
+                ->searchable()
+                ->editOnClick(),
+
+
+            Column::make('Status', 'status')
+                ->sortable()
+                ->searchable(),
+
 
         ];
     }
@@ -141,9 +151,7 @@ final class EmployeeTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('employees')->operators(['contains']),
             Filter::boolean('status')->label('Inactive', 'Active'),
-            Filter::datetimepicker('created_at'),
         ];
     }
 
@@ -156,30 +164,34 @@ final class EmployeeTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Employee Action Buttons.
+     * PowerGrid Classroom Action Buttons.
      *
      * @return array<int, Button>
      */
 
-    /*
+
     public function actions(): array
     {
        return [
            Button::make('edit', 'Edit')
                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('employee.edit', function(\App\Models\Employee $model) {
-                    return $model->id;
+               ->route('classroom.edit', function(\App\Models\Classroom $model) {
+                    return ['classroom' =>$model->id];
                }),
 
+                 /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('employee.destroy', function(\App\Models\Employee $model) {
+               ->route('classroom.destroy', function(\App\Models\Classroom $model) {
                     return $model->id;
                })
                ->method('delete')
+            */
         ];
     }
-    */
+
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -190,7 +202,7 @@ final class EmployeeTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Employee Action Rules.
+     * PowerGrid Classroom Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -202,25 +214,25 @@ final class EmployeeTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($employee) => $employee->id === 1)
+                ->when(fn($classroom) => $classroom->id === 1)
                 ->hide(),
         ];
     }
     */
 
-    public array $employees = [];
-    public array $refference_number = [];
+    public array $grade_level = [];
+    public array $section = [];
 
 
     protected array $rules = [
-        'employees.*' => ['required'],
-        'refference_number.*' => ['required', 'integer', 'max:9999999999'],
+        'grade_level.*' => ['required'],
+        'section.*' => ['required'],
     ];
 
     public function onUpdatedEditable($id, $field, $value): void
     {
         $this->validate();
-        Employee::query()->find($id)->update([
+        Classroom::query()->find($id)->update([
             $field => $value,
         ]);
     }

@@ -15,6 +15,10 @@ final class OffenseTable extends PowerGridComponent
     use ActionButton;
     use WithExport;
 
+    public array $description = [];
+    public array $offenses = [];
+    public array $status = [];
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -87,15 +91,14 @@ final class OffenseTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('id')
             ->addColumn('offenses')
 
-           /** Example of custom column using a closure **/
-            ->addColumn('offenses_lower', fn (Offenses $model) => strtolower(e($model->offenses)))
+            /** Example of custom column using a closure **/
+            ->addColumn('offenses_lower', fn(Offenses $model) => strtolower(e($model->offenses)))
 
             ->addColumn('description')
-            ->addColumn('status')
-            ->addColumn('created_at_formatted', fn (Offenses $model) => Carbon::parse($model->created_at)->format('F j, Y'));
+            ->addColumn('status', fn(Offenses $model) => $model?->getStatusTextAttribute() ?? 'No Data')
+            ->addColumn('created_at_formatted', fn(Offenses $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
     /*
@@ -107,31 +110,37 @@ final class OffenseTable extends PowerGridComponent
     |
     */
 
-     /**
-      * PowerGrid Columns.
-      *
-      * @return array<int, Column>
-      */
+    /**
+     * PowerGrid Columns.
+     *
+     * @return array<int, Column>
+     */
     public function columns(): array
     {
+
+
         return [
-            Column::make('Id', 'id'),
             Column::make('Offenses', 'offenses')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->editOnClick(),
+
 
             Column::make('Description', 'description')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->editOnClick(),
 
-            Column::make('Status', 'status')
-                ->toggleable(),
+
+            Column::make('Status', 'status'),
+
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->sortable(),
 
         ];
     }
+
 
     /**
      * PowerGrid Filters.
@@ -141,9 +150,8 @@ final class OffenseTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('offenses')->operators(['contains']),
             Filter::inputText('description')->operators(['contains']),
-            Filter::boolean('status'),
+            Filter::boolean('status')->label('Inactive', 'Active'),
             Filter::datetimepicker('created_at'),
         ];
     }
@@ -208,4 +216,16 @@ final class OffenseTable extends PowerGridComponent
         ];
     }
     */
+    protected array $rules = [
+        'description.*' => ['required'],
+        'offenses.*' => ['required'],
+        'status.*' => ['required'],
+    ];
+    public function onUpdatedEditable($id, $field, $value): void
+    {
+        $this->validate();
+        Offenses::query()->find($id)->update([
+            $field => $value,
+        ]);
+    }
 }

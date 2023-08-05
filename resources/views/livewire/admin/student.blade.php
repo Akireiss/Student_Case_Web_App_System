@@ -3,10 +3,15 @@
 <div x-data="{ showTable: true, showForm: false }">
     <!-- Table Section -->
     <div x-show="showTable">
+        <div class="flex items-center justify-between my-6">
+            <h4 class="text-lg font-semibold text-gray-600 dark:text-gray-300 flex-shrink-0">
+        Students
+            </h4>
         <div class="flex justify-end  mt-4">
             <x-button x-on:click="showTable = false; showForm = true">
                 Add
             </x-button>
+        </div>
         </div>
 
         <div>

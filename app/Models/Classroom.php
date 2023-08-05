@@ -36,5 +36,4 @@ class Classroom extends Model
         return $this->hasMany(Students::class);
     }
 
-
 }
