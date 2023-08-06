@@ -39,6 +39,11 @@ class Anecdotal extends Model
     }
 
 
+    public function students()
+    {
+        return $this->belongsTo(Students::class, 'student_id');
+    }
+    // TODO: for anecdotal table (still need some adjustment)
     public function student()
     {
         return $this->belongsTo(Students::class, 'student_id');
@@ -68,7 +73,7 @@ class Anecdotal extends Model
     {
         $statusCodes = [
             0 => 'Pending',
-            1 => 'In Process',
+            1 => 'Process',
             2 => 'Pending',
             3 => 'Resolved',
         ];

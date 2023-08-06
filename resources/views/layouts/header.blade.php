@@ -21,6 +21,8 @@
     <script src="{{ asset('assets/js/validation.js') }}"></script>
 
 
+
+
     @livewireStyles
 </head>
 <body>

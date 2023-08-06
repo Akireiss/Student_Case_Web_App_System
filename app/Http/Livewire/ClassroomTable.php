@@ -53,12 +53,14 @@ final class ClassroomTable extends PowerGridComponent
     public function datasource(): Builder
     {
         return Classroom::query()
-        ->join('employees', 'classrooms.employee_id', '=', 'employees.id')
-        ->select(
-            'classrooms.*',
-            'employees.employees as employee_name'
-        );
+            ->join('employees', 'classrooms.employee_id', '=', 'employees.id')
+            ->select(
+                'classrooms.*',
+                'employees.employees as employee_name',
+                'employees.status as employee_status'
+            );
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -151,7 +153,6 @@ final class ClassroomTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::boolean('status')->label('Inactive', 'Active'),
         ];
     }
 

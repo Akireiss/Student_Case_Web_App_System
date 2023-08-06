@@ -127,7 +127,7 @@ final class EmployeeTable extends PowerGridComponent
             Column::make('Status', 'status')
             ->sortable(),
 
-            Column::make('Created at', 'created_at_formatted', 'created_at')
+            Column::make('Date Added', 'created_at_formatted', 'created_at')
                 ->sortable(),
 
         ];

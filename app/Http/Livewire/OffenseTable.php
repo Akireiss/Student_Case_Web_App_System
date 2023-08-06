@@ -3,11 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Offenses;
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
-use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
 final class OffenseTable extends PowerGridComponent
@@ -36,6 +37,7 @@ final class OffenseTable extends PowerGridComponent
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
+                ->showRecordCount(mode: 'full')
                 ->showPerPage()
                 ->showRecordCount(),
         ];
@@ -96,8 +98,12 @@ final class OffenseTable extends PowerGridComponent
             /** Example of custom column using a closure **/
             ->addColumn('offenses_lower', fn(Offenses $model) => strtolower(e($model->offenses)))
 
-            ->addColumn('description')
-            ->addColumn('status', fn(Offenses $model) => $model?->getStatusTextAttribute() ?? 'No Data')
+            ->addColumn('description', function (Offenses $model) {
+                return Str::words(e($model->description), 8); //Gets the first 8 words
+            })
+            ->addColumn('status', function (Offenses $model) {
+                return ($model->status ? 'Inactive' : 'Active');
+              })
             ->addColumn('created_at_formatted', fn(Offenses $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
@@ -117,8 +123,7 @@ final class OffenseTable extends PowerGridComponent
      */
     public function columns(): array
     {
-
-
+        $isToggleable = true;
         return [
             Column::make('Offenses', 'offenses')
                 ->sortable()
@@ -132,7 +137,9 @@ final class OffenseTable extends PowerGridComponent
                 ->editOnClick(),
 
 
-            Column::make('Status', 'status'),
+            Column::make('Status', 'status')
+            ->toggleable($isToggleable, 'yes', 'no'),
+
 
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
@@ -141,6 +148,12 @@ final class OffenseTable extends PowerGridComponent
         ];
     }
 
+    public function onUpdatedToggleable(string $id, string $field, string $value): void
+{
+    Offenses::query()->find($id)->update([
+        $field => $value,
+    ]);
+}
 
     /**
      * PowerGrid Filters.

@@ -26,14 +26,37 @@ class Classroom extends Model
         return $this->hasMany(Students::class, 'classroom_id', 'id');
     }
 
-    public function employee()
-    {
-        return $this->belongsTo(Employee::class);
-    }
 
 //adviser
     public function students() {
         return $this->hasMany(Students::class);
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
+    public function getStatusTextAttribute()
+    {
+        $statusCodes = [
+            0 => 'Active',
+            1 => 'Inactive',
+        ];
+
+        return $statusCodes[$this->attributes['status']] ?? '';
+    }
+
+    public static function codes()
+    {
+        return collect(
+            [
+                ['class_status' => 0,  'label' => 'Active'],
+                ['class_status' => 1,  'label' => 'Inactive'],
+            ]
+        );
+    }
+
+
 
 }

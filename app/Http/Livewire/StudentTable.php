@@ -3,11 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Students;
+use App\Models\Classroom;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
-use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
 final class StudentTable extends PowerGridComponent
@@ -57,7 +58,8 @@ final class StudentTable extends PowerGridComponent
             ->select(
                 'students.*',
                 'classrooms.grade_level as grade_level',
-                'classrooms.section as section'
+                'classrooms.section as section',
+              //  'classrooms.status as classrooms_status'
 
             );
     }
@@ -104,7 +106,7 @@ final class StudentTable extends PowerGridComponent
 
             ->addColumn('classroom', fn(Students $model) => "{$model->grade_level} - {$model->section}")
 
-            ->addColumn('lrn')
+            ->addColumn('lrn', fn (Students $model) => $model->lrn ?: 'No Data')
             ->addColumn('status', fn(Students $model) => $model?->getStatusTextAttribute())
             ->addColumn('created_at_formatted', fn(Students $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
@@ -150,7 +152,7 @@ final class StudentTable extends PowerGridComponent
             Column::make('Status', 'status')
                 ->sortable(),
 
-            Column::make('Created at', 'created_at_formatted', 'created_at')
+            Column::make('Date Added', 'created_at_formatted', 'created_at')
                 ->sortable(),
 
         ];
@@ -166,8 +168,17 @@ final class StudentTable extends PowerGridComponent
         return [
             Filter::inputText('first_name')->operators(['contains']),
             Filter::inputText('last_name')->operators(['contains']),
-            Filter::boolean('status')->label('Inactive', 'Active'),
             Filter::datetimepicker('created_at'),
+            Filter::select('grade_level', 'grade_level')
+            ->dataSource(Classroom::select('grade_level')->distinct()->get())
+            ->optionValue('grade_level')
+            ->optionLabel('grade_level'),
+            Filter::select('section', 'section')
+            ->dataSource(Classroom::select('section')->distinct()->get())
+            ->optionValue('section')
+            ->optionLabel('section'),
+
+
         ];
     }
 
@@ -234,11 +245,13 @@ final class StudentTable extends PowerGridComponent
 
     public array $first_name = [];
     public array $last_name = [];
+    public array $lrn = [];
 
 
     protected array $rules = [
         'first_name.*' => ['required'],
         'last_name.*' => ['required'],
+        'lrn.*' => ['integer'],
     ];
 
     public function onUpdatedEditable($id, $field, $value): void

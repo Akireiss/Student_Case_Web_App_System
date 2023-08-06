@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Offenses;
 use App\Models\Anecdotal;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
-use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
 final class AnecdotaTable extends PowerGridComponent
@@ -46,18 +47,18 @@ final class AnecdotaTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid datasource.
+     * PowerGrid datasource
      *
      * @return Builder<\App\Models\Anecdotal>
      */
     public function datasource(): Builder
     {
         return Anecdotal::query()
-        ->join('students', 'anecdotal.student_id', '=', 'students.id')
-        ->select(
-            'anecdotal.*',
-            'students.first_name as student_first_name',
-            'students.last_name as student_last_name');
+            ->join('students', 'anecdotal.student_id', '=', 'students.id')
+            ->join('offenses', 'anecdotal.grave_offense_id', '=', 'offenses.id')
+            ->select(
+                'anecdotal.*'
+            );
     }
 
     /*
@@ -75,7 +76,12 @@ final class AnecdotaTable extends PowerGridComponent
      */
     public function relationSearch(): array
     {
-        return [];
+        // !important part for the relation
+        return [
+            'students' => ['first_name', 'last_name'],
+            'Minoroffenses' => ['offenses'],
+            'Graveoffenses' => ['offenses'],
+        ];
     }
 
     /*
@@ -92,18 +98,16 @@ final class AnecdotaTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('student_first_name', function (Anecdotal $model) {
+            ->addColumn('first_name', function (Anecdotal $model) {
                 return $model->student->first_name;
             })
-            ->addColumn('student_last_name', function (Anecdotal $model) {
+            ->addColumn('last_name', function (Anecdotal $model) {
                 return $model->student->last_name;
             })
+            ->addColumn('grave_offense', fn(Anecdotal $model) => $model->Graveoffenses ? $model->Graveoffenses->offenses : 'No Data')
+            ->addColumn('minor_offense', fn(Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'No Data')
 
-            // Existing columns...
-            ->addColumn('grave_offense', fn (Anecdotal $model) => $model->Graveoffenses ? $model->Graveoffenses->offenses : 'N/A')
-            ->addColumn('minor_offense', fn (Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'N/A')
-
-            ->addColumn('gravity_lower', fn (Anecdotal $model) => strtolower(e($model->gravity)))
+            ->addColumn('gravity_lower', fn(Anecdotal $model) => strtolower(e($model->gravity)))
             ->addColumn('created_at_formatted', function (Anecdotal $model) {
                 return Carbon::parse($model->created_at)->format('F j, Y');
             })
@@ -127,20 +131,21 @@ final class AnecdotaTable extends PowerGridComponent
     |
     */
 
-     /**
-      * PowerGrid Columns.
-      *
-      * @return array<int, Column>
-      */
+    /**
+     * PowerGrid Columns.
+     *
+     * @return array<int, Column>
+     */
     public function columns(): array
     {
         return [
-            Column::make('First Name', 'student_first_name')->sortable(),
-            Column::make('Last Name', 'student_last_name')->sortable(), // New column for last name
+            Column::make('First Name', 'first_name')->sortable()
+                ->withCount('Total Reports', true, false),
+            Column::make('Last Name', 'last_name')->sortable(), // New column for last name
             Column::make('Grave Offense', 'grave_offense'),
             Column::make('Minor Offense', 'minor_offense'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
-            Column::make('Created at', 'created_at_formatted', 'created_at')->sortable(),
+            Column::make('Submitted at', 'created_at_formatted', 'created_at')->sortable(),
             Column::make('Status', 'case_status')->sortable()
         ];
     }
@@ -153,9 +158,19 @@ final class AnecdotaTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-
-            Filter::inputText('gravity')->operators(['contains']),
+            Filter::inputText('first_name')->operators(['contains']),
+            Filter::inputText('last_name')->operators(['contains']),
             Filter::datetimepicker('created_at'),
+            Filter::select('gravity', 'gravity')
+                ->dataSource(Anecdotal::select('gravity')->distinct()->get())
+                ->optionValue('gravity')
+                ->optionLabel('gravity'),
+
+                // * In Progress
+            Filter::select('grave_offense', 'grave_offense')
+            ->dataSource(Offenses::select('offenses')->distinct()->get())
+            ->optionValue('offenses')
+            ->optionLabel('offenses'),
 
         ];
     }
@@ -178,19 +193,19 @@ final class AnecdotaTable extends PowerGridComponent
 
     public function actions(): array
     {
-       return [
-           Button::make('view', 'View')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('anecdotal.edit', function(\App\Models\Anecdotal $model) {
-                return ['anecdotal' => $model->id];
-               }),
+        return [
+            Button::make('view', 'View')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('anecdotal.edit', function (\App\Models\Anecdotal $model) {
+                    return ['anecdotal' => $model->id];
+                }),
 
-        //    Button::make('destroy', 'Delete')
-        //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-        //        ->route('anecdotal.destroy', function(\App\Models\Anecdotal $model) {
-        //             return $model->id;
-        //        })
-        //        ->method('delete')
+            //    Button::make('destroy', 'Delete')
+            //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+            //        ->route('anecdotal.destroy', function(\App\Models\Anecdotal $model) {
+            //             return $model->id;
+            //        })
+            //        ->method('delete')
         ];
     }
 

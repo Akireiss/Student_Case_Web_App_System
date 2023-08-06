@@ -17,14 +17,4 @@ class Offenses extends Model
         'status'
         ];
 
-        public static function status()
-        {
-            return collect(
-                [
-                    ['statu' => 0,  'label' => 'Active'],
-                    ['statu' => 1,  'label' => 'Inactive'],
-                ]
-            );
-        }
-
 }

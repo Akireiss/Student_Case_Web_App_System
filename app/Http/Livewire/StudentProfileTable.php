@@ -110,7 +110,8 @@ public function datasource(): Builder
             ->addColumn('contact')
             ->addColumn('barangay')
             ->addColumn('municipal')
-            ->addColumn('status');
+            ->addColumn('status', fn (Profile $model) =>$model?->getStatusTextAttribute()
+        );
     }
 
     /*
@@ -159,7 +160,6 @@ public function datasource(): Builder
     public function filters(): array
     {
         return [
-            Filter::inputText('sex')->operators(['contains']),
         ];
     }
 
