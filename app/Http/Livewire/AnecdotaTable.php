@@ -31,10 +31,10 @@ final class AnecdotaTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),
-            Header::make()->showSearchInput(),
+            Header::make()->showSearchInput()->showToggleColumns(),
             Footer::make()
                 ->showPerPage()
-                ->showRecordCount(),
+                ->showRecordCount(mode: 'full')
         ];
     }
 
@@ -112,12 +112,12 @@ final class AnecdotaTable extends PowerGridComponent
                 return Carbon::parse($model->created_at)->format('F j, Y');
             })
 
-            ->addColumn('case_status', function (Anecdotal $model) {
-                $statusText = $model->status_text;
-                $textColorClass = $model->case_status === 2 ? 'text-red-500' : '';
+            ->addColumn('case_status', function ($status) {
+                $code = Anecdotal::codes()->firstWhere('case_status', $status->case_status);
+                return $code ? $code['label'] : 'No Data';
+            })
 
-                return "<span class='$textColorClass'>$statusText</span>";
-            });
+        ;
     }
 
 
@@ -140,7 +140,7 @@ final class AnecdotaTable extends PowerGridComponent
     {
         return [
             Column::make('First Name', 'first_name')->sortable()
-                ->withCount('Total Reports', true, false),
+            ->withCount('Total Reports', true, false),
             Column::make('Last Name', 'last_name')->sortable(), // New column for last name
             Column::make('Grave Offense', 'grave_offense'),
             Column::make('Minor Offense', 'minor_offense'),
@@ -166,12 +166,10 @@ final class AnecdotaTable extends PowerGridComponent
                 ->optionValue('gravity')
                 ->optionLabel('gravity'),
 
-                // * In Progress
-            Filter::select('grave_offense', 'grave_offense')
-            ->dataSource(Offenses::select('offenses')->distinct()->get())
-            ->optionValue('offenses')
-            ->optionLabel('offenses'),
-
+            Filter::select('case_status', 'case_status')
+                ->dataSource(Anecdotal::codes())
+                ->optionValue('case_status')
+                ->optionLabel('label'),
         ];
     }
 

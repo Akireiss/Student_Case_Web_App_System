@@ -37,15 +37,7 @@ class Classroom extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    public function getStatusTextAttribute()
-    {
-        $statusCodes = [
-            0 => 'Active',
-            1 => 'Inactive',
-        ];
 
-        return $statusCodes[$this->attributes['status']] ?? '';
-    }
 
     public static function codes()
     {

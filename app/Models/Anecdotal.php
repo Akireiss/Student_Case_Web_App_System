@@ -29,7 +29,7 @@ class Anecdotal extends Model
         'desired',
         'outcome',
         'letter',
-        'status'
+        'case_status'
     ];
 
 
@@ -69,17 +69,33 @@ class Anecdotal extends Model
             ->logOnly(['student_id', 'short_description', 'outcome']);
     }
 
-    public function getStatusTextAttribute()
+    public static function codes()
     {
-        $statusCodes = [
-            0 => 'Pending',
-            1 => 'Process',
-            2 => 'Pending',
-            3 => 'Resolved',
-        ];
-
-        return $statusCodes[$this->attributes['case_status']] ?? '';
+        return collect([
+            ['case_status' => 0, 'label' => 'Pending'],
+            ['case_status' => 1, 'label' => 'Process'],
+            ['case_status' => 2, 'label' => 'Ongoing'],
+            ['case_status' => 3, 'label' => 'Resolved'],
+        ]);
     }
 
+    // Anecdotal.php (or the appropriate model file)
+    public function getCaseStatusAttribute()
+    {
+        $value = $this->attributes['case_status']; // Retrieve the attribute value from the model
+
+        switch ($value) {
+            case 0:
+                return 'Pending';
+            case 1:
+                return 'Process';
+            case 2:
+                return 'Ongoing';
+            case 3:
+                return 'Resolved';
+            default:
+                return 'Unknown';
+        }
+    }
 
 }

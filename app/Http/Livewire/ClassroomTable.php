@@ -97,11 +97,11 @@ final class ClassroomTable extends PowerGridComponent
             ->addColumn('employee_name')
             ->addColumn('section')
 
-           /** Example of custom column using a closure **/
-           ->addColumn('grade_level')
-            ->addColumn('section_lower', fn (Classroom $model) => strtolower(e($model->section)))
+            /** Example of custom column using a closure **/
+            ->addColumn('grade_level')
+            ->addColumn('section_lower', fn(Classroom $model) => strtolower(e($model->section)))
 
-            ->addColumn('status', fn (Classroom $model) => $model?->getStatusTextAttribute() ?? 'No Data');
+            ->addColumn('status', fn(Classroom $model) => $model?->getStatusTextAttribute() ?? 'No Data');
     }
 
     /*
@@ -113,16 +113,16 @@ final class ClassroomTable extends PowerGridComponent
     |
     */
 
-     /**
-      * PowerGrid Columns.
-      *
-      * @return array<int, Column>
-      */
+    /**
+     * PowerGrid Columns.
+     *
+     * @return array<int, Column>
+     */
     public function columns(): array
     {
         return [
             Column::make('Adviser', 'employee_name')
-            ->sortable(),
+                ->sortable(),
 
 
             Column::make('Grade level', 'grade_level')
@@ -131,7 +131,7 @@ final class ClassroomTable extends PowerGridComponent
                 ->editOnClick(),
 
 
-                Column::make('Section', 'section')
+            Column::make('Section', 'section')
                 ->sortable()
                 ->searchable()
                 ->editOnClick(),
@@ -173,21 +173,28 @@ final class ClassroomTable extends PowerGridComponent
 
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('classroom.edit', function(\App\Models\Classroom $model) {
-                    return ['classroom' =>$model->id];
-               }),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('bg-gray-500
+                cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('classroom.edit', function (Classroom $model) {
+                    return ['classroom' => $model->id];
+                }),
 
-                 /*
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('classroom.destroy', function(\App\Models\Classroom $model) {
-                    return $model->id;
-               })
-               ->method('delete')
-            */
+            Button::make('view', 'View')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->route('classroom.view', function (Classroom $model) {
+                return ['classroom' => $model->id];
+            }),
+
+            /*
+      Button::make('destroy', 'Delete')
+          ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+          ->route('classroom.destroy', function(\App\Models\Classroom $model) {
+               return $model->id;
+          })
+          ->method('delete')
+       */
         ];
     }
 

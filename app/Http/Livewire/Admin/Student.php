@@ -19,17 +19,18 @@ class Student extends Component
     protected $rules = [
         'first_name' => 'required|string',
         'last_name' => 'required|string',
-        'lrn' => 'required|numeric',
+        'lrn' => 'required|numeric|digits:10',
         'classroom_id' => 'required',
         'status' => 'required|in:0,1',
     ];
+
 
     public function render()
     {
         $classrooms = Classroom::all();
         return view('livewire.admin.student', compact('classrooms'))
-        ->extends('layouts.dashboard.index')
-        ->section('content');
+            ->extends('layouts.dashboard.index')
+            ->section('content');
 
     }
 
@@ -39,7 +40,6 @@ class Student extends Component
 
         $this->isSubmitting = true;
 
-        // Save the student data to the database using the Student model
         Students::create([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -56,7 +56,6 @@ class Student extends Component
 
     private function resetForm()
     {
-        // Add any logic to reset form fields if needed
         $this->first_name = '';
         $this->last_name = '';
         $this->lrn = '';

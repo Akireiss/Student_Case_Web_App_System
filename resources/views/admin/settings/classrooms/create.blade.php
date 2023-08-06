@@ -4,7 +4,7 @@
     <x-form title="Add Classroom">
         <x-slot name="actions">
             {{-- Button --}}
-            <x-link href="{{ url('admin/settings/classroom/create') }}">
+            <x-link href="{{ url('admin/settings/classrooms') }}">
                 Back
             </x-link>
         </x-slot>

@@ -1,6 +1,5 @@
 <div>
     <x-validation />
-    <x-flashalert />
 <div class="mx-auto">
                 <div class="flex justify-between items-center ">
                     <h6 class="text-xl font-bold px-4 text-left ">
@@ -18,7 +17,7 @@
             <form wire:submit.prevent="store" enctype="multipart/form-data" >
                 @csrf
                 <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                    Report Student
+                    Student Information
                 </h6>
                 <x-grid columns="2" gap="4" px="0" mt="0">
 
@@ -190,8 +189,12 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end mx-4 mt-2 space-x-2">
-                    <x-button>Submit</x-button>
+                <div class="flex justify-end items-center">
+                    <x-text-alert />
+                    <div wire:loading wire:target="store" class="mx-4">
+                        Loading
+                    </div>
+                    <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                 </div>
             </form>
 

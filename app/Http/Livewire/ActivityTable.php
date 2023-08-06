@@ -24,7 +24,6 @@ final class ActivityTable extends PowerGridComponent
     */
     public function setUp(): array
     {
-        $this->showCheckBox();
 
         return [
             Exportable::make('export')
@@ -52,7 +51,10 @@ final class ActivityTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Activity::query();
+        return Activity::query()
+        ->join('users', 'activity_log.causer_id', '=', 'users.id')
+        ->select('activity_log.*', 'users.name as causer_name')
+        ->latest();
     }
 
     /*
@@ -87,10 +89,9 @@ final class ActivityTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('id')
+            ->addColumn('causer_name')
             ->addColumn('log_name')
 
-           /** Example of custom column using a closure **/
             ->addColumn('log_name_lower', fn (Activity $model) => strtolower(e($model->log_name)))
 
             ->addColumn('description')
@@ -115,8 +116,9 @@ final class ActivityTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Log name', 'log_name')
+            Column::make('Name', 'causer_name'),
+
+                Column::make('Activity', 'log_name')
                 ->sortable()
                 ->searchable(),
 
@@ -142,8 +144,6 @@ final class ActivityTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('log_name')->operators(['contains']),
-            Filter::inputText('event')->operators(['contains']),
             Filter::datetimepicker('created_at'),
         ];
     }

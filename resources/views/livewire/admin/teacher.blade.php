@@ -19,8 +19,6 @@
         </div>
         <!-- Form Section -->
         <div x-cloak x-show="showForm">
-{{-- The fuking problem is hereee --}}
-            {{-- <x-flashalert /> --}}
 
             <div>
                 <!-- Back Button to show the Table -->

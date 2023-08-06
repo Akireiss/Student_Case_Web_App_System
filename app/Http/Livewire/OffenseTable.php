@@ -103,7 +103,7 @@ final class OffenseTable extends PowerGridComponent
             })
             ->addColumn('status', function (Offenses $model) {
                 return ($model->status ? 'Inactive' : 'Active');
-              })
+            })
             ->addColumn('created_at_formatted', fn(Offenses $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
@@ -137,8 +137,7 @@ final class OffenseTable extends PowerGridComponent
                 ->editOnClick(),
 
 
-            Column::make('Status', 'status')
-            ->toggleable($isToggleable, 'yes', 'no'),
+            Column::make('Status', 'status'),
 
 
 
@@ -149,11 +148,11 @@ final class OffenseTable extends PowerGridComponent
     }
 
     public function onUpdatedToggleable(string $id, string $field, string $value): void
-{
-    Offenses::query()->find($id)->update([
-        $field => $value,
-    ]);
-}
+    {
+        Offenses::query()->find($id)->update([
+            $field => $value,
+        ]);
+    }
 
     /**
      * PowerGrid Filters.

@@ -21,14 +21,14 @@ class StudentProfile extends Component
             ->section('content');
     }
 
+
     public function show($id)
     {
-
-        $profile = Profile::find($id);
+        $user = Auth::user();
+        $profile = $user->students->flatMap->profile->firstWhere('id', $id);
         if (!$profile) {
-            return redirect()->route('error')->with('message', 'Student Profile not found.');
-        };
-
+          abort (403);
+        }
         return view('staff.profile.view', compact('profile'));
     }
 

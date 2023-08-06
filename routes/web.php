@@ -4,6 +4,7 @@ use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Adviser\Dashboard;
+use App\Http\Livewire\Adviser\ReportHistory;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Livewire\Adviser\Report;
 use Illuminate\Support\Facades\Route;
@@ -39,7 +40,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth', 'role'])->group(function () {
 
-            // Admin Access
+    // Admin Access
     Route::middleware(['can:admin-access'])->group(function () {
 
         Route::prefix('admin')->group(function () {
@@ -68,18 +69,21 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::put('offenses/{id}', [OffensesController::class, 'update'])->name('admin.settings.offenses.update');
             // Employees
             Route::get('teachers', Teacher::class);
+
             // Classrooms
             Route::get('classrooms', [ClassroomController::class, 'index']);
             Route::get('classroom/create', [ClassroomController::class, 'create']);
-            Route::get('classroom/{id}', [ClassroomController::class, 'show']);
             Route::post('classroom/store', [ClassroomController::class, 'store'])->name('admin.classroom.store');
-
-            Route::get('classrooms/{classroom}/edit', [ClassroomController::class, 'edit'])->name('classroom.edit');
-
             Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
+            //Edit Classroom
+            Route::get('classrooms/{classroom}/edit', [ClassroomController::class, 'edit'])->name('classroom.edit');
+            //View Classrooms
+            Route::get('classroom/{classroom}/view', [ClassroomController::class, 'show'])->name('classroom.view');
+
 
             Route::get('audit-trail', function () {
-                 return view('admin.settings.audit-trail.index'); });
+                return view('admin.settings.audit-trail.index');
+            });
 
             // Students Area
             Route::get('students', Student::class);
@@ -89,20 +93,19 @@ Route::middleware(['auth', 'role'])->group(function () {
     // Adviser | Staff Area
     Route::middleware(['can:adviser-access'])->group(function () {
         Route::prefix('adviser')->group(function () {
-            //Dashboard
+            //*Dashboard
             Route::get('dashboard', Dashboard::class);
-            //Livewire Report Student
+            //*Livewire Report Student
             Route::get('report/student', Report::class);
-            // Student Profile//livewire
+            //*Student Profile//livewire
             Route::get('students-profile', StudentProfile::class);
             Route::get('student-profile/{id}/view', [StudentProfile::class, 'show']);
-            //History
-            Route::get('report/history', [ReportHistoryController::class, 'index']);
-            Route::get('report/history/{id}/view', [ReportHistoryController::class, 'show']);
-
+            //*History
+            Route::get('report/history', ReportHistory::class);
+            Route::get('report/history/{id}/view', [ReportHistory::class, 'show']);
+            //*Account Management
+            Route::get('update-acc', User::class);
+            Route::get('add-acc', User::class);
         });
     });
 });
-
-
-

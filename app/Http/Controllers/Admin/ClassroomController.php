@@ -11,8 +11,7 @@ class ClassroomController extends Controller
 {
     public function index()
     {
-        $classrooms = Classroom::with(['employee'])->get();
-        return view('admin.settings.classrooms.index', compact('classrooms'));
+        return view('admin.settings.classrooms.index');
     }
 
     /**
