@@ -22,8 +22,6 @@ class Report extends Component
     public $showError = false;
     public $cases = [];
     public $selectedActions = [];
-
-    use WithFileUploads;
     public $minor_offenses_id;
     public $grave_offenses_id;
     public $gravity;
@@ -34,36 +32,14 @@ class Report extends Component
     public $letter;
     public $user_id;
 
-    protected $rules = [
-        'studentName' => 'required',
-        'studentId' => 'required',
-        'minor_offenses_id' => 'nullable|required_without_all:grave_offenses_id',
-        'grave_offenses_id' => 'nullable|required_without_all:minor_offenses_id',
-        'gravity' => 'required',
-        'short_description' => 'required',
-        'observation' => 'required',
-        'desired' => 'required',
-        'outcome' => 'required',
-        'letter' => 'nullable | image',
-        'selectedActions' => 'required',
-    ];
-
-    protected $messages = [
-        'studentId' => 'Please select student',
-        'minor_offenses_id.required_without_all' => 'Please select at least one minor Offense or provide a grave Offense.',
-        'grave_offenses_id.required_without_all' => 'Please select at least one grave Offense or provide a minor Offense.',
-        'selectedActions.required' => 'Please select at least one action.',
-    ];
-
+    use WithFileUploads;
 
     public function selectStudent($id, $name)
     {
         $this->studentId = $id;
         $this->studentName = $name;
-     //  !$this->last_name = Students::find($id)->last_name;(for the profile)
         $this->isOpen = false;
         $this->loadCases();
-
     }
     public function loadCases()
     {
@@ -86,14 +62,12 @@ class Report extends Component
     {
         $this->isOpen = !$this->isOpen;
     }
-
     public function updatedStudentName($value)
     {
         if (empty($value)) {
             $this->resetForm();
         }
     }
-
     public function updated()
     {
         $this->showError = false;
@@ -103,7 +77,6 @@ class Report extends Component
         $this->showError = false;
         $this->loadCases();
     }
-
     public function render()
     {
         $students = [];
@@ -134,12 +107,6 @@ class Report extends Component
     public function store()
     {
         $this->validate();
-        if (empty($this->studentId)) {
-            $this->addError('studentId', 'Please select a student');
-            $this->showError = true;
-            return;
-        }
-
         $letterPath = null;
 
         if ($this->letter) {
@@ -164,17 +131,37 @@ class Report extends Component
             ]);
         }
 
-
-        $loggedInUserId = Auth::id();
-
-        if (!is_null($loggedInUserId)) {
+        $userId = Auth::id();
+        if (!is_null($userId)) {
             $anecdotal->report()->create([
-                'user_id' => $loggedInUserId,
+                'user_id' => $userId,
             ]);
         }
+
         $this->resetForm();
         session()->flash('message', 'Successfully Added');
     }
+
+    protected $rules = [
+        'studentName' => 'required',
+        'studentId' => 'required',
+        'minor_offenses_id' => 'nullable|required_without_all:grave_offenses_id',
+        'grave_offenses_id' => 'nullable|required_without_all:minor_offenses_id',
+        'gravity' => 'required',
+        'short_description' => 'required',
+        'observation' => 'required',
+        'desired' => 'required',
+        'outcome' => 'required',
+        'letter' => 'nullable | image',
+        'selectedActions' => 'required',
+    ];
+
+    protected $messages = [
+        'studentId' => 'Please select student',
+        'minor_offenses_id.required_without_all' => 'Please select at least one minor offense or provide a grave offense.',
+        'grave_offenses_id.required_without_all' => 'Please select at least one grave offense or provide a minor offense.',
+        'selectedActions.required' => 'Please select at least one action.',
+    ];
 
     public function resetForm()
     {
@@ -188,9 +175,9 @@ class Report extends Component
         $this->minor_offenses_id = null;
         $this->grave_offenses_id = null;
         $this->letter = null;
-        $this->selectedActions= [];
-
+        $this->selectedActions = [];
     }
+
     public function resetSelect($selectedField)
     {
         if ($selectedField === 'minor') {
@@ -198,7 +185,6 @@ class Report extends Component
                 $this->minor_offenses_id = null;
                 return;
             }
-            // No need to reset the value if an actual option is selected
         } elseif ($selectedField === 'grave') {
             if ($this->grave_offenses_id === '') {
                 $this->grave_offenses_id = null;

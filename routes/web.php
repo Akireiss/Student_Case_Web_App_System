@@ -31,7 +31,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/test', function () {
-    return view('layouts.app');
+    return view('test');
 });
 
 Auth::routes();
@@ -99,7 +99,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('report/student', Report::class);
             //*Student Profile//livewire
             Route::get('students-profile', StudentProfile::class);
-            Route::get('student-profile/{id}/view', [StudentProfile::class, 'show']);
+            Route::get('student-profile/{profile}/view', [StudentProfile::class, 'show'])->name('profile.view');
             //*History
             Route::get('report/history', ReportHistory::class);
             Route::get('report/history/{id}/view', [ReportHistory::class, 'show']);

@@ -33,6 +33,9 @@ class User extends Authenticatable
         'classroom_id'
     ];
 
+    public function classroom() {
+        return $this->belongsTo(Classroom::class, 'classroom_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -78,9 +81,6 @@ class User extends Authenticatable
         return $this->hasMany(Students::class, 'classroom_id', 'classroom_id');
     }
 
-    public function classroom() {
-        return $this->belongsTo(Classroom::class, 'classroom_id');
-    }
 
 
 }

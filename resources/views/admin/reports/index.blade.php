@@ -14,6 +14,8 @@
   </div>
 
 <div>
+    {{-- //The test table --}}
+    {{-- <livewire:student-anecdotal-table/> --}}
     <livewire:anecdota-table/>
 </div>
 

@@ -10,12 +10,10 @@ class User extends Component
 {
     public $name;
     public $email;
-    public $successMessage = '';
-
-
     public $currentPassword;
     public $newPassword;
     public $passwordConfirmation;
+
     public function mount()
     {
         $user = Auth::user();
@@ -44,15 +42,18 @@ class User extends Component
         ->section('content');
     }
 
+    protected $rules = [
+        'currentPassword' => 'required',
+        'newPassword' => 'required|min:8|confirmed',
+        'passwordConfirmation' => 'required'
+    ];
+
     public function updatePassword()
     {
-        $this->validate([
-            'currentPassword' => 'required',
-            'newPassword' => 'required|min:8|confirmed',
-        ]);
+        $this->validate();
 
         // Verify the current password
-        if (!Hash::check($this->currentPassword, auth()->user()->password)) {
+        if (Hash::check($this->currentPassword, auth()->user()->password)) {
             $this->addError('currentPassword', 'The current password is incorrect.');
             return;
         }
@@ -66,9 +67,9 @@ class User extends Component
         $this->currentPassword = '';
         $this->newPassword = '';
         $this->passwordConfirmation = '';
-        session()->flash('message', 'Updated Successfully');
-    }
 
+        session()->flash('message', 'Password updated successfully.');
+    }
 
 
 }

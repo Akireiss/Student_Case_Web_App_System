@@ -78,7 +78,7 @@ class Anecdotal extends Model
         ]);
     }
 
-    public function getCaseStatusAttribute()
+    public function getStatusTextAttribute()
     {
         $value = $this->attributes['case_status']; // Retrieve the attribute value from the model
 

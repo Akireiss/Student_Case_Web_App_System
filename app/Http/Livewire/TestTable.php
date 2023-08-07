@@ -3,15 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Models\Students;
-use App\Models\Classroom;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
+use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
-final class StudentTable extends PowerGridComponent
+final class TestTable extends PowerGridComponent
 {
     use ActionButton;
     use WithExport;
@@ -34,7 +33,7 @@ final class StudentTable extends PowerGridComponent
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
-                ->showRecordCount(mode: 'full')
+                ->showRecordCount(),
         ];
     }
 
@@ -53,15 +52,8 @@ final class StudentTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Students::query()
-            ->join('classrooms', 'students.classroom_id', '=', 'classrooms.id')
-            ->select(
-                'students.*',
-                'classrooms.grade_level as grade_level',
-                'classrooms.section as section',
-              //  'classrooms.status as classrooms_status'
-
-            );
+        $classroomId = auth()->user()->classroom_id;
+        return Students::where('classroom_id', $classroomId);
     }
 
     /*
@@ -96,19 +88,16 @@ final class StudentTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-
+            ->addColumn('id')
+            ->addColumn('classroom_id')
             ->addColumn('first_name')
 
-            /** Example of custom column using a closure **/
-            ->addColumn('first_name_lower', fn(Students $model) => strtolower(e($model->first_name)))
+           /** Example of custom column using a closure **/
+            ->addColumn('first_name_lower', fn (Students $model) => strtolower(e($model->first_name)))
 
             ->addColumn('last_name')
-
-            ->addColumn('classroom', fn(Students $model) => "{$model->grade_level} - {$model->section}")
-
-            ->addColumn('lrn', fn (Students $model) => $model->lrn ?: 'No Data')
-            ->addColumn('status', fn(Students $model) => $model?->getStatusTextAttribute())
-            ->addColumn('created_at_formatted', fn(Students $model) => Carbon::parse($model->created_at)->format('F j, Y'));
+            ->addColumn('lrn')
+            ->addColumn('status');
     }
 
     /*
@@ -120,40 +109,30 @@ final class StudentTable extends PowerGridComponent
     |
     */
 
-    /**
-     * PowerGrid Columns.
-     *
-     * @return array<int, Column>
-     */
+     /**
+      * PowerGrid Columns.
+      *
+      * @return array<int, Column>
+      */
     public function columns(): array
     {
         return [
+            Column::make('Id', 'id'),
+            Column::make('Classroom id', 'classroom_id'),
             Column::make('First name', 'first_name')
                 ->sortable()
-                ->searchable()
-                ->editOnClick(),
+                ->searchable(),
 
             Column::make('Last name', 'last_name')
                 ->sortable()
-                ->editOnClick()
                 ->searchable(),
 
-            Column::make('Grade Level', 'grade_level')
-                ->sortable(),
-
-            Column::make('Section', 'section')
-                ->sortable(),
-
             Column::make('Lrn', 'lrn')
-                ->editOnClick()
-                ->sortable(),
-
+                ->sortable()
+                ->searchable(),
 
             Column::make('Status', 'status')
-                ->sortable(),
-
-            Column::make('Date Added', 'created_at_formatted', 'created_at')
-                ->sortable(),
+                ->toggleable(),
 
         ];
     }
@@ -168,17 +147,8 @@ final class StudentTable extends PowerGridComponent
         return [
             Filter::inputText('first_name')->operators(['contains']),
             Filter::inputText('last_name')->operators(['contains']),
-            Filter::datetimepicker('created_at'),
-            Filter::select('grade_level', 'grade_level')
-            ->dataSource(Classroom::select('grade_level')->distinct()->get())
-            ->optionValue('grade_level')
-            ->optionLabel('grade_level'),
-            Filter::select('section', 'section')
-            ->dataSource(Classroom::select('section')->distinct()->get())
-            ->optionValue('section')
-            ->optionLabel('section'),
-
-
+            Filter::inputText('lrn')->operators(['contains']),
+            Filter::boolean('status'),
         ];
     }
 
@@ -191,7 +161,7 @@ final class StudentTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Student Action Buttons.
+     * PowerGrid Students Action Buttons.
      *
      * @return array<int, Button>
      */
@@ -202,13 +172,13 @@ final class StudentTable extends PowerGridComponent
        return [
            Button::make('edit', 'Edit')
                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('student.edit', function(\App\Models\Admin\Student $model) {
+               ->route('students.edit', function(\App\Models\Students $model) {
                     return $model->id;
                }),
 
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('student.destroy', function(\App\Models\Admin\Student $model) {
+               ->route('students.destroy', function(\App\Models\Students $model) {
                     return $model->id;
                })
                ->method('delete')
@@ -225,7 +195,7 @@ final class StudentTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Student Action Rules.
+     * PowerGrid Students Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -237,28 +207,9 @@ final class StudentTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($student) => $student->id === 1)
+                ->when(fn($students) => $students->id === 1)
                 ->hide(),
         ];
     }
     */
-
-    public array $first_name = [];
-    public array $last_name = [];
-    public array $lrn = [];
-
-
-    protected array $rules = [
-        'first_name.*' => ['required'],
-        'last_name.*' => ['required'],
-        'lrn.*' => ['integer'],
-    ];
-
-    public function onUpdatedEditable($id, $field, $value): void
-    {
-        $this->validate();
-        Students::query()->find($id)->update([
-            $field => $value,
-        ]);
-    }
 }

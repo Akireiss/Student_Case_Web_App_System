@@ -19,15 +19,15 @@
             @foreach($userReports as $report)
                 <tr class="text-gray-700 dark:text-gray-400">
                     <td class="px-4 py-2">
-                        {{ $report->anecdotal?->student?->first_name  ?? "No First Name" }}
-                         {{ $report->anecdotal?->student?->last_name ??  "No Last Name" }}
+                        {{ $report->anecdotal?->student?->first_name  ?? "No Data" }}
+                         {{ $report->anecdotal?->student?->last_name ??  "No Data" }}
 
                     </td>
                     <td class="px-4 py-2">
-                        {{ $report->anecdotal?->Minoroffenses?->offenses  ?? "No Offenses Found" }}
+                        {{ $report->anecdotal?->Minoroffenses?->offenses  ?? "No Data" }}
                     </td>
                     <td class="px-4 py-2">
-                        {{ $report->anecdotal?->Graveoffenses?->offenses ?? "No Offenses Found" }}
+                        {{ $report->anecdotal?->Graveoffenses?->offenses ?? "No Data" }}
                     </td>
 
                     <td class="px-4 py-2">

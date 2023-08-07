@@ -55,13 +55,9 @@
 
                 <div class="lg:col-span-2">
                     <div>
-                        @if ($successMessage)
-                        <div class=" text-green-800 p-2">
-                            {{ $successMessage }}
-                        </div>
-                    @endif
 
                         <form wire:submit.prevent="updatePassword">
+
                             <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 md:grid-cols-5">
                                 <div class="md:col-span-5">
                                     <x-label for="current_password">Current Password</x-label>
@@ -77,25 +73,19 @@
                                 <div class="md:col-span-5">
                                     <x-label for="password">Repeat Password</x-label>
                                     <x-input type="password" wire:model="passwordConfirmation" name="password_confirmation" />
+
                                     @error('passwordConfirmation') <span class="text-red-500">{{ $message }}</span> @enderror
                                 </div>
 
-                                <div class="md:col-span-5 text-right">
-                                    <div class="inline-flex items-end">
-                                        @if ($successMessage)
-                                        <div class=" text-green-800 p-2">
-                                            {{ $successMessage }}
-                                        </div>
-                                    @endif
-                                    <div class="flex justify-end items-center">
+
+                                    </div>
+                                    <div class="flex justify-end items-center my-4">
                                         <x-text-alert />
-                                        <div wire:loading wire:target="updatePassword" class="mx-4">
+                                        <div wire:loading wire:target="update" class="mx-4">
                                             Loading
                                         </div>
-                                        <x-button type="submit" wire:loading.attr="disabled">Update</x-button>
+                                        <x-button wire:loading.attr="disabled">Update</x-button>
                                     </div>
-                                    </div>
-                                </div>
                             </div>
                         </form>
 
