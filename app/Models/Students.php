@@ -12,9 +12,8 @@ class Students extends Model
 {
     public $timestamps = false;
     use HasFactory;
-
-
     use HasFactory;
+
 
     protected $table = 'students';
 
@@ -33,15 +32,10 @@ class Students extends Model
         return $this->hasMany(Report::class, 'anecdotal_id');
     }
 
-
-
     public function profile()
     {
         return $this->hasMany(Profile::class, 'student_id');
     }
-
-
-    //adviser
 
     public function classroom()
     {

@@ -21,7 +21,7 @@ class Report extends Component
     public $isOpen = false;
     public $showError = false;
     public $cases = [];
-    public $actions;
+    public $selectedActions = [];
 
     use WithFileUploads;
     public $minor_offenses_id;
@@ -32,33 +32,59 @@ class Report extends Component
     public $desired;
     public $outcome;
     public $letter;
-
     public $user_id;
 
-    public function mount()
-    {
-        $this->showError = false;
-    }
+    protected $rules = [
+        'studentName' => 'required',
+        'studentId' => 'required',
+        'minor_offenses_id' => 'nullable|required_without_all:grave_offenses_id',
+        'grave_offenses_id' => 'nullable|required_without_all:minor_offenses_id',
+        'gravity' => 'required',
+        'short_description' => 'required',
+        'observation' => 'required',
+        'desired' => 'required',
+        'outcome' => 'required',
+        'letter' => 'nullable | image',
+        'selectedActions' => 'required',
+    ];
+
+    protected $messages = [
+        'studentId' => 'Please select student',
+        'minor_offenses_id.required_without_all' => 'Please select at least one minor Offense or provide a grave Offense.',
+        'grave_offenses_id.required_without_all' => 'Please select at least one grave Offense or provide a minor Offense.',
+        'selectedActions.required' => 'Please select at least one action.',
+    ];
+
 
     public function selectStudent($id, $name)
     {
-
         $this->studentId = $id;
         $this->studentName = $name;
-        //  $this->last_name = Students::find($id)->last_name;
+     //  !$this->last_name = Students::find($id)->last_name;(for the profile)
         $this->isOpen = false;
-        $student = Students::find($id);
-        if ($student) {
-            $this->cases = $student->anecdotal;
+        $this->loadCases();
+
+    }
+    public function loadCases()
+    {
+        if ($this->studentId) {
+            $student = Students::find($this->studentId);
+            if ($student) {
+                $this->cases = $student->anecdotal;
+            } else {
+                $this->cases = [];
+            }
         } else {
             $this->cases = [];
         }
-
     }
-
+    public function updatedStudentId()
+    {
+        $this->loadCases();
+    }
     public function toggleDropdown()
     {
-        $this->isOpen = !$this->isOpen; // Toggle the dropdown visibility.
+        $this->isOpen = !$this->isOpen;
     }
 
     public function updatedStudentName($value)
@@ -72,10 +98,42 @@ class Report extends Component
     {
         $this->showError = false;
     }
+    public function mount()
+    {
+        $this->showError = false;
+        $this->loadCases();
+    }
+
+    public function render()
+    {
+        $students = [];
+
+        if (strlen($this->studentName) >= 3) {
+            $students = Students::where(function ($query) {
+                $query->where('first_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
+            })->get();
+        }
+        $actions = Action::all();
+        $offenses = Offenses::whereIn('category', [0, 1])->get();
+        $minorOffenses = $offenses->where('category', 0)->pluck('offenses', 'id');
+        $graveOffenses = $offenses->where('category', 1)->pluck('offenses', 'id');
+
+        return view('livewire.adviser.report', [
+            'minorOffenses' => $minorOffenses,
+            'graveOffenses' => $graveOffenses,
+            'students' => $students,
+            'actions' => $actions
+        ])->extends('layouts.dashboard.index')
+            ->section('content');
+    }
+
 
 
     public function store()
     {
+        $this->validate();
         if (empty($this->studentId)) {
             $this->addError('studentId', 'Please select a student');
             $this->showError = true;
@@ -100,9 +158,12 @@ class Report extends Component
             'letter' => $letterPath,
         ]);
 
-        $anecdotal->actionsTaken()->create([
-            'actions' => $this->actions
-        ]);
+        foreach ($this->selectedActions as $selectedAction) {
+            $anecdotal->actionsTaken()->create([
+                'actions' => $selectedAction
+            ]);
+        }
+
 
         $loggedInUserId = Auth::id();
 
@@ -117,33 +178,32 @@ class Report extends Component
 
     public function resetForm()
     {
-        $this->studentName = '';
-        $this->studentId = '';
-    }
+        $this->studentName = null;
+        $this->studentId = null;
+        $this->gravity = '';
+        $this->short_description = '';
+        $this->observation = '';
+        $this->desired = '';
+        $this->outcome = '';
+        $this->minor_offenses_id = null;
+        $this->grave_offenses_id = null;
+        $this->letter = null;
+        $this->selectedActions= [];
 
-    public function render()
+    }
+    public function resetSelect($selectedField)
     {
-        $students = [];
-
-        if (strlen($this->studentName) >= 3) {
-            $students = Students::where(function ($query) {
-                $query->where('first_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
-            })->get();
+        if ($selectedField === 'minor') {
+            if ($this->minor_offenses_id === '') {
+                $this->minor_offenses_id = null;
+                return;
+            }
+            // No need to reset the value if an actual option is selected
+        } elseif ($selectedField === 'grave') {
+            if ($this->grave_offenses_id === '') {
+                $this->grave_offenses_id = null;
+                return;
+            }
         }
-
-        $offenses = Offenses::whereIn('category', [0, 1])->get();
-        $minorOffenses = $offenses->where('category', 0)->pluck('offenses', 'id');
-        $graveOffenses = $offenses->where('category', 1)->pluck('offenses', 'id');
-
-        return view('livewire.adviser.report', [
-            'minorOffenses' => $minorOffenses,
-            'graveOffenses' => $graveOffenses,
-            'students' => $students
-        ])->extends('layouts.dashboard.index')
-        ->section('content');
     }
-
-
 }

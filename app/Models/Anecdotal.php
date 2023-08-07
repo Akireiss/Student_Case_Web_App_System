@@ -32,12 +32,19 @@ class Anecdotal extends Model
         'case_status'
     ];
 
+    public function Minoroffenses()
+    {
+        return $this->belongsTo(Offenses::class, 'minor_offense_id');
+    }
+    public function Graveoffenses()
+    {
+        return $this->belongsTo(Offenses::class, 'grave_offense_id');
+    }
 
     public function report()
     {
         return $this->hasMany(Report::class, 'anecdotal_id');
     }
-
 
     public function students()
     {
@@ -49,19 +56,10 @@ class Anecdotal extends Model
         return $this->belongsTo(Students::class, 'student_id');
     }
 
-    public function Minoroffenses()
-    {
-        return $this->belongsTo(Offenses::class, 'minor_offense_id');
-    }
-    public function Graveoffenses()
-    {
-        return $this->belongsTo(Offenses::class, 'grave_offense_id');
-    }
     public function actionsTaken()
     {
         return $this->hasMany(ActionsTaken::class, 'anecdotal_id');
     }
-
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -69,6 +67,7 @@ class Anecdotal extends Model
             ->logOnly(['student_id', 'short_description', 'outcome']);
     }
 
+    // !Table
     public static function codes()
     {
         return collect([
@@ -79,7 +78,6 @@ class Anecdotal extends Model
         ]);
     }
 
-    // Anecdotal.php (or the appropriate model file)
     public function getCaseStatusAttribute()
     {
         $value = $this->attributes['case_status']; // Retrieve the attribute value from the model
