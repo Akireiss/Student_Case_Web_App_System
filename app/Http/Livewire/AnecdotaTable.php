@@ -59,7 +59,7 @@ final class AnecdotaTable extends PowerGridComponent
             ->join('offenses', 'anecdotal.grave_offense_id', '=', 'offenses.id')
             ->select('anecdotal.*',
             'anecdotal.created_at',
-            'students.created as created',
+            'students.created_at as created',
             'offenses.created_at as created_offense',
         );
     }

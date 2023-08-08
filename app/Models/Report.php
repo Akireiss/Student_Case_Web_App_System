@@ -25,6 +25,12 @@ class Report extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    //! Powergrid
     public function anecdotal()
     {
         return $this->belongsTo(Anecdotal::class, 'anecdotal_id');

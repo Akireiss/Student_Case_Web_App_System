@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Students extends Model
 {
-    public $timestamps = false;
     use HasFactory;
     use HasFactory;
 
@@ -47,6 +46,14 @@ class Students extends Model
         return $this->hasMany(Anecdotal::class, 'student_id');
     }
 
-
+    public static function codes()
+    {
+        return collect(
+            [
+                ['status' => 0, 'label' => 'Active'],
+                ['status' => 1, 'label' => 'Inactive'],
+            ]
+        );
+    }
 
 }

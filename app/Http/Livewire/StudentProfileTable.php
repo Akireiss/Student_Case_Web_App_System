@@ -61,8 +61,8 @@ public function datasource(): Builder
         ->join('municipal', 'profile.municipal_id', '=', 'municipal.id')
         ->select(
             'profile.*',
-            'students.first_name as student_first_name',
-            'students.last_name as student_last_name',
+            'students.first_name',
+            'students.last_name',
             'barangay.barangay as barangay',
             'municipal.municipality as municipal'
         );
@@ -83,7 +83,11 @@ public function datasource(): Builder
      */
     public function relationSearch(): array
     {
-        return [];
+        return [
+            'barangay' => ['barangay'],
+            'municipal' => ['municipality'],
+            'student' => ['first_name', 'last_name'],
+        ];
     }
 
     /*
@@ -100,8 +104,8 @@ public function datasource(): Builder
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('student_first_name')
-            ->addColumn('student_last_name')
+            ->addColumn('first_name')
+            ->addColumn('last_name')
             ->addColumn('sex')
 
            /** Example of custom column using a closure **/
@@ -110,6 +114,7 @@ public function datasource(): Builder
             ->addColumn('contact')
             ->addColumn('barangay')
             ->addColumn('municipal')
+            ->addColumn('status')
             ->addColumn('status', fn (Profile $model) =>$model?->getStatusTextAttribute()
         );
     }
@@ -131,10 +136,13 @@ public function datasource(): Builder
     public function columns(): array
     {
         return [
-            Column::make('First Name', 'student_first_name')
+            Column::make('First Name', 'first_name')
+            ->searchable()
+            ->withCount('Total Students Profile', true, false)
             ->sortable(),
-            Column::make('Last Name', 'student_last_name')
-            ->sortable(),
+            Column::make('Last Name', 'last_name')
+            ->sortable()
+            ->searchable(),
             Column::make('Sex', 'sex')
                 ->sortable()
                 ->searchable(),
@@ -160,6 +168,18 @@ public function datasource(): Builder
     public function filters(): array
     {
         return [
+            Filter::inputText('first_name')->operators(['contains']),
+            Filter::inputText('last_name')->operators(['contains']),
+            Filter::select('sex', 'sex')
+            ->dataSource(Profile::select('sex')->distinct()->get())
+            ->optionValue('sex')
+            ->optionLabel('sex'),
+            Filter::select('status', 'profile.status')
+            ->dataSource(Profile::codes())
+            ->optionValue('status')
+            ->optionLabel('label'),
+
+
         ];
     }
 

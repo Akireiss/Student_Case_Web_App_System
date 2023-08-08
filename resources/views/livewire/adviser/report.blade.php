@@ -251,9 +251,9 @@
                         <td class="px-4 py-3">
                             {{ $case->Graveoffenses?->offenses ?? 'No Data' }}
                         </td>
-                        <td class="px-4 py-3">
+                        {{-- <td class="px-4 py-3">
                             {{ $case->getCaseStatusAttribute() }}
-                        </td>
+                        </td> --}}
                         <td class="px-4 py-3">
                             {{ $case->created_at->format('F j, Y') }}
                         </td>

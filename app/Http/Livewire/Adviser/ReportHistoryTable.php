@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Adviser;
 
-use App\Models\Anecdotal;
+use App\Models\Report;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
@@ -10,7 +10,7 @@ use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
 use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
-final class StudentAnecdotalTable extends PowerGridComponent
+final class ReportHistoryTable extends PowerGridComponent
 {
     use ActionButton;
     use WithExport;
@@ -48,12 +48,16 @@ final class StudentAnecdotalTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Anecdotal>
+     * @return Builder<\App\Models\Report>
      */
     public function datasource(): Builder
     {
-        return Anecdotal::query();
+        $userId = auth()->user()->id;
+        return Report::where('user_id', $userId)
+            ->with(['users', 'anecdotal' => fn ($query) => $query->select('student_id')])
+            ->get();
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +74,10 @@ final class StudentAnecdotalTable extends PowerGridComponent
      */
     public function relationSearch(): array
     {
-        return [];
+        return [
+            'users' => ['name'],
+            'anecdotal' => ['student_id'],
+        ];
     }
 
     /*
@@ -87,17 +94,10 @@ final class StudentAnecdotalTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('id')
-            ->addColumn('student_id')
-            ->addColumn('grave_offense_id')
-            ->addColumn('minor_offense_id')
-            ->addColumn('gravity')
-
-           /** Example of custom column using a closure **/
-            ->addColumn('gravity_lower', fn (Anecdotal $model) => strtolower(e($model->gravity)))
-
-            ->addColumn('case_status')
-            ->addColumn('created_at_formatted', fn (Anecdotal $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('users.name')
+            ->addColumn('anecdotal.student_id')
+            ->addColumn('status')
+            ->addColumn('created_at_formatted', fn (Report $model) => Carbon::parse($model->created_at)->format('F, j Y'));
     }
 
     /*
@@ -117,16 +117,9 @@ final class StudentAnecdotalTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Student id', 'student_id'),
-            Column::make('Grave offense id', 'grave_offense_id'),
-            Column::make('Minor offense id', 'minor_offense_id'),
-            Column::make('Gravity', 'gravity')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Case status', 'case_status')
-                ->toggleable(),
+            Column::make('Reporter Name', 'users.name'),
+            Column::make('Anecdotal id', 'anecdotal.student_id'),
+            Column::make('Status', 'status'),
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->sortable(),
@@ -142,8 +135,6 @@ final class StudentAnecdotalTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('gravity')->operators(['contains']),
-            Filter::boolean('case_status'),
             Filter::datetimepicker('created_at'),
         ];
     }
@@ -157,7 +148,7 @@ final class StudentAnecdotalTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Anecdotal Action Buttons.
+     * PowerGrid Report Action Buttons.
      *
      * @return array<int, Button>
      */
@@ -168,13 +159,13 @@ final class StudentAnecdotalTable extends PowerGridComponent
        return [
            Button::make('edit', 'Edit')
                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('anecdotal.edit', function(\App\Models\Anecdotal $model) {
+               ->route('report.edit', function(\App\Models\Report $model) {
                     return $model->id;
                }),
 
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('anecdotal.destroy', function(\App\Models\Anecdotal $model) {
+               ->route('report.destroy', function(\App\Models\Report $model) {
                     return $model->id;
                })
                ->method('delete')
@@ -191,7 +182,7 @@ final class StudentAnecdotalTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Anecdotal Action Rules.
+     * PowerGrid Report Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -203,7 +194,7 @@ final class StudentAnecdotalTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($anecdotal) => $anecdotal->id === 1)
+                ->when(fn($report) => $report->id === 1)
                 ->hide(),
         ];
     }

@@ -127,4 +127,14 @@ class Profile extends Model
         return $this->belongsTo(Province::class);
     }
 
+    public static function codes()
+    {
+        return collect([
+            ['status' => 0, 'label' => 'Pending'],
+            ['status' => 1, 'label' => 'Process'],
+            ['status' => 2, 'label' => 'Ongoing'],
+            ['status' => 3, 'label' => 'Resolved'],
+        ]);
+    }
+
 }
