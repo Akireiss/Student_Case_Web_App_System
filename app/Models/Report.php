@@ -29,7 +29,10 @@ class Report extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
+    public function students()
+    {
+        return $this->hasMany(Students::class, 'student_id');
+    }
     //! Powergrid
     public function anecdotal()
     {

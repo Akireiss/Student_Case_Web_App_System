@@ -2,8 +2,8 @@
     <x-validation />
     <div class="mx-auto">
         <div class="flex justify-between items-center ">
-            <h6 class="text-xl font-bold px-4 text-left ">
-                Report Student
+            <h6 class="text-xl font-bold text-left ">
+            Report Student
             </h6>
 
         </div>

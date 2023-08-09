@@ -102,10 +102,14 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('student-profile/{profile}/view', [StudentProfile::class, 'show'])->name('profile.view');
             //*History
             Route::get('report/history', ReportHistory::class);
-            Route::get('report/history/{id}/view', [ReportHistory::class, 'show']);
+            Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('report.view');
+            Route::get('report/history/{report}/edit', [ReportHistory::class, 'edit'])->name('report.edit');
             //*Account Management
             Route::get('update-acc', User::class);
             Route::get('add-acc', User::class);
         });
     });
 });
+
+//traits
+Route::resource('students', ReportHistory::class);

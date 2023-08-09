@@ -1,7 +1,9 @@
 <div>
     <div class="mx-auto py-8">
 
-        <h3 class="font-semibold mb-6 dark:text-gray-200 text-gray-600">Update your information here</h3>
+        <h6 class="text-xl font-bold text-left ">
+Update your information here
+        </h6>
 
         <div class="bg-white dark:bg-gray-800 rounded shadow-lg p-10 px-4 md:p-8 mb-6">
             <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3">
