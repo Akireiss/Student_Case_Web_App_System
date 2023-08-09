@@ -101,9 +101,15 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('students-profile', StudentProfile::class);
             Route::get('student-profile/{profile}/view', [StudentProfile::class, 'show'])->name('profile.view');
             //*History
-            Route::get('report/history', ReportHistory::class);
+            Route::get('report/history', function() {
+                return view('staff.report-history.index');
+            });
             Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('report.view');
-            Route::get('report/history/{report}/edit', [ReportHistory::class, 'edit'])->name('report.edit');
+            Route::get('report/history/{report}/edit', ReportHistory::class)->name('report.edit');
+            //*Students
+            Route::get('students', function() {
+                return view('staff.students.index');
+            });
             //*Account Management
             Route::get('update-acc', User::class);
             Route::get('add-acc', User::class);

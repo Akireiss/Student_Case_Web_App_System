@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Adviser;
 
-use App\Http\Requests\StudentFormRequest;
 use App\Models\ActionsTaken;
 use App\Models\Anecdotal;
 use App\Models\Students;
 use App\Models\User;
 use App\Models\Action;
+use App\Traits\SelectNameTrait;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Offenses;
@@ -16,67 +16,9 @@ use Livewire\WithFileUploads;
 
 class Report extends Component
 {
-    public $studentName = '';
-    public $studentId = null;
-    public $isOpen = false;
-    public $showError = false;
-    public $cases = [];
-    public $selectedActions = [];
-    public $minor_offenses_id;
-    public $grave_offenses_id;
-    public $gravity;
-    public $short_description;
-    public $observation;
-    public $desired;
-    public $outcome;
-    public $letter;
-    public $user_id;
 
     use WithFileUploads;
-
-    public function selectStudent($id, $name)
-    {
-        $this->studentId = $id;
-        $this->studentName = $name;
-        $this->isOpen = false;
-        $this->loadCases();
-    }
-    public function loadCases()
-    {
-        if ($this->studentId) {
-            $student = Students::find($this->studentId);
-            if ($student) {
-                $this->cases = $student->anecdotal;
-            } else {
-                $this->cases = [];
-            }
-        } else {
-            $this->cases = [];
-        }
-    }
-    public function updatedStudentId()
-    {
-        $this->loadCases();
-    }
-    public function toggleDropdown()
-    {
-        $this->isOpen = !$this->isOpen;
-    }
-    public function updatedStudentName($value)
-    {
-        if (empty($value)) {
-            $this->resetForm();
-        }
-    }
-    public function updated()
-    {
-        $this->showError = false;
-    }
-    public function mount()
-    {
-        $this->showError = false;
-        $this->loadCases();
-    }
+    use SelectNameTrait;
     public function render()
     {
         $students = [];
@@ -101,8 +43,6 @@ class Report extends Component
         ])->extends('layouts.dashboard.index')
             ->section('content');
     }
-
-
 
     public function store()
     {
@@ -142,26 +82,6 @@ class Report extends Component
         session()->flash('message', 'Successfully Added');
     }
 
-    protected $rules = [
-        'studentName' => 'required',
-        'studentId' => 'required',
-        'minor_offenses_id' => 'nullable|required_without_all:grave_offenses_id',
-        'grave_offenses_id' => 'nullable|required_without_all:minor_offenses_id',
-        'gravity' => 'required',
-        'short_description' => 'required',
-        'observation' => 'required',
-        'desired' => 'required',
-        'outcome' => 'required',
-        'letter' => 'nullable | image',
-        'selectedActions' => 'required',
-    ];
-
-    protected $messages = [
-        'studentId' => 'Please select student',
-        'minor_offenses_id.required_without_all' => 'Please select at least one minor offense or provide a grave offense.',
-        'grave_offenses_id.required_without_all' => 'Please select at least one grave offense or provide a minor offense.',
-        'selectedActions.required' => 'Please select at least one action.',
-    ];
 
     public function resetForm()
     {
@@ -178,18 +98,5 @@ class Report extends Component
         $this->selectedActions = [];
     }
 
-    public function resetSelect($selectedField)
-    {
-        if ($selectedField === 'minor') {
-            if ($this->minor_offenses_id === '') {
-                $this->minor_offenses_id = null;
-                return;
-            }
-        } elseif ($selectedField === 'grave') {
-            if ($this->grave_offenses_id === '') {
-                $this->grave_offenses_id = null;
-                return;
-            }
-        }
-    }
+
 }
