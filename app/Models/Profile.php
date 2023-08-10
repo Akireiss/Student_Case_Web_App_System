@@ -70,6 +70,10 @@ class Profile extends Model
         return $this->hasMany(ParentStatus::class);
     }
 
+    public function parents()
+    {
+        return $this->hasOne(Family::class, 'profile_id');
+    }
 
     public function family()
     {
@@ -125,6 +129,10 @@ class Profile extends Model
     public function province()
     {
         return $this->belongsTo(Province::class);
+    }
+    public function disability()
+    {
+        return $this->belongsTo(Dissa::class);
     }
 
     public static function codes()

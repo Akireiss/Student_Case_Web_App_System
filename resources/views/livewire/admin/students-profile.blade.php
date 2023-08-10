@@ -39,7 +39,7 @@
                                     placeholder="Start typing to search."
                                 />
                                 @error('studentId')
-    <p class="text-red-500 text-sm">{{ $message }}</p>
+    <p class="text-red-500 text-sm">{{ $message }} <span class="text-sm text-green-500 underline">Click Here</span></p>
     @enderror
                                 <span
                                     x-show="studentName !== ''"

@@ -1,6 +1,7 @@
 <?php
 namespace App\Traits;
 
+use App\Models\Profile;
 use App\Models\Students;
 
 trait SelectNameTrait
@@ -21,6 +22,7 @@ trait SelectNameTrait
     public $outcome;
     public $letter;
     public $user_id;
+
 
     protected $rules = [
         'studentName' => 'required',
@@ -75,14 +77,26 @@ trait SelectNameTrait
         $this->studentId = null;
         $this->cases = [];
     }
-
     public function selectStudent($id, $name)
     {
         $this->studentId = $id;
         $this->studentName = $name;
         $this->isOpen = false;
+        //*last name for the profile
+        $this->last_name = Students::find($id)->last_name;
+        //*load case for the case during reporting
         $this->loadCases();
+
+        $student = Students::find($id);
+        if ($student) {
+            $this->cases = $student->anecdotal;
+        } else {
+            $this->cases = [];
+        };
+
     }
+
+
 
     public function loadCases()
     {
