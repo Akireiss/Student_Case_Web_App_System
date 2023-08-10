@@ -5,6 +5,9 @@
     <title>CZCMNHS</title>
     <link rel="icon" href="{{ asset('assets/image/logo.png') }}" type="image/x-icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+
+    @livewireStyles
 </head>
 
 <body>
@@ -13,9 +16,11 @@
         @yield('content')
     </main>
     <x-footer />
-
     </div>
 
+
+
+    @livewireScripts
 </body>
 
 </html>

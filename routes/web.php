@@ -5,6 +5,7 @@ use App\Http\Livewire\Admin\Teacher;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Adviser\Dashboard;
 use App\Http\Livewire\Adviser\ReportHistory;
+use App\Http\Livewire\Student\StudentForm;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Livewire\Adviser\Report;
 use Illuminate\Support\Facades\Route;
@@ -119,3 +120,6 @@ Route::middleware(['auth', 'role'])->group(function () {
 
 //traits
 Route::resource('students', ReportHistory::class);
+//Student Form
+Route::get('student/form', StudentForm::class);
+

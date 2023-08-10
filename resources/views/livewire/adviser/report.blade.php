@@ -25,7 +25,7 @@
 
                                 <div x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
                                     <x-label for="studentName">
-                                        First Name
+                                      Name
                                     </x-label>
                                     <div class="relative">
                                         <x-input wire:model.debounce.300ms="studentName" @focus="isOpen = true"
