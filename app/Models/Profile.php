@@ -72,7 +72,7 @@ class Profile extends Model
 
     public function parents()
     {
-        return $this->hasOne(Family::class, 'profile_id');
+        return $this->hasOne(Family::class);
     }
 
     public function family()
@@ -109,7 +109,7 @@ class Profile extends Model
 
     public function education()
     {
-        return $this->hasMany(EducBg::class);
+        return $this->hasMany(EducBg::class, 'profile_id');
     }
 
     public function accidents()

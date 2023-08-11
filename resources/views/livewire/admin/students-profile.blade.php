@@ -1,6 +1,5 @@
 <div>
-    <x-validation/>
-    <x-flashalert/>
+
     <x-form title="Add Student Profile">
 
         <x-slot name="actions">
@@ -16,15 +15,10 @@
             <form wire:submit.prevent="save">
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
-
                     <div class="w-full px-4">
-
-
-
-
                         <div x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
                             <x-label for="studentName">
-                              First Name
+                                First Name
                             </x-label>
                             <div class="relative">
                                 <x-input
@@ -38,27 +32,19 @@
                                     name="studentName"
                                     placeholder="Start typing to search."
                                 />
-                                @error('studentId')
-    <p class="text-red-500 text-sm">{{ $message }} <span class="text-sm text-green-500 underline">Click Here</span></p>
-    @enderror
-                                <span
-                                    x-show="studentName !== ''"
-                                    @click="studentName = ''; isOpen = false"
-                                    class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold"
-                                >
+                                <x-error fieldName="studentName" /> <!-- Use the correct field name here -->
+
+                                <span x-show="studentName !== ''" @click="studentName = ''; isOpen = false"
+                                    class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold">
                                     &times;
                                 </span>
                                 @if ($studentName && count($students) > 0)
-                                    <ul
-                                        class="bg-white border border-gray-300 mt-2 rounded-md w-full max-h-48 overflow-auto absolute z-10"
-                                        x-show="isOpen"
-                                    >
+                                    <ul class="bg-white border border-gray-300 mt-2 rounded-md w-full max-h-48 overflow-auto absolute z-10"
+                                        x-show="isOpen">
                                         @foreach ($students as $student)
-                                            <li
-                                                class="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                                                wire:click="selectStudent('{{ $student->id }}', '{{ $student->first_name }} ')"
-                                                x-on:click="isOpen = false"
-                                            >
+                                            <li class="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                                                wire:click="selectStudent('{{ $student->id }}', '{{ $student->first_name }}')"
+                                                x-on:click="isOpen = false">
                                                 {{ $student->first_name }} {{ $student->last_name }}
                                             </li>
                                         @endforeach
@@ -67,25 +53,23 @@
                             </div>
                             <input type="hidden" name="studentId" wire:model="studentId">
                         </div>
-
                     </div>
-
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Last Name
                         </x-label>
-                        <x-input wire:model="last_name" readonly/>
+                        <x-input wire:model="last_name" readonly />
+
                     </div>
-
-
-
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Middle Name
                         </x-label>
                         <x-input wire:model="m_name" />
+                        <x-error fieldName="m_name" />
+
                     </div>
 
 
@@ -95,6 +79,8 @@
                             Suffix
                         </x-label>
                         <x-input wire:model="suffix" />
+                        <x-error fieldName="suffix" />
+
                     </div>
 
 
@@ -104,6 +90,8 @@
                             Nickname
                         </x-label>
                         <x-input wire:model="nickname" />
+                        <x-error fieldName="nickname" />
+
                     </div>
 
 
@@ -115,7 +103,9 @@
                             <x-label>
                                 Age
                             </x-label>
-                            <x-input wire:model="age"  type="number"/>
+                            <x-input wire:model="age" type="number" />
+                            <x-error fieldName="age" />
+
                         </div>
 
                     </div>
@@ -130,6 +120,8 @@
                                 <option>Male</option>
                                 <option>Female</option>
                             </x-select>
+                            <x-error fieldName="sex" />
+
                         </div>
 
                     </div>
@@ -140,6 +132,8 @@
                             Birthdate
                         </x-label>
                         <x-input type="date" wire:model="birthdate" />
+                        <x-error fieldName="birthdate" />
+
                     </div>
 
 
@@ -149,6 +143,8 @@
                             Contaact Number
                         </x-label>
                         <x-input wire:model="contact" />
+                        <x-error fieldName="contact" />
+
                     </div>
 
 
@@ -162,6 +158,8 @@
                             <option>Middle</option>
                             <option>Youngest</option>
                         </x-select>
+                        <x-error fieldName="birth_order" />
+
                     </div>
 
 
@@ -171,6 +169,8 @@
                             Number of Siblings
                         </x-label>
                         <x-input wire:model="number_of_siblings" />
+                        <x-error fieldName="number_of_siblings" />
+
                     </div>
 
 
@@ -179,6 +179,8 @@
                             Religion
                         </x-label>
                         <x-input wire:model="religion" />
+                        <x-error fieldName="religion" />
+
                     </div>
 
 
@@ -191,23 +193,29 @@
                             <option>Yes</option>
                             <option>No</option>
                         </x-select>
+                        <x-error fieldName="four_ps" />
+
                     </div>
 
 
 
-                            <div class="relative mb-3 px-4">
+                    <div class="relative mb-3 px-4">
                         <x-label>
                             Mother Tongue
                         </x-label>
                         <x-input wire:model="mother_tongue" />
+                        <x-error fieldName="mother_tongue" />
+
                     </div>
 
 
                     <div class="relative mb-3 px-4">
                         <x-label>
-                           Place of birth
+                            Place of birth
                         </x-label>
-                    <x-input wire:model="birth_place" />
+                        <x-input wire:model="birth_place" />
+                        <x-error fieldName="birth_place" />
+
 
                     </div>
 
@@ -229,6 +237,8 @@
                                 <option value="{{ $province->id }}">{{ $province->province }}</option>
                             @endforeach
                         </x-select>
+                        <x-error fieldName="selectedCity" />
+
                     </div>
 
                     <div class="relative mb-3 px-4">
@@ -238,6 +248,8 @@
                                 <option value="{{ $municipality->id }}">{{ $municipality->municipality }}</option>
                             @endforeach
                         </x-select>
+                        <x-error fieldName="selectedMunicipality" />
+
                     </div>
 
                     <div class="relative mb-3 px-4">
@@ -248,6 +260,8 @@
                                     {{ $barangay->barangay }}</option>
                             @endforeach
                         </x-select>
+                        <x-error fieldName="selectedBarangay" />
+
                     </div>
                 </x-grid>
 
@@ -267,7 +281,7 @@
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
 
-                 <input type="hidden" value="father" wire:model="father_type">
+                    <input type="hidden" value="father" wire:model="father_type">
 
 
 
@@ -276,6 +290,8 @@
                             Name
                         </x-label>
                         <x-input wire:model="father_name" />
+                        <x-error fieldName="father_name" />
+
                     </div>
 
 
@@ -285,6 +301,8 @@
                             Age
                         </x-label>
                         <x-input wire:model="father_age" type="number" />
+                        <x-error fieldName="father_age" />
+
                     </div>
 
 
@@ -293,13 +311,17 @@
                             Occupation
                         </x-label>
                         <x-input wire:model="father_occupation" />
+                        <x-error fieldName="father_occupation" />
+
                     </div>
 
                     <div x-data="{ phoneNumber: '' }" class="relative mb-3 px-4">
                         <x-label>
                             Contact No.
                         </x-label>
-                        <x-input wire:model="father_contact" type="number"  />
+                        <x-input wire:model="father_contact" type="number" />
+                        <x-error fieldName="father_contact" />
+
                     </div>
 
 
@@ -308,12 +330,16 @@
                             Office Contact No.
                         </x-label>
                         <x-input wire:model="father_office_contact" />
+                        <x-error fieldName="father_office_contact" />
+
                     </div>
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Monthly Income
                         </x-label>
                         <x-input wire:model="father_monthly_income" />
+                        <x-error fieldName="father_monthly_income" />
+
                     </div>
 
                 </x-grid>
@@ -326,11 +352,15 @@
                             Place of Birth
                         </x-label>
                         <x-input wire:model="father_birth_place" />
+                        <x-error fieldName="father_birth_place" />
+
                     </div>
                     <div class="relative mb-3 px-4">
                         Place of Work
 
                         <x-input wire:model="father_work_address" />
+                        <x-error fieldName="father_work_address" />
+
                     </div>
                 </x-grid>
 
@@ -347,13 +377,17 @@
                             Name
                         </x-label>
                         <x-input wire:model="mother_name" />
+                        <x-error fieldName="mother_name" />
+
                     </div>
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Age
                         </x-label>
-                        <x-input wire:model="mother_age"  type="number" />
+                        <x-input wire:model="mother_age" type="number" />
+                        <x-error fieldName="mother_age" />
+
                     </div>
 
 
@@ -362,6 +396,8 @@
                             Occupation
                         </x-label>
                         <x-input wire:model="mother_occupation" />
+                        <x-error fieldName="mother_occupation" />
+
                     </div>
 
                     <div class="relative mb-3 px-4">
@@ -369,6 +405,8 @@
                             Contaact No.
                         </x-label>
                         <x-input wire:model="mother_contact" />
+                        <x-error fieldName="mother_contact" />
+
                     </div>
 
                     <div class="relative mb-3 px-4">
@@ -376,12 +414,16 @@
                             Office Contact No.
                         </x-label>
                         <x-input wire:model="mother_office_contact" />
+                        <x-error fieldName="mother_office_contact" />
+
                     </div>
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Monthly Income
                         </x-label>
                         <x-input wire:model="mother_monthly_income" />
+                        <x-error fieldName="mother_monthly_income" />
+
                     </div>
 
                 </x-grid>
@@ -393,11 +435,15 @@
                             Place of Birth
                         </x-label>
                         <x-input wire:model="mother_birth_place" />
+                        <x-error fieldName="mother_birth_place" />
+
                     </div>
                     <div class="relative mb-3 px-4">
                         Place of Work
 
                         <x-input wire:model="mother_work_address" />
+                        <x-error fieldName="mother_work_address" />
+
                     </div>
                 </x-grid>
 
@@ -408,40 +454,43 @@
                             List down the names of Siblings that are studying at CZCMNHS?
                         </h6>
                         <div class="relative mb-3 px-4">
-                            <x-buttontype  @click="siblings.push({ name: '', age: '', gradeSection: '' })">
+                            <x-buttontype @click="siblings.push({ name: '', age: '', gradeSection: '' })">
                                 Add Sibling
                             </x-buttontype>
 
-                            <x-buttontype  @click="siblings.pop()" >
+                            <x-buttontype @click="siblings.pop()">
                                 Remove
                             </x-buttontype>
                         </div>
                     </div>
-
                     <template x-for="(sibling, index) in siblings" :key="index">
                         <x-grid columns="3" gap="4" px="0" mt="0">
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Name
                                 </x-label>
-                                <x-input x-model="sibling.name" />
+                                <x-input wire:model="siblings[index]['name']" />
+
                             </div>
 
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Age
                                 </x-label>
-                                <x-input x-model="sibling.age"   type="number"/>
+                                <x-input wire:model="siblings[index]['age']" type="number" />
+
                             </div>
 
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Grade and Section
                                 </x-label>
-                                <x-input x-model="sibling.gradeSection" />
+                                <x-input wire:model="siblings[index]['gradeSection']" />
+
                             </div>
                         </x-grid>
                     </template>
+
                 </div>
 
 
@@ -450,12 +499,14 @@
                 <div x-data="{ livingWith: @entangle('living_with') }">
                     <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                         You are currently living with:
+                        <x-error fieldName="living_with" />
                     </h6>
                     <x-grid columns="1 md:grid-cols-4" gap="4" px="0" mt="0">
                         <div class="relative mb-3 px-4">
                             <x-checkbox name="living-with" wire:model="living_with" value="both-parents"
                                 x-bind:checked="livingWith === 'both-parents'" />
                             <x-label class="inline-block" for="living-with" value="Both Parents" />
+
                         </div>
                         <div class="relative mb-3 px-4">
                             <x-checkbox name="living-with" wire:model="living_with" value="father-only"
@@ -542,6 +593,8 @@
                             Guardian's Name
                         </x-label>
                         <x-input wire:model="guardian_name" />
+                        <x-error fieldName="guardian_name" />
+
                     </div>
 
 
@@ -553,6 +606,8 @@
                             Relationship with the guardian
                         </x-label>
                         <x-input wire:model="relationship" />
+                        <x-error fieldName="relationship" />
+
                     </div>
 
 
@@ -563,6 +618,8 @@
                             Contact No.
                         </x-label>
                         <x-input wire:model="guardian_contact" />
+                        <x-error fieldName="guardian_contact" />
+
                     </div>
 
 
@@ -570,16 +627,20 @@
                         <x-label>
                             Age
                         </x-label>
-                        <x-input  type="number" wire:model="guardian_age" />
+                        <x-input type="number" wire:model="guardian_age" />
+                        <x-error fieldName="guardian_age" />
+
                     </div>
 
 
 
                     <div class="relative mb-3 px-4">
                         <x-label>
-                        Addresss
+                            Addresss
                         </x-label>
                         <x-input wire:model="guardian_address" />
+                        <x-error fieldName="guardian_address" />
+
                     </div>
 
                 </x-grid>
@@ -600,19 +661,19 @@
                         <div class="relative mb-3 px-4">
                             <x-label for="name_{{ $gradeLevel }}">Name of school</x-label>
                             <x-input wire:model="education.{{ $gradeLevel }}.name"
-                                id="name_{{ $gradeLevel }}" />
+                            id="name_{{ $gradeLevel }}" />
                         </div>
 
                         <div class="relative mb-3 px-4">
                             <x-label for="section_{{ $gradeLevel }}">Section</x-label>
                             <x-input wire:model="education.{{ $gradeLevel }}.section"
-                                id="section_{{ $gradeLevel }}" />
+                            id="section_{{ $gradeLevel }}" />
                         </div>
 
                         <div class="relative mb-3 px-4">
                             <x-label for="school_year_{{ $gradeLevel }}">School Year</x-label>
                             <x-input wire:model="education.{{ $gradeLevel }}.school_year"
-                                id="school_year_{{ $gradeLevel }}" />
+                            id="school_year_{{ $gradeLevel }}" />
                         </div>
                     </x-grid>
                 @endfor
@@ -625,10 +686,10 @@
                             Name some of your Academic and Extra-Curricular Awards
                         </h6>
                         <div class="relative mb-3 px-4">
-                            <x-buttontype  @click="rewards.push({ name: '', age: '' })">
+                            <x-buttontype @click="rewards.push({ name: '', age: '' })">
                                 Add Award
                             </x-buttontype>
-                            <x-buttontype  @click="rewards.pop()" >
+                            <x-buttontype @click="rewards.pop()">
                                 Remove
                             </x-buttontype>
                         </div>
@@ -642,13 +703,15 @@
                                     Name of Award
                                 </x-label>
                                 <x-input x-model="reward.name" />
+
                             </div>
 
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Year Achieved
                                 </x-label>
-                                <x-input x-model="reward.year" type="number"/>
+                                <x-input x-model="reward.year" type="number" />
+
                             </div>
                         </x-grid>
                     </template>
@@ -662,6 +725,8 @@
                             What is your favorite subject/s:
                         </x-label>
                         <x-input wire:model="favorite_subject" />
+                        <x-error fieldName="favorite_subject" />
+
                     </div>
 
                     <div class="relative mb-3 px-4">
@@ -669,6 +734,8 @@
                             What subject do you find difficult
                         </x-label>
                         <x-input wire:model="difficult_subject" />
+                        <x-error fieldName="difficult_subject" />
+
                     </div>
 
                     <div class="relative mb-3 px-4">
@@ -676,12 +743,16 @@
                             What school organizations are you afiliated?
                         </x-label>
                         <x-input wire:model="school_organization" />
+                        <x-error fieldName="school_organization" />
+
                     </div>
                 </x-grid>
 
                 <div x-data="{ plans: @entangle('plans') }">
                     <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                         What do you plan to do after graduating Senior High School?
+                        <x-error fieldName="plans" />
+
                     </h6>
                     <x-grid columns="3" gap="4" px="0" mt="0">
                         <div class="relative mb-3 px-4">
@@ -725,20 +796,26 @@
                             Height
                         </x-label>
                         <x-input wire:model="height" type="number" />
+                        <x-error fieldName="height" />
+
                     </div>
 
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Weight
                         </x-label>
-                        <x-input wire:model="weight"  type="number"/>
+                        <x-input wire:model="weight" type="number" />
+                        <x-error fieldName="weight" />
+
                     </div>
 
-                    <div class="relative mb-3 px-4" >
+                    <div class="relative mb-3 px-4">
                         <x-label>
                             BMI
                         </x-label>
-                        <x-input wire:model="bmi"  type="number"/>
+                        <x-input wire:model="bmi" type="number" />
+                        <x-error fieldName="bmi" />
+
                     </div>
 
 
@@ -759,6 +836,8 @@
                                 If yes, what is it?
                             </x-label>
                             <x-input x-ref="disabilityInput" wire:model="disability" />
+                            <x-error fieldName="" />
+
                         </div>
 
                         <div class="relative mb-3 px-4">
@@ -777,16 +856,14 @@
                                 If yes, what is your food allergy?
                             </x-label>
                             <x-input x-ref="foodAllergyInput" wire:model="foodAllergy" />
+
                         </div>
                     </div>
-
-
-
 
                 </x-grid>
 
                 <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
-                   Medicine taken in
+                    Medicine taken in
                 </h6>
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
@@ -796,6 +873,7 @@
                                 {{ $i }}
                             </x-label>
                             <x-input wire:model="medicines.{{ $i }}" id="medicine_{{ $i }}" />
+
                         </div>
                     @endfor
                 </x-grid>
@@ -813,6 +891,7 @@
                                 {{ $i }}
                             </x-label>
                             <x-input wire:model="vitamins.{{ $i }}" id="vitamin_{{ $i }}" />
+
                         </div>
                     @endfor
                 </x-grid>
@@ -827,7 +906,8 @@
                                 {{ $i }}
                             </x-label>
                             <x-input wire:model="accidents.{{ $i }}"
-                                id="accidents_{{ $i }}" />
+
+                            id="accidents_{{ $i }}" />
                         </div>
                     @endfor
                 </x-grid>
@@ -844,15 +924,18 @@
                                 {{ $i }}
                             </x-label>
                             <x-input wire:model="operations.{{ $i }}"
-                                id="operations_{{ $i }}" />
+                            id="operations_{{ $i }}" />
                         </div>
                     @endfor
                 </x-grid>
 
-                <div class="flex justify-end">
-                    <x-button> Submit</x-button>
+                <div class="flex justify-end items-center">
+                    <x-text-alert />
+                    <div wire:loading wire:target="store" class="mx-4">
+                        Loading
+                    </div>
+                    <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                 </div>
-
             </form>
         </x-slot>
     </x-form>

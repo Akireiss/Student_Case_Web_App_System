@@ -877,6 +877,7 @@
 
                     <x-error fieldName="studentId" />
 
+
                     <span x-show="studentName !== ''" @click="studentName = ''; isOpen = false"
                         class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold">
                         &times;

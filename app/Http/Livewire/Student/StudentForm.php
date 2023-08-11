@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Student;
 
+use App\Models\EducBg;
 use App\Models\Profile;
 use App\Traits\SelectAddressTrait;
 use Livewire\Component;
@@ -21,6 +22,7 @@ class StudentForm extends Component
 
         $profile = Profile::where('student_id', $id)->first();
         if ($profile) {
+            $this->last_name = $profile->student->first_name;
             $this->last_name = $profile->student->last_name;
             $this->m_name = $profile->m_name;
             $this->suffix = $profile->suffix;
@@ -79,6 +81,19 @@ class StudentForm extends Component
                 }
             }
 
+            $educationBackgrounds = EducBg::where('profile_id', $profile->id)->get();
+            // Prepare the education data for form fields
+            $this->education = [];
+            foreach ($educationBackgrounds as $background) {
+                $this->education[$background->grade_level] = [
+                    'name' => $background->school_name,
+                    'section' => $background->grade_section,
+                    'school_year' => $background->school_year,
+                ];
+            }
+
+
+
 
         } else {
             $this->resetForm();
@@ -86,6 +101,11 @@ class StudentForm extends Component
         }
 
     }
+
+
+
+
+
     public function render()
     {
         $students = [];

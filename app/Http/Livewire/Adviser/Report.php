@@ -19,6 +19,20 @@ class Report extends Component
 
     use WithFileUploads;
     use SelectNameTrait;
+    protected $rules = [
+        'studentName' => 'required',
+        'studentId' => 'required',
+        'minor_offenses_id' => 'nullable|required_without_all:grave_offenses_id',
+        'grave_offenses_id' => 'nullable|required_without_all:minor_offenses_id',
+        'gravity' => 'required',
+        'short_description' => 'required',
+        'observation' => 'required',
+        'desired' => 'required',
+        'outcome' => 'required',
+        'letter' => 'nullable | image',
+        'selectedActions' => 'required',
+    ];
+
     public function render()
     {
         $students = [];

@@ -24,19 +24,7 @@ trait SelectNameTrait
     public $user_id;
 
 
-    protected $rules = [
-        'studentName' => 'required',
-        'studentId' => 'required',
-        'minor_offenses_id' => 'nullable|required_without_all:grave_offenses_id',
-        'grave_offenses_id' => 'nullable|required_without_all:minor_offenses_id',
-        'gravity' => 'required',
-        'short_description' => 'required',
-        'observation' => 'required',
-        'desired' => 'required',
-        'outcome' => 'required',
-        'letter' => 'nullable | image',
-        'selectedActions' => 'required',
-    ];
+
     protected $messages = [
         'studentId' => 'Please select student',
         'minor_offenses_id.required_without_all' => 'Please select at least one minor offense or provide a grave offense.',
@@ -47,6 +35,12 @@ trait SelectNameTrait
     {
         $this->showError = false;
         $this->loadCases();
+        if (empty($this->rewards)) {
+            $this->rewards = [['award' => '', 'year' => '']];
+        }
+        if (empty($this->siblings)) {
+            $this->siblings = [['name' => '', 'age' => '', 'gradeSection' => '']];
+        }
     }
 
     public function toggleDropdown()
@@ -57,7 +51,7 @@ trait SelectNameTrait
     public function updatedStudentName($value)
     {
         if (empty($value)) {
-            $this->resetForm();
+            $this->resetName();
         }
     }
 
@@ -92,11 +86,10 @@ trait SelectNameTrait
             $this->cases = $student->anecdotal;
         } else {
             $this->cases = [];
-        };
+        }
+        ;
 
     }
-
-
 
     public function loadCases()
     {

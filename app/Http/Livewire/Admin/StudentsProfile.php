@@ -3,22 +3,21 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Profile;
-use App\Traits\SelectAddressTrait;
-use App\Traits\SelectNameTrait;
+use App\Traits\SiblingsTrait;
 use Livewire\Component;
 use App\Models\Barangay;
 use App\Models\Province;
 use App\Models\Students;
 use App\Models\Municipal;
+use App\Traits\SelectNameTrait;
+use Illuminate\Validation\Rule;
+use App\Traits\SelectAddressTrait;
 
 class StudentsProfile extends Component
 {
     use SelectAddressTrait;
     use SelectNameTrait;
-    public $showError = false;
-    //!
-
-    //!
+    use SiblingsTrait;
 
     public $m_name, $suffix, $nickname, $age, $sex, $birthdate, $birth_place,
     $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps,
@@ -43,10 +42,92 @@ class StudentsProfile extends Component
     public $foodAllergy;
     public $plans = [];
 
-    public $rewards = [];
-    public $siblings = [
-        ['name' => '', 'age' => '', 'gradeSection' => ''],
+
+    //  public $rewards = [];
+
+    protected $rules = [
+        'studentName' => 'required',
+        'suffix' => 'nullable',
+        'nickname' => 'nullable',
+        'age' => 'required|numeric',
+        'sex' => 'required',
+        'birthdate' => 'required|date',
+        'contact' => 'required',
+        'religion' => 'nullable',
+        'mother_tongue' => 'nullable',
+        'four_ps' => 'required',
+        'birth_order' => 'required',
+        'number_of_siblings' => 'required',
+        'selectedBarangay' => 'required',
+        'selectedCity' => 'required',
+        'selectedMunicipality' => 'required',
+        'birth_place' => 'required',
+        'living_with' => 'required',
+        'guardian_name' => 'required',
+        'relationship' => 'required',
+        'guardian_contact' => 'required',
+        'occupation' => 'nullable',
+        'guardian_age' => 'required|numeric',
+        'favorite_subject' => 'nullable',
+        'difficult_subject' => 'nullable',
+        'school_organization' => 'nullable',
+        'plans' => 'required',
+        // Assuming this field is optional
+        'height' => 'required|numeric',
+        'weight' => 'required|numeric',
+        'bmi' => 'required',
+        'disability' => 'nullable',
+        'foodAllergy' => 'nullable',
+        'hasDisability' => 'nullable',
+        'hasFoodAllergy' => 'nullable',
+        'father_type' => 'nullable',
+        'father_name' => 'required',
+        'father_age' => 'required|numeric',
+        'father_occupation' => 'required',
+        'father_contact' => 'required',
+        'father_office_contact' => 'nullable',
+        'father_birth_place' => 'required',
+        'father_work_address' => 'required',
+        'father_monthly_income' => 'nullable|numeric',
+        'mother_type' => 'nullable',
+        'mother_name' => 'required',
+        'mother_age' => 'required|numeric',
+        'mother_occupation' => 'required',
+        'mother_contact' => 'required',
+        'mother_office_contact' => 'nullable',
+        'mother_birth_place' => 'required',
+        'mother_work_address' => 'nullable',
+        'mother_monthly_income' => 'nullable|numeric',
+
+        'rewards.*.name' => 'required',
+        'rewards.*.year' => 'required|numeric',
     ];
+
+
+
+    public function rules()
+    {
+        return [
+            'plans' => [
+                'required',
+                Rule::in([
+                    'Go to College',
+                    'Work as a skilled worker',
+                    'Pursue TESDA certificates',
+                    'Engage in Business',
+                    'Work to help parents',
+                    'Undecided',
+                ]),
+            ],
+        ];
+    }
+
+    public $rewards = [
+        ['name' => '', 'year' => null],
+    ];
+
+
+
     public $living_with = null;
 
     protected $listeners = [
@@ -55,7 +136,6 @@ class StudentsProfile extends Component
 
     public function updatedLivingWith($value)
     {
-        // Set the other checkboxes to null when one is selected
         if ($value === 'both-parents') {
             $this->living_with = 'both-parents';
         } elseif ($value === 'father-only') {
@@ -67,30 +147,7 @@ class StudentsProfile extends Component
         }
     }
 
-    public function mount()
-    {
 
-        $this->showError = false;
-
-        if (empty($this->rewards)) {
-            $this->rewards = [['award' => '', 'year' => '']];
-        }
-        // Check if there are existing siblings, if not, add an initial empty sibling
-        if (empty($this->siblings)) {
-            $this->siblings = [['name' => '', 'age' => '', 'gradeSection' => '']];
-        }
-    }
-
-    public function addSibling()
-    {
-        $this->siblings[] = ['name' => '', 'age' => '', 'gradeSection' => ''];
-    }
-
-    public function removeSibling($index)
-    {
-        unset($this->siblings[$index]);
-        $this->siblings = array_values($this->siblings); // Re-index the array after removing a sibling
-    }
 
 
     public function render()
@@ -107,12 +164,13 @@ class StudentsProfile extends Component
         }
 
         $provinces = Province::all();
-        return view('livewire.admin.students-profile', compact( 'provinces', 'students'))
+        return view('livewire.admin.students-profile', compact('provinces', 'students'))
             ->extends('layouts.dashboard.index')
             ->section('content');
     }
     public function save()
     {
+        $this->validate();
         if (empty($this->studentId)) {
             $this->addError('studentId', 'Please select a student.');
             $this->showError = true; // Set the showError variable to true to show the error message.
@@ -162,29 +220,29 @@ class StudentsProfile extends Component
             'food_allergy' => $this->hasFoodAllergy === 'Yes' ? $this->foodAllergy : 'No',
         ]);
 
-            $profile->family()->create([
-                'type' => $this->mother_type,
-                'parent_name' => $this->mother_name,
-                'parent_age' => $this->mother_age,
-                'parent_occupation' => $this->mother_occupation,
-                'parent_contact' => $this->mother_contact,
-                'parent_office_contact' => $this->mother_office_contact,
-                'parent_birth_place' => $this->mother_birth_place,
-                'parent_work_address' => $this->mother_work_address,
-                'parent_monthly_income' => $this->mother_monthly_income
-            ]);
+        $profile->family()->create([
+            'type' => $this->mother_type,
+            'parent_name' => $this->mother_name,
+            'parent_age' => $this->mother_age,
+            'parent_occupation' => $this->mother_occupation,
+            'parent_contact' => $this->mother_contact,
+            'parent_office_contact' => $this->mother_office_contact,
+            'parent_birth_place' => $this->mother_birth_place,
+            'parent_work_address' => $this->mother_work_address,
+            'parent_monthly_income' => $this->mother_monthly_income
+        ]);
 
-            $profile->family()->create([
-                'type' => $this->father_type,
-                'parent_name' => $this->father_name,
-                'parent_age' => $this->father_age,
-                'parent_occupation' => $this->father_occupation,
-                'parent_contact' => $this->father_contact,
-                'parent_office_contact' => $this->father_office_contact,
-                'parent_birth_place' => $this->father_birth_place,
-                'parent_work_address' => $this->father_work_address,
-                'parent_monthly_income' => $this->father_monthly_income
-            ]);
+        $profile->family()->create([
+            'type' => $this->father_type,
+            'parent_name' => $this->father_name,
+            'parent_age' => $this->father_age,
+            'parent_occupation' => $this->father_occupation,
+            'parent_contact' => $this->father_contact,
+            'parent_office_contact' => $this->father_office_contact,
+            'parent_birth_place' => $this->father_birth_place,
+            'parent_work_address' => $this->father_work_address,
+            'parent_monthly_income' => $this->father_monthly_income
+        ]);
 
         foreach ($this->siblings as $sibling) {
             $profile->siblings()->create([
@@ -246,7 +304,8 @@ class StudentsProfile extends Component
 
     }
 
-    public function resetName() {
+    public function resetName()
+    {
         $this->studentName = '';
         $this->studentId = '';
     }
@@ -259,12 +318,12 @@ class StudentsProfile extends Component
         $this->suffix = '';
         $this->nickname = '';
         $this->age = '';
-        $this->sex       = '';
+        $this->sex = '';
         $this->birthdate = '';
         $this->contact = '';
         $this->religion = '';
         $this->mother_tongue = '';
-        $this->four_ps  = '';
+        $this->four_ps = '';
         $this->birth_order = '';
         $this->number_of_siblings = '';
         $this->selectedBarangay = '';
@@ -279,14 +338,14 @@ class StudentsProfile extends Component
         $this->occupation = '';
         $this->guardian_age = '';
         $this->favorite_subject = '';
-        $this->difficult_subject  = '';
+        $this->difficult_subject = '';
         $this->school_organization = '';
         $this->plans = '';
         $this->height = '';
         $this->weight = '';
         $this->bmi = '';
         $this->disability = '';
-        $this->foodAllergy  = '';
+        $this->foodAllergy = '';
         $this->hasDisability = '';
         $this->hasFoodAllergy = '';
         $this->father_type = '';
@@ -296,7 +355,7 @@ class StudentsProfile extends Component
         $this->father_contact = '';
         $this->father_contact = '';
         $this->father_office_contact = '';
-        $this->father_birth_place  = '';
+        $this->father_birth_place = '';
         $this->father_work_address = '';
         $this->father_monthly_income = '';
         $this->mother_type = '';
@@ -306,10 +365,10 @@ class StudentsProfile extends Component
         $this->mother_contact = '';
         $this->mother_contact = '';
         $this->mother_office_contact = '';
-        $this->mother_birth_place  = '';
+        $this->mother_birth_place = '';
         $this->mother_work_address = '';
         $this->mother_monthly_income = '';
-        $this->siblings= '';
+        $this->siblings = '';
         $this->parent_statuses = [];
         $this->medicines = [];
         $this->vitamins = [];
