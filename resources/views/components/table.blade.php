@@ -1,8 +1,8 @@
-<div {{ $attributes->merge(['class' => 'w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5']) }}>
+<div {{ $attributes->merge(['class' => 'w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5 shadow-lg ']) }}>
     <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
             <thead>
-                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b
+                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b shadow-md
                 border-gray-700 bg-gray-50 dark:text-gray-400"
                 >
                     {{ $header }}

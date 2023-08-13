@@ -16,7 +16,7 @@ final class AnecdotaTable extends PowerGridComponent
     use ActionButton;
     use WithExport;
 
-
+///! REMIDER:THE FUCKING BUGGGGG IS THE NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL FIX THAT
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -82,8 +82,8 @@ final class AnecdotaTable extends PowerGridComponent
         // !important part for the relation
         return [
             'students' => ['first_name', 'last_name'],
-            'Minoroffenses' => ['offenses'],
-            'Graveoffenses' => ['offenses'],
+            // 'Minoroffenses' => ['offenses'],
+            // 'Graveoffenses' => ['offenses'],
         ];
     }
 
@@ -107,10 +107,12 @@ final class AnecdotaTable extends PowerGridComponent
             ->addColumn('last_name', function (Anecdotal $model) {
                 return $model->students->last_name;
             })
-            ->addColumn('grave_offense', fn(Anecdotal $model) => $model->Graveoffenses ? $model->Graveoffenses->offenses : 'No Data')
-            ->addColumn('minor_offense', fn(Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'No Data')
 
-            ->addColumn('gravity_lower', fn(Anecdotal $model) => strtolower(e($model->gravity)))
+            // ->addColumn('grave_offense', fn(Anecdotal $model) => $model->Graveoffenses ? $model->Graveoffenses->offenses : 'No Data')
+            // ->addColumn('minor_offense', fn(Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'No Data')
+
+            ->addColumn('gravity', fn(Anecdotal $model) => ($model->gravityText))
+
 
             ->addColumn('anecdotal.created_at')
             ->addColumn('created_at_formatted', function (Anecdotal $model) {
@@ -145,8 +147,8 @@ final class AnecdotaTable extends PowerGridComponent
             Column::make('First Name', 'first_name')->sortable()
             ->withCount('Total Reports', true, false),
             Column::make('Last Name', 'last_name')->sortable(), // New column for last name
-            Column::make('Grave Offense', 'grave_offense'),
-            Column::make('Minor Offense', 'minor_offense'),
+           // Column::make('Grave Offense', 'grave_offense'),
+            //Column::make('Minor Offense', 'minor_offense'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
             Column::make('Submitted at', 'created_at_formatted', 'anecdotal.created_at')->sortable(),
             Column::make('Status', 'case_status')->sortable()
@@ -169,16 +171,16 @@ final class AnecdotaTable extends PowerGridComponent
             Filter::datetimepicker('created_at_formatted', 'anecdotal.created_at')
             ->params(['only_future' => false,
             'no_weekends' => true,]),
-            Filter::select('gravity', 'gravity')
-                ->dataSource(Anecdotal::select('gravity')->distinct()->get())
-                ->optionValue('gravity')
-                ->optionLabel('gravity'),
-
             Filter::select('case_status', 'case_status')
                 ->dataSource(Anecdotal::codes())
                 ->optionValue('case_status')
                 ->optionLabel('label'),
-        ];
+
+        Filter::select('gravity', 'gravity')
+        ->dataSource(Anecdotal::gravityCodes())
+        ->optionValue('gravity')
+        ->optionLabel('label'),
+];
     }
 
 

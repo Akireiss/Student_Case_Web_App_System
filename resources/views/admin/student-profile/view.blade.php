@@ -159,6 +159,7 @@
 
                 </x-grid>
 
+
                 <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
                     Address
                 </h6>
@@ -347,7 +348,7 @@
 
 
 
-
+                <div>
                     <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                         Siblings Information
                     </h6>
@@ -380,10 +381,11 @@
                         <x-input disabled placeholder="No Data"/>
                         @endif
                     </div>
+                </div>
 
 
 
-<div class="px-4">
+
 
                 <div>
                     <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
@@ -396,10 +398,7 @@
                             <x-label class="inline-block" for="living-with" >{{ $profile->living_with }}</x-label>
                         </div>
                     </x-grid>
-
                 </div>
-
-
 
                 <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                     Parent status are currently: (check which applies below)
@@ -714,8 +713,9 @@
                     @endif
                 </x-grid>
 
+
+
             </x-slot>
         </x-form>
     </div>
-</div>
 @endsection

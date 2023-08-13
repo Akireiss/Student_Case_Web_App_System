@@ -78,6 +78,19 @@ class Anecdotal extends Model
         ]);
     }
 
+        public static function gravityCodes()
+    {
+        return collect([
+            ['gravity' => 0, 'label' => 'Low Severity'],
+            ['gravity' => 1, 'label' => 'Moderate Severity'],
+            ['gravity' => 2, 'label' => 'Medium Severity'],
+            ['gravity' => 3, 'label' => 'High Severity'],
+            ['gravity' => 4, 'label' => 'Critical Severity'],
+        ]);
+    }
+
+
+
     public function getStatusTextAttribute()
     {
         $value = $this->attributes['case_status']; // Retrieve the attribute value from the model
@@ -91,6 +104,26 @@ class Anecdotal extends Model
                 return 'Ongoing';
             case 3:
                 return 'Resolved';
+            default:
+                return 'Unknown';
+        }
+    }
+
+    public function getGravityTextAttribute()
+    {
+        $value = $this->attributes['gravity'];
+
+        switch ($value) {
+            case 0:
+                return 'Low Severity';
+            case 1:
+                return 'Moderate Severity';
+            case 2:
+                return 'Medium Severity';
+            case 3:
+                return 'High Severity';
+            case 4:
+                return 'Critical Severity';
             default:
                 return 'Unknown';
         }

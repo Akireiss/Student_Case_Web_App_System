@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Profile;
 use App\Models\Anecdotal;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class StudentProfileController extends Controller
 {
@@ -14,9 +15,22 @@ class StudentProfileController extends Controller
         return view('admin.student-profile.index');
     }
 
-    public function show()
+    public function show($id)
     {
-    return('dsds');
+        $profile = Profile::with('family')->find($id);
+
+
+        if(!$profile)
+        {
+            abort(403);
+        }
+        return view('admin.student-profile.view', compact('profile'));
+
+    }
+
+    public function edit()
+    {
+    return('dsdsaaaaaaaaaa');
     }
 
 }

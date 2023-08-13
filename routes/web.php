@@ -1,15 +1,15 @@
 <?php
 
+use App\Http\Livewire\Admin\User;
+use App\Http\Livewire\Admin\Report;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
-use App\Http\Livewire\Admin\User;
-use App\Http\Livewire\Adviser\Dashboard;
-use App\Http\Livewire\Adviser\ReportHistory;
-use App\Http\Livewire\Student\StudentForm;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Livewire\Adviser\Report;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Adviser\Dashboard;
+use App\Http\Livewire\Student\StudentForm;
 use App\Http\Livewire\Admin\StudentsProfile;
+use App\Http\Livewire\Adviser\ReportHistory;
 use App\Http\Livewire\Adviser\StudentProfile;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\OffensesController;
@@ -47,8 +47,8 @@ Route::middleware(['auth', 'role'])->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('dashboard', \App\Http\Livewire\Admin\Dashboard::class);
             //Reports
-            Route::get('reports', [ReportController::class, 'index']);
-            Route::get('reports/add', [ReportController::class, 'create']);
+            Route::get('reports', \App\Http\Livewire\Admin\Report::class);
+            Route::get('report/add', [ReportController::class, 'create']);
             Route::get('reports/{anecdotal}/view', [ReportController::class, 'view'])->name('anecdotal.edit');
 
             //User Manage
@@ -57,7 +57,13 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             // Students Profile Area
             Route::get('student-profile', [StudentProfileController::class, 'index']);
-            Route::get('student-profile/{profile}/view', [StudentProfileController::class, 'show'])->name('admin.profile.edit');
+
+            Route::get('student-profile/{profile}/edit', [StudentProfileController::class, 'edit'])
+            ->name('admin.profile.edit');
+            Route::get('student-profile/{profile}/view', [StudentProfileController::class, 'show'])
+            ->name('admin.profile.show');
+
+
             Route::get('student-profile/add', StudentsProfile::class);
         });
 

@@ -31,6 +31,7 @@ trait SelectNameTrait
         'grave_offenses_id.required_without_all' => 'Please select at least one grave offense or provide a minor offense.',
         'selectedActions.required' => 'Please select at least one action.',
     ];
+
     public function mount()
     {
         $this->showError = false;
@@ -51,7 +52,7 @@ trait SelectNameTrait
     public function updatedStudentName($value)
     {
         if (empty($value)) {
-            $this->resetName();
+            $this->resetForm();
         }
     }
 
@@ -81,13 +82,22 @@ trait SelectNameTrait
         //*load case for the case during reporting
         $this->loadCases();
 
+
+
         $student = Students::find($id);
         if ($student) {
             $this->cases = $student->anecdotal;
         } else {
             $this->cases = [];
+        };
+
+        //Validation for existing profile
+        $existingProfile = Profile::where('student_id', $this->studentId)->exists();
+
+        if ($existingProfile) {
+            $this->addError('studentId', 'Student Already Has A Profile');
+            return;
         }
-        ;
 
     }
 

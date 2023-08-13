@@ -3,21 +3,19 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Profile;
+use App\Traits\ProfileValidationTrait;
 use App\Traits\SiblingsTrait;
 use Livewire\Component;
-use App\Models\Barangay;
 use App\Models\Province;
 use App\Models\Students;
-use App\Models\Municipal;
 use App\Traits\SelectNameTrait;
-use Illuminate\Validation\Rule;
 use App\Traits\SelectAddressTrait;
 
 class StudentsProfile extends Component
 {
     use SelectAddressTrait;
     use SelectNameTrait;
-    use SiblingsTrait;
+    use ProfileValidationTrait;
 
     public $m_name, $suffix, $nickname, $age, $sex, $birthdate, $birth_place,
     $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps,
@@ -42,114 +40,20 @@ class StudentsProfile extends Component
     public $foodAllergy;
     public $plans = [];
 
+    public $living_with = null;
 
-    //  public $rewards = [];
-
-    protected $rules = [
-        'studentName' => 'required',
-        'suffix' => 'nullable',
-        'nickname' => 'nullable',
-        'age' => 'required|numeric',
-        'sex' => 'required',
-        'birthdate' => 'required|date',
-        'contact' => 'required',
-        'religion' => 'nullable',
-        'mother_tongue' => 'nullable',
-        'four_ps' => 'required',
-        'birth_order' => 'required',
-        'number_of_siblings' => 'required',
-        'selectedBarangay' => 'required',
-        'selectedCity' => 'required',
-        'selectedMunicipality' => 'required',
-        'birth_place' => 'required',
-        'living_with' => 'required',
-        'guardian_name' => 'required',
-        'relationship' => 'required',
-        'guardian_contact' => 'required',
-        'occupation' => 'nullable',
-        'guardian_age' => 'required|numeric',
-        'favorite_subject' => 'nullable',
-        'difficult_subject' => 'nullable',
-        'school_organization' => 'nullable',
-        'plans' => 'required',
-        // Assuming this field is optional
-        'height' => 'required|numeric',
-        'weight' => 'required|numeric',
-        'bmi' => 'required',
-        'disability' => 'nullable',
-        'foodAllergy' => 'nullable',
-        'hasDisability' => 'nullable',
-        'hasFoodAllergy' => 'nullable',
-        'father_type' => 'nullable',
-        'father_name' => 'required',
-        'father_age' => 'required|numeric',
-        'father_occupation' => 'required',
-        'father_contact' => 'required',
-        'father_office_contact' => 'nullable',
-        'father_birth_place' => 'required',
-        'father_work_address' => 'required',
-        'father_monthly_income' => 'nullable|numeric',
-        'mother_type' => 'nullable',
-        'mother_name' => 'required',
-        'mother_age' => 'required|numeric',
-        'mother_occupation' => 'required',
-        'mother_contact' => 'required',
-        'mother_office_contact' => 'nullable',
-        'mother_birth_place' => 'required',
-        'mother_work_address' => 'nullable',
-        'mother_monthly_income' => 'nullable|numeric',
-
-        'rewards.*.name' => 'required',
-        'rewards.*.year' => 'required|numeric',
-    ];
-
-
-
-    public function rules()
-    {
-        return [
-            'plans' => [
-                'required',
-                Rule::in([
-                    'Go to College',
-                    'Work as a skilled worker',
-                    'Pursue TESDA certificates',
-                    'Engage in Business',
-                    'Work to help parents',
-                    'Undecided',
-                ]),
-            ],
-        ];
-    }
+    //optional
+    // public $siblings = [
+    //     ['name' => '', 'age' => '', 'gradeSection' => null],
+    // ];
 
     public $rewards = [
         ['name' => '', 'year' => null],
     ];
 
-
-
-    public $living_with = null;
-
     protected $listeners = [
         'resetName'
     ];
-
-    public function updatedLivingWith($value)
-    {
-        if ($value === 'both-parents') {
-            $this->living_with = 'both-parents';
-        } elseif ($value === 'father-only') {
-            $this->living_with = 'father-only';
-        } elseif ($value === 'mother-only') {
-            $this->living_with = 'mother-only';
-        } elseif ($value === 'na') {
-            $this->living_with = 'na';
-        }
-    }
-
-
-
-
     public function render()
     {
 
@@ -173,15 +77,7 @@ class StudentsProfile extends Component
         $this->validate();
         if (empty($this->studentId)) {
             $this->addError('studentId', 'Please select a student.');
-            $this->showError = true; // Set the showError variable to true to show the error message.
-            return;
-        }
-
-        $selectedStudent = Students::find($this->studentId);
-
-        if (!$selectedStudent) {
-            $this->addError('studentId', 'Invalid student selected.');
-            $this->showError = true; // Set the showError variable to true to show the error message.
+            $this->showError = true;
             return;
         }
 
@@ -244,6 +140,7 @@ class StudentsProfile extends Component
             'parent_monthly_income' => $this->father_monthly_income
         ]);
 
+
         foreach ($this->siblings as $sibling) {
             $profile->siblings()->create([
                 'sibling_name' => $sibling['name'],
@@ -252,6 +149,12 @@ class StudentsProfile extends Component
             ]);
         }
 
+        foreach ($this->rewards as $reward) {
+            $profile->awards()->create([
+                'award_name' => $reward['name'],
+                'award_year' => $reward['year'],
+            ]);
+        }
         foreach ($this->parent_statuses as $parent_status) {
             $profile->parentstatus()->create([
                 'parent_status' => $parent_status
@@ -268,12 +171,7 @@ class StudentsProfile extends Component
             ]);
         }
 
-        foreach ($this->rewards as $reward) {
-            $profile->awards()->create([
-                'award_name' => $reward['name'],
-                'award_year' => $reward['year'],
-            ]);
-        }
+
 
         foreach ($this->vitamins as $vitamin) {
             $profile->vitamins()->create([
@@ -368,7 +266,7 @@ class StudentsProfile extends Component
         $this->mother_birth_place = '';
         $this->mother_work_address = '';
         $this->mother_monthly_income = '';
-        $this->siblings = '';
+        $this->siblings = [];
         $this->parent_statuses = [];
         $this->medicines = [];
         $this->vitamins = [];

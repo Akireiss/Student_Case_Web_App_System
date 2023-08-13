@@ -1,17 +1,25 @@
 @extends('layouts.dashboard.index')
 @section('content')
-    <div class="mx-auto">
-        <div class="flex justify-between items-center ">
-            <h6 class="text-xl font-bold px-4 text-left ">
-                Report Information
-            </h6>
-
+<div class="mx-auto">
+    <div class="flex items-center justify-between">
+        <h6 class="text-xl font-bold px-4">
+            Report Information
+        </h6>
+        <div class="flex justify-end">
+            <x-link :href="url('admin/reports')">
+                Back
+            </x-link>
         </div>
+    </div>
+
 
         <div class="w-full mx-auto mt-6">
             <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-lg rounded-lg border-0 ">
 
-                <div class="flex-auto px-6 lg:px-10 py-10 pt-0">
+                <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                        Student Information
+                    </h6>
 
                     <x-grid columns="2" gap="4" px="0" mt="0">
 
@@ -144,12 +152,13 @@
 
                 </x-grid>
 
+<div class="px-4">
 
-                <h6 class="text-sm my-6 px-4 font-bold uppercase">
-                    Actions Taken
-                </h6>
+    <h6 class="text-sm my-6 px-4 font-bold uppercase">
+        Actions Taken
+    </h6>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
 
                     <div class="relative mb-3">
                         <div class="flex items-center space-x-2">
@@ -161,6 +170,7 @@
 
             </div>
         </div>
+    </div>
     </div>
     </div>
 
@@ -177,7 +187,6 @@
            <th class="px-4 py-3">Grave Offense</th>
            <th class="px-4 py-3">Minor Offense</th>
            <th class="px-4 py-3">Date</th>
-           <th class="px-4 py-3">Manage</th>
         </x-slot>
         @foreach ($cases as $case)
             <tr class="text-gray-700 dark:text-gray-400">
@@ -200,9 +209,6 @@
                         {{ $case->created_at->format('F j, Y') }}
                 </td>
 
-                       <td class="px-4 py-2">
-                        <x-link>View</x-link>
-                    </td>
 
             </tr>
         @endforeach

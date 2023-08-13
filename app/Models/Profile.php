@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Award;
 use App\Models\EducBg;
+use App\Models\Family;
 use App\Models\Sibling;
 use App\Models\Vitamin;
 use App\Models\Accident;
@@ -70,10 +71,11 @@ class Profile extends Model
         return $this->hasMany(ParentStatus::class);
     }
 
-    public function parents()
-    {
-        return $this->hasOne(Family::class);
-    }
+// public function parents()
+// {
+//     return $this->hasMany(Family::class, 'profile_id');
+// }
+
 
     public function family()
     {

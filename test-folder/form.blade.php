@@ -158,3 +158,56 @@
 </div>
 
     </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div x-data="{ plans: @entangle('plans') }">
+        <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+            What do you plan to do after graduating Senior High School?
+            <x-error fieldName="plans" />
+
+        </h6>
+        <x-grid columns="3" gap="4" px="0" mt="0">
+            <div class="relative mb-3 px-4">
+                <input type="radio" wire:model="plans" value="Go to College" />
+                <x-label class="inline-block">Go to College</x-label>
+            </div>
+            <div class="relative mb-3 px-4">
+                <input type="radio" wire:model="plans" value="Work as a skilled worker" />
+                <x-label class="inline-block">Work as a skilled worker</x-label>
+            </div>
+            <div class="relative mb-3 px-4">
+                <input type="radio" wire:model="plans" value="Pursue TESDA certificates" />
+                <x-label class="inline-block">Pursue TESDA certificates</x-label>
+            </div>
+            <div class="relative mb-3 px-4">
+                <input type="radio" wire:model="plans" value="Engage in Business" />
+                <x-label class="inline-block">Engage in Business</x-label>
+            </div>
+            <div class="relative mb-3 px-4">
+                <input type="radio" wire:model="plans" value="Work to help parents" />
+                <x-label class="inline-block">Work to help parents</x-label>
+            </div>
+            <div class="relative mb-3 px-4">
+                <input type="radio" wire:model="plans" value="Undecided" />
+                <x-label class="inline-block">Undecided</x-label>
+            </div>
+        </x-grid>
+    </div>

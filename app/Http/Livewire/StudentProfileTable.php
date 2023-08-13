@@ -202,17 +202,18 @@ public function datasource(): Builder
     {
        return [
            Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
                ->route('admin.profile.edit', function(\App\Models\Profile $model) {
                     return['profile' =>$model->id];
                }),
 
-        //    Button::make('destroy', 'Delete')
-        //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-        //        ->route('profile.destroy', function(\App\Models\Profile $model) {
-        //             return $model->id;
-        //        })
-        //        ->method('delete')
+               Button::make('view', 'View')
+               ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->route('admin.profile.show', function(\App\Models\Profile $model) {
+                    return['profile' =>$model->id];
+               }),
+
+
         ];
     }
 

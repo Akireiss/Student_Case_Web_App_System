@@ -21,18 +21,12 @@
                                 First Name
                             </x-label>
                             <div class="relative">
-                                <x-input
-                                    wire:model.debounce.300ms="studentName"
-                                    @focus="isOpen = true"
-                                    @click.away="isOpen = false"
-                                    @keydown.escape="isOpen = false"
-                                    @keydown="isOpen = true"
-                                    type="text"
-                                    id="studentName"
-                                    name="studentName"
-                                    placeholder="Start typing to search."
-                                />
+                                <x-input wire:model.debounce.300ms="studentName" @focus="isOpen = true"
+                                    @click.away="isOpen = false" @keydown.escape="isOpen = false"
+                                    @keydown="isOpen = true" type="text" id="studentName" name="studentName"
+                                    placeholder="Start typing to search." />
                                 <x-error fieldName="studentName" /> <!-- Use the correct field name here -->
+                                <x-error fieldName="studentId" /> <!-- Use the correct field name here -->
 
                                 <span x-show="studentName !== ''" @click="studentName = ''; isOpen = false"
                                     class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold">
@@ -337,7 +331,7 @@
                         <x-label>
                             Monthly Income
                         </x-label>
-                        <x-input wire:model="father_monthly_income" />
+                        <x-input type="number" wire:model="father_monthly_income" />
                         <x-error fieldName="father_monthly_income" />
 
                     </div>
@@ -421,7 +415,7 @@
                         <x-label>
                             Monthly Income
                         </x-label>
-                        <x-input wire:model="mother_monthly_income" />
+                        <x-input type="number" wire:model="mother_monthly_income" />
                         <x-error fieldName="mother_monthly_income" />
 
                     </div>
@@ -448,6 +442,7 @@
                 </x-grid>
 
 
+
                 <div x-data="{ siblings: @entangle('siblings') }">
                     <div class="flex items-center justify-between mt-4 mx-4">
                         <h6 class="text-sm font-bold uppercase">
@@ -457,43 +452,37 @@
                             <x-buttontype @click="siblings.push({ name: '', age: '', gradeSection: '' })">
                                 Add Sibling
                             </x-buttontype>
-
                             <x-buttontype @click="siblings.pop()">
                                 Remove
                             </x-buttontype>
                         </div>
                     </div>
+
                     <template x-for="(sibling, index) in siblings" :key="index">
                         <x-grid columns="3" gap="4" px="0" mt="0">
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Name
                                 </x-label>
-                                <x-input wire:model="siblings[index]['name']" />
-
+                                <x-input x-model="sibling.name" />
                             </div>
 
                             <div class="relative mb-3 px-4">
                                 <x-label>
                                     Age
                                 </x-label>
-                                <x-input wire:model="siblings[index]['age']" type="number" />
-
+                                <x-input x-model="sibling.age" type="number" />
                             </div>
 
                             <div class="relative mb-3 px-4">
                                 <x-label>
-                                    Grade and Section
+                                    Grade Section
                                 </x-label>
-                                <x-input wire:model="siblings[index]['gradeSection']" />
-
+                                <x-input x-model="sibling.gradeSection" />
                             </div>
                         </x-grid>
                     </template>
-
                 </div>
-
-
 
 
                 <div x-data="{ livingWith: @entangle('living_with') }">
@@ -501,25 +490,24 @@
                         You are currently living with:
                         <x-error fieldName="living_with" />
                     </h6>
-                    <x-grid columns="1 md:grid-cols-4" gap="4" px="0" mt="0">
-                        <div class="relative mb-3 px-4">
-                            <x-checkbox name="living-with" wire:model="living_with" value="both-parents"
+                    <x-grid columns="4" gap="4" px="4" mt="2">
+                        <div class="relative mb-3">
+                            <input type="radio" name="living-with" wire:model="living_with" value="both-parents"
                                 x-bind:checked="livingWith === 'both-parents'" />
                             <x-label class="inline-block" for="living-with" value="Both Parents" />
-
                         </div>
-                        <div class="relative mb-3 px-4">
-                            <x-checkbox name="living-with" wire:model="living_with" value="father-only"
+                        <div class="relative mb-3">
+                            <input type="radio" name="living-with" wire:model="living_with" value="father-only"
                                 x-bind:checked="livingWith === 'father-only'" />
                             <x-label class="inline-block" for="living-with" value="Father Only" />
                         </div>
-                        <div class="relative mb-3 px-4">
-                            <x-checkbox name="living-with" wire:model="living_with" value="mother-only"
+                        <div class="relative mb-3">
+                            <input type="radio" name="living-with" wire:model="living_with" value="mother-only"
                                 x-bind:checked="livingWith === 'mother-only'" />
                             <x-label class="inline-block" for="living-with" value="Mother Only" />
                         </div>
-                        <div class="relative mb-3 px-4">
-                            <x-checkbox name="living-with" wire:model="living_with" value="na"
+                        <div class="relative mb-3">
+                            <input type="radio" name="living-with" wire:model="living_with" value="na"
                                 x-bind:checked="livingWith === 'na'" />
                             <x-label class="inline-block" for="living-with" value="N/A" />
                         </div>
@@ -528,8 +516,10 @@
 
 
 
+
                 <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                     Parent are currently: (check which applies below)
+                    {{-- <x-error fieldName="parent_statuses" /> --}}
                 </h6>
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
@@ -661,19 +651,19 @@
                         <div class="relative mb-3 px-4">
                             <x-label for="name_{{ $gradeLevel }}">Name of school</x-label>
                             <x-input wire:model="education.{{ $gradeLevel }}.name"
-                            id="name_{{ $gradeLevel }}" />
+                                id="name_{{ $gradeLevel }}" />
                         </div>
 
                         <div class="relative mb-3 px-4">
                             <x-label for="section_{{ $gradeLevel }}">Section</x-label>
                             <x-input wire:model="education.{{ $gradeLevel }}.section"
-                            id="section_{{ $gradeLevel }}" />
+                                id="section_{{ $gradeLevel }}" />
                         </div>
 
                         <div class="relative mb-3 px-4">
                             <x-label for="school_year_{{ $gradeLevel }}">School Year</x-label>
                             <x-input wire:model="education.{{ $gradeLevel }}.school_year"
-                            id="school_year_{{ $gradeLevel }}" />
+                                id="school_year_{{ $gradeLevel }}" />
                         </div>
                     </x-grid>
                 @endfor
@@ -829,6 +819,8 @@
                                 <option value="No">No</option>
                                 <option value="Yes">Yes</option>
                             </x-select>
+                            <x-error fieldName="hasDisability" />
+
                         </div>
 
                         <div class="relative mb-3 px-4" x-show="hasDisability === 'Yes'">
@@ -836,7 +828,7 @@
                                 If yes, what is it?
                             </x-label>
                             <x-input x-ref="disabilityInput" wire:model="disability" />
-                            <x-error fieldName="" />
+                            <x-error fieldName="disability" />
 
                         </div>
 
@@ -849,6 +841,7 @@
                                 <option value="No">No</option>
                                 <option value="Yes">Yes</option>
                             </x-select>
+                            <x-error fieldName="hasFoodAllergy" />
                         </div>
 
                         <div class="relative mb-3 px-4" x-show="hasFoodAllergy === 'Yes'">
@@ -856,6 +849,7 @@
                                 If yes, what is your food allergy?
                             </x-label>
                             <x-input x-ref="foodAllergyInput" wire:model="foodAllergy" />
+                            <x-error fieldName="foodAllergy" />
 
                         </div>
                     </div>
@@ -906,8 +900,7 @@
                                 {{ $i }}
                             </x-label>
                             <x-input wire:model="accidents.{{ $i }}"
-
-                            id="accidents_{{ $i }}" />
+                                id="accidents_{{ $i }}" />
                         </div>
                     @endfor
                 </x-grid>
@@ -924,7 +917,7 @@
                                 {{ $i }}
                             </x-label>
                             <x-input wire:model="operations.{{ $i }}"
-                            id="operations_{{ $i }}" />
+                                id="operations_{{ $i }}" />
                         </div>
                     @endfor
                 </x-grid>
@@ -932,7 +925,7 @@
                 <div class="flex justify-end items-center">
                     <x-text-alert />
                     <div wire:loading wire:target="store" class="mx-4">
-                        Loading
+                        Loading..
                     </div>
                     <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                 </div>
