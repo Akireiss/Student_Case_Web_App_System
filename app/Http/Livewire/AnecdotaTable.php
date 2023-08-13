@@ -16,7 +16,7 @@ final class AnecdotaTable extends PowerGridComponent
     use ActionButton;
     use WithExport;
 
-///! REMIDER:THE FUCKING BUGGGGG IS THE NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL FIX THAT
+    ///! REMIDER:THE FUCKING BUGGGGG IS THE NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL FIX THAT
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -57,11 +57,12 @@ final class AnecdotaTable extends PowerGridComponent
         return Anecdotal::query()
             ->join('students', 'anecdotal.student_id', '=', 'students.id')
             ->join('offenses', 'anecdotal.grave_offense_id', '=', 'offenses.id')
-            ->select('anecdotal.*',
-            'anecdotal.created_at',
-            'students.created_at as created',
-            'offenses.created_at as created_offense',
-        );
+            ->select(
+                'anecdotal.*',
+                'anecdotal.created_at',
+                'students.created_at as created',
+                'offenses.created_at as created_offense',
+            );
     }
 
     /*
@@ -82,7 +83,7 @@ final class AnecdotaTable extends PowerGridComponent
         // !important part for the relation
         return [
             'students' => ['first_name', 'last_name'],
-            // 'Minoroffenses' => ['offenses'],
+                'Minoroffenses' => ['offenses'],
             // 'Graveoffenses' => ['offenses'],
         ];
     }
@@ -109,7 +110,7 @@ final class AnecdotaTable extends PowerGridComponent
             })
 
             // ->addColumn('grave_offense', fn(Anecdotal $model) => $model->Graveoffenses ? $model->Graveoffenses->offenses : 'No Data')
-            // ->addColumn('minor_offense', fn(Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'No Data')
+            ->addColumn('minor_offense', fn(Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'No Data')
 
             ->addColumn('gravity', fn(Anecdotal $model) => ($model->gravityText))
 
@@ -119,47 +120,25 @@ final class AnecdotaTable extends PowerGridComponent
                 return Carbon::parse($model->created_at)->format('F j, Y');
             })
 
-            ->addColumn('case_status', fn (Anecdotal $model) => $model->getStatusTextAttribute() ?? 'No Data');
+            ->addColumn('case_status', fn(Anecdotal $model) => $model->getStatusTextAttribute() ?? 'No Data');
 
 
 
     }
 
-
-
-    /*
-    |--------------------------------------------------------------------------
-    |  Include Columns
-    |--------------------------------------------------------------------------
-    | Include the columns added columns, making them visible on the Table.
-    | Each column can be configured with properties, filters, actions...
-    |
-    */
-
-    /**
-     * PowerGrid Columns.
-     *
-     * @return array<int, Column>
-     */
     public function columns(): array
     {
         return [
             Column::make('First Name', 'first_name')->sortable()
-            ->withCount('Total Reports', true, false),
+                ->withCount('Total Reports', true, false),
             Column::make('Last Name', 'last_name')->sortable(), // New column for last name
-           // Column::make('Grave Offense', 'grave_offense'),
-            //Column::make('Minor Offense', 'minor_offense'),
+            // Column::make('Grave Offense', 'grave_offense'),
+            Column::make('Offenses', 'minor_offense'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
             Column::make('Submitted at', 'created_at_formatted', 'anecdotal.created_at')->sortable(),
             Column::make('Status', 'case_status')->sortable()
         ];
     }
-
-    /**
-     * PowerGrid Filters.
-     *
-     * @return array<int, Filter>
-     */
 
 
     public function filters(): array
@@ -169,28 +148,28 @@ final class AnecdotaTable extends PowerGridComponent
             Filter::inputText('first_name')->operators(['contains']),
             Filter::inputText('last_name')->operators(['contains']),
             Filter::datetimepicker('created_at_formatted', 'anecdotal.created_at')
-            ->params(['only_future' => false,
-            'no_weekends' => true,]),
+                ->params([
+                    'only_future' => false,
+                    'no_weekends' => true,
+                ]),
             Filter::select('case_status', 'case_status')
                 ->dataSource(Anecdotal::codes())
                 ->optionValue('case_status')
                 ->optionLabel('label'),
 
-        Filter::select('gravity', 'gravity')
-        ->dataSource(Anecdotal::gravityCodes())
-        ->optionValue('gravity')
+            Filter::select('gravity', 'gravity')
+                ->dataSource(Anecdotal::gravityCodes())
+                ->optionValue('gravity')
+                ->optionLabel('label'),
+
+
+        Filter::select('minor_offense', 'category')
+        ->dataSource(Offenses::categories())
+        ->optionValue('category')
         ->optionLabel('label'),
 ];
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Method
-    |--------------------------------------------------------------------------
-    | Enable the method below only if the Routes below are defined in your app.
-    |
-    */
 
     /**
      * PowerGrid Anecdotal Action Buttons.
@@ -216,21 +195,6 @@ final class AnecdotaTable extends PowerGridComponent
             //        ->method('delete')
         ];
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Rules
-    |--------------------------------------------------------------------------
-    | Enable the method below to configure Rules for your Table and Action Buttons.
-    |
-    */
-
-    /**
-     * PowerGrid Anecdotal Action Rules.
-     *
-     * @return array<int, RuleActions>
-     */
 
     /*
     public function actionRules(): array

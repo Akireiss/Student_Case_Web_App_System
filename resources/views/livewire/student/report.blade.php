@@ -84,9 +84,19 @@
                          </h6>
 
                          <x-grid columns="2" gap="4" px="0" mt="4">
+                            <div class="w-full px-4">
+                                <x-label>
+                                    Classroom
+                                </x-label>
+                                <x-input disabled :value="($classroom && $classroom->section) ? 'Grade: ' . $classroom->grade_level . ' ' . $classroom->section : ''" />
+                            </div>
+
+
+
+
                              <div class="w-full px-4">
                                  <x-label>
-                                     Minor Offenses
+                                   Offense
                                  </x-label>
                                  <x-select name="minor_offense_id" wire:model="minor_offenses_id"
                                      wire:change="resetSelect('minor')">
@@ -99,20 +109,6 @@
                                  <x-error fieldName="minor_offenses_id" />
                              </div>
 
-                             <div class="w-full px-4">
-                                 <x-label>
-                                     Grave Offenses
-                                 </x-label>
-                                 <x-select name="grave_offense_id" wire:model="grave_offenses_id"
-                                     wire:change="resetSelect('grave')">
-                                     @if ($graveOffenses)
-                                         @foreach ($graveOffenses as $id => $graveOffense)
-                                             <option value="{{ $id }}">{{ $graveOffense }}</option>
-                                         @endforeach
-                                     @endif
-                                 </x-select>
-                                 <x-error fieldName="grave_offenses_id" />
-                             </div>
 
 
                          </x-grid>
@@ -246,7 +242,7 @@
          <x-table>
              <x-slot name="header">
                  <th class="px-4 py-3">Student Name</th>
-                 <th class="px-4 py-3">Minor Offense</th>
+                 <th class="px-4 py-3">Offenses</th>
                  <th class="px-4 py-3">Grave Offense</th>
                  <th class="px-4 py-3">Status</th>
                  <th class="px-4 py-3">Date Reported</th>
@@ -261,12 +257,6 @@
                          <td class="px-4 py-3">
                              {{ $case->Minoroffenses?->offenses ?? 'No Data' }}
                          </td>
-                         <td class="px-4 py-3">
-                             {{ $case->Graveoffenses?->offenses ?? 'No Data' }}
-                         </td>
-                         {{-- <td class="px-4 py-3">
-                             {{ $case->getCaseStatusAttribute() }}
-                         </td> --}}
                          <td class="px-4 py-3">
                              {{ $case->created_at->format('F j, Y') }}
                          </td>

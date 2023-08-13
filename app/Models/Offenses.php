@@ -17,4 +17,13 @@ class Offenses extends Model
         'status'
         ];
 
+        public static function categories()
+        {
+            return collect([
+                ['category' => 0, 'label' => 'Minor'],
+                ['category' => 1, 'label' => 'Grave'],
+            ]);
+        }
+
+
 }

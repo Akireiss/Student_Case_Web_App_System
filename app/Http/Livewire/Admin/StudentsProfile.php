@@ -54,6 +54,22 @@ class StudentsProfile extends Component
     protected $listeners = [
         'resetName'
     ];
+
+    public function selectStudent($id, $name)
+    {
+        $this->studentId = $id;
+        $this->last_name = Students::find($id)->last_name;
+
+        $existingProfile = Profile::where('student_id', $this->studentId)->exists();
+
+        if ($existingProfile) {
+            $this->addError('studentId', 'Student Already Has A Profile');
+            return;
+        }
+
+    }
+
+
     public function render()
     {
 

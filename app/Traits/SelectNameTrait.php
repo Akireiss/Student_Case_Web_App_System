@@ -22,6 +22,8 @@ trait SelectNameTrait
     public $outcome;
     public $letter;
     public $user_id;
+    public $classroom;
+
 
 
 
@@ -74,30 +76,17 @@ trait SelectNameTrait
     }
     public function selectStudent($id, $name)
     {
-        $this->studentId = $id;
         $this->studentName = $name;
         $this->isOpen = false;
-        //*last name for the profile
-        $this->last_name = Students::find($id)->last_name;
         //*load case for the case during reporting
         $this->loadCases();
-
-
-
         $student = Students::find($id);
         if ($student) {
             $this->cases = $student->anecdotal;
+            $this->classroom = $student->classroom;
         } else {
             $this->cases = [];
         };
-
-        //Validation for existing profile
-        $existingProfile = Profile::where('student_id', $this->studentId)->exists();
-
-        if ($existingProfile) {
-            $this->addError('studentId', 'Student Already Has A Profile');
-            return;
-        }
 
     }
 
