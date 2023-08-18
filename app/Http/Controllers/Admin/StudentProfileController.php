@@ -28,9 +28,4 @@ class StudentProfileController extends Controller
 
     }
 
-    public function edit()
-    {
-    return('dsdsaaaaaaaaaa');
-    }
-
 }

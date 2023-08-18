@@ -13,6 +13,7 @@ use App\Models\Medicine;
 use App\Models\Students;
 use App\Models\Municipal;
 use App\Models\Operation;
+use App\Traits\StatusTrait;
 use App\Models\ParentStatus;
 use App\Http\Livewire\BirthPlace;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Profile extends Model
 {
     use HasFactory;
+    use StatusTrait;
+
 
     protected $table = 'profile';
 
@@ -39,7 +42,7 @@ class Profile extends Model
         'birth_place',
         'religion',
         'mother_tongue',
-        '4ps',
+        'four_ps',
         'birth_order',
         'no_of_siblings',
         'living_with',

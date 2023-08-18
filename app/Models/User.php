@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Report;
 use App\Models\Classroom;
+use App\Traits\StatusTrait;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Notifications\Notifiable;
@@ -16,6 +17,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use LogsActivity;
+    use StatusTrait;
+
 
     protected static $logAttributes = ['name', 'email', 'password'];
 
@@ -34,7 +37,7 @@ class User extends Authenticatable
     ];
 
     public function classroom() {
-        return $this->belongsTo(Classroom::class, 'classroom_id');
+        return $this->belongsTo(Classroom::class);
     }
     /**
      * The attributes that should be hidden for serialization.
@@ -80,6 +83,7 @@ class User extends Authenticatable
     public function students() {
         return $this->hasMany(Students::class, 'classroom_id', 'classroom_id');
     }
+
 
 
 

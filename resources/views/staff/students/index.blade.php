@@ -2,7 +2,7 @@
 
 @section('content')
 <h6 class="text-xl font-bold text-left ">
-    Students
+    Grade:  {{ auth()->user()->classroom->grade_level }}  {{ auth()->user()->classroom->section }} Students
  </h6>
  <div>
      <livewire:adviser.student-table/>

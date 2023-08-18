@@ -5,13 +5,15 @@ namespace App\Models;
 use App\Models\Profile;
 use App\Models\Anecdotal;
 use App\Models\Classroom;
+use App\Traits\StatusTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Students extends Model
 {
     use HasFactory;
-    use HasFactory;
+    use StatusTrait;
+
 
 
     protected $table = 'students';

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Employee;
 use App\Models\Students;
+use App\Traits\StatusTrait;
 use App\Models\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Classroom extends Model
 {
     use HasFactory;
+    use StatusTrait;
 
     protected $table = 'classrooms';
 

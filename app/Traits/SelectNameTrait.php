@@ -24,9 +24,6 @@ trait SelectNameTrait
     public $user_id;
     public $classroom;
 
-
-
-
     protected $messages = [
         'studentId' => 'Please select student',
         'minor_offenses_id.required_without_all' => 'Please select at least one minor offense or provide a grave offense.',
@@ -73,10 +70,13 @@ trait SelectNameTrait
         $this->studentName = '';
         $this->studentId = null;
         $this->cases = [];
+        $this->resetErrorBag(['studentId']);  // Clear the error for studentId field
     }
+
     public function selectStudent($id, $name)
     {
         $this->studentName = $name;
+        $this->studentId = $id;
         $this->isOpen = false;
         //*load case for the case during reporting
         $this->loadCases();

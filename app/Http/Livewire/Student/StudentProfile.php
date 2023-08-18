@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Student;
 
 use App\Models\Profile;
 use App\Traits\ProfileValidationTrait;
@@ -10,12 +10,14 @@ use App\Models\Province;
 use App\Models\Students;
 use App\Traits\SelectNameTrait;
 use App\Traits\SelectAddressTrait;
+use Illuminate\Support\Facades\Session;
 
-class StudentsProfile extends Component
+class StudentProfile extends Component
 {
     use SelectAddressTrait;
     use SelectNameTrait;
     use ProfileValidationTrait;
+    public $formSubmitted = false;
 
     public $m_name, $suffix, $nickname, $age, $sex, $birthdate, $birth_place,
     $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps,
@@ -23,10 +25,12 @@ class StudentsProfile extends Component
     $guardian_age, $favorite_subject, $difficult_subject, $school_organization, $graduation_plan,
     $height, $weight, $bmi;
     //father
-    public $father_type, $father_name, $father_age, $father_occupation, $father_contact, $father_office_contact,
+    public $father_type = 0,
+    $father_name, $father_age, $father_occupation, $father_contact, $father_office_contact,
     $father_monthly_income, $father_birth_place, $father_work_address;
     //mother
-    public $mother_type, $mother_name, $mother_age, $mother_occupation, $mother_contact, $mother_office_contact,
+    public $mother_type = 1,
+    $mother_name, $mother_age, $mother_occupation, $mother_contact, $mother_office_contact,
     $mother_monthly_income, $mother_birth_place, $mother_work_address;
     public $medicines = [];
     public $parent_statuses = [];
@@ -56,7 +60,6 @@ class StudentsProfile extends Component
     protected $listeners = [
         'resetName'
     ];
-
     public function selectStudent($id, $name)
     {
         $this->studentId = $id;
@@ -68,7 +71,8 @@ class StudentsProfile extends Component
         if ($existingProfile) {
             $this->addError('studentId', 'Student Already Has A Profile');
             $this->disableSubmitButton = true; // Add this line
-            return;
+        } else {
+            $this->resetErrorBag(['studentId']); // Clear the error for studentId field
         }
 
         $this->disableSubmitButton = false; // Add this line
@@ -90,8 +94,8 @@ class StudentsProfile extends Component
         }
 
         $provinces = Province::all();
-        return view('livewire.admin.students-profile', compact('provinces', 'students'))
-            ->extends('layouts.dashboard.index')
+        return view('livewire.student.student-profile', compact('provinces', 'students'))
+            ->extends('layouts.app')
             ->section('content');
     }
     public function save()
@@ -114,7 +118,7 @@ class StudentsProfile extends Component
             'contact' => $this->contact,
             'religion' => $this->religion,
             'mother_tongue' => $this->mother_tongue,
-            '4ps' => $this->four_ps,
+            'four_ps' => $this->four_ps,
             'birth_order' => $this->birth_order,
             'no_of_siblings' => $this->number_of_siblings,
             'barangay_id' => $this->selectedBarangay,
@@ -138,17 +142,6 @@ class StudentsProfile extends Component
             'food_allergy' => $this->hasFoodAllergy === 'Yes' ? $this->foodAllergy : 'No',
         ]);
 
-        $profile->family()->create([
-            'type' => $this->mother_type,
-            'parent_name' => $this->mother_name,
-            'parent_age' => $this->mother_age,
-            'parent_occupation' => $this->mother_occupation,
-            'parent_contact' => $this->mother_contact,
-            'parent_office_contact' => $this->mother_office_contact,
-            'parent_birth_place' => $this->mother_birth_place,
-            'parent_work_address' => $this->mother_work_address,
-            'parent_monthly_income' => $this->mother_monthly_income
-        ]);
 
         $profile->family()->create([
             'type' => $this->father_type,
@@ -160,6 +153,18 @@ class StudentsProfile extends Component
             'parent_birth_place' => $this->father_birth_place,
             'parent_work_address' => $this->father_work_address,
             'parent_monthly_income' => $this->father_monthly_income
+        ]);
+
+        $profile->family()->create([
+            'type' => $this->mother_type,
+            'parent_name' => $this->mother_name,
+            'parent_age' => $this->mother_age,
+            'parent_occupation' => $this->mother_occupation,
+            'parent_contact' => $this->mother_contact,
+            'parent_office_contact' => $this->mother_office_contact,
+            'parent_birth_place' => $this->mother_birth_place,
+            'parent_work_address' => $this->mother_work_address,
+            'parent_monthly_income' => $this->mother_monthly_income
         ]);
 
 
@@ -177,10 +182,10 @@ class StudentsProfile extends Component
                 'award_year' => $reward['year'],
             ]);
         }
-        foreach ($this->parent_statuses as $parent_status) {
-            $profile->parentstatus()->create([
-                'parent_status' => $parent_status
-            ]);
+
+
+        foreach ($this->parent_statuses as $status) {
+            $profile->parent_status()->create(['parent_status' => $status]);
         }
 
 
@@ -219,8 +224,10 @@ class StudentsProfile extends Component
             ]);
         }
         $this->resetForm();
-
-        session()->flash('message', 'Succesfully Save');
+        //session()->flash('message', 'Succesfully Save');
+        $this->formSubmitted = true;
+        $createdForm = Profile::latest()->first();
+        Session::put('created_form_id', $createdForm->id);
 
     }
 

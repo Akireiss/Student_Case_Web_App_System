@@ -1,7 +1,6 @@
 <div {{ $attributes->merge(['class' => 'mx-auto ']) }}>
     <div class="flex justify-between items-center ">
-        <h6 class="text-lg font-semibold
-        text-gray-600 dark:text-gray-300 flex-shrink-0 ">
+        <h6 class="text-xl font-bold text-left ">
             {{ $title }}
         </h6>
         <div class="ml-aut o">

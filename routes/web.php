@@ -4,6 +4,8 @@ use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\Report;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
+use App\Http\Livewire\Student\Profile\StudentProfileUpdate;
+use App\Http\Livewire\Student\StudentFormUpdate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
@@ -58,8 +60,11 @@ Route::middleware(['auth', 'role'])->group(function () {
             // Students Profile Area
             Route::get('student-profile', [StudentProfileController::class, 'index']);
 
-            Route::get('student-profile/{profile}/edit', [StudentProfileController::class, 'edit'])
+            //Livewire Component
+            Route::get('student-profile/{profile}/edit', StudentProfileUpdate::class)
             ->name('admin.profile.edit');
+
+
             Route::get('student-profile/{profile}/view', [StudentProfileController::class, 'show'])
             ->name('admin.profile.show');
 
@@ -103,7 +108,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             //*Dashboard
             Route::get('dashboard', Dashboard::class);
             //*Livewire Report Student
-            Route::get('report/student', Report::class);
+            Route::get('report/student', \App\Http\Livewire\Adviser\Report::class);
             //*Student Profile//livewire
             Route::get('students-profile', StudentProfile::class);
             Route::get('student-profile/{profile}/view', [StudentProfile::class, 'show'])->name('profile.view');
@@ -124,8 +129,9 @@ Route::middleware(['auth', 'role'])->group(function () {
     });
 });
 
-//traits
 Route::resource('students', ReportHistory::class);
-//Student Form
 Route::get('student/form', StudentForm::class);
+Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
+Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
+
 

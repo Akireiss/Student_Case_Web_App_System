@@ -1,11 +1,11 @@
 <div>
+    @if (!$formSubmitted)
+<div class="p-4 ">
 
-    <x-form title="Add Student Profile">
+    <x-form title="">
 
         <x-slot name="actions">
-            <x-link href="{{ url('admin/student-profile') }}">
-                Back
-            </x-link>
+            <x-link a href="{{ url('student/form') }}">Back</x-link>
         </x-slot>
         <x-slot name="slot">
             <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 ">
@@ -41,7 +41,11 @@
                                                 x-on:click="isOpen = false">
                                                 {{ $student->first_name }} {{ $student->last_name }}
                                             </li>
-                                        @endforeach
+                                            @endforeach
+                                            @elseif ($studentName)
+                                            <span class="text-red-500 text-sm">
+                                                No Student Found
+                                             </span>
                                     </ul>
                                 @endif
                             </div>
@@ -274,8 +278,9 @@
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
-
-                    <input type="hidden" value="father" wire:model="father_type">
+                    <div class="hidden">
+                        <x-input  wire:model="father_type" value="0"/>
+                    </div>
 
 
 
@@ -364,7 +369,11 @@
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
-                    <input type="hidden" value="mother" wire:model="mother_type">
+<div class="hidden">
+
+    <x-input  wire:model="mother_type" disabled value="1"/>
+</div>
+
 
                     <div class="relative mb-3 px-4">
                         <x-label>
@@ -515,62 +524,14 @@
                 </div>
 
 
-
-
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
-                    Parent are currently: (check which applies below)
-                    {{-- <x-error fieldName="parent_statuses" /> --}}
-                </h6>
                 <x-grid columns="3" gap="4" px="0" mt="0">
-
-                    <div class="relative mb-3 px-4">
-                        <x-checkbox />
-                        <x-label class="inline-block" wire:model="parent_statuses"
-                         value="Living together">Living
-                            together
-                        </x-label>
-                    </div>
-
-                    <div class="relative mb-3 px-4">
-                        <x-checkbox />
-                        <x-label class="inline-block" wire:model="parent_statuses"
-                        value="Separated">Separated
-                        </x-label>
-                    </div>
-
-                    <div class="relative mb-3 px-4">
-                        <x-checkbox />
-                        <x-label class="inline-block" wire:model="parent_statuses"
-                        value="Legally Separated">Legally
-                            Separated</x-label>
-                    </div>
-
-                    <div class="relative mb-3 px-4">
-                        <x-checkbox />
-                        <x-label class="inline-block" wire:model="parent_statuses"
-                        value="With another partner">With
-                            another partner</x-label>
-                    </div>
-
-
-                    <div class="relative mb-3 px-4">
-                        <x-checkbox />
-                        <x-label class="inline-block" wire:model="parent_statuses" value="Father is OFW">Father is
-                            OFW
-                        </x-label>
-                    </div>
-
-
-                    <div class="relative mb-3 px-4">
-                        <x-checkbox />
-                        <x-label class="inline-block" wire:model="parent_statuses" value="Mother is OFW">Mother is
-                            OFW
-                        </x-label>
-                    </div>
-
+                    @foreach(['Living Together', 'Separated', 'Legally Separated', 'With another partner', 'Father is OFW', 'Mother is OFW'] as $status)
+                        <div class="relative mb-3 px-4">
+                            <x-checkbox wire:model="parent_statuses" value="{{ $status }}" />
+                            <x-label class="inline-block">{{ $status }}</x-label>
+                        </div>
+                    @endforeach
                 </x-grid>
-
-
 
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
@@ -806,7 +767,8 @@
                     </div>
 
 
-                    <div x-data="{ hasDisability: @entangle('hasDisability'), hasFoodAllergy: @entangle('hasFoodAllergy') }">
+                    <div x-data="{ hasDisability: @entangle('hasDisability'),
+                     hasFoodAllergy: @entangle('hasFoodAllergy') }">
                         <div class="relative mb-3 px-4">
                             <x-label>
                                 Do you have a disability?
@@ -847,8 +809,9 @@
                             </x-label>
                             <x-input x-ref="foodAllergyInput" wire:model="foodAllergy" />
                             <x-error fieldName="foodAllergy" />
-
                         </div>
+
+
                     </div>
 
                 </x-grid>
@@ -930,4 +893,28 @@
             </form>
         </x-slot>
     </x-form>
+</div>
+<div>
+
+    @else
+    <div class="text-center">
+        <p class="font-bold">
+            Thank you for submitting
+        </p>
+        @php
+            $formId = Session::get('created_form_id');
+        @endphp
+        @if ($formId)
+
+        <div class="mx-auto">
+            <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->merge(public_path('logo.PNG'), 0.3, true)->size(200)
+            ->generate(url('student/form/'.$formId.'/update'))) }}" alt="">
+        </div>
+
+        @endif
+    </div>
+    @endif
+</div>
+
+
 </div>
