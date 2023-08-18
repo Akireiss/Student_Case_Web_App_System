@@ -494,36 +494,26 @@
                 </div>
 
 
-                <div x-data="{ livingWith: @entangle('living_with') }">
+                <div x-data="{ selected: @entangle('living_with') }">
                     <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                         You are currently living with:
                         <x-error fieldName="living_with" />
                     </h6>
                     <x-grid columns="4" gap="4" px="4" mt="2">
-                        <div class="relative mb-3">
-                            <input type="radio" name="living-with" wire:model="living_with" value="both-parents"
-                                x-bind:checked="livingWith === 'both-parents'" />
-                            <x-label class="inline-block" for="living-with" value="Both Parents" />
-                        </div>
-                        <div class="relative mb-3">
-                            <input type="radio" name="living-with" wire:model="living_with" value="father-only"
-                                x-bind:checked="livingWith === 'father-only'" />
-                            <x-label class="inline-block" for="living-with" value="Father Only" />
-                        </div>
-                        <div class="relative mb-3">
-                            <input type="radio" name="living-with" wire:model="living_with" value="mother-only"
-                                x-bind:checked="livingWith === 'mother-only'" />
-                            <x-label class="inline-block" for="living-with" value="Mother Only" />
-                        </div>
-                        <div class="relative mb-3">
-                            <input type="radio" name="living-with" wire:model="living_with" value="na"
-                                x-bind:checked="livingWith === 'na'" />
-                            <x-label class="inline-block" for="living-with" value="N/A" />
-                        </div>
+                        @foreach(['both-parents', 'father-only', 'mother-only', 'na'] as $option)
+                            <div class="relative mb-3">
+                                <input type="radio" name="living-with" wire:model="living_with" value="{{ $option }}"
+                                       x-bind:checked="selected === '{{ $option }}'" />
+                                <x-label class="inline-block" for="living-with" value="{{ ucfirst(str_replace('-', ' ', $option)) }}" />
+                            </div>
+                        @endforeach
                     </x-grid>
                 </div>
 
-
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+                    Parent are currently:
+                    <x-error fieldName="living_with" />
+                </h6>
                 <x-grid columns="3" gap="4" px="0" mt="0">
                     @foreach(['Living Together', 'Separated', 'Legally Separated', 'With another partner', 'Father is OFW', 'Mother is OFW'] as $status)
                         <div class="relative mb-3 px-4">
@@ -544,9 +534,6 @@
                         <x-error fieldName="guardian_name" />
 
                     </div>
-
-
-
 
 
                     <div class="relative mb-3 px-4">

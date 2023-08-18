@@ -123,18 +123,21 @@ class Profile extends Model
     }
 
     //Address
-    public function barangay()
-    {
-        return $this->belongsTo(Barangay::class);
-    }
-    public function municipal()
-    {
-        return $this->belongsTo(Municipal::class);
-    }
     public function province()
     {
-        return $this->belongsTo(Province::class);
+        return $this->belongsTo(Province::class, 'province_id');
     }
+
+    public function municipal()
+    {
+        return $this->belongsTo(Municipal::class, 'municipal_id');
+    }
+
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class, 'barangay_id');
+    }
+
     public function disability()
     {
         return $this->belongsTo(Dissa::class);
