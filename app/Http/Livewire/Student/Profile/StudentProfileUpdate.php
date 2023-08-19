@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Student\Profile;
 
 use App\Models\Barangay;
+use App\Models\Family;
 use App\Models\Municipal;
 use App\Models\Profile;
 use App\Traits\UpdateAddressTrait;
@@ -20,8 +21,13 @@ class StudentProfileUpdate extends Component
 
     public $profileId;
     public $profile;
-    public $disableSubmitButton = false;
 
+    public $rewards = [
+        ['name' => '', 'year' => null],
+    ];
+    public $siblings = [
+        ['name' => '', 'age' => '', 'gradeSection' => null],
+    ];
 
     public function selectStudent($id, $name)
     {
@@ -45,6 +51,9 @@ class StudentProfileUpdate extends Component
         $this->profileId = $profile;
         $this->profile = Profile::findOrFail($profile);
         $this->parentStatuses = $this->profile->parent_status->pluck('parent_status')->toArray();
+        $this->studentName = $this->profile->student->first_name;
+        $this->last_name = $this->profile->student->last_name;
+        $this->studentId = $this->profile->student->id;
         $this->selectedCity = $this->profile->province_id;
         $this->selectedMunicipality = $this->profile->municipal_id;
         $this->selectedBarangay = $this->profile->barangay_id;
@@ -62,6 +71,39 @@ class StudentProfileUpdate extends Component
         $this->contact = $this->profile->contact;
         $this->mother_tongue = $this->profile->mother_tongue;
         $this->birth_place = $this->profile->birth_place;
+        //Family Background: Father
+        if ($this->profile->family->count() > 0) {
+            $familyMember = $this->profile->family->where('type', 0)->first();
+            if ($familyMember) {
+                $this->father_name = $familyMember->parent_name;
+                $this->father_age = $familyMember->parent_age;
+                $this->father_occupation = $familyMember->parent_occupation;
+                $this->father_contact = $familyMember->parent_contact;
+                $this->father_office_contact = $familyMember->parent_office_contact;
+                $this->father_monthly_income = $familyMember->parent_monthly_income;
+                $this->father_birth_place = $familyMember->parent_birth_place;
+                $this->father_work_address = $familyMember->parent_work_address;
+            }
+        }
+          //Family Background: Mother
+          if ($this->profile->family->count() > 0) {
+            $familyMember = $this->profile->family->where('type', 1)->first();
+            if ($familyMember) {
+                $this->mother_name = $familyMember->parent_name;
+                $this->mother_age = $familyMember->parent_age;
+                $this->mother_occupation = $familyMember->parent_occupation;
+                $this->mother_contact = $familyMember->parent_contact;
+                $this->mother_office_contact = $familyMember->parent_office_contact;
+                $this->mother_monthly_income = $familyMember->parent_monthly_income;
+                $this->mother_birth_place = $familyMember->parent_birth_place;
+                $this->mother_work_address = $familyMember->parent_work_address;
+            }
+        }
+
+
+
+
+
 
     }
 
@@ -79,6 +121,7 @@ class StudentProfileUpdate extends Component
         $provinces = Province::all();
         $municipalities = Municipal::all();
         $barangays = Barangay::all();
+
         return view('livewire.student.profile.student-profile-update', [
             'profile' => $this->profile,
             'provinces' => $provinces,

@@ -29,4 +29,7 @@ trait WireModelTraits
     public $hasFoodAllergy;
     public $foodAllergy;
     public $plans = [];
+    public $living_with = null;
+
+
 }

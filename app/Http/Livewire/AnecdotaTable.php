@@ -62,7 +62,7 @@ final class AnecdotaTable extends PowerGridComponent
                 'anecdotal.created_at',
                 'students.created_at as created',
                 'offenses.created_at as created_offense',
-            );
+            )->orderByDesc('anecdotal.created_at');
     }
 
     /*
