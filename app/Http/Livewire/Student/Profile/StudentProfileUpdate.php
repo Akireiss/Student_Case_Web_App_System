@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Student\Profile;
 
 use App\Models\Barangay;
+use App\Models\EducBg;
 use App\Models\Family;
 use App\Models\Municipal;
 use App\Models\Profile;
@@ -21,6 +22,7 @@ class StudentProfileUpdate extends Component
 
     public $profileId;
     public $profile;
+   // public $education = [];
 
     public $rewards = [
         ['name' => '', 'year' => null],
@@ -71,6 +73,15 @@ class StudentProfileUpdate extends Component
         $this->contact = $this->profile->contact;
         $this->mother_tongue = $this->profile->mother_tongue;
         $this->birth_place = $this->profile->birth_place;
+        $this->living_with = $this->profile->living_with;
+
+        //Guardian
+        $this->guardian_name = $this->profile->guardian_name;
+        $this->relationship = $this->profile->guardian_relationship;
+        $this->guardian_contact = $this->profile->guardian_contact;
+        $this->guardian_age = $this->profile->guardian_age;
+        $this->guardian_address = $this->profile->guardian_address;
+
         //Family Background: Father
         if ($this->profile->family->count() > 0) {
             $familyMember = $this->profile->family->where('type', 0)->first();
@@ -100,10 +111,11 @@ class StudentProfileUpdate extends Component
             }
         }
 
+        $educationData = $this->profile->education->groupBy('grade_level');
 
-
-
-
+            $this->education['name'] = $educationData->school_name ;
+            $this->education['section'] = $educationData->grade_section ;
+            $this->education['school_year'] = $educationData->school_year ;
 
     }
 
@@ -127,7 +139,8 @@ class StudentProfileUpdate extends Component
             'provinces' => $provinces,
             'municipalities' => $municipalities,
             'barangays' => $barangays,
-            'students' => $students
+            'students' => $students,
+
         ])
             ->extends('layouts.dashboard.index', )
             ->section('content');

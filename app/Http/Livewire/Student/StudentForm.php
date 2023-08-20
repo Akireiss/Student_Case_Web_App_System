@@ -11,10 +11,13 @@ use App\Traits\SelectNameTrait;
 
 class StudentForm extends Component
 {
-    use SelectNameTrait;
+    public $studentName = '';
+    public $studentId = null;
+    public $isOpen = false;
+    public $showError = false;
+
     use SelectAddressTrait;
     public $showCreateLink = false;
-
 
     public function selectStudent($id, $name)
     {
@@ -33,8 +36,6 @@ class StudentForm extends Component
         }
     }
 
-
-
     public function clearStudent()
     {
         $this->studentId = null;
@@ -43,7 +44,6 @@ class StudentForm extends Component
         $this->resetErrorBag();
     }
 
-
     public function render()
     {
         $students = [];
@@ -51,8 +51,9 @@ class StudentForm extends Component
         if (strlen($this->studentName) >= 3) {
             $students = Students::where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhere('middle_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
+                    ->orWhereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
             })->get();
         }
 
@@ -61,5 +62,11 @@ class StudentForm extends Component
         ])->extends('layouts.app')
             ->section('content');
     }
-
+    public function resetForm()
+    {
+        $this->studentName = '';
+        $this->studentId = null;
+        $this->cases = [];
+        $this->resetErrorBag(['studentId']);
+    }
 }

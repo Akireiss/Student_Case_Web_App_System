@@ -16,14 +16,6 @@ final class AnecdotaTable extends PowerGridComponent
     use ActionButton;
     use WithExport;
 
-    ///! REMIDER:THE FUCKING BUGGGGG IS THE NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL FIX THAT
-    /*
-    |--------------------------------------------------------------------------
-    |  Features Setup
-    |--------------------------------------------------------------------------
-    | Setup Table's general features
-    |
-    */
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -39,66 +31,31 @@ final class AnecdotaTable extends PowerGridComponent
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Datasource
-    |--------------------------------------------------------------------------
-    | Provides data to your Table using a Model or Collection
-    |
-    */
-
-    /**
-     * PowerGrid datasource
-     *
-     * @return Builder<\App\Models\Anecdotal>
-     */
     public function datasource(): Builder
     {
         return Anecdotal::query()
-            ->join('students', 'anecdotal.student_id', '=', 'students.id')
-            ->join('offenses', 'anecdotal.grave_offense_id', '=', 'offenses.id')
-            ->select(
-                'anecdotal.*',
-                'anecdotal.created_at',
-                'students.created_at as created',
-                'offenses.created_at as created_offense',
-            )->orderByDesc('anecdotal.created_at');
+        ->join('students', 'anecdotal.student_id', '=', 'students.id')
+        ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
+        ->select(
+            'anecdotal.*',
+            'anecdotal.created_at',
+            'students.created_at as created',
+            'offenses.created_at as created_offense',
+            'offenses.offenses'
+        )
+        ->orderByDesc('anecdotal.created_at');
+
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Relationship Search
-    |--------------------------------------------------------------------------
-    | Configure here relationships to be used by the Search and Table Filters.
-    |
-    */
-
-    /**
-     * Relationship search.
-     *
-     * @return array<string, array<int, string>>
-     */
     public function relationSearch(): array
     {
         // !important part for the relation
         return [
             'students' => ['first_name', 'last_name'],
-                'Minoroffenses' => ['offenses'],
-            // 'Graveoffenses' => ['offenses'],
+                'offenses' => ['offenses'],
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Add Column
-    |--------------------------------------------------------------------------
-    | Make Datasource fields available to be used as columns.
-    | You can pass a closure to transform/modify the data.
-    |
-    | ❗ IMPORTANT: When using closures, you must escape any value coming from
-    |    the database using the `e()` Laravel Helper function.
-    |
-    */
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
@@ -109,8 +66,7 @@ final class AnecdotaTable extends PowerGridComponent
                 return $model->students->last_name;
             })
 
-            // ->addColumn('grave_offense', fn(Anecdotal $model) => $model->Graveoffenses ? $model->Graveoffenses->offenses : 'No Data')
-            ->addColumn('minor_offense', fn(Anecdotal $model) => $model->Minoroffenses ? $model->Minoroffenses->offenses : 'No Data')
+            ->addColumn('offenses')
 
             ->addColumn('gravity', fn(Anecdotal $model) => ($model->gravityText))
 
@@ -131,9 +87,8 @@ final class AnecdotaTable extends PowerGridComponent
         return [
             Column::make('First Name', 'first_name')->sortable()
                 ->withCount('Total Reports', true, false),
-            Column::make('Last Name', 'last_name')->sortable(), // New column for last name
-            // Column::make('Grave Offense', 'grave_offense'),
-            Column::make('Offenses', 'minor_offense'),
+            Column::make('Last Name', 'last_name')->sortable(),
+            Column::make('Offenses', 'offenses'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
             Column::make('Submitted at', 'created_at_formatted', 'anecdotal.created_at')->sortable(),
             Column::make('Status', 'case_status')->sortable()
@@ -163,19 +118,12 @@ final class AnecdotaTable extends PowerGridComponent
                 ->optionLabel('label'),
 
 
-        Filter::select('minor_offense', 'category')
+        Filter::select('offenses', 'category')
         ->dataSource(Offenses::categories())
         ->optionValue('category')
         ->optionLabel('label'),
 ];
     }
-
-
-    /**
-     * PowerGrid Anecdotal Action Buttons.
-     *
-     * @return array<int, Button>
-     */
 
 
     public function actions(): array
@@ -186,31 +134,7 @@ final class AnecdotaTable extends PowerGridComponent
                 ->route('anecdotal.edit', function (\App\Models\Anecdotal $model) {
                     return ['anecdotal' => $model->id];
                 }),
-                //     Button::make('edit', 'Edit')
-                // ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-                // ->route('anecdotal.edit', function (\App\Models\Anecdotal $model) {
-                //     return ['anecdotal' => $model->id];
-                // }),
-
-            //    Button::make('destroy', 'Delete')
-            //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-            //        ->route('anecdotal.destroy', function(\App\Models\Anecdotal $model) {
-            //             return $model->id;
-            //        })
-            //        ->method('delete')
         ];
     }
 
-    /*
-    public function actionRules(): array
-    {
-       return [
-
-           //Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($anecdotal) => $anecdotal->id === 1)
-                ->hide(),
-        ];
-    }
-    */
 }

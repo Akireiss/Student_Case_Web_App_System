@@ -40,6 +40,14 @@
                                 </div>
                             </div>
 
+                            <div class="w-full px-4">
+                                <div class="relative mb-3">
+                                    <x-label>Middle Name</x-label>
+                                    <x-input type="text" name="middle_name" wire:model="middle_name" required />
+                                    <x-error fieldName="middle_name" />
+                                </div>
+                            </div>
+
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
@@ -81,7 +89,6 @@
                                         <option value="1">Inactive</option>
                                     </x-select>
                                     <x-error fieldName="status" />
-
                                 </div>
                             </div>
                         </div>
@@ -91,7 +98,7 @@
                             <div wire:loading wire:target="store" class="mx-4">
                                 Loading
                             </div>
-                            <x-button type="submit" wire:loading.attr="disabled">Add</x-button>
+                            <x-button type="submit" wire:loading.attr="disabled">Add Student</x-button>
                         </div>
                     </form>
                 </x-form>

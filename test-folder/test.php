@@ -276,3 +276,13 @@ foreach ($educationBackgrounds as $background) {
         'school_year' => $background->school_year,
     ];
 }
+
+
+//Anecdotal Table
+  // public function resetForm()
+    // {
+    //     $this->studentName = '';
+    //     $this->studentId = null;
+    //     $this->cases = [];
+    //     $this->resetErrorBag(['studentId']);
+    // }

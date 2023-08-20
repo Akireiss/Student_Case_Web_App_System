@@ -313,3 +313,41 @@
       file:py-2.5 file:px-4">
    </div>
 {{--  --}}
+
+
+
+
+@if ($studentName && $studentId)
+<h6 class="text-lg font-bold px-4 text-left mb-3">
+    Recent Cases of {{ $studentName }}
+</h6>
+<x-table>
+    <x-slot name="header">
+        <th class="px-4 py-3">Student Name</th>
+        <th class="px-4 py-3">Offenses</th>
+        <th class="px-4 py-3">Grave Offense</th>
+        <th class="px-4 py-3">Status</th>
+        <th class="px-4 py-3">Date Reported</th>
+    </x-slot>
+
+    @if (count($cases) > 0)
+        @foreach ($cases as $case)
+            <tr class="text-gray-700 dark:text-gray-400">
+                <td class="px-4 py-3">
+                    {{ $studentName }}
+                </td>
+                <td class="px-4 py-3">
+                    {{ $case->Minoroffenses?->offenses ?? 'No Data' }}
+                </td>
+                <td class="px-4 py-3">
+                    {{ $case->created_at->format('F j, Y') }}
+                </td>
+            </tr>
+        @endforeach
+    @else
+        <tr>
+            <td class="px-4 py-3" colspan="2">No cases found for this student.</td>
+        </tr>
+    @endif
+</x-table>
+@endif

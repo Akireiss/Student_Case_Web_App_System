@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('parent_occupation');
             $table->string('parent_contact');
             $table->string('parent_office_contact')->nullable();
-            $table->string('parent_birth_place');
-            $table->string('parent_work_address');
+            $table->string('parent_birth_place')->nullable();
+            $table->string('parent_work_address')->nullable();
             $table->string('parent_monthly_income');
 
             $table->foreign('profile_id')->references('id')->on('profile')->onDelete('cascade');

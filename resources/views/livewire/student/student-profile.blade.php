@@ -39,7 +39,7 @@
                                             <li class="px-4 py-2 cursor-pointer hover:bg-gray-200"
                                                 wire:click="selectStudent('{{ $student->id }}', '{{ $student->first_name }}')"
                                                 x-on:click="isOpen = false">
-                                                {{ $student->first_name }} {{ $student->last_name }}
+                                                {{ $student->first_name }}  {{ $student->middle_name }} {{ $student->last_name }}
                                             </li>
                                             @endforeach
                                             @elseif ($studentName)
@@ -65,7 +65,7 @@
                         <x-label>
                             Middle Name
                         </x-label>
-                        <x-input wire:model="m_name" />
+                        <x-input wire:model="middle_name" />
                         <x-error fieldName="m_name" />
 
                     </div>

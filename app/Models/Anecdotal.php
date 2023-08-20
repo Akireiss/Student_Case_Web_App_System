@@ -21,24 +21,20 @@ class Anecdotal extends Model
 
     protected $fillable = [
         'student_id',
-        'grave_offense_id',
-        'minor_offense_id',
+        'offense_id',
         'gravity',
         'short_description',
         'observation',
         'desired',
         'outcome',
         'letter',
-        'case_status'
+        'case_status',
+        'status'
     ];
 
-    public function Minoroffenses()
+    public function offenses()
     {
-        return $this->belongsTo(Offenses::class, 'minor_offense_id');
-    }
-    public function Graveoffenses()
-    {
-        return $this->belongsTo(Offenses::class, 'grave_offense_id');
+        return $this->belongsTo(Offenses::class, 'offense_id');
     }
 
     public function report()
@@ -73,8 +69,7 @@ class Anecdotal extends Model
         return collect([
             ['case_status' => 0, 'label' => 'Pending'],
             ['case_status' => 1, 'label' => 'Process'],
-            ['case_status' => 2, 'label' => 'Ongoing'],
-            ['case_status' => 3, 'label' => 'Resolved'],
+            ['case_status' => 2, 'label' => 'Resolved'],
         ]);
     }
 
@@ -101,8 +96,6 @@ class Anecdotal extends Model
             case 1:
                 return 'Process';
             case 2:
-                return 'Ongoing';
-            case 3:
                 return 'Resolved';
             default:
                 return 'Unknown';

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('actions');
 
             $table->foreign('anecdotal_id')->references('id')->on('anecdotal')->onDelete('cascade');
-            $table->timestamps();
+            $table->timestamps(false);
         });
     }
 

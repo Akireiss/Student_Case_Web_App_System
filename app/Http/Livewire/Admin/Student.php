@@ -10,6 +10,7 @@ class Student extends Component
 {
     public $status;
     public $first_name;
+    public $middle_name;
     public $last_name;
     public $lrn;
     public $classroom_id;
@@ -19,7 +20,7 @@ class Student extends Component
     protected $rules = [
         'first_name' => 'required|string',
         'last_name' => 'required|string',
-        'lrn' => 'required|numeric|digits:10',
+        'lrn' => 'required|numeric',
         'classroom_id' => 'required',
         'status' => 'required|in:0,1',
     ];
@@ -42,6 +43,7 @@ class Student extends Component
 
         Students::create([
             'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
             'lrn' => $this->lrn,
             'classroom_id' => $this->classroom_id,
@@ -57,6 +59,7 @@ class Student extends Component
     private function resetForm()
     {
         $this->first_name = '';
+        $this->middle_name = '';
         $this->last_name = '';
         $this->lrn = '';
         $this->classroom_id = null;

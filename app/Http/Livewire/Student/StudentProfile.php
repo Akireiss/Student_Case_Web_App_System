@@ -18,11 +18,8 @@ class StudentProfile extends Component
     use SelectNameTrait;
     use ProfileValidationTrait;
     use WireModelTraits;
-
-    //Button
     public $disableSubmitButton = false;
     public $living_with = null;
-
     public $rewards = [
         ['name' => '', 'year' => null],
     ];
@@ -34,17 +31,18 @@ class StudentProfile extends Component
         $this->studentId = $id;
         $this->studentName = $name;
         $this->last_name = Students::find($id)->last_name;
+        $this->middle_name = Students::find($id)->middle_name;
 
         $existingProfile = Profile::where('student_id', $this->studentId)->exists();
 
         if ($existingProfile) {
             $this->addError('studentId', 'Student Already Has A Profile');
-            $this->disableSubmitButton = true; // Add this line
+            $this->disableSubmitButton = true;
         } else {
-            $this->resetErrorBag(['studentId']); // Clear the error for studentId field
+            $this->resetErrorBag(['studentId']);
         }
 
-        $this->disableSubmitButton = false; // Add this line
+        $this->disableSubmitButton = false;
     }
 
     public function render()
@@ -55,8 +53,9 @@ class StudentProfile extends Component
         if (strlen($this->studentName) >= 3) {
             $students = Students::where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhere('middle_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
+                    ->orWhereRaw("CONCAT(first_name, ' ', middle_name,  ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
             })->get();
         }
 
@@ -75,8 +74,7 @@ class StudentProfile extends Component
         }
 
         $profile = Profile::create([
-            'student_id' => $this->studentId,
-            'm_name' => $this->m_name,
+            'student_id' => $this->studentId,,
             'suffix' => $this->suffix,
             'nickname' => $this->nickname,
             'age' => $this->age,

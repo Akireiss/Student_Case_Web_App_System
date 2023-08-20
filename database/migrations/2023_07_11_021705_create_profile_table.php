@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('profile', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('student_id')->nullable();
-            $table->string('m_name');
+            $table->unsignedBigInteger('student_id');
             $table->string('suffix')->nullable();
             $table->string('nickname')->nullable();
             $table->integer('age');
@@ -27,7 +26,7 @@ return new class extends Migration
             $table->string('birth_place');
             $table->string('religion');
             $table->string('mother_tongue');
-            $table->boolean('4ps');
+            $table->boolean('four_ps');
             $table->string('birth_order');
             $table->string('no_of_siblings');
 
@@ -43,7 +42,7 @@ return new class extends Migration
             //Education Background
             //Award Here
             $table->string('favorite_subject');
-            $table->string('difficult_subject')->nullable();
+            $table->string('difficult_subject');
             $table->string('school_organization')->nullable();
             $table->string('graduation_plan');
             //Additional info here
@@ -57,7 +56,7 @@ return new class extends Migration
 
 
 
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('set null');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('barangay_id')->references('id')->on('barangay')->onDelete('cascade');
             $table->foreign('municipal_id')->references('id')->on('municipal')->onDelete('cascade');
             $table->foreign('province_id')->references('id')->on('province')->onDelete('cascade');

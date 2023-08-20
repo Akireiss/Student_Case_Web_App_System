@@ -14,22 +14,55 @@ use Livewire\WithFileUploads;
 
 class Report extends Component
 {
+    public $offense_id;
+    public $observation;
+    public $desired;
+    public $outcome;
+    public $letter;
+    public $user_id;
+    public $classroom;
+    public $gravity;
+    public $short_description;
+    public $cases = [];
+    public $selectedActions = [];
 
     use WithFileUploads;
     use SelectNameTrait;
     protected $rules = [
         'studentName' => 'required',
         'studentId' => 'required',
-        'minor_offenses_id' => 'nullable|required_without_all:grave_offenses_id',
-        'grave_offenses_id' => 'nullable|required_without_all:minor_offenses_id',
+        'offense_id' => 'required',
         'gravity' => 'required',
-        'short_description' => 'required',
+        'short_description' => 'nullable',
         'observation' => 'required',
         'desired' => 'required',
         'outcome' => 'required',
         'letter' => 'nullable | image',
         'selectedActions' => 'required',
     ];
+
+    protected $messages = [
+        'studentId' => 'This field is required',
+        'offense_id' => 'This field is required',
+        'selectedActions.required' => 'Please select at least one action.',
+    ];
+
+    public function loadCases()
+    {
+        if ($this->studentId) {
+            $student = Students::find($this->studentId);
+            if ($student) {
+                $this->cases = $student->anecdotal;
+            } else {
+                $this->cases = [];
+            }
+        }
+    }
+
+    public function updatedStudentId()
+    {
+        $this->loadCases();
+    }
 
     public function render()
     {
@@ -38,18 +71,16 @@ class Report extends Component
         if (strlen($this->studentName) >= 3) {
             $students = Students::where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->studentName . '%')
+                    ->orWhere('middle_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
+                    ->orWhereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
             })->get();
         }
         $actions = Action::all();
-        $offenses = Offenses::whereIn('category', [0, 1])->get();
-        $minorOffenses = $offenses->where('category', 0)->pluck('offenses', 'id');
-        $graveOffenses = $offenses->where('category', 1)->pluck('offenses', 'id');
+        $offenses = Offenses::pluck('offenses', 'id')->all();
 
         return view('livewire.student.report', [
-            'minorOffenses' => $minorOffenses,
-            'graveOffenses' => $graveOffenses,
+            'offenses' => $offenses,
             'students' => $students,
             'actions' => $actions
         ])->extends('layouts.dashboard.index')
@@ -67,8 +98,7 @@ class Report extends Component
 
         $anecdotal = Anecdotal::create([
             'student_id' => $this->studentId,
-            'minor_offense_id' => $this->minor_offenses_id,
-            'grave_offense_id' => $this->grave_offenses_id,
+            'offense_id' => $this->offense_id,
             'gravity' => $this->gravity,
             'short_description' => $this->short_description,
             'observation' => $this->observation,
@@ -90,12 +120,12 @@ class Report extends Component
             ]);
         }
 
-        $this->resetForm();
+        $this->resetReport();
         session()->flash('message', 'Successfully Added');
     }
 
 
-    public function resetForm()
+    public function resetReport()
     {
         $this->studentName = null;
         $this->studentId = null;
@@ -104,11 +134,17 @@ class Report extends Component
         $this->observation = '';
         $this->desired = '';
         $this->outcome = '';
-        $this->minor_offenses_id = null;
-        $this->grave_offenses_id = null;
+        $this->offense_id = null;
         $this->letter = null;
         $this->selectedActions = [];
     }
 
+    public function resetForm()
+    {
+        $this->studentName = '';
+        $this->studentId = null;
+        $this->cases = [];
+        $this->resetErrorBag(['studentId']);
+    }
 
 }

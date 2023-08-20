@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('vitamins');
 
             $table->foreign('profile_id')->references('id')->on('profile')->onDelete('cascade');
-            $table->timestamps();
+            $table->timestamps(false);
         });
     }
 

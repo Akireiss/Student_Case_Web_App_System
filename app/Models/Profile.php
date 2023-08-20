@@ -29,7 +29,6 @@ class Profile extends Model
 
     protected $fillable = [
         'student_id',
-        'm_name',
         'suffix',
         'nickname',
         'age',
@@ -114,7 +113,7 @@ class Profile extends Model
 
     public function education()
     {
-        return $this->hasMany(EducBg::class, 'profile_id');
+        return $this->hasMany(EducBg::class);
     }
 
     public function accidents()
@@ -138,10 +137,10 @@ class Profile extends Model
         return $this->belongsTo(Barangay::class, 'barangay_id');
     }
 
-    public function disability()
-    {
-        return $this->belongsTo(Dissa::class);
-    }
+    // public function disability()
+    // {
+    //     return $this->belongsTo(Diss::class);
+    // }
 
     public static function codes()
     {

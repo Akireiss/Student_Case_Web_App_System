@@ -61,8 +61,7 @@
                         <x-label>
                             Middle Name
                         </x-label>
-                        <x-input wire:model="m_name" />
-                        <x-error fieldName="m_name" />
+                        <x-input wire:model="middle_name" disabled/>
 
                     </div>
 

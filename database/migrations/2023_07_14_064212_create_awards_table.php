@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('award_name')->nullable();
             $table->integer('award_year')->nullable();
             $table->foreign('profile_id')->references('id')->on('profile')->onDelete('set null');
-            $table->timestamps();
+            $table->timestamps(false);
         });
     }
 
