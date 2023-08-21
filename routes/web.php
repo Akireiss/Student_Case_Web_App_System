@@ -1,11 +1,10 @@
 <?php
 
 use App\Http\Livewire\Admin\User;
+use App\Http\Livewire\Admin\Chart;
 use App\Http\Livewire\Admin\Report;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
-use App\Http\Livewire\Student\Profile\StudentProfileUpdate;
-use App\Http\Livewire\Student\StudentFormUpdate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
@@ -13,11 +12,14 @@ use App\Http\Livewire\Student\StudentForm;
 use App\Http\Livewire\Admin\StudentsProfile;
 use App\Http\Livewire\Adviser\ReportHistory;
 use App\Http\Livewire\Adviser\StudentProfile;
+use App\Http\Controllers\Admin\ChartController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Livewire\Student\StudentFormUpdate;
 use App\Http\Controllers\Admin\OffensesController;
 use App\Http\Controllers\Admin\ClassroomController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StudentProfileController;
-use App\Http\Controllers\Adviser\ReportHistoryController;
+use App\Http\Livewire\Student\Profile\StudentProfileUpdate;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +36,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/test', function () {
-    return view('test');
+    return view('home');
 });
 
 Auth::routes();
@@ -47,7 +49,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::middleware(['can:admin-access'])->group(function () {
 
         Route::prefix('admin')->group(function () {
-            Route::get('dashboard', \App\Http\Livewire\Admin\Dashboard::class);
+            Route::get('dashboard', [DashboardController::class, 'index']);
             //Reports
             Route::get('reports', \App\Http\Livewire\Admin\Report::class);
             Route::get('report/add', [ReportController::class, 'create']);
@@ -134,4 +136,11 @@ Route::get('student/form', StudentForm::class);
 Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
 Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
 
+
+
+
+
+
+Route::get('/admin/get-case-counts', [DashboardController::class, 'getCaseCounts']);
+Route::get('/get-dashboard-data', [DashboardController::class, 'getDashboardData']);
 

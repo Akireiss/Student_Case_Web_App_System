@@ -159,7 +159,7 @@
 
                     </div>
                 </header>
-                <main class="h-full overflow-y-auto px-8 bg-white ">
+                <main class="h-full overflow-y-auto px-8 ">
                     <div class="mx-auto my-6">
                         @yield('content')
                         @include('components.footer')
@@ -170,16 +170,17 @@
 
 
 
+        @yield('script')
         @stack('modals')
         @stack('scripts')
 
         <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
         <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
+        <script src="{{ asset('assets/js/charts-bars.js') }}" defer></script>
         <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
-        <script src="{{ asset('assets/js/livewire.js') }}"></script>
-        {{-- <script src="{{ asset('assets/js/main.js') }}"></script> --}}
-        {{-- Ajax Here
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+        <script src="{{ asset('assets/js/cards.js') }}" defer></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 

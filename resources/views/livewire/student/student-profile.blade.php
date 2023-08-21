@@ -65,7 +65,7 @@
                         <x-label>
                             Middle Name
                         </x-label>
-                        <x-input wire:model="middle_name" />
+                        <x-input wire:model="middle_name"  disabled/>
                         <x-error fieldName="m_name" />
 
                     </div>
@@ -188,8 +188,8 @@
                             4Ps Receipient:
                         </x-label>
                         <x-select wire:model="four_ps">
-                            <option>Yes</option>
-                            <option>No</option>
+                            <option value="0">Yes</option>
+                            <option value="yes">No</option>
                         </x-select>
                         <x-error fieldName="four_ps" />
 
@@ -279,7 +279,7 @@
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
                     <div class="hidden">
-                        <x-input  wire:model="father_type" value="0"/>
+                        <x-input wire:model="father_type" disabled/>
                     </div>
 
 
@@ -371,7 +371,7 @@
 
 <div class="hidden">
 
-    <x-input  wire:model="mother_type" disabled value="1"/>
+    <x-input wire:model="mother_type" disabled />
 </div>
 
 

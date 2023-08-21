@@ -211,3 +211,19 @@
             </div>
         </x-grid>
     </div>
+
+    <script>
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('refreshCard', function () {
+                Livewire.emit('updateCard');
+            });
+
+            document.addEventListener('start-polling', function (event) {
+                var interval = event.detail.interval;
+
+                setInterval(function () {
+                    Livewire.emit('updateCard');
+                }, interval);
+            });
+        });
+    </script>

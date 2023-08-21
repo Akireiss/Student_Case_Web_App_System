@@ -13,7 +13,7 @@ class Family extends Model
 
     protected $fillable = [
         'profile_id',
-        'type',
+        'parent_type',
         'parent_name',
         'parent_age',
         'parent_occupation',

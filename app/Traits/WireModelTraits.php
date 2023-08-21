@@ -2,11 +2,12 @@
 namespace App\Traits;
 trait WireModelTraits
 {
-    public $formSubmitted = false;
+
 
     // Personal Information
     public $suffix, $nickname, $age, $sex, $birthdate, $birth_place,
-           $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps;
+           $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps,
+           $height, $weight, $bmi;
 
     // Guardian Information
     public $guardian_name, $relationship, $guardian_contact, $occupation, $guardian_address,
@@ -37,8 +38,12 @@ trait WireModelTraits
     // Plans and Living Situation
     public $plans = [];
     public $living_with = null;
-
-    // Control Flags
+    //Preferences
+    public $favorite_subject;
+    public $difficult_subject;
+    public $school_organization;
+    // Controls
     public $disableSubmitButton = false;
+    public $formSubmitted = false;
 }
 

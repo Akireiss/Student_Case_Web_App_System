@@ -62,8 +62,9 @@ final class StudentTable extends PowerGridComponent
                 'classrooms.grade_level as grade_level',
                 'classrooms.section as section'
             )
-            ->orderByDesc('students.created_at'); // Sort by the created_at column in descending order
+            ->orderByDesc('students.created_at');
     }
+
 
 
     /*

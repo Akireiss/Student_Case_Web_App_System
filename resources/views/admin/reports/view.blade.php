@@ -14,7 +14,7 @@
 
 
         <div class="w-full mx-auto mt-6">
-            <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-lg rounded-lg border-0 ">
+            <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
 
                 <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
                     <h6 class="text-sm my-1 px-4 font-bold uppercase ">
@@ -29,7 +29,8 @@
                                 <x-label>
                                     Student Name
                                 </x-label>
-                                <x-input type="text" name="offenses" value="{{ $anecdotal->student->first_name }}"
+                                <x-input type="text" name="offenses"
+                                 value="{{ $anecdotal->student->first_name }}"
                                     disabled />
                             </div>
 
@@ -175,53 +176,17 @@
     </div>
 
 
+    @if ($cases->isNotEmpty())
+        <p class="mb-2 text-center text-md text-red-500">
+            {{ $anecdotal->student->first_name }} {{ $anecdotal->student->last_name }} has a total of  {{ $totalCases }} cases |
+            {{ $pendingCases }} are pending | {{ $ongoingCases }} are ongoing | {{ $resolvedCases }} are resolved.
+        </p>
+    @else
+    <p class="mb-2 text-center text-md text-green-500">
+        No Cases For This Student
+    </p>
 
-
-    <h6 class="text-xl font-bold px-4 text-left ">
-        Recent Cases
-    </h6>
-@if ($cases->isNotEmpty())
-    <x-table>
-        <x-slot name="header">
-           <th class="px-4 py-3">Student Name</th>
-           <th class="px-4 py-3">Grave Offense</th>
-           <th class="px-4 py-3">Minor Offense</th>
-           <th class="px-4 py-3">Date</th>
-        </x-slot>
-        @foreach ($cases as $case)
-            <tr class="text-gray-700 dark:text-gray-400">
-                       <td class="px-4 py-2">{{ $case->student->first_name }} {{ $case->student->last_name }}</td>
-                       <td class="px-4 py-2">
-                    @if ($case->GraveOffenses)
-                        {{ $case->GraveOffenses->offenses }}
-                    @else
-                        No Offenses Found
-                    @endif
-                </td>
-                       <td class="px-4 py-2">
-                    @if ($case->MinorOffenses)
-                        {{ $case->MinorOffenses->offenses }}
-                    @else
-                        No Offenses Found
-                    @endif
-                </td>
-                       <td class="px-4 py-2">
-                        {{ $case->created_at->format('F j, Y') }}
-                </td>
-
-
-            </tr>
-        @endforeach
-    </x-table>
-@else
-    <p>No other cases found for this student.</p>
-@endif
-
-<!-- Your other HTML content -->
-
-
-
-
+    @endif
 
 
 

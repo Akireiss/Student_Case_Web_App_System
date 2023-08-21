@@ -74,7 +74,7 @@ class StudentProfile extends Component
         }
 
         $profile = Profile::create([
-            'student_id' => $this->studentId,,
+            'student_id' => $this->studentId,
             'suffix' => $this->suffix,
             'nickname' => $this->nickname,
             'age' => $this->age,
@@ -109,7 +109,7 @@ class StudentProfile extends Component
 
 
         $profile->family()->create([
-            'type' => $this->father_type,
+            'parent_type' => $this->father_type,
             'parent_name' => $this->father_name,
             'parent_age' => $this->father_age,
             'parent_occupation' => $this->father_occupation,
@@ -121,7 +121,7 @@ class StudentProfile extends Component
         ]);
 
         $profile->family()->create([
-            'type' => $this->mother_type,
+            'parent_type' => $this->mother_type,
             'parent_name' => $this->mother_name,
             'parent_age' => $this->mother_age,
             'parent_occupation' => $this->mother_occupation,
