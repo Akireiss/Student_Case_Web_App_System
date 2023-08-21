@@ -8,7 +8,8 @@
         </h2>
 
      <div class="py-1">
-    <div class="bg-red-500 border-l-4 text-white p-2.5 mb-3 shadow-md hidden-alert-weekly" role="alert" id="weekly-alert">
+    <div class="bg-red-500 border-l-4 text-white p-2.5 mb-1 shadow-md hidden-alert-weekly"
+     role="alert" id="weekly-alert">
         <p class="font-bold">Notice</p>
         <p>Total Reports This Week: <span id="weekly-report-count"></span></p>
     </div>
@@ -16,14 +17,15 @@
 
 
         <div class="py-1">
-            <div class="bg-red-400 border-l-4 border-red-600 text-white p-3 hidden-alert" role="alert" id="monthly-alert">
+            <div class="bg-red-400 border-l-4 border-red-600 text-white
+            hidden-alert" role="alert" id="monthly-alert">
                 <p class="font-bold">Notice</p>
                 <p>Total Reports This Month: <span id="monthly-report-count"></span></p>
             </div>
         </div>
 
 
-        <div x-data="{ showAllYear: true }">
+        <div x-data="{ showAllYear: true }" class="flex justify-end my-2">
             <x-button
                 id="toggle-time-range"
                 @click="showAllYear = !showAllYear"
@@ -125,9 +127,34 @@
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
 
             <div class="min-w-0 p-4 shadow-md bg-white rounded-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
-                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                    Cases Status For the School Year
-                </h4>
+                <div class="flex justify-between items-start">
+
+                    <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                        Cases Status For the School Year
+                    </h4>
+
+                    <div x-data="{ open: false }" class="inline-block">
+                        <!-- Dropdown button -->
+                        <div class="relative inline-block text-left">
+                            <button @click="open = !open">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                </svg>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div x-show="open" @click.away="open = false" @click.away="open = false" class="origin-top-right absolute
+                            top-7 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+                                <!-- Dropdown items -->
+                                <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Option 1</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Option 2</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Option 3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <canvas id="bars"></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
@@ -170,4 +197,6 @@
 
         </div>
     </div>
+
+
 @endsection
