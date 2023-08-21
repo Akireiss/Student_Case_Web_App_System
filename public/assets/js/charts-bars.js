@@ -1,17 +1,24 @@
 const barConfig = {
     type: 'bar',
     data: {
-        labels: ['August', 'September', 'October', 'November', 'December'],
+        labels: ['August', 'September', 'October', 'November', 'December',
+         'January', 'February', 'March', 'April'],
         datasets: [
             {
                 label: 'Pending',
-                backgroundColor: '#0694a2',
+                backgroundColor: '#EB3859',
+                borderWidth: 1,
+                data: [],
+            },
+            {
+                label: 'Ongoing',
+                backgroundColor: '#20C997',
                 borderWidth: 1,
                 data: [],
             },
             {
                 label: 'Resolved',
-                backgroundColor: '#7e3af2',
+                backgroundColor: '#02BF0B',
                 borderWidth: 1,
                 data: [],
             },
@@ -29,12 +36,14 @@ const barsCtx = document.getElementById('bars').getContext('2d');
 const myBar = new Chart(barsCtx, barConfig);
 
 function updateChart(data) {
-    const months = ['August', 'September', 'October', 'November', 'December'];
+    const months = ['August', 'September', 'October', 'November', 'December',
+    'January', 'February', 'March', 'April']
 
     for (let i = 0; i < months.length; i++) {
         const month = months[i];
         barConfig.data.datasets[0].data[i] = data.pending[month] || 0;
-        barConfig.data.datasets[1].data[i] = data.resolved[month] || 0;
+        barConfig.data.datasets[1].data[i] = data.ongoing[month] || 0;
+        barConfig.data.datasets[2].data[i] = data.resolved[month] || 0;
     }
 
     myBar.update();

@@ -7,3 +7,6 @@
 [x-cloak] {
     display: none;
   }
+  .hidden-alert {
+      display: none;
+  }

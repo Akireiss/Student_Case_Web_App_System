@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Anecdotal;
+use Carbon\Carbon;
 use App\Models\Students;
+use App\Models\Anecdotal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -16,10 +18,27 @@ class DashboardController extends Controller
 
     public function getDashboardData(Request $request)
     {
-        $totalStudents = Students::count();
-        $totalCases = Anecdotal::count();
-        $pendingCases = Anecdotal::where('case_status', 0)->count();
-        $resolvedCases = Anecdotal::where('case_status', 2)->count();
+        $studentQuery = Students::where('status', 0);
+        $caseQuery = Anecdotal::query();
+
+        if ($request->input('time_range') === 'yearly') {
+            $currentMonth = date('n');
+            if ($currentMonth >= 8) { // August to December
+                $studentQuery->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
+                $caseQuery->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
+            } else { // January to May
+                $studentQuery->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')]);
+                $caseQuery->where(function($query) {
+                    $query->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')])
+                          ->orWhereBetween('created_at', [date('Y-m-d', strtotime('-1 year', strtotime('August 1'))), date('Y-m-d', strtotime('-1 year', strtotime('May 31')))]);
+                });
+            }
+        }
+
+        $totalStudents = $studentQuery->count();
+        $totalCases = $caseQuery->count();
+        $pendingCases = $caseQuery->where('case_status', 0)->count();
+        $resolvedCases = $caseQuery->where('case_status', 2)->count();
 
         return response()->json([
             'totalStudents' => $totalStudents,
@@ -29,6 +48,19 @@ class DashboardController extends Controller
         ]);
     }
 
+
+    public function getOffenseCounts()
+    {
+        $offenseCounts = DB::table('anecdotal')
+            ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
+            ->select('offenses.offenses as offense', DB::raw('count(*) as count'))
+            ->groupBy('offense')
+            ->get();
+
+        return response()->json($offenseCounts);
+    }
+
+
     public function getCaseCounts()
     {
         $caseCounts = Anecdotal::selectRaw("DATE_FORMAT(created_at, '%M') as month, case_status, count(*) as count")
@@ -37,6 +69,7 @@ class DashboardController extends Controller
 
         $data = [
             'pending' => [],
+            'ongoing' => [],
             'resolved' => [],
         ];
 
@@ -45,6 +78,9 @@ class DashboardController extends Controller
 
             if ($count->case_status === 0) {
                 $data['pending'][$month] = $count->count;
+            }
+            else if ($count->case_status === 1) {
+                $data['ongoing'][$month] = $count->count;
             } else if ($count->case_status === 2) {
                 $data['resolved'][$month] = $count->count;
             }
@@ -52,5 +88,36 @@ class DashboardController extends Controller
 
         return response()->json($data);
     }
+
+    public function getWeeklyReportCount()
+{
+    $startOfWeek = Carbon::now()->startOfWeek();
+    $endOfWeek = Carbon::now()->endOfWeek();
+
+    $weeklyReportCount = DB::table('anecdotal')
+        ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+        ->count();
+
+    return response()->json([
+        'weeklyReportCount' => $weeklyReportCount,
+    ]);
+}
+
+
+public function getMonthlyReportCount()
+{
+    $startOfMonth = Carbon::now()->startOfMonth();
+    $endOfMonth = Carbon::now()->endOfMonth();
+
+    $monthlyReportCount = DB::table('anecdotal')
+        ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+        ->count();
+
+    return response()->json([
+        'monthlyReportCount' => $monthlyReportCount,
+    ]);
+}
+
+
 }
 
