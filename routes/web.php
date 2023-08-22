@@ -5,6 +5,7 @@ use App\Http\Livewire\Admin\Chart;
 use App\Http\Livewire\Admin\Report;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
+use App\Http\Livewire\Student\ReportUpdate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
@@ -53,7 +54,10 @@ Route::middleware(['auth', 'role'])->group(function () {
             //Reports
             Route::get('reports', \App\Http\Livewire\Admin\Report::class);
             Route::get('report/add', [ReportController::class, 'create']);
-            Route::get('reports/{anecdotal}/view', [ReportController::class, 'view'])->name('anecdotal.edit');
+            Route::get('reports/{anecdotal}/view', [ReportController::class, 'view'])
+            ->name('anecdotal.view');
+            Route::get('reports/{anecdotal}/edit', ReportUpdate::class)->name('anecdotal.edit');
+
 
             //User Manage
             Route::get('update-acc', User::class);

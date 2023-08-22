@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    let timeRange = 'yearly'; // Initially set to 'yearly'
+    let timeRange = 'yearly';
 
     $('#toggle-time-range').click(function() {
         timeRange = (timeRange === 'all') ? 'yearly' : 'all';
@@ -24,10 +24,10 @@ $(document).ready(function() {
         });
     }
 
-    // Initially load data for the current year
+
     updateDashboardData(timeRange);
 
-    // Set interval to update data periodically
+    // Set interval
     setInterval(function() {
         updateDashboardData(timeRange);
     }, 1000);

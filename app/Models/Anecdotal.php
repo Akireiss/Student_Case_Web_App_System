@@ -32,6 +32,14 @@ class Anecdotal extends Model
         'status'
     ];
 
+    public function actions()
+    {
+        return $this->hasOne(AnecdotalOutcome::class, 'anecdotal_id');
+    }
+    public function actionsTaken()
+    {
+        return $this->hasMany(ActionsTaken::class, 'anecdotal_id');
+    }
     public function offenses()
     {
         return $this->belongsTo(Offenses::class, 'offense_id');
@@ -52,10 +60,7 @@ class Anecdotal extends Model
         return $this->belongsTo(Students::class, 'student_id');
     }
 
-    public function actionsTaken()
-    {
-        return $this->hasMany(ActionsTaken::class, 'anecdotal_id');
-    }
+
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -68,7 +73,7 @@ class Anecdotal extends Model
     {
         return collect([
             ['case_status' => 0, 'label' => 'Pending'],
-            ['case_status' => 1, 'label' => 'Process'],
+            ['case_status' => 1, 'label' => 'Ongoing'],
             ['case_status' => 2, 'label' => 'Resolved'],
         ]);
     }
@@ -94,7 +99,7 @@ class Anecdotal extends Model
             case 0:
                 return 'Pending';
             case 1:
-                return 'Process';
+                return 'Ongoing';
             case 2:
                 return 'Resolved';
             default:
