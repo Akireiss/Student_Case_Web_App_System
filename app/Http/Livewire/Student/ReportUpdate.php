@@ -16,17 +16,19 @@ class ReportUpdate extends Component
     public $anecdotal;
     public $anecdotalData;
     public $showMeetingOutcomeForm = false;
-    public $buttonText = 'Accept';
-    public $statusText = 'Accepting it will update the status to ongoing';
+
+
+
     public function mount($anecdotal)
     {
         $this->anecdotal = $anecdotal;
         $this->anecdotalData = Anecdotal::findOrFail($anecdotal);
+        $this->outcome = $this->anecdotalData->actions->outcome ?? '';
+        $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks ?? '';
+        $this->actions_id = $this->anecdotalData->actions->actions_id ?? null;
 
         if ($this->anecdotalData->case_status == 1) {
             $this->showMeetingOutcomeForm = true;
-            $this->buttonText = 'Ongoing';
-            $this->statusText = 'Working on it';
         }
     }
 
@@ -35,20 +37,23 @@ class ReportUpdate extends Component
         $this->anecdotalData->update(['case_status' => 1]);
         $this->anecdotalData = $this->anecdotalData->fresh();
         $this->showMeetingOutcomeForm = true;
-        $this->buttonText = 'Ongoing';
     }
 
 
-    public function update() {
-        AnecdotalOutcome::create([
-            'anecdotal_id' => $this->anecdotal,
+    public function update()
+    {
+        $anecdotalOutcome = AnecdotalOutcome::where('anecdotal_id', $this->anecdotalData->id)
+            ->firstOrFail();
+
+        $anecdotalOutcome->update([
             'actions_id' => $this->actions_id,
             'outcome' => $this->outcome,
             'outcome_remarks' => $this->outcome_remarks,
         ]);
-        session()->flash('message', 'Updated Successfully');
 
+        session()->flash('message', 'Updated Successfully');
     }
+
 
     public function render()
     {

@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('anecdotal_outcome', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('anecdotal_id');
-            $table->unsignedBigInteger('actions_id');
-            $table->string('outcome');
-            $table->mediumText('outcome_remarks');
+            $table->unsignedBigInteger('actions_id')->nullable();
+            $table->string('outcome')->nullable();
+            $table->mediumText('outcome_remarks')->nullable();
 
             $table->foreign('anecdotal_id')->references('id')->on('anecdotal')
                 ->onDelete('cascade');
             $table->foreign('actions_id')->references('id')->on('actions')
-                ->onDelete('cascade');
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

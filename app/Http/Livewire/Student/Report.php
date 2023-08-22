@@ -26,6 +26,11 @@ class Report extends Component
     public $cases = [];
     public $selectedActions = [];
 
+    public $actions_id = null;
+    public $outcome_update = null;
+    public $outcome_remarks = null;
+
+
     use WithFileUploads;
     use SelectNameTrait;
     protected $rules = [
@@ -107,11 +112,20 @@ class Report extends Component
             'letter' => $letterPath,
         ]);
 
+        $anecdotal->actions()->create([
+            'actions_id' => $this->actions_id,
+            'outcome' => $this->outcome_update,
+            'outcome_remarks' => $this->outcome_remarks,
+        ]);
+
+
+
         foreach ($this->selectedActions as $selectedAction) {
             $anecdotal->actionsTaken()->create([
                 'actions' => $selectedAction
             ]);
         }
+
 
         $userId = Auth::id();
         if (!is_null($userId)) {

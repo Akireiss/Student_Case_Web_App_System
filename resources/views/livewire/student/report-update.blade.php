@@ -179,18 +179,16 @@
                 </div>
 
                 <div class="flex justify-end px-8">
+                    @if (!$anecdotalData->case_status == 1)
                     <div class="flex items-center">
                         <span class="text-red-500 text-sm mr-2">
-                            @if ($showMeetingOutcomeForm)
-                                {{ $statusText }}
-                            @else
-                                Accepting it will update the status to ongoing
-                            @endif
+                            Accepting it will update the status to ongoing
                         </span>
                         <x-button wire:click="acceptAnecdotal" wire:loading.attr="disabled">
-                            {{ $buttonText }}
+                           Accept
                         </x-button>
                     </div>
+                    @endif
                 </div>
 
 
@@ -214,7 +212,7 @@
                                 <x-label>
                                     Update
                                 </x-label>
-                                <x-input value="{{ $anecdotalData->actions->outcome }}"  />
+                                <x-input  />
                             </div>
                         </div>
 
@@ -223,7 +221,7 @@
                                 <x-label>
                                     Remarks (Short Description)
                                 </x-label>
-                                <x-input value="{{ $anecdotalData->actions->outcome_remarks }}"   />
+                                <x-input   />
                             </div>
                         </div>
 
@@ -259,19 +257,6 @@
 
                 </div>
                 @endif
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             </div>

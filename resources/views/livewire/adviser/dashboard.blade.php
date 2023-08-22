@@ -6,6 +6,18 @@
             Dashboard
         </h2>
 
+
+        <div class="bg-red-500 border-l-4 text-white p-2.5 mb-1 shadow-md hidden-alert-weekly" role="alert" id="weekly-alert">
+            <p class="font-bold">Notice</p>
+            <p>Class Reports Today: <span id="weekly-report-count-class">{{ $dailyReportCount }}</span></p>
+        </div>
+        <div class="bg-red-500 border-l-4 text-white p-2.5 mb-1 shadow-md hidden-alert-weekly" role="alert" id="weekly-alert">
+            <p class="font-bold">Notice</p>
+            <p>Total Reports This Week: <span id="weekly-report-count-class">{{ $weeklyReportCount }}</span></p>
+        </div>
+
+
+
         <!-- Cards -->
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
             <!-- Card -->
