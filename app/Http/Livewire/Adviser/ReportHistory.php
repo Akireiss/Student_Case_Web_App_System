@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Adviser;
 
+use App\Models\Actions;
+use App\Models\ActionsTaken;
 use App\Models\Report;
 use Livewire\Component;
 use App\Models\Offenses;
@@ -26,7 +28,7 @@ class ReportHistory extends Component
     public $reportId;
     public $description;
     public $letter;
-    public $selectedActions;
+    public $selectedActions = [];
 
     public function mount($report)
     {
@@ -39,13 +41,44 @@ class ReportHistory extends Component
         $this->gravity = $anecdotal->gravity;
         $this->offense_id = $anecdotal->offense_id;
         $this->short_description = $anecdotal->short_description;
+        $this->letter = $anecdotal->letter;
         $this->studentId = $anecdotal->student->id;
         $this->studentName = $anecdotal->student->first_name . ' ' . $anecdotal->student->last_name;
         $this->user_id = $reportData->users->name;
 
+        $actionsTaken = $reportData->anecdotal->actionsTaken;
+        if ($actionsTaken->count() > 0) {
+            $this->selectedActions = $actionsTaken->pluck('actions')->toArray();
+        }
+
+    }
 
 
+    public function update()
+    {
+        $letterPath = null;
+        $report = Report::findOrFail($this->reportId);
+        if ($this->letter) {
+            $letterPath = $this->letter->store('uploads', 'public');
+        }
 
+        $report->anecdotal->update([
+            'student_id' => $this->studentId,
+            'offense_id' => $this->offense_id,
+            'observation' => $this->observation,
+            'desired' => $this->desired,
+            'outcome' => $this->outcome,
+            'gravity' => $this->gravity,
+            'short_description' => $this->short_description,
+            'letter' => $letterPath, // Corrected line
+        ]);
+
+        $report->anecdotal->actionsTaken()->delete();
+        foreach ($this->selectedActions as $selectedAction) {
+            $report->anecdotal->actionsTaken()->create(['actions' => $selectedAction]);
+        }
+
+        session()->flash('message', 'Report updated successfully.');
     }
 
     public function render()
@@ -61,14 +94,15 @@ class ReportHistory extends Component
         }
 
         $offenses = Offenses::pluck('offenses', 'id')->all();
-
+        $actions = Actions::all();
         $report = Report::findOrFail($this->reportId);
         if ($report->user_id != auth()->user()->id) {
             abort(403);
         }
-        return view('livewire.adviser.report-history', compact('report', 'offenses', 'students'))
+        return view('livewire.adviser.report-history', compact('report', 'offenses', 'actions', 'students'))
             ->extends('layouts.dashboard.index')->section('content');
     }
+
 
 
 
