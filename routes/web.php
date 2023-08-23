@@ -5,6 +5,7 @@ use App\Http\Livewire\Admin\Chart;
 use App\Http\Livewire\Admin\Report;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
+use App\Http\Livewire\Components\Notification;
 use App\Http\Livewire\Student\ReportUpdate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -148,5 +149,6 @@ Route::get('/get-offense-counts', [DashboardController::class, 'getOffenseCounts
 Route::get('/get-dashboard-data', [DashboardController::class, 'getDashboardData']);
 Route::get('/get-weekly-report-count', [DashboardController::class, 'getWeeklyReportCount']);
 Route::get('/get-monthly-report-count', [DashboardController::class, 'getMonthlyReportCount']);
+
 
 

@@ -13,24 +13,43 @@ use Livewire\WithFileUploads;
 
 class ReportHistory extends Component
 {
-   use SelectNameTrait;
-   use WithFileUploads;
+    use SelectNameTrait;
+    use WithFileUploads;
+
+    public $offense_id;
+    public $user_id;
+    public $observation;
+    public $desired;
+    public $outcome;
+    public $gravity;
+    public $short_description;
     public $reportId;
-    public function view($id)
+    public $description;
+    public $letter;
+    public $selectedActions;
+
+    public function mount($report)
     {
-        $report = Report::findOrFail($id);
-        if($report->user_id != auth()->user()->id)
-        {
-            abort(403);
-        }
-        return view('staff.report-history.view', compact('report'));
+        $this->reportId = $report;
+        $reportData = Report::findOrFail($report);
+        $anecdotal = Report::findOrFail($report)->anecdotal;
+        $this->observation = $anecdotal->observation;
+        $this->desired = $anecdotal->desired;
+        $this->outcome = $anecdotal->outcome;
+        $this->gravity = $anecdotal->gravity;
+        $this->offense_id = $anecdotal->offense_id;
+        $this->short_description = $anecdotal->short_description;
+        $this->studentId = $anecdotal->student->id;
+        $this->studentName = $anecdotal->student->first_name . ' ' . $anecdotal->student->last_name;
+        $this->user_id = $reportData->users->name;
+
+
+
+
     }
 
-    public function mount($report) {
-    $this->reportId = $report;
-    }
-
-    public function render() {
+    public function render()
+    {
         $students = [];
 
         if (strlen($this->studentName) >= 3) {
@@ -41,56 +60,27 @@ class ReportHistory extends Component
             })->get();
         }
 
-        $offenses = Offenses::whereIn('category', [0, 1])->get();
-        $minorOffenses = $offenses->where('category', 0)->pluck('offenses', 'id');
-        $graveOffenses = $offenses->where('category', 1)->pluck('offenses', 'id');
+        $offenses = Offenses::pluck('offenses', 'id')->all();
 
         $report = Report::findOrFail($this->reportId);
-        if($report->user_id != auth()->user()->id)
-        {
+        if ($report->user_id != auth()->user()->id) {
             abort(403);
         }
-        return view('livewire.adviser.report-history', compact('report', 'graveOffenses', 'minorOffenses', 'students'))
-        ->extends('layouts.dashboard.index')->section('content');
-    }
-
-    public function update() {
-        $letterPath = null;
-
-        if ($this->letter) {
-            $letterPath = $this->letter->store('uploads', 'public');
-        }
-
-        $anecdotal = Anecdotal::update([
-            'student_id' => $this->studentId,
-            'minor_offense_id' => $this->minor_offenses_id,
-            'grave_offense_id' => $this->grave_offenses_id,
-            'gravity' => $this->gravity,
-            'short_description' => $this->short_description,
-            'observation' => $this->observation,
-            'desired' => $this->desired,
-            'outcome' => $this->outcome,
-            'letter' => $letterPath,
-        ]);
-
-        foreach ($this->selectedActions as $selectedAction) {
-            $anecdotal->actionsTaken()->update([
-                'actions' => $selectedAction
-            ]);
-        }
-
-        $userId = Auth::id();
-        if (!is_null($userId)) {
-            $anecdotal->report()->update([
-                'user_id' => $userId,
-            ]);
-        }
-
-        $this->resetForm();
-        session()->flash('message', 'Updated Successfully');
+        return view('livewire.adviser.report-history', compact('report', 'offenses', 'students'))
+            ->extends('layouts.dashboard.index')->section('content');
     }
 
 
+
+    public function view($id)
+    {
+        $report = Report::findOrFail($id);
+        if ($report->user_id != auth()->user()->id) {
+            abort(403);
+        }
+        $anecdotal = $report->anecdotal;
+        return view('staff.report-history.view', compact('report'));
+    }
 
 
 

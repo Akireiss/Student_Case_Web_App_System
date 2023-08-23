@@ -44,10 +44,6 @@
                     </div>
                     <input type="hidden" name="studentId" wire:model="studentId">
                 </div>
-
-                @if ($report->anecdotal->student)
-                    Student Selected: <span class="mt-2">{{ $report->anecdotal->student->first_name }} {{ $report->anecdotal->student->last_name }}</span>
-                @endif
             </div>
 
 
@@ -55,8 +51,9 @@
                 <x-label>
                     Referred By
                 </x-label>
-                <x-input  wire:model="user_id"
-                 value="{{ $report->user?->name ?? 'No Reporter Found' }}" disabled/>
+                <x-input
+                wire:model="user_id"
+                disabled/>
             </div>
 
 
@@ -74,36 +71,20 @@
 
             <div class="w-full px-4">
                 <x-label>
-                    Minor Offenses
+                   Offenses
                 </x-label>
-                <x-select name="minor_offense_id" wire:model="minor_offenses_id">
-                    <option value="">Select an offense</option>
-                    @foreach ($minorOffenses as $offenseId => $offenseName)
+                <x-select name="offenses_id" wire:model="offense_id">
+                    <option>Select an offense</option>
+                    @foreach ($offenses as $offenseId => $offenseName)
                         <option value="{{ $offenseId }}"
-                            {{ $report->anecdotal->minor_offense_id == $offenseId ? 'selected' : '' }}>
+                            {{ $report->anecdotal->offense_id == $offenseId ? 'selected' : '' }}>
                             {{ $offenseName }}
                         </option>
                     @endforeach
                 </x-select>
-                <x-error fieldName="minor_offenses_id" />
-
+                <x-error fieldName="offenses_id" />
             </div>
-            <div class="w-full px-4">
-                <x-label>
-                    Grave Offenses
-                </x-label>
-                <x-select name="grave_offense_id" wire:model="grave_offenses_id">
-                    <option value="">Select an offense</option>
-                    @foreach ($graveOffenses as $offenseId => $offenseName)
-                        <option value="{{ $offenseId }}"
-                            {{ $report->anecdotal->grave_offense_id == $offenseId ? 'selected' : '' }}>
-                            {{ $offenseName }}
-                        </option>
-                    @endforeach
-                </x-select>
-                <x-error fieldName="grave_offenses_id" />
 
-            </div>
 
 
         </x-grid>
@@ -168,7 +149,7 @@
                     </x-label>
                     <x-input
                     wire:model="gravity"
-                    type="text" name="gravity" value="{{ $report->anecdotal?->gravity ?? 'No Data' }}" />
+                    type="text" name="gravity"  />
                         <x-error fieldName="gravity" />
 
                     </div>

@@ -22,6 +22,11 @@ class Report extends Model
         'status',
     ];
 
+    //! Powergrid
+    public function anecdotal()
+    {
+        return $this->belongsTo(Anecdotal::class, 'anecdotal_id');
+    }
 
     public function user()
     {
@@ -35,11 +40,6 @@ class Report extends Model
     public function students()
     {
         return $this->hasMany(Students::class, 'student_id');
-    }
-    //! Powergrid
-    public function anecdotal()
-    {
-        return $this->belongsTo(Anecdotal::class, 'anecdotal_id');
     }
 
     public function getCaseStatusAttribute($value)

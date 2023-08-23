@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Students;
 use App\Models\Anecdotal;
+use Carbon\CarbonTimeZone;
 
 class Dashboard extends Component
 {
@@ -18,7 +19,6 @@ class Dashboard extends Component
     public $weeklyReportCount;
 
     public $lastUpdatedWeek;
-
 
 
 
@@ -49,19 +49,27 @@ class Dashboard extends Component
         $this->weeklyReportCount = 0;
     }
 
-
     public function updateCard()
     {
         $user = auth()->user();
         $classroom = $user->classroom;
 
-        $today = Carbon::now()->format('Y-m-d');
-        //Week
-        $startOfWeek = Carbon::now()->startOfWeek();
-        $endOfWeek = Carbon::now()->endOfWeek();
+        $currentTime = Carbon::now(new CarbonTimeZone('Asia/Manila'));
+        $today = $currentTime->format('Y-m-d');
 
-        // Reset daily report count if it's a new day
-        if ($today != $this->lastUpdatedDay) {
+        $startOfWeek = Carbon::now(new CarbonTimeZone('Asia/Manila'))->startOfWeek();
+        $endOfWeek = Carbon::now(new CarbonTimeZone('Asia/Manila'))->endOfWeek();
+
+        if ($currentTime->hour == 7 && $currentTime->minute >= 25) {
+            $this->resetDailyReportCount();
+        }
+
+        // Reset weekly report
+        if ($currentTime->isMonday()) {
+            $this->resetWeeklyReportCount();
+        }
+
+        if (Carbon::now()->format('H:i') === '00:00') {
             $this->resetDailyReportCount();
             $this->lastUpdatedDay = $today;
         }
@@ -71,13 +79,11 @@ class Dashboard extends Component
             $this->lastUpdatedWeek = $startOfWeek;
         }
 
-
         $this->totalStudents = $classroom?->students?->count();
         $this->totalCases = $classroom?->students?->flatMap->anecdotal->count();
         $this->pendingCases = $classroom?->students?->flatMap->anecdotal->where('case_status', 0)->count();
         $this->resolvedCases = $classroom?->students?->flatMap->anecdotal->where('case_status', 3)->count();
 
-        // Counting cases for the day
         $this->dailyReportCount = $classroom?->students?->flatMap->anecdotal
             ->where('created_at', '>=', $today)
             ->count();
@@ -86,6 +92,7 @@ class Dashboard extends Component
             ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->count();
     }
+
 
 
     public function render()
@@ -101,4 +108,7 @@ class Dashboard extends Component
         $this->updateCard();
         $this->emit('refreshCard');
     }
+
+
+
 }

@@ -286,3 +286,49 @@ foreach ($educationBackgrounds as $background) {
     //     $this->cases = [];
     //     $this->resetErrorBag(['studentId']);
     // }
+
+
+
+
+
+
+
+
+
+
+    public function update()
+    {
+        $letterPath = null;
+
+        if ($this->letter) {
+            $letterPath = $this->letter->store('uploads', 'public');
+        }
+
+        $anecdotal = Anecdotal::update([
+            'student_id' => $this->studentId,
+            'minor_offense_id' => $this->minor_offenses_id,
+            'grave_offense_id' => $this->grave_offenses_id,
+            'gravity' => $this->gravity,
+            'short_description' => $this->short_description,
+            'observation' => $this->observation,
+            'desired' => $this->desired,
+            'outcome' => $this->outcome,
+            'letter' => $letterPath,
+        ]);
+
+        foreach ($this->selectedActions as $selectedAction) {
+            $anecdotal->actionsTaken()->update([
+                'actions' => $selectedAction
+            ]);
+        }
+
+        $userId = Auth::id();
+        if (!is_null($userId)) {
+            $anecdotal->report()->update([
+                'user_id' => $userId,
+            ]);
+        }
+
+        $this->resetForm();
+        session()->flash('message', 'Updated Successfully');
+    }

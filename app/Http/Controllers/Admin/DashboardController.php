@@ -89,34 +89,36 @@ class DashboardController extends Controller
         return response()->json($data);
     }
 
+
+
     public function getWeeklyReportCount()
-{
-    $startOfWeek = Carbon::now()->startOfWeek();
-    $endOfWeek = Carbon::now()->endOfWeek();
+    {
+        $startOfWeek = Carbon::now(new \DateTimeZone('Asia/Manila'))->startOfWeek();
+        $endOfWeek = Carbon::now(new \DateTimeZone('Asia/Manila'))->endOfWeek();
 
-    $weeklyReportCount = DB::table('anecdotal')
-        ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
-        ->count();
+        $weeklyReportCount = DB::table('anecdotal')
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->count();
 
-    return response()->json([
-        'weeklyReportCount' => $weeklyReportCount,
-    ]);
-}
+        return response()->json([
+            'weeklyReportCount' => $weeklyReportCount,
+        ]);
+    }
 
+    public function getMonthlyReportCount()
+    {
+        $startOfMonth = Carbon::now(new \DateTimeZone('Asia/Manila'))->startOfMonth();
+        $endOfMonth = Carbon::now(new \DateTimeZone('Asia/Manila'))->endOfMonth();
 
-public function getMonthlyReportCount()
-{
-    $startOfMonth = Carbon::now()->startOfMonth();
-    $endOfMonth = Carbon::now()->endOfMonth();
+        $monthlyReportCount = DB::table('anecdotal')
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->count();
 
-    $monthlyReportCount = DB::table('anecdotal')
-        ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-        ->count();
+        return response()->json([
+            'monthlyReportCount' => $monthlyReportCount,
+        ]);
+    }
 
-    return response()->json([
-        'monthlyReportCount' => $monthlyReportCount,
-    ]);
-}
 
 
 }
