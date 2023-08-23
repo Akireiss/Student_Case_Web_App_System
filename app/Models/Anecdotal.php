@@ -31,15 +31,15 @@ class Anecdotal extends Model
         'case_status',
         'status'
     ];
-
-    public function actions()
-    {
-        return $this->hasOne(AnecdotalOutcome::class, 'anecdotal_id');
-    }
     public function actionsTaken()
     {
         return $this->hasMany(ActionsTaken::class, 'anecdotal_id');
     }
+    public function actions()
+    {
+        return $this->hasOne(AnecdotalOutcome::class, 'anecdotal_id');
+    }
+
     public function offenses()
     {
         return $this->belongsTo(Offenses::class, 'offense_id');
