@@ -9,7 +9,7 @@
                 Personal Information
             </h6>
 
-            <form wire:submit.prevent="save">
+            <form wire:submit.prevent="updateProfile">
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
                     <div class="w-full px-4">
@@ -62,7 +62,7 @@
                         <x-label>
                             Middle Name
                         </x-label>
-                        <x-input wire:model="m_name" />
+                        <x-input wire:model="middle_name" />
                         <x-error fieldName="m_name" />
 
                     </div>
@@ -577,32 +577,32 @@
                 </x-grid>
 
 
-
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                     Educational Background
                 </h6>
 
-                @for ($gradeLevel = 7; $gradeLevel <= 12; $gradeLevel++)
-                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
-                        Grade {{ $gradeLevel }}
-                    </h6>
-                    <x-grid columns="3" gap="4" px="0" mt="0">
-                        <div class="relative mb-3 px-4">
-                            <x-label for="name_{{ $gradeLevel }}">Name of school</x-label>
-                            <x-input wire:model="education.{{ $gradeLevel }}.name" id="name_{{ $gradeLevel }}" />
+                <x-grid columns="3" gap="4" px="0" mt="0">
+                    @foreach ($education as $i => $edu)
+                        <div class="w-full px-4">
+                            <h6 class="text-sm my-1 font-bold uppercase text-gray-500">
+                                Grade {{ $edu['grade_level'] }}
+                            </h6>
+                            <div class="relative mb-3">
+                                <x-label for="school_name">Name of school</x-label>
+                                <x-input wire:model="education.{{ $i }}.school_name" id="name" class="w-full" />
+                            </div>
+                            <div class="relative mb-3">
+                                <x-label for="section">Section</x-label>
+                                <x-input wire:model="education.{{ $i }}.grade_section" id="section" class="w-full" />
+                            </div>
+                            <div class="relative mb-3">
+                                <x-label for="school_year">School Year</x-label>
+                                <x-input wire:model="education.{{ $i }}.school_year" id="school_year" class="w-full" />
+                            </div>
                         </div>
+                    @endforeach
+                </x-grid>
 
-                        <div class="relative mb-3 px-4">
-                            <x-label for="section_{{ $gradeLevel }}">Section</x-label>
-                            <x-input wire:model="education.{{ $gradeLevel }}.section" id="section_{{ $gradeLevel }}" />
-                        </div>
-
-                        <div class="relative mb-3 px-4">
-                            <x-label for="school_year_{{ $gradeLevel }}">School Year</x-label>
-                            <x-input wire:model="education.{{ $gradeLevel }}.school_year" id="school_year_{{ $gradeLevel }}" />
-                        </div>
-                    </x-grid>
-                @endfor
 
 
 
@@ -744,12 +744,15 @@
                         <x-error fieldName="bmi" />
 
                     </div>
+                </x-grid>
 
 
                     <div x-data="{
                         hasDisability: @entangle('hasDisability'),
                         hasFoodAllergy: @entangle('hasFoodAllergy')
                     }">
+
+                <x-grid columns="2" gap="4" px="0" mt="0">
                         <div class="relative mb-3 px-4">
                             <x-label>
                                 Do you have a disability?
@@ -793,58 +796,56 @@
                         </div>
 
 
+                    </x-grid>
                     </div>
 
-                </x-grid>
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
-                    Medicine taken in
-                </h6>
+                    <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+                        Medicine taken in
+                    </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
-                        <div class="relative mb-3 px-4">
-                            <x-label for="medicine_{{ $i }}">
-                                {{ $i }}
-                            </x-label>
-                            <x-input wire:model="medicines.{{ $i }}" id="medicine_{{ $i }}" />
+                    <x-grid columns="3" gap="4" px="0" mt="0">
+                        @for ($i = 1; $i <= 3; $i++)
 
-                        </div>
-                    @endfor
-                </x-grid>
-
+                            <div class="relative mb-3 px-4">
+                                <x-label for="medicine_{{ $i }}">
+                                    {{ $i }}
+                                </x-label>
+                                <x-input wire:model="medicines.{{ $i - 1 }}" id="medicine_{{ $i }}" />
+                            </div>
+                        @endfor
+                    </x-grid>
 
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
-                    Vitamins taken in
-                </h6>
+                    <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+                        Vitamins taken in
+                    </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
-                        <div class="relative mb-3 px-4">
-                            <x-label for="vitamin_{{ $i }}">
-                                {{ $i }}
-                            </x-label>
-                            <x-input wire:model="vitamins.{{ $i }}" id="vitamin_{{ $i }}" />
+                    <x-grid columns="3" gap="4" px="0" mt="0">
+                        @for ($i = 1; $i <= 3; $i++)
+                            <div class="relative mb-3 px-4">
+                                <x-label for="vitamin_{{ $i }}">
+                                    {{ $i }}
+                                </x-label>
+                                <x-input wire:model="vitamins.{{ $i - 1 }}" id="vitamin_{{ $i }}" />
+                            </div>
+                        @endfor
+                    </x-grid>
 
-                        </div>
-                    @endfor
-                </x-grid>
+                    <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+                        Accidents experienced
+                    </h6>
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500 ">
-                    Accidents experienced
-                </h6>
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
-                        <div class="relative mb-3 px-4">
-                            <x-label for="accident_{{ $i }}">
-                                {{ $i }}
-                            </x-label>
-                            <x-input wire:model="accidents.{{ $i }}"
-                                id="accidents_{{ $i }}" />
-                        </div>
-                    @endfor
-                </x-grid>
+                    <x-grid columns="3" gap="4" px="0" mt="0">
+                        @for ($i = 1; $i <= 3; $i++)
+                            <div class="relative mb-3 px-4">
+                                <x-label for="accident_{{ $i }}">
+                                    {{ $i }}
+                                </x-label>
+                                <x-input wire:model="accidents.{{ $i -1 }}" id="accidents_{{ $i }}" />
+                            </div>
+                        @endfor
+                    </x-grid>
 
 
                 <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500 ">
@@ -857,7 +858,7 @@
                             <x-label for="operation_{{ $i }}">
                                 {{ $i }}
                             </x-label>
-                            <x-input wire:model="operations.{{ $i }}"
+                            <x-input wire:model="operations.{{ $i -1  }}"
                                 id="operations_{{ $i }}" />
                         </div>
                     @endfor
@@ -868,7 +869,8 @@
                     <div wire:loading wire:target="update" class="mx-4">
                         Loading..
                     </div>
-                    <x-button type="submit" wire:loading.attr="disabled" >Submit</x-button>
+                    <x-button type="submit"
+                     wire:loading.attr="disabled" >Update</x-button>
                 </div>
 
             </form>

@@ -12,6 +12,7 @@ class EducBg extends Model
 
     protected $fillable = [
         'profile_id',
+        'grade_level',
         'school_name',
         'school_year',
         'grade_section'

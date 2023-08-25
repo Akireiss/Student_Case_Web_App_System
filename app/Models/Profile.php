@@ -62,6 +62,12 @@ class Profile extends Model
         'food_allergy',
         'status'
     ];
+
+
+    public function education()
+    {
+        return $this->hasMany(EducBg::class);
+    }
     public function siblings()
     {
         return $this->hasMany(Sibling::class);
@@ -111,10 +117,6 @@ class Profile extends Model
         return $this->hasMany(Operation::class);
     }
 
-    public function education()
-    {
-        return $this->hasMany(EducBg::class);
-    }
 
     public function accidents()
     {
