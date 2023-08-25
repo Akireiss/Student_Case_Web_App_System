@@ -444,48 +444,53 @@
                     </div>
                 </x-grid>
 
+                <div>
 
-
-                <div x-data="{ siblings: @entangle('siblings') }">
-                    <div class="flex items-center justify-between mt-4 mx-4">
-                        <h6 class="text-sm font-bold uppercase">
-                            List down the names of Siblings that are studying at CZCMNHS?
+                    <div class="flex justify-between items-center mb-4">
+                        <h6 class=" px-4 text-sm font-bold uppercase">
+                            Siblings' Information
                         </h6>
-                        <div class="relative mb-3 px-4">
-                            <x-buttontype @click="siblings.push({ name: '', age: '', gradeSection: '' })">
-                                Add Sibling
-                            </x-buttontype>
-                            <x-buttontype @click="siblings.pop()">
-                                Remove
-                            </x-buttontype>
-                        </div>
+
+                        <x-button wire:click="addSibling">Add</x-button>
                     </div>
 
-                    <template x-for="(sibling, index) in siblings" :key="index">
-                        <x-grid columns="3" gap="4" px="0" mt="0">
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Name
-                                </x-label>
-                                <x-input x-model="sibling.name" />
-                            </div>
 
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Age
-                                </x-label>
-                                <x-input x-model="sibling.age" type="number" />
-                            </div>
+                        @foreach($siblings as $index => $sibling)
+                         <div class="flex justify-end px-4 ">
+                        <button class="text-red-500 text-sm underline" wire:click="removeSibling({{ $index }})">
+                            Remove
+                        </button>
+                    </div>
+                    <x-grid columns="3" gap="4" px="0" mt="0">
 
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Grade Section
-                                </x-label>
-                                <x-input x-model="sibling.gradeSection" />
-                            </div>
-                        </x-grid>
-                    </template>
+                             <div class="relative mb-3 px-4">
+                                    <x-label>
+                                        Sibling's Name
+                                    </x-label>
+                                    <x-input type="text" wire:model="siblings.{{ $index }}.name" />
+                                </div>
+                             <div class="relative mb-3 px-4">
+                                    <x-label>
+                                        Sibling's Age
+                                    </x-label>
+                                    <x-input type="text" wire:model="siblings.{{ $index }}.age" />
+                                </div>
+                             <div class="relative mb-3 px-4">
+                                    <x-label>
+                                        Grade/Section
+                                    </x-label>
+                                    <x-input type="text" wire:model="siblings.{{ $index }}.gradeSection" />
+                                </div>
+
+                    </x-grid>
+                        @endforeach
+
+
                 </div>
+
+
+
+
 
 
                 <div x-data="{ selected: @entangle('living_with') }">
@@ -606,43 +611,45 @@
 
 
 
+                <div class="flex justify-between items-center mb-1 px-4">
+                    <h6 class="text-sm font-bold uppercase">
+                        Name some of you award
+                    </h6>
 
-                <div x-data="{ rewards: @entangle('rewards') }">
-                    <div class="flex items-center justify-between mt-4 mx-4">
-                        <h6 class="text-sm font-bold uppercase">
-                            Name some of your Academic and Extra-Curricular Awards
-                        </h6>
-                        <div class="relative mb-3 px-4">
-                            <x-buttontype @click="rewards.push({ name: '', age: '' })">
-                                Add Award
-                            </x-buttontype>
-                            <x-buttontype @click="rewards.pop()">
-                                Remove
-                            </x-buttontype>
-                        </div>
+                    <x-button wire:click="addReward">Add</x-button>
+                </div>
+
+
+                    @foreach($rewards as $index => $reward)
+                     <div class="flex justify-end px-4 ">
+                    <button class="text-red-500 text-sm underline" wire:click="removeAward({{ $index }})">
+                        Remove
+                    </button>
+                </div>
+                <x-grid columns="2" gap="4" px="0" mt="0">
+
+                         <div class="relative mb-3 px-4">
+                                <x-label>
+                                    Reward Name
+                                </x-label>
+                                <x-input type="text" wire:model="rewards.{{ $index }}.name" />
+                            </div>
+                         <div class="relative mb-3 px-4">
+                                <x-label>
+                                    Year
+                                </x-label>
+                                <x-input type="text" wire:model="rewards.{{ $index }}.year" />
+                            </div>
+                </x-grid>
+                    @endforeach
+
+                    <div class="flex justify-end px-4">
+                        <x-button wire:click="saveAwards">Update</x-button>
                     </div>
 
-                    <template x-for="(reward, index) in rewards" :key="index">
-                        <x-grid columns="2" gap="4" px="0" mt="0"
-                            x-show="index === 0 || rewards.length > 1">
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Name of Award
-                                </x-label>
-                                <x-input x-model="reward.name" />
 
-                            </div>
 
-                            <div class="relative mb-3 px-4">
-                                <x-label>
-                                    Year Achieved
-                                </x-label>
-                                <x-input x-model="reward.year" type="number" />
 
-                            </div>
-                        </x-grid>
-                    </template>
-                </div>
 
 
                 <x-grid columns="3" gap="4" px="0" mt="0">

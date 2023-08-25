@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Student\Profile;
 
+use App\Models\Award;
 use App\Models\Barangay;
 use App\Models\EducBg;
 use App\Models\Family;
 use App\Models\Municipal;
 use App\Models\Profile;
+use App\Traits\RewardSiblingTrait;
 use App\Traits\UpdateAddressTrait;
 use Livewire\Component;
 use App\Models\Province;
@@ -19,24 +21,12 @@ class StudentProfileUpdate extends Component
     use UpdateAddressTrait;
     use SelectNameTrait;
     use WireModelTraits;
-    public $education = [];
-    public $school_name = [];
-    public $grade_section = [];
-    public $school_year = [];
+    use RewardSiblingTrait;
     public $parent_statuses = [];
-
 
     public $profileId;
     public $profile;
 
-   public $rewards = [];
-    public $siblings = [];
-    // public $rewards = [
-    //     ['name' => '', 'year' => null],
-    // ];
-    // public $siblings = [
-    //     ['sibling_name' => '', 'sibling_age' => '', 'sibling_grade_section' => ''],
-    // ];
 
     public function selectStudent($id, $name)
     {
@@ -172,13 +162,13 @@ class StudentProfileUpdate extends Component
 
         }
 
-            $awardsData = $this->profile->awards;
-            foreach ($awardsData as $award) {
-                $this->rewards[] = [
-                    'name' => $award->award_name,
-                    'year' => $award->award_year,
-                ];
-            }
+        $awardsData = $this->profile->awards;
+        foreach ($awardsData as $award) {
+            $this->rewards[] = [
+                'name' => $award->award_name,
+                'year' => $award->award_year,
+            ];
+        }
 
 
     }
@@ -186,7 +176,7 @@ class StudentProfileUpdate extends Component
 
     public function updateProfile()
     {
-       $profileData = $this->profile->update([
+        $profileData = $this->profile->update([
             'student_id' => $this->studentId,
             'suffix' => $this->suffix,
             'nickname' => $this->nickname,
@@ -271,57 +261,48 @@ class StudentProfileUpdate extends Component
         }
 
 
-      foreach ($this->profile->vitamins as $index => $vitaminModel) {
-    if (isset($this->vitamins[$index])) {
-        $vitaminModel->update([
-            'vitamins' => $this->vitamins[$index],
-        ]);
-    }
-}
+        foreach ($this->profile->vitamins as $index => $vitaminModel) {
+            if (isset($this->vitamins[$index])) {
+                $vitaminModel->update([
+                    'vitamins' => $this->vitamins[$index],
+                ]);
+            }
+        }
 
-foreach ($this->profile->accidents as $index => $accidentModel) {
-    if (isset($this->accidents[$index])) {
-        $accidentModel->update([
-            'accidents' => $this->accidents[$index],
-        ]);
-    }
-}
+        foreach ($this->profile->accidents as $index => $accidentModel) {
+            if (isset($this->accidents[$index])) {
+                $accidentModel->update([
+                    'accidents' => $this->accidents[$index],
+                ]);
+            }
+        }
 
-  // Update operations
-foreach ($this->profile->operations as $index => $operationModel) {
-    if (isset($this->operations[$index])) {
-        $operationModel->update([
-            'operations' => $this->operations[$index],
-        ]);
-    }
-}
-
-
-        foreach ($this->siblings as $sibling) {
-            $siblingModel = $this->profile->siblings->firstWhere('sibling_name', $sibling['name']);
-            if ($siblingModel) {
+        // Update operations
+        foreach ($this->profile->operations as $index => $operationModel) {
+            if (isset($this->operations[$index])) {
+                $operationModel->update([
+                    'operations' => $this->operations[$index],
+                ]);
+            }
+        }
+        foreach ($this->profile->siblings as $index => $siblingModel) {
+            if (isset($this->siblings[$index])) {
                 $siblingModel->update([
-                    'sibling_age' => $sibling['age'],
-                    'sibling_grade_section' => $sibling['gradeSection'],
+                    'sibling_name' => $this->siblings[$index]['name'],
+                    'sibling_age' => $this->siblings[$index]['age'],
+                    'sibling_grade_section' => $this->siblings[$index]['gradeSection'],
                 ]);
             }
         }
 
-        // Update awards
-        foreach ($this->rewards as $award) {
-            $awardModel = $this->profile->awards->firstWhere('award_name', $award['name']);
-            if ($awardModel) {
-                $awardModel->update([
-                    'award_year' => $award['year'],
-                ]);
-            } else {
-                $this->profile->awards()->create([
-                    'award_name' => $award['name'],
-                    'award_year' => $award['year'],
+        foreach ($this->profile->awards as $index => $rewardModel) {
+            if (isset($this->rewards[$index])) {
+                $rewardModel->update([
+                    'award_name' => $this->rewards[$index]['name'],
+                    'award_year' => $this->rewards[$index]['year'],
                 ]);
             }
         }
-
         session()->flash('message', 'Profile data updated successfully.');
     }
 
@@ -352,5 +333,7 @@ foreach ($this->profile->operations as $index => $operationModel) {
             ->extends('layouts.dashboard.index', )
             ->section('content');
     }
+
+
 
 }

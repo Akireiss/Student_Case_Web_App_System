@@ -65,3 +65,10 @@ class StudentController extends Controller
 
 
 }
+    // public $rewards = [
+    //     ['name' => '', 'year' => null],
+    // ];
+
+    // public $siblings = [
+    //     ['sibling_name' => '', 'sibling_age' => '', 'sibling_grade_section' => ''],
+    // ];
