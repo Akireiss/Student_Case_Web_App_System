@@ -24,7 +24,7 @@ class StudentProfile extends Component
         if (!$profile) {
           abort (403);
         }
-        return view('staff.profile.view', compact('profile'));
+        return view('student.profile.view', compact('profile'));
     }
 
 

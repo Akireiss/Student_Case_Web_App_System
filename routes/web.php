@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Student\StudentDataController;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\Chart;
 use App\Http\Livewire\Admin\Report;
@@ -75,8 +76,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('student-profile/{profile}/view', [StudentProfileController::class, 'show'])
             ->name('admin.profile.show');
 
-
-            Route::get('student-profile/add', StudentsProfile::class);
+            Route::get('student-profile/add', \App\Http\Livewire\Student\StudentProfile::class);
         });
 
         Route::prefix('admin/settings')->group(function () {
@@ -141,7 +141,8 @@ Route::resource('students', ReportHistory::class);
 Route::get('student/form', StudentForm::class);
 Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
 Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
-
+//*Student Profile Data
+Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])->name('student.profile.data');
 
 //*end-points
 Route::get('/admin/get-case-counts', [DashboardController::class, 'getCaseCounts']);

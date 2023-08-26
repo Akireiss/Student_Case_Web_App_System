@@ -19,12 +19,11 @@ class StudentProfileController extends Controller
     {
         $profile = Profile::with('family')->find($id);
 
-
         if(!$profile)
         {
             abort(403);
         }
-        return view('admin.student-profile.view', compact('profile'));
+        return view('student.profile.view', compact('profile'));
 
     }
 

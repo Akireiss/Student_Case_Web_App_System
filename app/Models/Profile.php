@@ -90,6 +90,8 @@ class Profile extends Model
         return $this->hasMany(Family::class);
     }
 
+
+
     public function student()
     {
         return $this->belongsTo(Students::class, 'student_id');

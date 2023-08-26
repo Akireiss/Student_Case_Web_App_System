@@ -4,11 +4,26 @@
 
         <x-form title="Student Profile">
 
+
+            @if(auth()->user()->role === 1)
+            <x-slot name="actions">
+                <x-link href="{{ url('admin/student-profile') }}">
+                    Back
+                </x-link>
+            </x-slot>
+            @endif
+
+
+            @if(auth()->user()->role === 2)
             <x-slot name="actions">
                 <x-link href="{{ url('adviser/students-profile') }}">
                     Back
                 </x-link>
             </x-slot>
+            @endif
+
+
+
             <x-slot name="slot">
                 <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 ">
                     Personal Information
@@ -40,7 +55,7 @@
                         <x-label>
                             Middle Name
                         </x-label>
-                        <x-input disabled value="{{ $profile->m_name }}" />
+                        <x-input disabled value="{{ $profile->student->middle_name }}" />
                     </div>
 
 
@@ -81,7 +96,7 @@
                             <x-label>
                                 Sex
                             </x-label>
-                            <x-input disabled value="{{ $profile->sex }}" type="date" />
+                            <x-input disabled value="{{ $profile->sex }}"  />
                         </div>
 
                     </div>
@@ -160,7 +175,7 @@
                 </x-grid>
 
 
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                     Address
                 </h6>
 
@@ -192,12 +207,11 @@
                     Father
                 </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    @if ($profile->family)
-                        @foreach ($profile->family as $familyMember)
-                            @if ($familyMember->type === 0)
-                                <input type="hidden" value="father">
 
+
+                        @foreach ($profile->family as $familyMember)
+                            @if ($familyMember->parent_type === 0)
+                            <x-grid columns="3" gap="4" px="0" mt="0">
                                 <div class="relative mb-3 px-4">
                                     <x-label>
                                         Name
@@ -255,16 +269,9 @@
 
                                     <x-input disabled value="{{ $familyMember->parent_work_address ?? 'No Data' }}" />
                                 </div>
+                            </x-grid>
                             @endif
                         @endforeach
-                    @else
-                        <!-- Handle case when there are no parents -->
-                        <p>No parents found.</p>
-                    @endif
-                </x-grid>
-
-
-
 
 
 
@@ -277,8 +284,7 @@
                 <x-grid columns="3" gap="4" px="0" mt="0">
                     @if ($profile->family)
                         @foreach ($profile->family as $familyMember)
-                            @if ($familyMember->type === 1)
-                                <input type="hidden" value="mother">
+                            @if ($familyMember->parent_type === 1)
 
                                 <div class="relative mb-3 px-4">
                                     <x-label>
@@ -387,8 +393,8 @@
 
 
 
-                <div>
-                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+                <div class="px-4">
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase">
                         You are currently living with:
                     </h6>
                     <x-grid columns="1 md:grid-cols-4" gap="4" px="0" mt="0">
@@ -398,7 +404,7 @@
                             <x-label class="inline-block" for="living-with" >{{ $profile->living_with }}</x-label>
                         </div>
                     </x-grid>
-                </div>
+
 
                 <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                     Parent status are currently: (check which applies below)
@@ -470,48 +476,47 @@
 
 
                 <div>
-
                     <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                         Educational Background
                     </h6>
 
                     @if ($profile->education->isNotEmpty())
                         @php
-                            $sortedEducation = $profile->education->sortBy('school_year');
-                            $baseGrade = 7;
+                            $groupedEducation = $profile->education->groupBy('grade_level');
                         @endphp
 
-                        @foreach ($sortedEducation as $education)
-                            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
-                                Grade Level: {{ $baseGrade }}
-                            </h6>
+                        <x-grid columns="3" gap="4" px="0" mt="0">
+                            @foreach ($groupedEducation as $gradeLevel => $educations)
+                                <div class="w-full">
+                                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 text-gray-500">
+                                        Grade Level: {{ $gradeLevel }}
+                                    </h6>
+                                    @foreach ($educations as $education)
+                                        <div class="relative mb-3 px-4">
+                                            <x-label for="name">Name of school</x-label>
+                                            <x-input disabled :value="$education->school_name" id="name" />
+                                        </div>
 
-                            <x-grid columns="3" gap="4" px="0" mt="0">
-                                <div class="relative mb-3 px-4">
-                                    <x-label for="name">Name of school</x-label>
-                                    <x-input disabled :value="$education->school_name" id="name" />
+                                        <div class="relative mb-3 px-4">
+                                            <x-label for="section">Section</x-label>
+                                            <x-input disabled :value="$education->grade_section" id="section" />
+                                        </div>
+
+                                        <div class="relative mb-3 px-4">
+                                            <x-label for="school_year">School Year</x-label>
+                                            <x-input disabled :value="$education->school_year" id="school_year" />
+                                        </div>
+                                    @endforeach
                                 </div>
-
-                                <div class="relative mb-3 px-4">
-                                    <x-label for="section">Section</x-label>
-                                    <x-input disabled :value="$education->grade_section" id="section" />
-                                </div>
-
-                                <div class="relative mb-3 px-4">
-                                    <x-label for="school_year">School Year</x-label>
-                                    <x-input disabled :value="$education->school_year" id="school_year" />
-                                </div>
-                            </x-grid>
-
-                            @php
-                                $baseGrade++;
-                            @endphp
-                        @endforeach
+                            @endforeach
+                        </x-grid>
                     @else
                         <div class="px-4">
                             <x-input disabled value="No Data" />
                         </div>
                     @endif
+                </div>
+
 
 
 
@@ -638,11 +643,19 @@
 
 
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+
+
+                <x-grid columns="2" gap="4" px="0" mt="0">
+
+                <div>
+
+                <h6 class="text-sm my-4 px-4 uppercase mt-3 font-bold">
                     Medicine taken in
                 </h6>
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    @if ($profile->medicines->isEmpty())
+
+
+
+                        @if ($profile->medicines->isEmpty())
                         <div class="px-4 py-2">
                             <x-input disabled value="No Data" />
                         </div>
@@ -652,70 +665,71 @@
                                 <x-input disabled value="{{ $medicine->medicine }}" />
                             </div>
                         @endforeach
-                    @endif
-                </x-grid>
+                        @endif
+
+                </div>
 
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+                <div>
+                    <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 ">
                     Vitamins taken in
                 </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="0">
                     @if ($profile->vitamins->isNotEmpty())
                         @foreach ($profile->vitamins as $vitamin)
                             <div class="relative mb-3 px-4">
                                 <x-input disabled :value="$vitamin->vitamins" />
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="px-4 py-2">
-                            <x-input disabled value="No Data" />
-                        </div>
-                    @endif
+                                </div>
+                                @endforeach
+                                @else
+                                <div class="px-4 py-2">
+                                    <x-input disabled value="No Data" />
+                                </div>
+                                @endif
+            </div>
                 </x-grid>
 
+                <x-grid columns="2" gap="4" px="0" mt="0">
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
-                    Accidents experienced
-                </h6>
-
-                <x-grid columns="3" gap="4" px="0" mt="0">
+<div>
+    <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 ">
+        Accidents experienced
+            </h6>
                     @if ($profile->accidents->isNotEmpty())
-                        @foreach ($profile->accidents as $accident)
+                    @foreach ($profile->accidents as $accident)
                             <div class="relative mb-3 px-4">
                                 <x-input disabled value="{{ $accident->accidents }}" />
                             </div>
-                        @endforeach
+                            @endforeach
                     @else
-                        <div class="px-4 py-2">
-                            <x-input value="No Data" disabled />
-                        </div>
+                    <div class="px-4 py-2">
+                        <x-input value="No Data" disabled />
+                    </div>
                     @endif
-                </x-grid>
+            </div>
 
-
-
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+            <div>
+                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 ">
                     Operations experienced
                 </h6>
-
-                <x-grid columns="3" gap="4" px="0" mt="0">
                     @if ($profile->operations->isNotEmpty())
                         @foreach ($profile->operations as $operation)
                             <div class="relative mb-3 px-4">
                                 <x-input disabled value="{{ $operation->operations }}" />
                             </div>
-                        @endforeach
+                            @endforeach
                     @else
-                        <div class="px-4 py-2">
+                    <div class="px-4 py-2">
                             <x-input value="No Data" disabled />
                         </div>
                     @endif
+            </div>
+
                 </x-grid>
-
-
 
             </x-slot>
         </x-form>
     </div>
+</div>
+
 @endsection

@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Student;
 
 use App\Models\Profile;
-use App\Traits\ProfileValidationTrait;
-use App\Traits\WireModelTraits;
 use Livewire\Component;
 use App\Models\Province;
 use App\Models\Students;
 use App\Traits\SelectNameTrait;
+use App\Traits\WireModelTraits;
 use App\Traits\SelectAddressTrait;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\ProfileValidationTrait;
 use Illuminate\Support\Facades\Session;
 
 class StudentProfile extends Component
@@ -60,10 +61,19 @@ class StudentProfile extends Component
         }
 
         $provinces = Province::all();
-        return view('livewire.student.student-profile', compact('provinces', 'students'))
+
+        if (Auth::check()) {
+            return view('livewire.student.student-profile', compact('provinces', 'students'))
+                ->extends('layouts.dashboard.index')
+                ->section('content');
+        } else {
+            return view('livewire.student.student-profile', compact('provinces', 'students'))
             ->extends('layouts.app')
             ->section('content');
-    }
+        }
+
+
+        }
     public function save()
     {
         $this->validate();
@@ -92,6 +102,7 @@ class StudentProfile extends Component
             'birth_place' => $this->birth_place,
             'living_with' => $this->living_with,
             'guardian_name' => $this->guardian_name,
+            'guardian_address' => $this->guardian_name,
             'guardian_relationship' => $this->relationship,
             'guardian_contact' => $this->guardian_contact,
             'guardian_occupation' => $this->occupation,
@@ -206,11 +217,20 @@ class StudentProfile extends Component
             ]);
         }
 
-        $this->resetForm();
-        //session()->flash('message', 'Succesfully Save');
-        $this->formSubmitted = true;
-        $createdForm = Profile::latest()->first();
-        Session::put('created_form_id', $createdForm->id);
+
+        if (Auth::check()) {
+            if (Auth::user()->role == 1) {
+                session()->flash('message', 'Successfully Saved');
+                $this->resetForm();
+            }
+        } else {
+            $createdForm = Profile::latest()->first();
+            Session::put('created_form_id', $createdForm->id);
+
+            // Redirect with the created_form_id as a query parameter
+            return redirect()->route('student.profile.data', ['form_id' => $createdForm->id]);
+
+        }
 
     }
 

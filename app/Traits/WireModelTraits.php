@@ -14,12 +14,12 @@ trait WireModelTraits
            $guardian_age;
 
     // Father Information
-    public $father_type = 0,
+    public $father_type = "0",
            $father_name, $father_age, $father_occupation, $father_contact, $father_office_contact,
            $father_monthly_income, $father_birth_place, $father_work_address;
 
     // Mother Information
-    public $mother_type = 1,
+    public $mother_type = "1",
            $mother_name, $mother_age, $mother_occupation, $mother_contact, $mother_office_contact,
            $mother_monthly_income, $mother_birth_place, $mother_work_address;
 

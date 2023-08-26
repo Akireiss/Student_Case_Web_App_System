@@ -1,12 +1,32 @@
 <div>
-    @if (!$formSubmitted)
+
 <div class="p-4 ">
 
     <x-form title="">
 
+        @if(auth()->check())
+    @if(auth()->user()->role === 1)
         <x-slot name="actions">
-            <x-link a href="{{ url('student/form') }}">Back</x-link>
+            <x-link a href="{{ url('admin/student-profile') }}">Back</x-link>
         </x-slot>
+    @endif
+
+    @if(auth()->user()->role === 2)
+        <x-slot name="actions">
+            <x-link a href="{{ url('admin/student-profile') }}">Back</x-link>
+        </x-slot>
+    @endif
+@endif
+
+
+@if (auth()->guest())
+    <x-slot name="actions">
+        <x-link a href="{{ url('student/form') }}">Back</x-link>
+    </x-slot>
+@endif
+
+
+
         <x-slot name="slot">
             <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 ">
                 Personal Information
@@ -877,27 +897,12 @@
         </x-slot>
     </x-form>
 </div>
-<div>
 
-    @else
-    <div class="text-center">
-        <p class="font-bold">
-            Thank you for submitting
-        </p>
-        @php
-            $formId = Session::get('created_form_id');
-        @endphp
-        @if ($formId)
 
-        <div class="mx-auto">
-            <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->merge(public_path('logo.PNG'), 0.3, true)->size(200)
-            ->generate(url('student/form/'.$formId.'/update'))) }}" alt="">
-        </div>
 
-        @endif
-    </div>
-    @endif
-</div>
+
+
+
 
 
 </div>
