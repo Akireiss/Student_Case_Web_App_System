@@ -2,6 +2,7 @@
 namespace App\Traits;
 
 use App\Models\Award;
+use App\Models\Sibling;
 
 trait RewardSiblingTrait
 {
@@ -22,15 +23,6 @@ trait RewardSiblingTrait
             'gradeSection' => '',
         ];
     }
-
-
-    public function removeSibling($index)
-    {
-        unset($this->siblings[$index]);
-        $this->siblings = array_values($this->siblings);
-
-    }
-
 
 
     public function addReward()
@@ -56,6 +48,25 @@ trait RewardSiblingTrait
             );
         }
 
+        foreach ($this->siblings as $index => $sibling) {
+            $siblingModel = $this->profile->siblings[$index] ?? new Sibling();
+
+            $siblingModel->updateOrCreate(
+                ['id' => $siblingModel->id],
+                [
+                    'profile_id' => $this->profileId,
+                    'sibling_name' => $sibling['name'],
+                    'sibling_age' => $sibling['age'],
+                    'sibling_grade_section' => $sibling['gradeSection'],
+                ]
+            );
+        }
+
+
+
+
+
+
     }
 
     public function removeAward($index)
@@ -71,6 +82,22 @@ trait RewardSiblingTrait
             $this->rewards = array_values($this->rewards);
         }
     }
+
+
+    public function removeSiblings($index)
+    {
+        if (isset($this->siblings[$index])) {
+            $siblingModel = $this->profile->siblings[$index] ?? null;
+
+            if ($siblingModel) {
+                $siblingModel->delete();
+            }
+
+            unset($this->siblings[$index]);
+            $this->siblings = array_values($this->siblings);
+        }
+    }
+
 
 
 }

@@ -56,4 +56,14 @@ trait SelectNameTrait
         };
 
     }
+
+    public function resetForm()
+    {
+        $this->studentName = '';
+        $this->middle_name = '';
+        $this->last_name = '';
+        $this->studentId = null;
+        $this->cases = [];
+        $this->resetErrorBag(['studentId']);
+    }
 }

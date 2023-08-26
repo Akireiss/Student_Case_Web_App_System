@@ -2,19 +2,17 @@
 
 namespace App\Http\Livewire\Student\Profile;
 
-use App\Models\Award;
-use App\Models\Barangay;
-use App\Models\EducBg;
-use App\Models\Family;
-use App\Models\Municipal;
 use App\Models\Profile;
-use App\Traits\RewardSiblingTrait;
-use App\Traits\UpdateAddressTrait;
 use Livewire\Component;
+use App\Models\Barangay;
 use App\Models\Province;
 use App\Models\Students;
+use App\Models\Municipal;
+use App\Models\ParentStatus;
 use App\Traits\SelectNameTrait;
 use App\Traits\WireModelTraits;
+use App\Traits\RewardSiblingTrait;
+use App\Traits\UpdateAddressTrait;
 
 class StudentProfileUpdate extends Component
 {
@@ -49,7 +47,6 @@ class StudentProfileUpdate extends Component
     {
         $this->profileId = $profile;
         $this->profile = Profile::findOrFail($profile);
-        $this->parentStatuses = $this->profile->parent_status->pluck('parent_status')->toArray();
         $this->studentName = $this->profile->student->first_name;
         $this->last_name = $this->profile->student->last_name;
         $this->middle_name = $this->profile->student->middle_name;
@@ -133,24 +130,20 @@ class StudentProfileUpdate extends Component
             ];
         }
 
-        $medicineData = $this->profile->medicines;
-        foreach ($medicineData as $medicine) {
-            $this->medicines[] = $medicine->medicine;
-        }
 
-        $vitaminData = $this->profile->vitamins;
-        foreach ($vitaminData as $vitamin) {
-            $this->vitamins[] = $vitamin->vitamins;
-        }
 
-        $accidentData = $this->profile->accidents;
-        foreach ($accidentData as $accident) {
-            $this->accidents[] = $accident->accidents;
-        }
-        $operationsData = $this->profile->operations;
-        foreach ($operationsData as $operation) {
-            $this->operations[] = $operation->operations;
-        }
+        $medicineData = $this->profile?->medicines;
+        $this->medicines = $medicineData->isEmpty() ? ['No Data'] : $medicineData->pluck('medicine')->toArray();
+
+        $vitamintData = $this->profile->vitamins;
+        $this->vitamins = $vitamintData->isEmpty() ? ['No Data'] : $vitamintData->pluck('vitamins')->toArray();
+
+
+        $accidentData = $this->profile?->accidents;
+        $this->accidents = $accidentData->isEmpty() ? ['No Data'] : $accidentData->pluck('accidents')->toArray();
+
+        $operationData = $this->profile->operations;
+        $this->operations = $operationData->isEmpty() ? ['No Data'] : $operationData->pluck('operations')->toArray();
 
         $siblingsData = $this->profile->siblings;
         foreach ($siblingsData as $sibling) {
@@ -176,7 +169,7 @@ class StudentProfileUpdate extends Component
 
     public function updateProfile()
     {
-        $profileData = $this->profile->update([
+        $this->profile->update([
             'student_id' => $this->studentId,
             'suffix' => $this->suffix,
             'nickname' => $this->nickname,
@@ -251,6 +244,28 @@ class StudentProfileUpdate extends Component
             }
         }
 
+        foreach ($this->profile->parent_status as $index => $parentModel) {
+            if (!isset($this->parent_statuses[$index]) && $parentModel) {
+                $parentModel->delete();
+            }
+        }
+
+        foreach ($this->parent_statuses as $index => $parentStatus) {
+            $parentModel = $this->profile->parent_status[$index] ?? null;
+
+            if ($parentModel) {
+                $parentModel->update([
+                    'parent_status' => $parentStatus,
+                ]);
+            } elseif ($parentStatus) {
+                ParentStatus::create([
+                    'profile_id' => $this->profileId,
+                    'parent_status' => $parentStatus,
+                ]);
+            }
+        }
+
+
 
         foreach ($this->profile->medicines as $index => $medicineModel) {
             if (isset($this->medicines[$index])) {
@@ -285,24 +300,7 @@ class StudentProfileUpdate extends Component
                 ]);
             }
         }
-        foreach ($this->profile->siblings as $index => $siblingModel) {
-            if (isset($this->siblings[$index])) {
-                $siblingModel->update([
-                    'sibling_name' => $this->siblings[$index]['name'],
-                    'sibling_age' => $this->siblings[$index]['age'],
-                    'sibling_grade_section' => $this->siblings[$index]['gradeSection'],
-                ]);
-            }
-        }
 
-        foreach ($this->profile->awards as $index => $rewardModel) {
-            if (isset($this->rewards[$index])) {
-                $rewardModel->update([
-                    'award_name' => $this->rewards[$index]['name'],
-                    'award_year' => $this->rewards[$index]['year'],
-                ]);
-            }
-        }
         session()->flash('message', 'Profile data updated successfully.');
     }
 

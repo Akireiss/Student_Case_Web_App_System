@@ -166,28 +166,46 @@ class StudentProfile extends Component
 
 
         foreach ($this->vitamins as $vitamin) {
+            if (empty($vitamin) || $vitamin === 'No Data') {
+                $vitamin = 'No Data';
+            }
+
             $profile->vitamins()->create([
                 'vitamins' => $vitamin,
             ]);
         }
 
         foreach ($this->medicines as $medicine) {
+            if (empty($medicine) || $medicine === 'No Data') {
+                $medicine = 'No Data';
+            }
+
             $profile->medicines()->create([
                 'medicine' => $medicine,
             ]);
         }
 
         foreach ($this->operations as $operation) {
+            if (empty($operation) || $operation === 'No Data') {
+                $operation = 'No Data';
+            }
+
             $profile->operations()->create([
                 'operations' => $operation,
             ]);
         }
 
+
         foreach ($this->accidents as $accident) {
+            if (empty($accident) || $accident === 'No Data') {
+                $accident = 'No Data';
+            }
+
             $profile->accidents()->create([
                 'accidents' => $accident,
             ]);
         }
+
         $this->resetForm();
         //session()->flash('message', 'Succesfully Save');
         $this->formSubmitted = true;
