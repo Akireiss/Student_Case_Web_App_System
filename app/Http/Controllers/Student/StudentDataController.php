@@ -16,4 +16,9 @@ class StudentDataController extends Controller
     }
 
 
+    public function view($form_id) {
+        $profile = Profile::findOrFail($form_id);
+        return view('student.profile.view', compact('profile'));
+    }
+
 }

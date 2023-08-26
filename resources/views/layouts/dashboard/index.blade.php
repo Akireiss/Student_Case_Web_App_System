@@ -135,7 +135,7 @@
                                 <button class="flex items-center justify-center rounded-full focus:outline-none"
                                     @click="isProfileMenuOpen = !isProfileMenuOpen" aria-label="Account"
                                     aria-haspopup="true">
-                                    <span class="mr-1">{{ Auth()->user()->name }}</span>
+                                    <span class="mr-1">{{ Auth()->user()?->name }}</span>
                                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
                                         aria-hidden="true">
                                         <path fill-rule="evenodd"

@@ -1,27 +1,38 @@
-@extends('layouts.dashboard.index')
-@section('content')
+@if(auth()->check())
+    @extends('layouts.dashboard.index')
+    @section('content')
+@else
+    @extends('layouts.app')
+    @section('content')
+@endif
+
     <div>
 
         <x-form title="Student Profile">
 
-
+            @if(auth()->check())
             @if(auth()->user()->role === 1)
-            <x-slot name="actions">
-                <x-link href="{{ url('admin/student-profile') }}">
-                    Back
-                </x-link>
-            </x-slot>
+                <x-slot name="actions">
+                    <x-link href="{{ url('admin/student-profile') }}">
+                        Back
+                    </x-link>
+                </x-slot>
             @endif
-
 
             @if(auth()->user()->role === 2)
-            <x-slot name="actions">
-                <x-link href="{{ url('adviser/students-profile') }}">
-                    Back
-                </x-link>
-            </x-slot>
+                <x-slot name="actions">
+                    <x-link href="{{ url('adviser/students-profile') }}">
+                        Back
+                    </x-link>
+                </x-slot>
             @endif
+        @endif
 
+        <x-slot name="actions">
+            <x-link href="">
+                Back
+            </x-link>
+        </x-slot>
 
 
             <x-slot name="slot">

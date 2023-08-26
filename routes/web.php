@@ -143,6 +143,8 @@ Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.sh
 Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
 //*Student Profile Data
 Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])->name('student.profile.data');
+Route::get('student/profile/data/{form_id}/view',
+ [StudentDataController::class, 'view']);
 
 //*end-points
 Route::get('/admin/get-case-counts', [DashboardController::class, 'getCaseCounts']);
