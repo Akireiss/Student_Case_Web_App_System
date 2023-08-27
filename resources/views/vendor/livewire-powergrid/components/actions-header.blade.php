@@ -57,7 +57,7 @@
                 href="{{ route($action->route, $parameters) }}"
                 id="{{ $action->id }}"
                 title="{{ $action->tooltip }}"
-                target="{{ $action->target }}"
+               target="{{ $action->target }}"
                 class="power-grid-button {{ filled($action->class) ? $action->class : $theme->actions->headerBtnClass }}"
             >
                 {!! $action->caption !!}

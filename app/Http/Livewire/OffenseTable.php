@@ -103,8 +103,7 @@ final class OffenseTable extends PowerGridComponent
             })
             ->addColumn('status', function (Offenses $model) {
                 return ($model->status ? 'Inactive' : 'Active');
-            })
-            ->addColumn('created_at_formatted', fn(Offenses $model) => Carbon::parse($model->created_at)->format('F j, Y'));
+            });
     }
 
     /*
@@ -139,11 +138,6 @@ final class OffenseTable extends PowerGridComponent
 
             Column::make('Status', 'status'),
 
-
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
-
         ];
     }
 
@@ -164,7 +158,6 @@ final class OffenseTable extends PowerGridComponent
         return [
             Filter::inputText('description')->operators(['contains']),
             Filter::boolean('status')->label('Inactive', 'Active'),
-            Filter::datetimepicker('created_at'),
         ];
     }
 

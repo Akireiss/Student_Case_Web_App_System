@@ -74,8 +74,13 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-end">
-                                <x-button type="submit">Add</x-button>
+
+                            <div class="flex justify-end items-center">
+                                <x-text-alert />
+                                <div wire:loading wire:target="store" class="mx-4">
+                                    Loading
+                                </div>
+                                <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                             </div>
                         </form>
             </div>

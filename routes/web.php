@@ -118,6 +118,12 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('report/student', \App\Http\Livewire\Adviser\Report::class);
             //*Student Profile//livewire
             Route::get('students-profile', StudentProfile::class);
+            //*Add
+            Route::get('student-profile/add', \App\Http\Livewire\Student\StudentProfile::class);
+            //*Edit
+            Route::get('student-profile/{profile}/edit', StudentProfileUpdate::class)
+            ->name('adviser.profile.edit');
+
             Route::get('student-profile/{profile}/view', [StudentProfile::class, 'show'])->name('profile.view');
             //*History
             Route::get('report/history', function() {
@@ -145,6 +151,9 @@ Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::
 Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])->name('student.profile.data');
 Route::get('student/profile/data/{form_id}/view',
  [StudentDataController::class, 'view']);
+//*student form update
+Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
+
 
 //*end-points
 Route::get('/admin/get-case-counts', [DashboardController::class, 'getCaseCounts']);

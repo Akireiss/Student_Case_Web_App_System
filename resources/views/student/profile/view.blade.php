@@ -1,14 +1,14 @@
 @if(auth()->check())
-    @extends('layouts.dashboard.index')
-    @section('content')
+@extends('layouts.dashboard.index')
 @else
-    @extends('layouts.app')
-    @section('content')
+@extends('layouts.app')
 @endif
+
+@section('content')
 
     <div>
 
-        <x-form title="Student Profile">
+        <x-form title="Student ProfilAAAe">
 
             @if(auth()->check())
             @if(auth()->user()->role === 1)

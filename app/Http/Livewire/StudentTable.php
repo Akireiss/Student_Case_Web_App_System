@@ -114,8 +114,7 @@ final class StudentTable extends PowerGridComponent
             ->addColumn('students.status')
             ->addColumn('status', fn(Students $model) => $model?->getStatusTextAttribute())
 
-            ->addColumn('students.created_at')
-            ->addColumn('created_at_formatted', fn(Students $model) => Carbon::parse($model->created_at)->format('F j, Y'));
+            ->addColumn('students.created_at');
     }
 
     /*
@@ -161,8 +160,6 @@ final class StudentTable extends PowerGridComponent
             Column::make('Status', 'status', 'students.status')
                 ->sortable(),
 
-            Column::make('Date Added', 'created_at_formatted', 'students.created_at')
-                ->sortable(),
 
         ];
     }
@@ -177,7 +174,6 @@ final class StudentTable extends PowerGridComponent
         return [
             Filter::inputText('first_name')->operators(['contains']),
             Filter::inputText('last_name')->operators(['contains']),
-            Filter::datetimepicker('created_at_formatted', 'students.created_at'),
             Filter::select('grade_level', 'grade_level')
             ->dataSource(Classroom::select('grade_level')->distinct()->get())
             ->optionValue('grade_level')

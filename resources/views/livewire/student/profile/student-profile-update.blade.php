@@ -766,7 +766,7 @@
                     hasFoodAllergy: @entangle('hasFoodAllergy')
                 }">
 
-                    <x-grid columns="2" gap="4" px="0" mt="0">
+                <x-grid columns="2" gap="4" px="0" mt="0">
                         <div class="relative mb-3 px-4">
                             <x-label>
                                 Do you have a disability?
@@ -808,7 +808,6 @@
                             <x-input x-ref="foodAllergyInput" wire:model="foodAllergy" />
                             <x-error fieldName="foodAllergy" />
                         </div>
-
 
                     </x-grid>
                 </div>

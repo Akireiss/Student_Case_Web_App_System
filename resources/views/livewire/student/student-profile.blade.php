@@ -13,7 +13,7 @@
 
     @if(auth()->user()->role === 2)
         <x-slot name="actions">
-            <x-link a href="{{ url('admin/student-profile') }}">Back</x-link>
+            <x-link a href="{{ url('adviser/students-profile') }}">Back</x-link>
         </x-slot>
     @endif
 @endif
@@ -736,6 +736,7 @@
 
 
 
+
                 <h6 class="text-sm my-4 px-4 font-bold uppercase mt-5 ">
                     Additional Information
                 </h6>
@@ -768,21 +769,23 @@
                         <x-error fieldName="bmi" />
 
                     </div>
+                </x-grid>
+
 
 
                     <div x-data="{ hasDisability: @entangle('hasDisability'),
-                     hasFoodAllergy: @entangle('hasFoodAllergy') }">
+                                   hasFoodAllergy: @entangle('hasFoodAllergy') }">
+                    <x-grid columns="2" gap="4" px="0" mt="0">
                         <div class="relative mb-3 px-4">
                             <x-label>
                                 Do you have a disability?
                             </x-label>
                             <x-select x-on:change="hasDisability === 'Yes' ? $refs.disabilityInput.focus() : null"
-                                wire:model="hasDisability">
+                                      wire:model="hasDisability">
                                 <option value="No">No</option>
                                 <option value="Yes">Yes</option>
                             </x-select>
                             <x-error fieldName="hasDisability" />
-
                         </div>
 
                         <div class="relative mb-3 px-4" x-show="hasDisability === 'Yes'">
@@ -791,7 +794,6 @@
                             </x-label>
                             <x-input x-ref="disabilityInput" wire:model="disability" />
                             <x-error fieldName="disability" />
-
                         </div>
 
                         <div class="relative mb-3 px-4">
@@ -799,7 +801,7 @@
                                 Do you have a food allergy?
                             </x-label>
                             <x-select x-on:change="hasFoodAllergy === 'Yes' ? $refs.foodAllergyInput.focus() : null"
-                                wire:model="hasFoodAllergy">
+                                      wire:model="hasFoodAllergy">
                                 <option value="No">No</option>
                                 <option value="Yes">Yes</option>
                             </x-select>
@@ -815,16 +817,24 @@
                         </div>
 
 
+                    </x-grid>
+
                     </div>
 
-                </x-grid>
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
-                    Medicine taken in
+
+
+
+                    <x-grid columns="2" gap="4" px="0" mt="0">
+
+<div>
+
+    <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+        Medicine taken in
                 </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
+
+                @for ($i = 1; $i <= 3; $i++)
                         <div class="relative mb-3 px-4">
                             <x-label for="medicine_{{ $i }}">
                                 {{ $i }}
@@ -832,17 +842,22 @@
                             <x-input wire:model="medicines.{{ $i }}" id="medicine_{{ $i }}" />
 
                         </div>
-                    @endfor
-                </x-grid>
+                        @endfor
+
+                    </div>
 
 
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
-                    Vitamins taken in
-                </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
+
+                    <div>
+
+                        <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500">
+                            Vitamins taken in
+                        </h6>
+
+
+                        @for ($i = 1; $i <= 3; $i++)
                         <div class="relative mb-3 px-4">
                             <x-label for="vitamin_{{ $i }}">
                                 {{ $i }}
@@ -851,30 +866,40 @@
 
                         </div>
                     @endfor
-                </x-grid>
+                </div>
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500 ">
-                    Accidents experienced
+            </x-grid>
+
+            <x-grid columns="2" gap="4" px="0" mt="0">
+
+
+                <div>
+
+                    <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500 ">
+                        Accidents experienced
                 </h6>
-                <x-grid columns="3" gap="4" px="0" mt="0">
+
                     @for ($i = 1; $i <= 3; $i++)
-                        <div class="relative mb-3 px-4">
+                    <div class="relative mb-3 px-4">
                             <x-label for="accident_{{ $i }}">
                                 {{ $i }}
                             </x-label>
                             <x-input wire:model="accidents.{{ $i }}"
                                 id="accidents_{{ $i }}" />
                         </div>
-                    @endfor
-                </x-grid>
+                        @endfor
+
+                    </div>
+
+                    <div>
 
 
-                <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500 ">
-                    Operations experienced
-                </h6>
+                        <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 text-gray-500 ">
+                            Operations experienced
+                        </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="0">
-                    @for ($i = 1; $i <= 3; $i++)
+
+                        @for ($i = 1; $i <= 3; $i++)
                         <div class="relative mb-3 px-4">
                             <x-label for="operation_{{ $i }}">
                                 {{ $i }}
@@ -883,7 +908,22 @@
                                 id="operations_{{ $i }}" />
                         </div>
                     @endfor
-                </x-grid>
+
+                </div>
+
+            </x-grid>
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <div class="flex justify-end items-center">
                     <x-text-alert />

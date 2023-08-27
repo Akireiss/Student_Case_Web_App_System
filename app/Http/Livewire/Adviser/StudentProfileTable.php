@@ -187,43 +187,25 @@ final class StudentProfileTable extends PowerGridComponent
                ->route('profile.view', function(\App\Models\Profile $model) {
                     return  ['profile' => $model->id];
                }),
- /*
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('profile.destroy', function(\App\Models\Profile $model) {
-                    return $model->id;
-               })
-               ->method('delete')
-           */
+
+               Button::make('edit', 'Edit')
+               ->class('bg-green-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->route('adviser.profile.edit', function(\App\Models\Profile $model) {
+                    return  ['profile' => $model->id];
+               }),
 
         ];
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Rules
-    |--------------------------------------------------------------------------
-    | Enable the method below to configure Rules for your Table and Action Buttons.
-    |
-    */
 
-    /**
-     * PowerGrid Profile Action Rules.
-     *
-     * @return array<int, RuleActions>
-     */
-
-    /*
     public function actionRules(): array
     {
        return [
-
-           //Hide button edit for ID 1
             Rule::button('edit')
                 ->when(fn($profile) => $profile->id === 1)
                 ->hide(),
         ];
     }
-    */
+
 }
