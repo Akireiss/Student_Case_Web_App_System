@@ -2,28 +2,18 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Traits\StudentTrait;
 use Livewire\Component;
 use App\Models\Classroom;
 use App\Models\Students;
 
 class Student extends Component
 {
-    public $status;
-    public $first_name;
-    public $middle_name;
-    public $last_name;
-    public $lrn;
-    public $classroom_id;
+    use StudentTrait;
     public $successMessage = '';
     public $isSubmitting = false;
 
-    protected $rules = [
-        'first_name' => 'required|string',
-        'last_name' => 'required|string',
-        'lrn' => 'required|numeric',
-        'classroom_id' => 'required',
-        'status' => 'required|in:0,1',
-    ];
+
 
 
     public function render()

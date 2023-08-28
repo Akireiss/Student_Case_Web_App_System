@@ -1,3 +1,4 @@
+
 <aside class="z-20 hidden w-64 overflow-y-auto bg-white md:block flex-shrink-0">
     <div class="py-4 text-gray-500 dark:text-gray-400">
         <a class="ml-6 text-lg font-bold text-green-800 dark:text-green-600" href="#">
@@ -288,8 +289,7 @@
         @endcan
 
 
-
-
+        @can('admin-access' || 'adviser-access')
 
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -302,9 +302,9 @@
                         <span class="ml-4">Help</span>
                     </a>
                 </li>
+@endcan
 
-
-
+@can('admin-access' || 'adviser-access')
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                         href="cards.html">
@@ -316,7 +316,7 @@
                         <span class="ml-4">Log Out</span>
                     </a>
                 </li>
-
+@endcan
             </ul>
 
     </div>
@@ -640,8 +640,8 @@
                     </ul>
                 </template>
             </li>
-@endcan
 
+@can('admin-access' || 'adviser-access')
 <li class="relative px-6 py-3">
     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
         href="cards.html">
@@ -653,8 +653,10 @@
         <span class="ml-4">Help</span>
     </a>
 </li>
+@endcan
 
 
+@can('admin-access' || 'adviser-access')
             <li class="relative px-6 py-3">
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="cards.html">
@@ -666,9 +668,11 @@
                     <span class="ml-4">Log Out</span>
                 </a>
             </li>
+            @endcan
 
 
         </ul>
 
     </div>
 </aside>
+@endcan

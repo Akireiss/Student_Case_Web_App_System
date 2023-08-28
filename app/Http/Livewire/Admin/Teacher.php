@@ -2,21 +2,14 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Traits\TeacherTrait;
 use Livewire\Component;
 use App\Models\Employee;
 
 class Teacher extends Component
 {
-    public $employees;
-    public $refference_number;
-    public $status;
 
-    protected $rules = [
-        'employees' => 'required|string|max:255',
-        'refference_number' => 'required|string|max:255',
-        'status' => 'required|in:0,1',
-    ];
-
+    use TeacherTrait;
     public function render()
     {
         return view('livewire.admin.teacher')

@@ -1,8 +1,6 @@
-@if(auth()->check())
+
 @extends('layouts.dashboard.index')
-@else
-@extends('layouts.app')
-@endif
+
 
 @section('content')
 

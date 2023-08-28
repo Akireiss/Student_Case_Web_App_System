@@ -205,25 +205,24 @@ final class StudentTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
+
     public function actions(): array
     {
        return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('student.edit', function(\App\Models\Admin\Student $model) {
-                    return $model->id;
-               }),
+        Button::make('edit', 'Edit')
+        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+        ->route('student.edit', function (\App\Models\Students $model) {
+            return ['student' => $model->id];
+        }),
 
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('student.destroy', function(\App\Models\Admin\Student $model) {
-                    return $model->id;
-               })
-               ->method('delete')
+
+        Button::make('view', 'View')
+        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+        ->route('student.view', function (\App\Models\Students $model) {
+            return ['student' => $model->id];
+        }),
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------

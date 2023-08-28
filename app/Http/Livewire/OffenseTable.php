@@ -175,52 +175,25 @@ final class OffenseTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
+
     public function actions(): array
     {
        return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('offenses.edit', function(\App\Models\Offenses $model) {
-                    return $model->id;
-               }),
+        Button::make('edit', 'Edit')
+        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+        ->route('admin.offense.edit', function (Offenses $model) {
+            return ['offense' => $model->id];
+        }),
 
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('offenses.destroy', function(\App\Models\Offenses $model) {
-                    return $model->id;
-               })
-               ->method('delete')
+        Button::make('view', 'View')
+        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+        ->route('admin.offense.view', function (Offenses $model) {
+            return ['offense' => $model->id];
+        }),
+
         ];
     }
-    */
 
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Rules
-    |--------------------------------------------------------------------------
-    | Enable the method below to configure Rules for your Table and Action Buttons.
-    |
-    */
-
-    /**
-     * PowerGrid Offenses Action Rules.
-     *
-     * @return array<int, RuleActions>
-     */
-
-    /*
-    public function actionRules(): array
-    {
-       return [
-
-           //Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($offenses) => $offenses->id === 1)
-                ->hide(),
-        ];
-    }
-    */
     protected array $rules = [
         'description.*' => ['required'],
         'offenses.*' => ['required'],

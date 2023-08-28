@@ -101,4 +101,21 @@ final class EmployeeTable extends PowerGridComponent
             $field => $value,
         ]);
     }
+    public function actions(): array
+    {
+       return [
+        Button::make('edit', 'Edit')
+        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+        ->route('teacher.edit', function (Employee $model) {
+            return ['employee' => $model->id];
+        }),
+        Button::make('view', 'View')
+        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+        ->route('teacher.view', function (Employee $model) {
+            return ['employee' => $model->id];
+        }),
+        ];
+    }
+
+
 }

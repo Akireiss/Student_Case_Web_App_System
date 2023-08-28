@@ -1,26 +1,24 @@
 <?php
 
-use App\Http\Controllers\Student\StudentDataController;
+use App\Http\Livewire\Admin\Offenses\EditOffense;
+use App\Http\Livewire\Admin\Teacher\EditTeacher;
 use App\Http\Livewire\Admin\User;
-use App\Http\Livewire\Admin\Chart;
-use App\Http\Livewire\Admin\Report;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
-use App\Http\Livewire\Components\Notification;
-use App\Http\Livewire\Student\ReportUpdate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
 use App\Http\Livewire\Student\StudentForm;
-use App\Http\Livewire\Admin\StudentsProfile;
+use App\Http\Livewire\Student\ReportUpdate;
 use App\Http\Livewire\Adviser\ReportHistory;
 use App\Http\Livewire\Adviser\StudentProfile;
-use App\Http\Controllers\Admin\ChartController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Livewire\Admin\Student\EditStudent;
 use App\Http\Livewire\Student\StudentFormUpdate;
 use App\Http\Controllers\Admin\OffensesController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Student\StudentDataController;
 use App\Http\Controllers\Admin\StudentProfileController;
 use App\Http\Livewire\Student\Profile\StudentProfileUpdate;
 
@@ -83,12 +81,22 @@ Route::middleware(['auth', 'role'])->group(function () {
             // Settings Area - Offenses
             Route::get('offenses', [OffensesController::class, 'index']);
             Route::get('offenses/create', [OffensesController::class, 'create']);
+
             Route::post('offenses/store', [OffensesController::class, 'store']);
-            Route::get('offenses/{offense}/edit', [OffensesController::class, 'edit'])->name('offenses.edit');
-            Route::put('offenses/{id}', [OffensesController::class, 'update'])->name('admin.settings.offenses.update');
+            Route::get('offenses/store/{offense}/view', [OffensesController::class, 'view'])
+            ->name('admin.offense.view');
+            //*Update
+            Route::get('student-profile/{offense}/update', EditOffense::class)
+            ->name('admin.offense.edit');
+
+
+
             // Employees
             Route::get('teachers', Teacher::class);
-
+            Route::get('teachers/update/{employee}', EditTeacher::class)
+            ->name('teacher.edit');
+            Route::get('teachers/view/{employee}', [EditTeacher::class, 'view'])
+            ->name('teacher.view');
             // Classrooms
             Route::get('classrooms', [ClassroomController::class, 'index']);
             Route::get('classroom/create', [ClassroomController::class, 'create']);
@@ -100,12 +108,17 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('classroom/{classroom}/view', [ClassroomController::class, 'show'])->name('classroom.view');
 
 
+
             Route::get('audit-trail', function () {
                 return view('admin.settings.audit-trail.index');
             });
 
             // Students Area
             Route::get('students', Student::class);
+            Route::get('student/update/{student}', EditStudent::class)->name('student.edit');
+            Route::get('student/view/{student}', [EditStudent::class, 'view'])
+            ->name('student.view');
+
         });
     });
 
