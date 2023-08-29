@@ -35,6 +35,11 @@ class User extends Authenticatable
         'role',
         'classroom_id'
     ];
+    const ROLE_USER = 0;
+
+    const ROLE_ADMIN = 1;
+    const ROLE_STAFF = 2;
+
 
     public function classroom() {
         return $this->belongsTo(Classroom::class);
@@ -58,8 +63,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    const ROLE_ADMIN = 1;
-    const ROLE_STAFF = 2;
 
 
     public function reports()

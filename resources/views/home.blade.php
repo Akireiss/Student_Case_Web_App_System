@@ -2,6 +2,6 @@
 
 @section('content')
 
-      <livewire:admin.chart/>
+<livewire:student.report/>
 
 @endsection

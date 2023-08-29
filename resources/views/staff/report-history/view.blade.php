@@ -2,9 +2,17 @@
 @section('content')
     <x-form title="Report Information">
         <x-slot name="actions">
-            <x-link :href="url('adviser/report/history')">
-                Back
-            </x-link>
+            <x-slot name="actions">
+                @if (auth()->user()->role === 0)
+
+                <x-link :href="url('report/history')">
+                  Back
+              </x-link>
+          @elseif(auth()->user()->role === 2)
+              <x-link :href="url('adviser/report/history')">
+                  Back
+              </x-link>
+              @endif
         </x-slot>
 
         <x-slot name="slot">

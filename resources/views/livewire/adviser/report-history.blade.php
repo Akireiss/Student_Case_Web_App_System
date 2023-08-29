@@ -1,9 +1,16 @@
 <x-form title="Report Information">
     <x-slot name="actions">
-        <x-link :href="url('adviser/report/history')">
-            Back
-        </x-link>
-    </x-slot>
+      @if (auth()->user()->role === 0)
+
+      <x-link :href="url('report/history')">
+        Back
+    </x-link>
+@elseif(auth()->user()->role === 2)
+    <x-link :href="url('adviser/report/history')">
+        Back
+    </x-link>
+    @endif
+</x-slot>
 
     <x-slot name="slot">
         <form wire:submit.prevent="update" enctype="multipart/form-data">

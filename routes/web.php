@@ -5,6 +5,7 @@ use App\Http\Livewire\Admin\Teacher\EditTeacher;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
+use App\Http\Livewire\Student\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
@@ -153,12 +154,22 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('add-acc', User::class);
         });
     });
+
+    Route::middleware(['can:user-access'])->group(function () {
+            Route::get('report/student', Report::class);
+            Route::get('report/history', function() {
+                return view('staff.report-history.index');
+            });
+            Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('report.view');
+            Route::get('report/history/{report}/edit', ReportHistory::class)->name('report.edit');
+
+        });
 });
 
 //*students
 Route::resource('students', ReportHistory::class);
 Route::get('student/form', StudentForm::class);
-Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
+// Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
 Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
 //*Student Profile Data
 Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])->name('student.profile.data');

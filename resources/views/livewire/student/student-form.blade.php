@@ -26,8 +26,8 @@
             </div>
         </div>
 
-        <div class="w-full px-4">
-            <div x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
+        <div class="w-full lg:px-72  ">
+            <div class="px-4" x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
                 <x-label for="studentName">
                     Student Name
                 </x-label>

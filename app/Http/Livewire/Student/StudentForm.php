@@ -29,7 +29,7 @@ class StudentForm extends Component
 
         if ($profile) {
             $this->resetErrorBag();
-            return redirect()->route('profile.show', $profile->id);
+            return redirect()->route('student.profile.data', $profile->id);
         } else {
             $this->addError('studentId', 'This student has no profile. You can create a profile for this student.');
             $this->showCreateLink = true;

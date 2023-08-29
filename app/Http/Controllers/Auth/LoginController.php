@@ -36,6 +36,8 @@ class LoginController extends Controller
         }
         elseif(Auth::user()->role == '2'){
             return redirect('adviser/dashboard');
+        } elseif(Auth::user()->role == '0'){
+            return redirect('home');
         }else{
             return redirect('home');
         }
