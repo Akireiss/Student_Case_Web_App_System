@@ -13,10 +13,10 @@
         @if ($formId)
             <div class="text-center">
                 <div>
-
+{{--
                     <img class="w-48 h-48 mx-auto mb-2" src="data:image/png;base64,
                     {{ base64_encode(QrCode::format('png')->merge(public_path('logo.PNG'), 0.3, true)->size(200)
-                ->generate(url('/student/profile/data/' . $form->id))) }}" alt="QR Code">
+                ->generate(url('/student/profile/data/' . $form->id))) }}" alt="QR Code"> --}}
             </div>
 
             </div>

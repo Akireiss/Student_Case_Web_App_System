@@ -31,7 +31,9 @@ final class ActivityTable extends PowerGridComponent
     {
         return Activity::query()
             ->join('users', 'activity_log.causer_id', '=', 'users.id')
-            ->select('activity_log.*', 'users.name as causer_name')
+            ->select('activity_log.*', 'users.name as causer_name',
+            'activity_log.created_at',
+            )
             ->latest();
     }
 
@@ -48,6 +50,8 @@ final class ActivityTable extends PowerGridComponent
             ->addColumn('log_name_lower', fn (Activity $model) => strtolower(e($model->log_name)))
             ->addColumn('description')
             ->addColumn('event')
+            ->addColumn('activity_log.created_at')
+
             ->addColumn('created_at_formatted', fn (Activity $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
@@ -72,7 +76,7 @@ final class ActivityTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::datetimepicker('created_at'),
+            Filter::datetimepicker('created_at', 'activity_log.created_at'),
         ];
     }
 }
