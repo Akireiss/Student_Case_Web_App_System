@@ -266,6 +266,9 @@
                         <path
                             d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
                     </svg>
+
+                    <span class="ml-4">Report History</span>
+                    </a>
                 @elseif (auth()->user()->role === 0)
                 <li class="relative px-6 py-3">
                 <span class="{{ request()->is('report/history') || request()->is('report/history/*') ? 'absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}"
