@@ -12,8 +12,10 @@
                 <p class="text-gray-600 pt-2 font-bold">Register here.</p>
             </div>
 
-        <form method="POST" action="{{ route('register') }}" x-data="{ showPassword: false, passwordMismatch: false }"
-        x-on:submit="checkPasswordsMatch()" class="flex flex-col">
+        <form method="POST" action="{{ route('register') }}"
+         x-data="{ showPassword: false, passwordMismatch: false }"
+        x-on:submit="checkPasswordsMatch()"
+        class="flex flex-col">
         @csrf
             <div class="mb-6 pt-3 rounded ">
                 <x-label for="name" value="{{ __('Name') }}" />
@@ -40,7 +42,8 @@
             <div class="mb-6 pt-3 rounded ">
                 <x-label>Password</x-label>
                 <div class="relative">
-                    <x-input type="password" id="password" name="password" x-bind:type="showPassword ? 'text' : 'password'"
+                    <x-input type="password" id="password"
+                     name="password" x-bind:type="showPassword ? 'text' : 'password'"
                         required autocomplete="new-password"  minlength="8" />
                     <button type="button" @click="showPassword = !showPassword"
                         class="absolute right-2 top-2.5 text-gray-600 focus:outline-none">

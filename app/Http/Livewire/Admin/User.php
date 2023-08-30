@@ -42,34 +42,28 @@ class User extends Component
         ->section('content');
     }
 
+
     protected $rules = [
         'currentPassword' => 'required',
-        'newPassword' => 'required|min:8|confirmed',
-        'passwordConfirmation' => 'required'
-    ];
+         'newPassword' => 'required|min:8',
+        ];
 
-    public function updatePassword()
-    {
-        $this->validate();
+        public function updatePassword()
+        {
+           $this->validate();
 
-        // Verify the current password
-        if (Hash::check($this->currentPassword, auth()->user()->password)) {
-            $this->addError('currentPassword', 'The current password is incorrect.');
-            return;
+            if (!Hash::check($this->currentPassword, auth()->user()->password)) {
+                $this->addError('currentPassword', 'The current password is incorrect.');
+                return;
+            }
+
+            auth()->user()->update([
+                'password' => Hash::make($this->newPassword),
+            ]);
+
+            $this->reset(['currentPassword', 'newPassword', 'passwordConfirmation']);
+
+            session()->flash('message', 'Password updated successfully.');
         }
-
-        // Update the password
-        $user = auth()->user();
-        $user->password = Hash::make($this->newPassword);
-        $user->save();
-
-        // Clear the form fields
-        $this->currentPassword = '';
-        $this->newPassword = '';
-        $this->passwordConfirmation = '';
-
-        session()->flash('message', 'Password updated successfully.');
-    }
-
 
 }

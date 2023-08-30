@@ -6,7 +6,10 @@
 
         <div class="bg-white dark:bg-gray-800 rounded shadow-lg p-10  px-4 md:p-8 mb-6 ">
 
-            <form wire:submit.prevent="store">
+            <form wire:submit.prevent="store"
+            x-data="{ showPassword: false, passwordMismatch: false }"
+            x-on:submit="checkPasswordsMatch()"
+            >
                 <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 dark:text-gray-400">
                         <p class="font-medium text-lg dark:text-gray-200 text-gray-600">Personal Details</p>
@@ -45,8 +48,24 @@
 
 
                             <div class="md:col-span-5">
-                                <x-label for="password">New Password</x-label>
-                                <x-input type="password" wire:model="password" required/>
+                                <div class="relative">
+                                    <x-input type="password" id="password" wire:model="password"
+                                     name="password" x-bind:type="showPassword ? 'text' : 'password'"
+                                        required autocomplete="new-password"  minlength="8" />
+                                    <button type="button" @click="showPassword = !showPassword"
+                                        class="absolute right-2 top-2.5 text-gray-600 focus:outline-none">
+                                        <div x-show="!showPassword">
+                                            <p class="text-sm text-red">show</p>
+                                        </div>
+                                    </button>
+
+                                    <button type="button" @click="showPassword = !showPassword" x-show="showPassword"
+                                        class="absolute right-2 top-2.5 text-gray-600 focus:outline-none">
+                                        <div x-show="showPassword">
+                                            <p class="text-sm text-red">hide</p>
+                                        </div>
+                                    </button>
+                                </div>
                                 <x-error fieldName="password" />
 
                             </div>
