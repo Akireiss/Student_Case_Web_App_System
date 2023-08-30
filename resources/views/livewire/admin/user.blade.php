@@ -2,7 +2,7 @@
     <div class="mx-auto py-8">
 
         <h6 class="text-xl font-bold text-left ">
-Update your information here
+Update your information heress
         </h6>
 
         <div class="bg-white dark:bg-gray-800 rounded shadow-lg p-10 px-4 md:p-8 mb-6">

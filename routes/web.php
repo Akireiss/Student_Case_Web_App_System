@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Offenses\EditOffense;
 use App\Http\Livewire\Admin\Teacher\EditTeacher;
 use App\Http\Livewire\Admin\User;
@@ -62,7 +63,10 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             //User Manage
             Route::get('update-acc', User::class);
-            Route::get('add-acc', User::class);
+            Route::get('add-acc', AddUser::class);
+            Route::get('user/accounts', function () {
+                return view('admin.user.index');
+            });
 
             // Students Profile Area
             Route::get('student-profile', [StudentProfileController::class, 'index']);
@@ -151,7 +155,8 @@ Route::middleware(['auth', 'role'])->group(function () {
             });
             //*Account Management
             Route::get('update-acc', User::class);
-            Route::get('add-acc', User::class);
+            Route::get('add-acc', AddUser::class);
+
         });
     });
 

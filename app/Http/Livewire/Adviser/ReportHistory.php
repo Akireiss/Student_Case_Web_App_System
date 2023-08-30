@@ -116,6 +116,4 @@ class ReportHistory extends Component
         return view('staff.report-history.view', compact('report'));
     }
 
-
-
 }
