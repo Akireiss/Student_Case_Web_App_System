@@ -2,8 +2,7 @@
     <x-authentication-card class="mt-36">
 
         <section>
-            {{-- <h3 class="font-bold text-2xl">Login your account</h3> --}}
-            {{-- <p class="text-gray-600 pt-2">Login to your account.</p> --}}
+
             <a href="/">
                 <img src="assets/image/logo.png" alt="" class="w-40 mx-auto mb-2">
             </a>
