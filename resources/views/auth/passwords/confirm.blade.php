@@ -1,15 +1,18 @@
-@extends('layouts.app')
+@include('layouts.header')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+<x-authentication-card class="mt-36">
 
-                <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
+    <section>
 
+        <a href="/">
+            <img src="{{ asset('assets/image/logo.png') }}" alt="phpyo" class="w-40 mx-auto mb-2">
+
+        </a>
+    </section>
+
+    <div>
+        <p class="text-gray-600 pt-2 font-bold">Please confirm your password before continuing</p>
+    </div>
                     <form method="POST" action="{{ route('password.confirm') }}">
                         @csrf
 
@@ -41,9 +44,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+</x-authentication-card>
+
+@include('components.footer')
+

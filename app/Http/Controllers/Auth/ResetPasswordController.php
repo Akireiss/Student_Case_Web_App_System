@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
@@ -26,5 +27,16 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+       protected function redirectTo()
+    {
+        if (Auth::user()->role == '1') {
+            return 'admin/dashboard';
+        } elseif (Auth::user()->role == '2') {
+            return 'adviser/dashboard';
+        } elseif (Auth::user()->role == '0') {
+            return 'home';
+        } else {
+            return 'home';
+        }
+    }
 }

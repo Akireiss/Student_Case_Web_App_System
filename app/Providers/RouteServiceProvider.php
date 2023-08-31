@@ -18,6 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
 
+
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
