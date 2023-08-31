@@ -72,11 +72,6 @@ function showAlert() {
     $('#monthly-alert').removeClass('hidden-alert');
 }
 
-// Function to hide the alert
-function hideAlert() {
-    $('#monthly-alert').addClass('hidden-alert');
-}
-
 // Update monthly report count every hour
 function updateMonthlyReportCount() {
     $.ajax({
@@ -100,6 +95,26 @@ if (currentDay <= 3) {
     setTimeout(showAlert, (4 - currentDay) * 24 * 3600000);
     setInterval(updateMonthlyReportCount, 3600000);
 } else {
-    hideAlert();
     updateMonthlyReportCount();
 }
+
+//resolved cases
+
+function updateResolvedCasesCount() {
+    $.ajax({
+        url: '/get-resolved-cases',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            $('#resolved-cases-count').text(data.resolvedCount);
+        },
+        error: function() {
+            console.log('Failed to fetch resolved cases count.');
+        }
+    });
+}
+
+// Update resolved cases count initially and every hour
+updateResolvedCasesCount();
+setInterval(updateResolvedCasesCount, 1000);
+

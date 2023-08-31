@@ -913,7 +913,8 @@
                     <div wire:loading wire:target="update" class="mx-4">
                         Loading..
                     </div>
-                    <x-button type="submit" wire:click="saveAwards" wire:loading.attr="disabled">Update</x-button>
+                    <x-button type="submit" wire:click="saveAwards"
+                     wire:loading.attr="disabled">Update</x-button>
                 </div>
 
             </form>

@@ -229,6 +229,7 @@
         <script src="{{ asset('assets/js/charts-bars.js') }}" defer></script>
         <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
         <script src="{{ asset('assets/js/cards.js') }}" defer></script>
+        <script src="{{ asset('assets/js/pages.js') }}" defer></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

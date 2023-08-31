@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Layouts\SidebarController;
 use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Offenses\EditOffense;
 use App\Http\Livewire\Admin\Teacher\EditTeacher;
@@ -190,6 +191,9 @@ Route::get('/get-offense-counts', [DashboardController::class, 'getOffenseCounts
 Route::get('/get-dashboard-data', [DashboardController::class, 'getDashboardData']);
 Route::get('/get-weekly-report-count', [DashboardController::class, 'getWeeklyReportCount']);
 Route::get('/get-monthly-report-count', [DashboardController::class, 'getMonthlyReportCount']);
+//*resolved cases end points
+Route::get('/get-resolved-cases', [DashboardController::class, 'getResolvedCases'])->name('get.resolved.cases');
 
-
-
+//Dynamic Pages
+// Route::get('admin/dashboard',[SidebarController::class, 'dashboard'])->name('admin.dashboard.dashboard');
+// Route::get('admin/reports', [SidebarController::class, 'reports'])->name('livewire.student.report');

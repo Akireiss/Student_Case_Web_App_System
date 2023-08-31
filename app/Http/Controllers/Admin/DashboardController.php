@@ -119,6 +119,20 @@ class DashboardController extends Controller
         ]);
     }
 
+    //*Resolved Cases
+
+public function getResolvedCases()
+{
+    $twoWeeksAgo = Carbon::now()->subWeeks(2);
+    $resolvedCount = Anecdotal::where('case_status', 2)
+        ->where('case_status', 2)
+        ->where('updated_at', '>', $twoWeeksAgo)
+        ->count();
+
+    return response()->json(['resolvedCount' => $resolvedCount]);
+}
+
+
 
 
 }

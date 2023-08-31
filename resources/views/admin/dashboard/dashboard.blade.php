@@ -7,22 +7,6 @@
             Dashboard
         </h2>
 
-     <div class="py-1">
-    <div class="bg-red-500 border-l-4 text-white p-2.5 mb-1 shadow-md hidden-alert-weekly"
-     role="alert" id="weekly-alert">
-        <p class="font-bold">Notice</p>
-        <p>Total Reports This Week: <span id="weekly-report-count"></span></p>
-    </div>
-</div>
-
-
-        <div class="py-1">
-            <div class="bg-red-400 border-l-4 border-red-600 text-white
-            hidden-alert" role="alert" id="monthly-alert">
-                <p class="font-bold">Notice</p>
-                <p>Total Reports This Month: <span id="monthly-report-count"></span></p>
-            </div>
-        </div>
 
 
         <div x-data="{ showAllYear: true }" class="flex justify-end my-2">
@@ -33,7 +17,7 @@
             ></x-button>
         </div>
 
-        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
             <!-- Card -->
 
                 <a href="{{ url('admin/settings/students') }}" class="flex items-center p-4 bg-white rounded-lg shadow-md  dark:bg-gray-800">
@@ -123,6 +107,49 @@
             </div>
 
         </div>
+
+
+        <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
+
+            <div class="py-1">
+                <div class="bg-red-500 border-l-4 text-white rounded-md border-red-600 p-2.5 mb-1 shadow-md"
+                     role="alert" id="weekly-alert">
+                    <p class="font-bold">Notice</p>
+                    <p>The cases that have resolved on last (date) from (studentname)
+                       don't you want to check the student?
+                    <span id="resolved-cases-count"></span></p>
+                </div>
+            </div>
+
+
+
+
+            <div class="py-1">
+           <div class="bg-red-500 border-l-4 text-white  rounded-md border-red-600 p-2.5 mb-1
+           shadow-md hidden-alert-weekly"
+            role="alert" id="weekly-alert">
+               <p class="font-bold">Notice</p>
+               <p>Total Reports This Week: <span id="weekly-report-count"></span></p>
+           </div>
+       </div>
+
+
+
+        <div class="py-1">
+            <div class="bg-red-500 border-l-4  rounded-md   border-red-600  p-2.5 mb-1
+            shadow-md
+             text-white" role="alert" id="monthly-alert">
+                <p class="font-bold">Notice</p>
+                <p>Total Reports This Month: <span id="monthly-report-count"></span></p>
+            </div>
+        </div>
+
+
+
+               </div>
+
+
+
 
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
 
