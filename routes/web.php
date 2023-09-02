@@ -166,8 +166,8 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('report/history', function() {
                 return view('staff.report-history.index');
             });
-            Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('report.view');
-            Route::get('report/history/{report}/edit', ReportHistory::class)->name('report.edit');
+            Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('user.report.view');
+            Route::get('report/history/{report}/edit', ReportHistory::class)->name('user.report.edit');
 
         });
 });

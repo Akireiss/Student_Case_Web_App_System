@@ -31,6 +31,10 @@ class Anecdotal extends Model
         'case_status',
         'status'
     ];
+
+
+
+
     public function actionsTaken()
     {
         return $this->hasMany(ActionsTaken::class, 'anecdotal_id');

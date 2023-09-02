@@ -27,6 +27,11 @@ class Students extends Model
         'lrn',
         'status'
     ];
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
+    }
+
 
     public function classroom()
     {

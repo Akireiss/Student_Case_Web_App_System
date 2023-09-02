@@ -36,7 +36,6 @@ class User extends Authenticatable
         'classroom_id'
     ];
     const ROLE_USER = 0;
-
     const ROLE_ADMIN = 1;
     const ROLE_STAFF = 2;
 
@@ -88,6 +87,21 @@ class User extends Authenticatable
     }
 
 
+    public function getRoleTextAttribute()
+    {
+        $value = $this->attributes['role']; // Retrieve the attribute value from the model
+
+        switch ($value) {
+            case 0:
+                return 'Adviser W/O advisee';
+            case 1:
+                return 'Administrator';
+            case 2:
+                return 'Adviser';
+            default:
+                return 'Unknown';
+        }
+    }
 
 
 }

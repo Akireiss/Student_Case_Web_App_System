@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add/Remove Inputs</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Add or Remove Inputs</h1>
+        <form id="inputForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name[]">
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" name="address[]">
+            </div>
+            <button type="button" class="btn btn-primary" id="addInput">Add Input</button>
+            <button type="button" class="btn btn-danger" id="removeInput">Remove Input</button>
+        </form>
+    </div>
+
+    <!-- Add Bootstrap and JavaScript libraries here -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Add Input
+        document.getElementById("addInput").addEventListener("click", function () {
+            const inputForm = document.getElementById("inputForm");
+            const nameInput = document.createElement("div");
+            nameInput.className = "form-group";
+            nameInput.innerHTML = '<label for="name">Name:</label><input type="text" class="form-control" name="name[]">';
+            inputForm.appendChild(nameInput);
+
+            const addressInput = document.createElement("div");
+            addressInput.className = "form-group";
+            addressInput.innerHTML = '<label for="address">Address:</label><input type="text" class="form-control" name="address[]">';
+            inputForm.appendChild(addressInput);
+        });
+
+        // Remove Input
+        document.getElementById("removeInput").addEventListener("click", function () {
+            const inputForm = document.getElementById("inputForm");
+            const nameInputs = inputForm.querySelectorAll('input[name="name[]"]');
+            const addressInputs = inputForm.querySelectorAll('input[name="address[]"]');
+
+            if (nameInputs.length > 1) {
+                inputForm.removeChild(nameInputs[nameInputs.length - 1].parentNode);
+                inputForm.removeChild(addressInputs[addressInputs.length - 1].parentNode);
+            } else {
+                alert("You must have at least one input field.");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -87,15 +87,12 @@ final class UsersTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('id')
             ->addColumn('name')
 
-           /** Example of custom column using a closure **/
             ->addColumn('name_lower', fn (User $model) => strtolower(e($model->name)))
 
             ->addColumn('email')
-            ->addColumn('role')
-            ->addColumn('classroom_id')
+            ->addColumn('role', fn (User $model) => $model->roleText)
             ->addColumn('created_at_formatted', fn (User $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
 
@@ -116,7 +113,6 @@ final class UsersTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
@@ -126,7 +122,6 @@ final class UsersTable extends PowerGridComponent
                 ->searchable(),
 
             Column::make('Role', 'role'),
-            Column::make('Classroom id', 'classroom_id'),
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->sortable(),
 

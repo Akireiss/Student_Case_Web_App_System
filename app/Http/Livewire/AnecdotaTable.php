@@ -29,44 +29,40 @@ final class AnecdotaTable extends PowerGridComponent
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(mode: 'full'),
-         //   Responsive::make()
         ];
     }
-
     public function datasource(): Builder
     {
         return Anecdotal::query()
-        ->join('students', 'anecdotal.student_id', '=', 'students.id')
-        ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
-        ->select(
-            'anecdotal.*',
-            'anecdotal.created_at',
-            'students.created_at as created',
-            'offenses.created_at as created_offense',
-            'offenses.offenses'
-        )
-        ->orderByDesc('anecdotal.created_at');
-
+            ->join('students', 'anecdotal.student_id', '=', 'students.id')
+            ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
+            ->select(
+                'anecdotal.*',
+                'anecdotal.created_at',
+                'students.created_at as created',
+                'offenses.created_at as created_offense',
+                'offenses.offenses'
+            );
     }
+
 
     public function relationSearch(): array
     {
-        // !important part for the relation
         return [
             'students' => ['first_name', 'last_name'],
-                'offenses' => ['offenses'],
+            'offenses' => ['offenses'],
         ];
     }
 
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('first_name', function (Anecdotal $model) {
-                return $model->students->first_name;
-            })
-            ->addColumn('last_name', function (Anecdotal $model) {
-                return $model->students->last_name;
-            })
+        ->addColumn('first_name', function (Anecdotal $model) {
+            return $model->students->first_name . ' ' . $model->students->last_name;
+        })
+            // ->addColumn('last_name', function (Anecdotal $model) {
+            //     return $model->students->last_name;
+            // })
 
             ->addColumn('offenses')
 
@@ -80,16 +76,14 @@ final class AnecdotaTable extends PowerGridComponent
 
             ->addColumn('case_status', fn(Anecdotal $model) => $model->getStatusTextAttribute() ?? 'No Data');
 
-
-
     }
 
     public function columns(): array
     {
         return [
-            Column::make('First Name', 'first_name')->sortable()
+            Column::make('Full Name', 'first_name')->sortable()
                 ->withCount('Total Reports', true, false),
-            Column::make('Last Name', 'last_name')->sortable(),
+            // Column::make('Last Name', 'last_name')->sortable(),
             Column::make('Offenses', 'offenses'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
             Column::make('Submitted at', 'created_at_formatted', 'anecdotal.created_at')->sortable(),
@@ -102,8 +96,8 @@ final class AnecdotaTable extends PowerGridComponent
     {
 
         return [
-            Filter::inputText('first_name')->operators(['contains']),
-            Filter::inputText('last_name')->operators(['contains']),
+            // Filter::inputText('first_name')->operators(['contains']),
+            // Filter::inputText('last_name')->operators(['contains']),
             Filter::datetimepicker('created_at_formatted', 'anecdotal.created_at')
                 ->params([
                     'only_future' => false,
