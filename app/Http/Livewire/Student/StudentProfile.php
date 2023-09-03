@@ -8,6 +8,7 @@ use App\Models\Province;
 use App\Models\Students;
 use App\Traits\SelectNameTrait;
 use App\Traits\WireModelTraits;
+use App\Traits\RewardSiblingTrait;
 use App\Traits\SelectAddressTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\ProfileValidationTrait;
@@ -19,14 +20,17 @@ class StudentProfile extends Component
     use SelectNameTrait;
     use ProfileValidationTrait;
     use WireModelTraits;
+
     public $disableSubmitButton = false;
     public $living_with = null;
-    public $rewards = [
-        ['name' => '', 'year' => null],
-    ];
+    // public $rewards = [
+    //     ['name' => '', 'year' => null],
+    // ];
     protected $listeners = [
         'resetName'
     ];
+
+
     public function selectStudent($id, $name)
     {
         $this->studentId = $id;

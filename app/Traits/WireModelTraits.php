@@ -3,7 +3,6 @@ namespace App\Traits;
 trait WireModelTraits
 {
 
-
     // Personal Information
     public $suffix, $nickname, $age, $sex, $birthdate, $birth_place,
            $contact, $birth_order, $number_of_siblings, $religion, $mother_tongue, $four_ps,

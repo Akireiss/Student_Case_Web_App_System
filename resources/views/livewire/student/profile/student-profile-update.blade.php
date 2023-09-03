@@ -275,10 +275,6 @@
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
-                    <div class="hidden">
-                        <x-input wire:model="father_type" value="0" />
-                    </div>
-
                     <div class="relative mb-3 px-4">
                         <x-label>
                             Name
@@ -363,10 +359,7 @@
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
-                    <div class="hidden">
 
-                        <x-input wire:model="mother_type" disabled value="1" />
-                    </div>
 
 
                     <div class="relative mb-3 px-4">

@@ -39,5 +39,5 @@ function updateChart() {
 // Initial chart rendering
 updateChart();
 
-// Automatically update the chart every 5 minutes (300,000 milliseconds)
-setInterval(updateChart, 300000);
+
+setInterval(updateChart, 10000);
