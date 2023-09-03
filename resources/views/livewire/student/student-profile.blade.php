@@ -7,13 +7,13 @@
         @if(auth()->check())
     @if(auth()->user()->role === 1)
         <x-slot name="actions">
-            <x-link a href="{{ url('admin/student-profile') }}">Back</x-link>
+            <x-link href="{{ url('admin/student-profile') }}">Back</x-link>
         </x-slot>
     @endif
 
     @if(auth()->user()->role === 2)
         <x-slot name="actions">
-            <x-link a href="{{ url('adviser/students-profile') }}">Back</x-link>
+            <x-link href="{{ url('adviser/students-profile') }}">Back</x-link>
         </x-slot>
     @endif
 @endif
@@ -298,9 +298,6 @@
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
 
-                    <div class="hidden">
-                        <x-input wire:model="father_type" disabled/>
-                    </div>
 
 
 
@@ -388,11 +385,6 @@
                 </h6>
 
                 <x-grid columns="3" gap="4" px="0" mt="0">
-
-<div class="hidden">
-
-    <x-input wire:model="mother_type" disabled />
-</div>
 
 
                     <div class="relative mb-3 px-4">

@@ -29,6 +29,15 @@ class ReportHistory extends Component
     public $description;
     public $letter;
     public $selectedActions = [];
+    public $gravityOptions = [
+        0 => 'Low Severity',
+        1 => 'Moderate Severity',
+        2 => 'Medium Severity',
+        3 => 'High Severity',
+        4 => 'Critical Severity',
+    ];
+
+
 
     public function mount($report)
     {

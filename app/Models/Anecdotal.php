@@ -63,7 +63,10 @@ class Anecdotal extends Model
     {
         return $this->belongsTo(Students::class, 'student_id');
     }
-
+    public function outcome()
+    {
+        return $this->hasMany(AnecdotalOutcome::class, 'anecdotal_id');
+    }
 
 
     public function getActivitylogOptions(): LogOptions
@@ -130,5 +133,7 @@ class Anecdotal extends Model
                 return 'Unknown';
         }
     }
+
+
 
 }

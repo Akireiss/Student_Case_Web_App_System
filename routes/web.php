@@ -193,6 +193,8 @@ Route::get('/get-weekly-report-count', [DashboardController::class, 'getWeeklyRe
 Route::get('/get-monthly-report-count', [DashboardController::class, 'getMonthlyReportCount']);
 //*resolved cases end points
 Route::get('/get-resolved-cases', [DashboardController::class, 'getResolvedCases'])->name('get.resolved.cases');
+//*Actions Taken (Successfull)
+Route::get('/get-successful-actions', [DashboardController::class, 'getSuccessfulActions']);
 
 //Dynamic Pages
 // Route::get('admin/dashboard',[SidebarController::class, 'dashboard'])->name('admin.dashboard.dashboard');

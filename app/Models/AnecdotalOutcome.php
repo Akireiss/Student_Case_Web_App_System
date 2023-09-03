@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Actions;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AnecdotalOutcome extends Model
 {
@@ -17,5 +18,9 @@ class AnecdotalOutcome extends Model
         'outcome_remarks'
     ];
 
+    public function actionTaken()
+    {
+        return $this->belongsTo(Actions::class, 'actions_id');
+    }
 
 }

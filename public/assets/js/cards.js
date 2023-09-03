@@ -66,38 +66,6 @@ setInterval(updateWeeklyReportCount, 1000);
 
 
 
-
-//Montly Alert
-function showAlert() {
-    $('#monthly-alert').removeClass('hidden-alert');
-}
-
-// Update monthly report count every hour
-function updateMonthlyReportCount() {
-    $.ajax({
-        url: '/get-monthly-report-count',
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            $('#monthly-report-count').text(data.monthlyReportCount);
-        },
-        error: function() {
-            console.log('Failed to fetch monthly report count.');
-        }
-    });
-}
-
-// Show the alert only during the first 3 days of each month
-const currentDate = new Date();
-const currentDay = currentDate.getDate();
-
-if (currentDay <= 3) {
-    setTimeout(showAlert, (4 - currentDay) * 24 * 3600000);
-    setInterval(updateMonthlyReportCount, 3600000);
-} else {
-    updateMonthlyReportCount();
-}
-
 //resolved cases
 
 function updateResolvedCasesCount() {
@@ -118,3 +86,23 @@ function updateResolvedCasesCount() {
 updateResolvedCasesCount();
 setInterval(updateResolvedCasesCount, 1000);
 
+
+//Monthly
+function updateMonthlyReportCount() {
+    $.ajax({
+        url: '/get-monthly-report-count',
+        type: 'GET',
+        success: function (data) {
+            $('#monthly-report-count').text(data.monthlyReportCount);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
+// Call the function initially to populate the count
+updateMonthlyReportCount();
+
+// Set up a timer to update the count periodically (e.g., every 30 seconds)
+setInterval(updateMonthlyReportCount, 30000);

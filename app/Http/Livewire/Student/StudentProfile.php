@@ -52,11 +52,11 @@ class StudentProfile extends Component
         $students = [];
 
         if (strlen($this->studentName) >= 3) {
-            $students = Students::where(function ($query) {
+            $students = Students::where('status', 0)->where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('middle_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhereRaw("CONCAT(first_name, ' ', middle_name,  ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
+                    ->orWhereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
             })->get();
         }
 
@@ -218,19 +218,16 @@ class StudentProfile extends Component
         }
 
 
-        if (Auth::check()) {
-            if (Auth::user()->role == 1) {
-                session()->flash('message', 'Successfully Saved');
-                $this->resetForm();
-            }
-        } else {
-            $createdForm = Profile::latest()->first();
-            Session::put('created_form_id', $createdForm->id);
+       if (Auth::check() && (Auth::user()->role == 1 || Auth::user()->role == 2)) {
+    session()->flash('message', 'Successfully Saved');
+    $this->resetForm();
+} else {
+    $createdForm = Profile::latest()->first();
+    Session::put('created_form_id', $createdForm->id);
 
-            // Redirect with the created_form_id as a query parameter
-            return redirect()->route('student.profile.data', ['form_id' => $createdForm->id]);
-
-        }
+    // Redirect with the created_form_id as a query parameter
+    return redirect()->route('student.profile.data', ['form_id' => $createdForm->id]);
+}
 
     }
 

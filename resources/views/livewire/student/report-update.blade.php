@@ -180,83 +180,16 @@
 
                 <div class="flex justify-end px-8">
                     @if (!$anecdotalData->case_status == 1)
-                    <div class="flex items-center">
-                        <span class="text-red-500 text-sm mr-2">
-                            Accepting it will update the status to ongoing
-                        </span>
-                        <x-button wire:click="acceptAnecdotal" wire:loading.attr="disabled">
-                           Accept
-                        </x-button>
-                    </div>
+                        <div class="flex items-center">
+                            <span class="text-red-500 text-sm mr-2">
+                                Accepting it will update the status to ongoing
+                            </span>
+                            <x-button wire:click="acceptAnecdotal" wire:loading.attr="disabled">
+                                Accept
+                            </x-button>
+                        </div>
                     @endif
                 </div>
-
-
-
-
-
-
-                {{-- Additional Form Only shown When The butotn is click--}}
-                @if ($showMeetingOutcomeForm)
-                <div class="px-4">
-                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
-                        Meeting Outcome Update
-                    </h6>
-
-
-                    <x-grid columns="3" gap="4" px="0" mt="4">
-
-
-                        <div class="w-full px-4">
-                            <div class="relative mb-3" wire:model="outcome">
-                                <x-label>
-                                    Update
-                                </x-label>
-                                <x-input  />
-                            </div>
-                        </div>
-
-                        <div class="w-full px-4">
-                            <div class="relative mb-3" wire:model="outcome_remarks">
-                                <x-label>
-                                    Remarks (Short Description)
-                                </x-label>
-                                <x-input   />
-                            </div>
-                        </div>
-
-                        <div class="w-full px-4">
-                            <div class="relative mb-3">
-                                <x-label>
-                                    Action Taken
-                                </x-label>
-                                <x-select name="action_id" wire:model="actions_id">
-                                    <option value=""></option>
-                                    @foreach ($actions as $action)
-                                        <option value="{{ $action->id }}">
-                                            {{ $action->action_taken }}</option>
-                                    @endforeach
-                                </x-select>
-                            </div>
-                        </div>
-
-
-
-                    </x-grid>
-
-
-                    <div class="flex justify-end items-center">
-                        <x-text-alert />
-                        <div wire:loading wire:target="store" class="mx-4">
-                            Loading
-                        </div>
-                        <x-button type="submit" wire:loading.attr="disabled"
-                        wire:click="update"
-                        >Update</x-button>
-                    </div>
-
-                </div>
-                @endif
 
 
             </div>
@@ -267,6 +200,78 @@
 
 
 
+
+
+
+
+
+    @if ($showMeetingOutcomeForm)
+        <div class="w-full mx-auto mt-6">
+            <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
+
+                <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                       Meeting Outcome Update
+                    </h6>
+
+                    <x-grid columns="3" gap="4" px="0" mt="4">
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Meeting Outcome
+                                </x-label>
+                               <x-select wire:model="outcome">
+                                <option value="Succesfull">Succesfull</option>
+                                <option value="Follow-up">Follow-up</option>
+                                <option value="Referral">Referral </option>
+                               </x-select>
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Remarks (Short Description)
+                                </x-label>
+                                <x-input wire:model="outcome_remarks" />
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Action Taken
+                                </x-label>
+                                <x-select name="action_id" wire:model="actions_id">
+                                    @foreach ($actions as $action)
+                                        <option value="{{ $action->id }}">
+                                            {{ $action->action_taken }}</option>
+                                    @endforeach
+                                </x-select>
+                            </div>
+                        </div>
+
+
+                    </x-grid>
+
+
+                    <div class="flex justify-end items-center">
+                        <x-text-alert />
+                        <div wire:loading wire:target="store" class="mx-4">
+                            Loading
+                        </div>
+                        <x-button type="submit" wire:loading.attr="disabled" wire:click="update">Update</x-button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+</div>
+
+@endif
 
 
 

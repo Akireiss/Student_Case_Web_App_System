@@ -23,12 +23,15 @@ class ReportUpdate extends Component
     {
         $this->anecdotal = $anecdotal;
         $this->anecdotalData = Anecdotal::findOrFail($anecdotal);
-        $this->outcome = $this->anecdotalData->actions->outcome ?? '';
-        $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks ?? '';
-        $this->actions_id = $this->anecdotalData->actions->actions_id ?? null;
+        $this->outcome = $this->anecdotalData->actions->outcome;
+        $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;
+        $this->actions_id = $this->anecdotalData->actions->actions_id;
 
         if ($this->anecdotalData->case_status == 1) {
             $this->showMeetingOutcomeForm = true;
+            $this->outcome = $this->anecdotalData->actions->outcome;
+            $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;
+            $this->actions_id = $this->anecdotalData->actions->actions_id;
         }
     }
 
@@ -58,13 +61,10 @@ class ReportUpdate extends Component
     public function render()
     {
         $actions = Action::all();
-        return view(
-            'livewire.student.report-update',
-            [
+        return view('livewire.student.report-update',[
                 'anecdotalData' => $this->anecdotalData,
                 'actions' => $actions
-            ]
-        )->extends('layouts.dashboard.index')->section('content');
+            ])->extends('layouts.dashboard.index')->section('content');
     }
 
 }

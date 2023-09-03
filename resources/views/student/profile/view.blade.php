@@ -6,9 +6,9 @@
 
     <div>
 
-        <x-form title="Student ProfilAAAe">
+        <x-form title="Student Profile">
 
-            @if(auth()->check())
+
             @if(auth()->user()->role === 1)
                 <x-slot name="actions">
                     <x-link href="{{ url('admin/student-profile') }}">
@@ -24,13 +24,6 @@
                     </x-link>
                 </x-slot>
             @endif
-        @endif
-
-        <x-slot name="actions">
-            <x-link href="">
-                Back
-            </x-link>
-        </x-slot>
 
 
             <x-slot name="slot">

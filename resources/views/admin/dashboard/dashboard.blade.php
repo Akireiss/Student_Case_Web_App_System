@@ -39,8 +39,6 @@
             </a>
 
 
-
-
             <!-- Card -->
             <a href="{{ url('admin/reports') }}"  class="flex items-center p-4 bg-white rounded-lg shadow-md  dark:bg-gray-800">
                 <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
@@ -115,8 +113,7 @@
                 <div class="bg-red-500 border-l-4 text-white rounded-md border-red-600 p-2.5 mb-1 shadow-md"
                      role="alert" id="weekly-alert">
                     <p class="font-bold">Notice</p>
-                    <p>The cases that have resolved on last (date) from (studentname)
-                       don't you want to check the student?
+                    <p>Resolved Cases This Week:
                     <span id="resolved-cases-count"></span></p>
                 </div>
             </div>
@@ -124,25 +121,23 @@
 
 
 
-            <div class="py-1">
+            <a href="{{ url('') }}" class="py-1">
            <div class="bg-red-500 border-l-4 text-white  rounded-md border-red-600 p-2.5 mb-1
            shadow-md hidden-alert-weekly"
             role="alert" id="weekly-alert">
                <p class="font-bold">Notice</p>
-               <p>Total Reports This Week: <span id="weekly-report-count"></span></p>
+               <p>Total Reports This Week: <span id="weekly-report-count" class="underline"></span></p>
            </div>
-       </div>
+       </a>
 
 
 
-        <div class="py-1">
-            <div class="bg-red-500 border-l-4  rounded-md   border-red-600  p-2.5 mb-1
-            shadow-md
-             text-white" role="alert" id="monthly-alert">
-                <p class="font-bold">Notice</p>
-                <p>Total Reports This Month: <span id="monthly-report-count"></span></p>
-            </div>
+       <div class="py-1">
+        <div class="bg-red-500 border-l-4 rounded-md border-red-600 p-2.5 mb-1 shadow-md hidden-alert-monthly text-white" role="alert" id="monthly-alert">
+            <p class="font-bold">Notice</p>
+            <p>Total Reports This Month: <span id="monthly-report-count"></span></p>
         </div>
+    </div>
 
 
 
@@ -218,6 +213,23 @@
 
                 </div>
             </div>
+
+
+            <div class="min-w-0 p-4 shadow-md bg-white rounded-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
+                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                    Action Usage
+                </h4>
+                <canvas id="myChart" ></canvas>
+                <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                    <!-- Chart legend -->
+                    <div class="flex items-center">
+                        <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
+                        <span>Succesfull Actions</span>
+                    </div>
+
+                </div>
+            </div>
+
 
 
 

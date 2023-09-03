@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Students;
 use App\Models\Anecdotal;
 use Illuminate\Http\Request;
+use App\Models\AnecdotalOutcome;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -133,6 +134,17 @@ public function getResolvedCases()
 }
 
 
+public function getSuccessfulActions()
+{
+    $successfulActions = DB::table('anecdotal_outcome')
+        ->join('actions', 'anecdotal_outcome.actions_id', '=', 'actions.id')
+        ->select('actions.action_taken as actions', DB::raw('count(*) as count'))
+        ->where('anecdotal_outcome.outcome', '=', 'Successful')
+        ->groupBy('actions')
+        ->get();
+
+    return response()->json($successfulActions);
+}
 
 
 }

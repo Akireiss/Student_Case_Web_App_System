@@ -145,11 +145,15 @@
                         <x-label>
                             Gravity of offense
                         </x-label>
-                        <x-input wire:model="gravity" type="text" name="gravity" />
+                        <x-select wire:model="gravity">
+                            @foreach($gravityOptions as $value => $name)
+                                <option value="{{ $value }}">{{ $name }}</option>
+                            @endforeach
+                        </x-select>
                         <x-error fieldName="gravity" />
-
                     </div>
                 </div>
+
 
                 <div class="w-full px-4">
                     <div class="relative mb-3">

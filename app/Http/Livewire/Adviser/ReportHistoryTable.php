@@ -98,19 +98,35 @@ final class ReportHistoryTable extends PowerGridComponent
 
     public function actions(): array
     {
-        return [
-            Button::make('view', 'View')
-                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-                ->route('report.view', function (\App\Models\Report $model) {
-                    return ['report' => $model->id];
-                }),
-            Button::make('edit', 'Edit')
-                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-                ->route('report.edit', function (\App\Models\Report $model) {
-                    return ['report' => $model->id];
-                }),
+    $buttons = [];
 
-        ];
+    if (auth()->user()->role === 0) {
+        $buttons[] = Button::make('view', 'View')
+            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->route('user.report.view', function (\App\Models\Report $model) {
+                return ['report' => $model->id];
+            });
+
+        $buttons[] = Button::make('edit', 'Edit')
+            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->route('user.report.edit', function (\App\Models\Report $model) {
+                return ['report' => $model->id];
+            });
+    } elseif (auth()->user()->role === 2) {
+        $buttons[] = Button::make('view', 'View')
+            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->route('report.view', function (\App\Models\Report $model) {
+                return ['report' => $model->id];
+            });
+
+        $buttons[] = Button::make('edit', 'Edit')
+            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->route('report.edit', function (\App\Models\Report $model) {
+                return ['report' => $model->id];
+            });
+    }
+
+    return $buttons;
     }
 
     public function actionRules(): array
