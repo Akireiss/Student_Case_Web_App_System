@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Student\StudentDataController;
 use App\Http\Controllers\Admin\StudentProfileController;
+use App\Http\Livewire\Admin\Dashboard\ResolvedCases;
 use App\Http\Livewire\Student\Profile\StudentProfileUpdate;
 
 /*
@@ -199,3 +200,6 @@ Route::get('/get-successful-actions', [DashboardController::class, 'getSuccessfu
 //Dynamic Pages
 // Route::get('admin/dashboard',[SidebarController::class, 'dashboard'])->name('admin.dashboard.dashboard');
 // Route::get('admin/reports', [SidebarController::class, 'reports'])->name('livewire.student.report');
+
+//ResolvedCase
+Route::get('admin/resolved-cases', ResolvedCases::class);
