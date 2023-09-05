@@ -32,6 +32,7 @@ class ReportUpdate extends Component
             $this->outcome = $this->anecdotalData->actions->outcome;
             $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;
             $this->actions_id = $this->anecdotalData->actions->actions_id;
+
         }
     }
 

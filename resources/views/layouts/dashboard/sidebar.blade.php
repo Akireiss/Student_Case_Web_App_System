@@ -56,7 +56,7 @@
             @can('admin-access')
                 <li class="relative px-6 py-3">
                     <span
-                        class=" {{ request()->is('admin/reports') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+                        class=" {{ request()->is('admin/reports') ||  request()->is('admin/reports/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                         aria-hidden="true"></span>
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                         href="{{ url('admin/reports') }}">
@@ -77,7 +77,7 @@
             @can('admin-access')
                 <li class="relative px-6 py-3">
                     <span
-                        class=" {{ request()->is('admin/student-profile') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+                        class=" {{ request()->is('admin/student-profile') ||  request()->is('admin/student-profile/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                             aria-hidden="true"></span>
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150
                          hover:text-gray-800 dark:hover:text-gray-200"
@@ -210,10 +210,11 @@
                     </li>
                 @endcan
 
+
                 @can('adviser-access')
                     <li class="relative px-6 py-3">
                         <span
-                            class=" {{ request()->is('adviser/students-profile') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+                            class=" {{ request()->is('adviser/students-profile') || request()->is('adviser/students-profile/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                      aria-hidden="true"></span>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             href="{{ url('adviser/students-profile') }}">
@@ -233,7 +234,7 @@
                 @can('adviser-access')
                     <li class="relative px-6 py-3">
                         <span
-                            class=" {{ request()->is('adviser/students') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+                            class=" {{ request()->is('adviser/students') ||  request()->is('adviser/students/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                  aria-hidden="true"></span>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             href="{{ url('adviser/students') }}">
@@ -256,7 +257,7 @@
 
                 @if (auth()->user()->role === 2)
                 <li class="relative px-6 py-3">
-                    <span class="{{ request()->is('adviser/report/history') ? 'absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}"
+                    <span class="{{ request()->is('adviser/report/history') ||  request()->is('adviser/report/history/*') ? 'absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}"
                           aria-hidden="true"></span>
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                        href="{{ url('adviser/report/history') }}">

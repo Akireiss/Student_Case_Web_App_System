@@ -279,7 +279,6 @@ class StudentProfile extends Component
         $this->foodAllergy = '';
         $this->hasDisability = '';
         $this->hasFoodAllergy = '';
-        $this->father_type = '';
         $this->father_name = '';
         $this->father_age = '';
         $this->father_occupation = '';
@@ -289,7 +288,6 @@ class StudentProfile extends Component
         $this->father_birth_place = '';
         $this->father_work_address = '';
         $this->father_monthly_income = '';
-        $this->mother_type = '';
         $this->mother_name = '';
         $this->mother_age = '';
         $this->mother_occupation = '';
