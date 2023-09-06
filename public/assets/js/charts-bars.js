@@ -12,7 +12,7 @@ const barConfig = {
             },
             {
                 label: 'Ongoing',
-                backgroundColor: '#20C997',
+                backgroundColor: '#F2FF47',
                 borderWidth: 1,
                 data: [],
             },

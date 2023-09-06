@@ -195,7 +195,7 @@
                         <span>Pending</span>
                     </div>
                     <div class="flex items-center">
-                        <span class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full bg-primary-600"></span>
+                        <span class="inline-block w-3 h-3 mr-1 bg-yellow-200 rounded-full bg-primary-600"></span>
                         <span>Ongoing</span>
                     </div>
                     <div class="flex items-center">

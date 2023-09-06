@@ -23,7 +23,15 @@ class StudentProfileController extends Controller
         {
             abort(403);
         }
-        return view('student.profile.view', compact('profile'));
+
+
+        if (auth()->check()) {
+            // User is authenticated
+            return view('admin.student-profile.view', compact('profile'));
+        } else {
+            // Guest user
+            return view('student.profile.view', compact('profile'));
+        }
 
     }
 

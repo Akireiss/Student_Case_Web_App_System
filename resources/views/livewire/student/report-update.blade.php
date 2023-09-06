@@ -121,7 +121,7 @@
                                     Gravity of offense
                                 </x-label>
                                 <x-input disabled type="text" name="gravity"
-                                    value="{{ $anecdotalData?->gravity ?? 'No Data' }}" />
+                                    value="{{ $anecdotalData?->getGravityTextAttribute() ?? 'No Data' }}" />
                             </div>
                         </div>
 
@@ -259,8 +259,8 @@
 
                     <div class="flex justify-end items-center">
                         <x-text-alert />
-                        <div wire:loading wire:target="store" class="mx-4">
-                            Loading
+                        <div wire:loading wire:target="update" class="mx-4">
+                            Loading...
                         </div>
                         <x-button type="submit" wire:loading.attr="disabled" wire:click="update">Update</x-button>
                     </div>

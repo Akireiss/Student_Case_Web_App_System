@@ -27,7 +27,8 @@ class ReportUpdate extends Component
         $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;
         $this->actions_id = $this->anecdotalData->actions->actions_id;
 
-        if ($this->anecdotalData->case_status == 1) {
+        if ($this->anecdotalData->case_status == 1 || $this->anecdotalData->case_status == 2)
+        {
             $this->showMeetingOutcomeForm = true;
             $this->outcome = $this->anecdotalData->actions->outcome;
             $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;

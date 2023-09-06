@@ -1,10 +1,11 @@
-
-@extends('layouts.app')
+@extends('layouts.dashboard.index')
 
 
 @section('content')
 
-    <div class="lg:p-12 p-0">
+    <div>
+
+
 
         <x-profile :profile="$profile" />
 
