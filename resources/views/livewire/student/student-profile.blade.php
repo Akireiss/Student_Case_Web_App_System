@@ -919,7 +919,7 @@
 
                 <div class="flex justify-end items-center">
                     <x-text-alert />
-                    <div wire:loading wire:target="store" class="mx-4">
+                    <div wire:loading wire:target="save" class="mx-4">
                         Loading..
                     </div>
                     <x-button type="submit" wire:loading.attr="disabled" :disabled="$disableSubmitButton">Submit</x-button>
