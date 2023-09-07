@@ -7,6 +7,7 @@ use App\Http\Livewire\Admin\Teacher\EditTeacher;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
+use App\Http\Livewire\Adviser\ReferStudent;
 use App\Http\Livewire\Student\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -152,9 +153,15 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('report.view');
             Route::get('report/history/{report}/edit', ReportHistory::class)->name('report.edit');
             //*Students
+
+
             Route::get('students', function() {
                 return view('staff.students.index');
             });
+
+            Route::get('students/{student}/edit', ReferStudent::class)->name('adviser.students.edit');
+
+
             //*Account Management
             Route::get('update-acc', User::class);
             Route::get('add-acc', AddUser::class);
