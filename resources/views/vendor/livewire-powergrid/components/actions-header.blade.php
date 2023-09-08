@@ -33,6 +33,15 @@
     >
         {!! $action->caption !!}
     </button>
+@elseif ($action->bladeComponent !== '')
+    @php
+        $action->bladeComponentParams = new \Illuminate\View\ComponentAttributeBag($action->params);
+    @endphp
+
+    <x-dynamic-component
+        :component="$action->bladeComponent"
+        :attributes="$action->bladeComponentParams"
+    />
 @else
     @if (strtolower($action->method) !== 'get')
         <form
@@ -57,7 +66,7 @@
                 href="{{ route($action->route, $parameters) }}"
                 id="{{ $action->id }}"
                 title="{{ $action->tooltip }}"
-               target="{{ $action->target }}"
+                target="{{ $action->target }}"
                 class="power-grid-button {{ filled($action->class) ? $action->class : $theme->actions->headerBtnClass }}"
             >
                 {!! $action->caption !!}
