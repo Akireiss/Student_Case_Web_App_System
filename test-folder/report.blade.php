@@ -5,6 +5,8 @@
     Recent Cases
 </h6>
 @if ($cases->isNotEmpty())
+
+
 <x-table>
     <x-slot name="header">
        <th class="px-4 py-3">Student Name</th>
