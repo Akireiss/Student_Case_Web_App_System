@@ -55,6 +55,8 @@ class ReportUpdate extends Component
             'outcome' => $this->outcome,
             'outcome_remarks' => $this->outcome_remarks,
         ]);
+        $this->anecdotalData->update(['case_status' => 2]);
+        $this->anecdotalData = $this->anecdotalData->fresh();
 
         session()->flash('message', 'Updated Successfully');
     }

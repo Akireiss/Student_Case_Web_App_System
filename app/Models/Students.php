@@ -27,6 +27,11 @@ class Students extends Model
         'lrn',
         'status'
     ];
+
+    public function anecdotal()
+    {
+        return $this->hasMany(Anecdotal::class, 'student_id');
+    }
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');
@@ -52,10 +57,7 @@ class Students extends Model
 
 
 
-    public function anecdotal()
-    {
-        return $this->hasMany(Anecdotal::class, 'student_id');
-    }
+
 
     public static function codes()
     {

@@ -21,6 +21,7 @@ class Report extends Component
     public $letter;
     public $user_id;
     public $classroom;
+    public $grade_level;
     public $gravity;
     public $short_description;
     public $cases = [];
@@ -109,6 +110,7 @@ class Report extends Component
             'observation' => $this->observation,
             'desired' => $this->desired,
             'outcome' => $this->outcome,
+            'grade_level' => $this->classroom->section . ' ' . $this->classroom->grade_level ?? '',
             'letter' => $letterPath,
         ]);
 

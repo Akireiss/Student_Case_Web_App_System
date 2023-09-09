@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Layouts\SidebarController;
 use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Offenses\EditOffense;
 use App\Http\Livewire\Admin\Teacher\EditTeacher;
@@ -18,7 +17,6 @@ use App\Http\Livewire\Adviser\ReportHistory;
 use App\Http\Livewire\Adviser\StudentProfile;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Livewire\Admin\Student\EditStudent;
-use App\Http\Livewire\Student\StudentFormUpdate;
 use App\Http\Controllers\Admin\OffensesController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -160,6 +158,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             });
 
             Route::get('students/{student}/edit', ReferStudent::class)->name('adviser.students.edit');
+            Route::get('students/{student}/view', [ReferStudent::class,'view'])->name('adviser.students.view');
 
 
             //*Account Management

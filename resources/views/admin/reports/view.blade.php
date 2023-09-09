@@ -56,16 +56,18 @@
                     <x-grid columns="2" gap="4" px="0" mt="4">
                         <div class="w-full px-4">
                             <x-label>
-                                Minor Offenses
+                             Grade Level
                             </x-label>
-                            <x-input value="{{ $anecdotal->Minoroffenses?->offenses ?? 'No Offenses Found' }}" disabled />
+                            <x-input
+                            value="{{ $anecdotal->grade_level ?? 'No Data' }}"
+                             disabled />
                         </div>
 
                         <div class="w-full px-4">
                             <x-label>
                                 Grave Offenses
                             </x-label>
-                            <x-input value="{{ $anecdotal->Graveoffenses?->offenses ?? 'No Offenses Found' }}" disabled />
+                            <x-input value="{{ $anecdotal->offenses?->offenses ?? 'No Offenses Found' }}" disabled />
                         </div>
                     </x-grid>
 
@@ -162,7 +164,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
 
                     <div class="relative mb-3">
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-2 mx-4">
                             <x-checkbox wire:model="actions" checked disabled value="Parent Teacher Meeting" />
                             <x-label>Parent Teacher Meeting</x-label>
                         </div>

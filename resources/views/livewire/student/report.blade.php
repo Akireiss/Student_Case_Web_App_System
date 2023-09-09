@@ -89,7 +89,9 @@
                                 <x-label>
                                     Classroom
                                 </x-label>
-                                <x-input disabled :value="$classroom && $classroom->section
+                                <x-input disabled
+
+                                :value="$classroom && $classroom->section
                                     ? 'Grade: ' . $classroom->grade_level . ' ' . $classroom->section
                                     : ''" />
                             </div>

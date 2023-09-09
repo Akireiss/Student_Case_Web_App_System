@@ -1,8 +1,20 @@
 <div>
+<div class="md:px-10 mx-3">
+
     <x-form title="">
 
         <x-slot name="actions">
-            <x-link a href="{{ url('student/form') }}">Back</x-link>
+
+            @if(auth()->guest())
+            <x-link href="{{ url('student/profile/data/' . $profileId) }}" class="mt-5">Back</x-link>
+
+        @elseif(auth()->user()->role == 1)
+            <x-link href="{{ url('admin/student-profile') }}">Back</x-link>
+        @endif
+
+
+
+
         </x-slot>
         <x-slot name="slot">
             <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 ">

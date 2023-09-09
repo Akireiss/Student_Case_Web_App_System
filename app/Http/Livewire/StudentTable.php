@@ -136,9 +136,10 @@ final class StudentTable extends PowerGridComponent
         return [
             Column::make('First name', 'first_name')
                 ->sortable()
-                ->searchable()
-                ->editOnClick()
-                ->withCount('Total Students', true, false),
+                ->withCount('Total Students', true, false)
+                ->searchableRaw('students(students.first_name, students.last_name,")'),
+
+
 
 
             Column::make('Last name', 'last_name')

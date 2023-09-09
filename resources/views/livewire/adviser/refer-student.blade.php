@@ -1,17 +1,16 @@
 <div>
     <div>
 
-        <x-form title="Add Students">
+        <x-form title="Update Student">
             <x-slot name="actions">
                 <x-link href="{{ url('adviser/students') }}">
-
-                        Bacl
+                    Back
                 </x-link>
             </x-slot>
 
             <form wire:submit.prevent="update">
                 <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                    Add New Student
+                   Update Student
                 </h6>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -53,14 +52,16 @@
 
                     <div class="w-full px-4">
                         <div class="relative mb-3">
-                            <x-label>Classroom</x-label>
+                            <x-label>Reffer Student</x-label>
                             <x-select name="classroom_id" wire:model="classroom_id" required>
                                 @foreach ($classrooms as $classroom)
-                                    <option value="{{ $classroom->id }}">Grade:{{ $classroom->grade_level }}
+                                    <option value="{{ $classroom->id }}">
+                                    Grade:{{ $classroom->grade_level }}
                                         {{ $classroom->section }}</option>
                                 @endforeach
                             </x-select>
                             <x-error fieldName="classroom_id" />
+                            <span class="text-green-500 text-xs"> Reffer Student To Next Grade Level </span>
                         </div>
                     </div>
 
@@ -75,6 +76,8 @@
                             <x-error fieldName="status" />
                         </div>
                     </div>
+
+
                 </div>
 
                 <div class="flex justify-end items-center">
@@ -82,7 +85,7 @@
                     <div wire:loading wire:target="update" class="mx-4">
                         Loading...
                     </div>
-                    <x-button type="submit" wire:loading.attr="disabled">Reffer Student</x-button>
+                    <x-button type="submit" wire:loading.attr="disabled">Update</x-button>
                 </div>
             </form>
         </x-form>

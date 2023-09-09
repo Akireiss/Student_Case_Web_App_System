@@ -320,16 +320,17 @@ class StudentProfileUpdate extends Component
         $municipalities = Municipal::all();
         $barangays = Barangay::all();
 
+        $layout = auth()->check() ? 'layouts.dashboard.index' : 'layouts.app';
+
         return view('livewire.student.profile.student-profile-update', [
             'profile' => $this->profile,
             'provinces' => $provinces,
             'municipalities' => $municipalities,
             'barangays' => $barangays,
             'students' => $students,
-
         ])
-            ->extends('layouts.dashboard.index', )
-            ->section('content');
+        ->extends($layout)
+        ->section('content');
     }
 
 

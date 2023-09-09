@@ -29,11 +29,16 @@ class Anecdotal extends Model
         'outcome',
         'letter',
         'case_status',
+        'grade_level',
         'status'
+
     ];
 
 
-
+    public function students()
+    {
+        return $this->belongsTo(Students::class, 'student_id');
+    }
 
     public function actionsTaken()
     {
@@ -54,10 +59,7 @@ class Anecdotal extends Model
         return $this->hasMany(Report::class, 'anecdotal_id');
     }
 
-    public function students()
-    {
-        return $this->belongsTo(Students::class, 'student_id');
-    }
+
     // TODO: for anecdotal table (still need some adjustment)
     public function student()
     {
