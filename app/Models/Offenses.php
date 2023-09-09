@@ -16,7 +16,8 @@ class Offenses extends Model
     protected $fillable = [
         'offenses',
         'description',
-        'status'
+        'status',
+        'category'
         ];
 
         public static function categories()

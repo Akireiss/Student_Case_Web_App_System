@@ -79,7 +79,7 @@ class ReportHistory extends Component
             'outcome' => $this->outcome,
             'gravity' => $this->gravity,
             'short_description' => $this->short_description,
-            'letter' => $letterPath, // Corrected line
+            'letter' => $letterPath,
         ]);
 
         $report->anecdotal->actionsTaken()->delete();

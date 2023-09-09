@@ -45,15 +45,15 @@ final class ActivityTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('causer_name')
-            ->addColumn('log_name')
-            ->addColumn('log_name_lower', fn (Activity $model) => strtolower(e($model->log_name)))
-            ->addColumn('description')
-            ->addColumn('event')
+            ->addColumn('causer_name', fn (Activity $model) => ucfirst($model->causer_name))
+            ->addColumn('log_name', fn (Activity $model) => ucfirst($model->log_name))
+            ->addColumn('log_name_lower', fn (Activity $model) => ucfirst(e($model->log_name)))
+            ->addColumn('description', fn (Activity $model) => ucfirst($model->description))
+            ->addColumn('event', fn (Activity $model) => ucfirst($model->event))
             ->addColumn('activity_log.created_at')
-
             ->addColumn('created_at_formatted', fn (Activity $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
+
 
     public function columns(): array
     {

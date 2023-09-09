@@ -209,6 +209,7 @@
         <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
         <script src="{{ asset('assets/js/actionspiechart.js ') }}" defer></script>
         <script src="{{ asset('assets/js/charts-bars.js') }}" defer></script>
+        <script src="{{ asset('assets/js/chartPie.js') }}" defer></script>
         <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
         <script src="{{ asset('assets/js/cards.js') }}" defer></script>
         <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>

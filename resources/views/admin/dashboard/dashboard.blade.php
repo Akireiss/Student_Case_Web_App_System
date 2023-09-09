@@ -207,21 +207,21 @@
 
 
 
-
             <div class="min-w-0 p-4 shadow-md bg-white rounded-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
                 <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                    Offenses Usage
+                    Action Usage
                 </h4>
-                <canvas id="pie"></canvas>
+                <canvas id="myChartPie" ></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
                     <!-- Chart legend -->
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
-                        <span>Offenses</span>
+                        <span>Succesfull Actions</span>
                     </div>
 
                 </div>
             </div>
+
 
 
             <div class="min-w-0 p-4 shadow-md bg-white rounded-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
@@ -238,6 +238,7 @@
 
                 </div>
             </div>
+
 
 
 

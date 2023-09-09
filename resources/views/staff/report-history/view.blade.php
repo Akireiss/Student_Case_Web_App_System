@@ -36,7 +36,7 @@
                     <x-label>
                         Referred By
                     </x-label>
-                    <x-input value="{{ $report->user?->name ?? 'No Reporter Found' }}" disabled />
+                    <x-input value="{{ $report->users?->name ?? 'No Reporter Found' }}" disabled />
                 </div>
 
 
@@ -174,7 +174,7 @@
 
             <x-grid columns="3" gap="4" px="0" mt="4">
                 <div class="relative mb-3">
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-2 mx-4">
                         @if ($report->anecdotal && $report->anecdotal->actionsTaken->isNotEmpty())
                             @foreach ($report->anecdotal->actionsTaken as $action)
                                 <x-checkbox checked disabled />
@@ -192,6 +192,49 @@
 
         </div>
     </x-form>
+
+
+
+
+    <div class="w-full mx-auto mt-6">
+        @if($report->case_status == 2)
+            <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
+                <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                       Meeting Outcome Updates
+                    </h6>
+
+                    <x-grid columns="3" gap="4" px="0" mt="4">
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Meeting Outcomes
+                                </x-label>
+                                <x-input disabled value="{{ $report->actions?->outcome ?? 'No Data' }}"/>
+                            </div>
+                        </div>
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Remarks (Short Description)
+                                </x-label>
+                                <x-input disabled value="{{ $report->actions?->outcome_remarks ?? 'No Data' }}"/>
+                            </div>
+                        </div>
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Action Taken
+                                </x-label>
+                                <x-input disabled value="{{ $report->actions?->actions_id ?? 'No Data' }}"/>
+                            </div>
+                        </div>
+                    </x-grid>
+                </div>
+            </div>
+        @endif
+    </div>
+
 
 
 @endsection

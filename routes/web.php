@@ -113,6 +113,12 @@ Route::middleware(['auth', 'role'])->group(function () {
             //View Classrooms
             Route::get('classroom/{classroom}/view', [ClassroomController::class, 'show'])->name('classroom.view');
 
+            // Report History
+            Route::get('report/history', function() {
+                return view('staff.report-history.index');
+            });
+            Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('admin.report.view');
+            Route::get('report/history/{report}/edit', ReportHistory::class)->name('admin.report.edit');
 
 
             Route::get('audit-trail', function () {

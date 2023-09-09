@@ -28,7 +28,12 @@ class Report extends Model
         return $this->belongsTo(Anecdotal::class, 'anecdotal_id');
     }
 
-    public function user()
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class, 'user_id');
+    // }
+
+    public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

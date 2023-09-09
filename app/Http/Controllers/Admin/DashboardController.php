@@ -49,7 +49,6 @@ class DashboardController extends Controller
         ]);
     }
 
-
     public function getOffenseCounts()
     {
         $offenseCounts = DB::table('anecdotal')
@@ -60,6 +59,8 @@ class DashboardController extends Controller
 
         return response()->json($offenseCounts);
     }
+
+
 
 
     public function getCaseCounts()
@@ -139,7 +140,7 @@ public function getSuccessfulActions()
     $successfulActions = DB::table('anecdotal_outcome')
         ->join('actions', 'anecdotal_outcome.actions_id', '=', 'actions.id')
         ->select('actions.action_taken as actions', DB::raw('count(*) as count'))
-        ->where('anecdotal_outcome.outcome', '=', 'Successful')
+        ->where('anecdotal_outcome.outcome', '=', 'Succesfull')
         ->groupBy('actions')
         ->get();
 

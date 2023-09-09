@@ -18,4 +18,6 @@ class Activity extends Model
         'description',
         'event'
     ];
+
+
 }

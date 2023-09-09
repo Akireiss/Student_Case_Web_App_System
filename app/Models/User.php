@@ -104,4 +104,14 @@ class User extends Authenticatable
     }
 
 
+    public static function codes()
+    {
+        return collect([
+            ['role' => 0, 'label' => 'Adviser W/O advisee'],
+            ['role' => 1, 'label' => 'Administrator'],
+            ['role' => 2, 'label' => 'Adviser'],
+        ]);
+    }
+
+
 }

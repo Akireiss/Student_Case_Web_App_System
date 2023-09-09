@@ -4,7 +4,7 @@
     <div class="mx-auto">
         <div class="flex justify-between items-center">
             <h6 class="text-xl font-bold text-left ">
-                Report Student
+                Users List
             </h6>
 
         </div>

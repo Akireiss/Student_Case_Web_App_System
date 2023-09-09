@@ -42,7 +42,7 @@
                                 <x-label>
                                     Referred By
                                 </x-label>
-                                <x-input value="{{ $anecdotal->report->first()?->user->name ?? 'No Reporter Found' }}"
+                                <x-input value="{{ $anecdotal->report->first()?->users->name ?? 'No Reporter Found' }}"
                                     disabled />
                             </div>
                         </div>

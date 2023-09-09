@@ -93,7 +93,8 @@ final class UsersTable extends PowerGridComponent
 
             ->addColumn('email')
             ->addColumn('role', fn (User $model) => $model->roleText)
-            ->addColumn('created_at_formatted', fn (User $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('status', fn(User $model) => $model->getStatusTextAttribute() ?? 'No Data');
+
     }
 
     /*
@@ -122,8 +123,7 @@ final class UsersTable extends PowerGridComponent
                 ->searchable(),
 
             Column::make('Role', 'role'),
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
+            Column::make('Status', 'status')->sortable()
 
         ];
     }
@@ -138,7 +138,11 @@ final class UsersTable extends PowerGridComponent
         return [
             Filter::inputText('name')->operators(['contains']),
             Filter::inputText('email')->operators(['contains']),
-            Filter::datetimepicker('created_at'),
+            Filter::boolean('status')->label('Inactive', 'Active'),
+               Filter::select('role', 'role')
+                ->dataSource(User::codes())
+                ->optionValue('role')
+                ->optionLabel('label'),
         ];
     }
 
