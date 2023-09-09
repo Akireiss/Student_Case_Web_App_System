@@ -1,7 +1,7 @@
 <x-form title="Student Profile">
 
     <x-slot name="actions">
-        <x-link href="{{ url('admin/student-profile') }}">
+        <x-link href="{{ url('student/profile/data/' . $profile->id) }}">
             Back
         </x-link>
     </x-slot>
