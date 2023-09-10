@@ -8,6 +8,7 @@ use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
 use App\Http\Livewire\Adviser\ReferStudent;
 use App\Http\Livewire\Student\Report;
+use App\Http\Livewire\TestInput;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
@@ -192,6 +193,8 @@ Route::get('student/form', StudentForm::class);
 Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
 //*Student Profile Data
 Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])->name('student.profile.data');
+
+
 Route::get('student/profile/data/{form_id}/view',
  [StudentDataController::class, 'view']);
 //*student form update
@@ -215,3 +218,6 @@ Route::get('/get-successful-actions', [DashboardController::class, 'getSuccessfu
 
 //ResolvedCase
 Route::get('admin/resolved-cases', ResolvedCases::class);
+//Test
+
+Route::get('/input', TestInput::class);

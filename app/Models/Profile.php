@@ -60,7 +60,8 @@ class Profile extends Model
         'bmi',
         'disability',
         'food_allergy',
-        'status'
+        'status',
+        'token'
     ];
 
 

@@ -13,16 +13,31 @@
         @if ($formId)
             <div class="text-center">
                 <div>
-
                     <img class="w-48 h-48 mx-auto mb-2" src="data:image/png;base64,
                     {{ base64_encode(QrCode::format('png')->merge(public_path('logo.PNG'), 0.3, true)->size(200)
-                ->generate(url('/student/profile/data/' . $form->id))) }}" alt="QR Code">
-            </div>
+                    ->generate(url('/student/profile/data/' . $form->id))) }}" alt="QR Code">
+                </div>
+
+
+                <div class="flex mx-auto flex-row space-x-2">
+
+                <x-button
+                    id="saveImageButton">
+                    Save Image
+                </x-button>
+                <x-button
+                id="saveImageButton">
+                Copy Link
+            </x-button>
+        </div>
+
+
+
 
             </div>
         @else
            <div>
-            No Data
+                No Data
            </div>
         @endif
     </div>
@@ -68,5 +83,25 @@
 
 </div>
 
+<script>
+document.getElementById('saveImageButton').addEventListener('click', function () {
+    const qrCodeImage = document.querySelector('.w-48.h-48');
+    const scaleFactor = 2;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = qrCodeImage.width * scaleFactor;
+    canvas.height = qrCodeImage.height * scaleFactor;
+    const context = canvas.getContext('2d');
+    context.drawImage(qrCodeImage, 0, 0, canvas.width, canvas.height);
+    const dataURL = canvas.toDataURL('image/png', 1.0);
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'qr_code.png';
+    link.click();
+});
+
+</script>
 
 @endsection
+
+

@@ -16,12 +16,7 @@ trait SelectNameTrait
     public function mount()
     {
         $this->showError = false;
-        if (empty($this->rewards)) {
-            $this->rewards = [['award' => '', 'year' => '']];
-        }
-        if (empty($this->siblings)) {
-            $this->siblings = [['name' => '', 'age' => '', 'gradeSection' => '']];
-        }
+
     }
 
     public function toggleDropdown()

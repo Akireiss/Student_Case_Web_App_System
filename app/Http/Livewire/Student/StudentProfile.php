@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Student;
 
 use App\Models\Profile;
+use App\Traits\AddSiblingRewardTrait;
 use Livewire\Component;
 use App\Models\Province;
 use App\Models\Students;
@@ -20,12 +21,10 @@ class StudentProfile extends Component
     use SelectNameTrait;
     use ProfileValidationTrait;
     use WireModelTraits;
+    use AddSiblingRewardTrait;
 
     public $disableSubmitButton = false;
     public $living_with = null;
-    // public $rewards = [
-    //     ['name' => '', 'year' => null],
-    // ];
     protected $listeners = [
         'resetName'
     ];
@@ -152,14 +151,14 @@ class StudentProfile extends Component
             $profile->siblings()->create([
                 'sibling_name' => $sibling['name'],
                 'sibling_age' => $sibling['age'],
-                'sibling_grade_section' => $sibling['gradeSection'],
+                'sibling_grade_section' => $sibling['grade_section'],
             ]);
         }
 
-        foreach ($this->rewards as $reward) {
+        foreach ($this->awards as $award) {
             $profile->awards()->create([
-                'award_name' => $reward['name'],
-                'award_year' => $reward['year'],
+                'award_name' => $award['award_name'],
+                'award_year' => $award['award_year'],
             ]);
         }
 
