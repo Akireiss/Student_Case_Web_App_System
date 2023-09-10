@@ -38,7 +38,6 @@ function createCaseElement(caseData) {
     `;
     return caseElement;
 }
-
 function fetchDataAndPopulateDropdown() {
     $.ajax({
         url: '/get-ongoing-actions',
@@ -49,21 +48,20 @@ function fetchDataAndPopulateDropdown() {
 
             const now = new Date();
 
-            // Filter ongoing cases that haven't been updated for the past 3 days
             const filteredOngoingCases = data.ongoingCases.filter((caseData) => {
                 const updatedAt = new Date(caseData.updated_at);
                 const timeDifference = now - updatedAt;
-                const daysDifference = Math.floor(timeDifference / 86400000); // 1 day = 86400000 milliseconds
+                const daysDifference = Math.floor(timeDifference / 86400000);
                 return daysDifference >= 3;
             });
 
-            // Filter resolved cases that haven't been updated for the past 3 days
+
+            const oneWeekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
             const filteredResolvedCases = data.resolvedCases.filter((caseData) => {
-                const updatedAt = new Date(caseData.updated_at);
-                const timeDifference = now - updatedAt;
-                const daysDifference = Math.floor(timeDifference / 86400000); // 1 day = 86400000 milliseconds
-                return daysDifference >= 3;
+                const resolvedDate = new Date(caseData.updated_at);
+                return caseData.case_status === 2 && resolvedDate > oneWeekAgo;
             });
+
 
             if (filteredOngoingCases.length === 0 && filteredResolvedCases.length === 0) {
                 dropdownMenu.innerHTML = '<p>No notifications</p>';
@@ -85,6 +83,7 @@ function fetchDataAndPopulateDropdown() {
         }
     });
 }
+
 
 fetchDataAndPopulateDropdown();
 setInterval(fetchDataAndPopulateDropdown, 10000);

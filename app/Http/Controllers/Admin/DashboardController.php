@@ -161,6 +161,7 @@ public function getOngoingCases()
         ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
         ->where('anecdotal.case_status', 2)
         ->where('anecdotal.updated_at', '>', $oneWeekAgo)
+        ->orderBy('anecdotal.updated_at', 'desc')
         ->get();
 
     return response()->json(['ongoingCases' => $ongoingCases, 'resolvedCases' => $resolvedCases]);
