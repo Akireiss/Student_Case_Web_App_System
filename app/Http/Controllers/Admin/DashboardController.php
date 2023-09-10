@@ -121,8 +121,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    //*Resolved Cases
-
+//*Resolved Cases
 public function getResolvedCases()
 {
     $twoWeeksAgo = Carbon::now()->subWeeks(2);
@@ -130,7 +129,6 @@ public function getResolvedCases()
         ->where('case_status', 2)
         ->where('updated_at', '>', $twoWeeksAgo)
         ->count();
-
     return response()->json(['resolvedCount' => $resolvedCount]);
 }
 
@@ -146,6 +144,28 @@ public function getSuccessfulActions()
 
     return response()->json($successfulActions);
 }
+
+public function getOngoingCases()
+{
+    $oneWeekAgo = now()->subWeek();
+
+    $ongoingCases = DB::table('anecdotal')
+        ->join('students', 'anecdotal.student_id', '=', 'students.id')
+        ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
+        ->where('anecdotal.case_status', 1)
+        ->where('anecdotal.updated_at', '>', $oneWeekAgo)
+        ->get();
+
+    $resolvedCases = DB::table('anecdotal')
+        ->join('students', 'anecdotal.student_id', '=', 'students.id')
+        ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
+        ->where('anecdotal.case_status', 2)
+        ->where('anecdotal.updated_at', '>', $oneWeekAgo)
+        ->get();
+
+    return response()->json(['ongoingCases' => $ongoingCases, 'resolvedCases' => $resolvedCases]);
+}
+
 
 
 }

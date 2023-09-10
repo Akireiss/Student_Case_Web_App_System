@@ -8,7 +8,6 @@ use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
 use App\Http\Livewire\Adviser\ReferStudent;
 use App\Http\Livewire\Student\Report;
-use App\Http\Livewire\TestInput;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
@@ -211,6 +210,11 @@ Route::get('/get-monthly-report-count', [DashboardController::class, 'getMonthly
 Route::get('/get-resolved-cases', [DashboardController::class, 'getResolvedCases'])->name('get.resolved.cases');
 //*Actions Taken (Successfull)
 Route::get('/get-successful-actions', [DashboardController::class, 'getSuccessfulActions']);
+//*Onoging Cases (Notification)
+Route::get('/get-ongoing-actions',
+[DashboardController::class, 'getOngoingCases']);
+
+
 
 //Dynamic Pages
 // Route::get('admin/dashboard',[SidebarController::class, 'dashboard'])->name('admin.dashboard.dashboard');
@@ -219,5 +223,3 @@ Route::get('/get-successful-actions', [DashboardController::class, 'getSuccessfu
 //ResolvedCase
 Route::get('admin/resolved-cases', ResolvedCases::class);
 //Test
-
-Route::get('/input', TestInput::class);
