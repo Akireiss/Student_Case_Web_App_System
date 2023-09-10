@@ -147,7 +147,7 @@ public function getSuccessfulActions()
 
 public function getOngoingCases()
 {
-    $oneWeekAgo = now()->subWeek();
+    $oneWeekAgo = Carbon::now()->subWeeks(1);
 
     $ongoingCases = DB::table('anecdotal')
         ->join('students', 'anecdotal.student_id', '=', 'students.id')

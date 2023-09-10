@@ -3,7 +3,6 @@ function createCaseElement(caseData) {
     caseElement.href = '#';
     caseElement.className = 'flex items-start p-1 hover:bg-gray-50 rounded-lg';
 
-    // Calculate the time elapsed
     const updatedAt = new Date(caseData.updated_at);
     const now = new Date();
     const timeDifference = now - updatedAt;
@@ -24,7 +23,6 @@ function createCaseElement(caseData) {
         timeString = `${days} day${days === 1 ? '' : 's'} ago`;
     }
 
-    // Determine the case status and adjust the display accordingly
     const statusText = caseData.case_status === 1 ? 'Ongoing' : 'Resolved';
 
     caseElement.innerHTML = `
@@ -47,24 +45,37 @@ function fetchDataAndPopulateDropdown() {
         type: 'GET',
         success: function (data) {
             const dropdownMenu = document.getElementById('dropdownInformation');
-
-            // Clear any existing content in the dropdown menu
             dropdownMenu.innerHTML = '';
 
-            // Display a message when there are no notifications
-            if (data.ongoingCases.length === 0 && data.resolvedCases.length === 0) {
+            const now = new Date();
+
+            // Filter ongoing cases that haven't been updated for the past 3 days
+            const filteredOngoingCases = data.ongoingCases.filter((caseData) => {
+                const updatedAt = new Date(caseData.updated_at);
+                const timeDifference = now - updatedAt;
+                const daysDifference = Math.floor(timeDifference / 86400000); // 1 day = 86400000 milliseconds
+                return daysDifference >= 3;
+            });
+
+            // Filter resolved cases that haven't been updated for the past 3 days
+            const filteredResolvedCases = data.resolvedCases.filter((caseData) => {
+                const updatedAt = new Date(caseData.updated_at);
+                const timeDifference = now - updatedAt;
+                const daysDifference = Math.floor(timeDifference / 86400000); // 1 day = 86400000 milliseconds
+                return daysDifference >= 3;
+            });
+
+            if (filteredOngoingCases.length === 0 && filteredResolvedCases.length === 0) {
                 dropdownMenu.innerHTML = '<p>No notifications</p>';
                 return;
             }
 
-            // Loop through the ongoing cases and create HTML elements for each
-            data.ongoingCases.forEach((caseData) => {
+            filteredOngoingCases.forEach((caseData) => {
                 const caseElement = createCaseElement(caseData);
                 dropdownMenu.appendChild(caseElement);
             });
 
-            // Loop through the resolved cases and create HTML elements for each
-            data.resolvedCases.forEach((caseData) => {
+            filteredResolvedCases.forEach((caseData) => {
                 const caseElement = createCaseElement(caseData);
                 dropdownMenu.appendChild(caseElement);
             });
