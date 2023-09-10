@@ -54,14 +54,25 @@
 
                                 <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute z-full mt-3 w-64 max-w-md -translate-x-1/2 transform px-2 sm:px-0">
 
-                                    <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute z-full mt-3 w-64 max-w-md -translate-x-1/2 transform px-2 sm:px-0">
-                                        <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                                            <div class="relative grid gap-1 bg-white px-2 py-4 sm:p-6">
+                                    <div x-show="open"
+                                     @click.away="open = false"
+                                     x-transition:enter="transition ease-out duration-200"
+                                     x-transition:enter-start="opacity-0 scale-95"
+                                     x-transition:enter-end="opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-200"
+                                     x-transition:leave-start="opacity-100 scale-100"
+                                     x-transition:leave-end="opacity-0 scale-95"
+                                     class="absolute z-full mt-3 w-80  max-w-md
+                                     -translate-x-1/2 transform px-2 sm:px-0">
+                                        <div class="overflow-hidden  rounded-lg
+                                        shadow-lg ring-1 ring-black ring-opacity-5">
+                                            <div id="dropdownInformation" class="relative overflow-y-auto h-60
+                                            grid gap-1 bg-white px-2 py-4 sm:p-6
 
+                                            ">
+                                                {{-- <div  >
 
-                                                <div id="dropdownInformation">
-
-                                                </div>
+                                                </div> --}}
 
                                         </div>
 

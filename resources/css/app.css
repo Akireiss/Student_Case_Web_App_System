@@ -10,3 +10,21 @@
   .hidden-alert {
       display: none;
   }
+
+#dropdownInformation {
+    max-height: 240px; /* Set the maximum height for the scrollbar */
+    overflow-y: auto; /* Enable the vertical scrollbar */
+}
+
+#dropdownInformation::-webkit-scrollbar {
+    width: 6px; /* Set the width of the scrollbar */
+}
+
+#dropdownInformation::-webkit-scrollbar-thumb {
+    background-color: #00bf4c; /* Set the color of the scrollbar thumb */
+    border-radius: 3px; /* Adjust the border-radius for rounded corners */
+}
+
+#dropdownInformation::-webkit-scrollbar-track {
+    background-color: #F3F4F6; /* Set the background color of the scrollbar track */
+}
