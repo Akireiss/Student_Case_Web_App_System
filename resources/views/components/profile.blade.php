@@ -1,4 +1,4 @@
-<x-form title="Student Profile">
+<x-form title="Student Profile" class="p-4">
 
     <x-slot name="actions">
         <x-link href="{{ url('student/profile/data/' . $profile->id) }}">
