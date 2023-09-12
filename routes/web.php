@@ -1,28 +1,29 @@
 <?php
 
-use App\Http\Livewire\Admin\AddUser;
-use App\Http\Livewire\Admin\Offenses\EditOffense;
-use App\Http\Livewire\Admin\Teacher\EditTeacher;
 use App\Http\Livewire\Admin\User;
+use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
-use App\Http\Livewire\Adviser\ReferStudent;
-use App\Http\Livewire\Student\Report;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Livewire\Student\Report;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
 use App\Http\Livewire\Student\StudentForm;
+use App\Http\Livewire\Adviser\ReferStudent;
 use App\Http\Livewire\Student\ReportUpdate;
 use App\Http\Livewire\Adviser\ReportHistory;
 use App\Http\Livewire\Adviser\StudentProfile;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Livewire\Admin\Student\EditStudent;
+use App\Http\Livewire\Admin\Teacher\EditTeacher;
+use App\Http\Livewire\Admin\Offenses\EditOffense;
 use App\Http\Controllers\Admin\OffensesController;
+use App\Http\Controllers\GenerateReportController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Livewire\Admin\Dashboard\ResolvedCases;
 use App\Http\Controllers\Student\StudentDataController;
 use App\Http\Controllers\Admin\StudentProfileController;
-use App\Http\Livewire\Admin\Dashboard\ResolvedCases;
 use App\Http\Livewire\Student\Profile\StudentProfileUpdate;
 
 /*
@@ -130,6 +131,9 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('student/update/{student}', EditStudent::class)->name('student.edit');
             Route::get('student/view/{student}', [EditStudent::class, 'view'])
             ->name('student.view');
+
+            //Generate Report
+            Route::get('generate-report', [GenerateReportController::class, 'index']);
 
         });
     });
