@@ -41,6 +41,7 @@ class DashboardController extends Controller
         $pendingCases = $caseQuery->where('case_status', 0)->count();
         $resolvedCases = $caseQuery->where('case_status', 2)->count();
 
+
         return response()->json([
             'totalStudents' => $totalStudents,
             'totalCases' => $totalCases,

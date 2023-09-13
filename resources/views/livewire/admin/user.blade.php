@@ -36,7 +36,7 @@ Update your information heress
                                 <div class="flex justify-end items-center">
                                     <x-text-alert />
                                     <div wire:loading wire:target="update" class="mx-4">
-                                        Loading
+                                        Loading...
                                     </div>
                                     <x-button wire:loading.attr="disabled">Update</x-button>
                                 </div>
@@ -120,7 +120,7 @@ Update your information heress
                             <div class="flex justify-end items-center my-4">
                                 <x-text-alert />
                                 <div wire:loading wire:target="updatePassword" class="mx-4">
-                                    Loading
+                                    Loading...
                                 </div>
                                 <x-button wire:loading.attr="disabled">Update</x-button>
                             </div>

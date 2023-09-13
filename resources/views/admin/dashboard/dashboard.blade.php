@@ -95,8 +95,6 @@
 
                 </div>
 
-
-                {{-- Resolved here --}}
                 <div>
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
                         Resolved Cases
@@ -105,8 +103,6 @@
 
                     </p>
                 </div>
-
-
             </div>
 
         </div>
@@ -118,7 +114,8 @@
             <a href="{{ url('admin/resolved-cases') }}">
 
                 <div class="py-1">
-                    <div class="bg-red-500 border-l-4 text-white rounded-md border-red-600 p-2.5 mb-1 shadow-md"
+                    <div class=" p-4 bg-white
+                    rounded-lg shadow-md mb-1 "
                     role="alert" id="weekly-alert">
                     <p class="font-bold">Notice</p>
                     <p>Resolved Cases This Week:
@@ -131,8 +128,8 @@
 
 
             <a href="{{ url('') }}" class="py-1">
-           <div class="bg-red-500 border-l-4 text-white  rounded-md border-red-600 p-2.5 mb-1
-           shadow-md hidden-alert-weekly"
+           <div class=" p-4 bg-white
+           rounded-lg shadow-md hidden-alert-weekly"
             role="alert" id="weekly-alert">
                <p class="font-bold">Notice</p>
                <p>Total Reports This Week: <span id="weekly-report-count" class="underline"></span></p>
@@ -142,7 +139,8 @@
 
 
        <div class="py-1">
-        <div class="bg-red-500 border-l-4 rounded-md border-red-600 p-2.5 mb-1 shadow-md hidden-alert-monthly text-white" role="alert" id="monthly-alert">
+        <div class=" p-4 bg-white
+        rounded-lg shadow-md hidden-alert-monthly" role="alert" id="monthly-alert">
             <p class="font-bold">Notice</p>
             <p>Total Reports This Month: <span id="monthly-report-count"></span></p>
         </div>

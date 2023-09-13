@@ -23,8 +23,6 @@ $(document).ready(function() {
             }
         });
     }
-
-
     updateDashboardData(timeRange);
 
     // Set interval
@@ -32,6 +30,8 @@ $(document).ready(function() {
         updateDashboardData(timeRange);
     }, 1000);
 });
+
+
 //Weekly Alert
 function showAlert(alertId) {
     $('#' + alertId).removeClass('hidden-alert-weekly');
