@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('parents', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('profile_id');
-            $table->string('parent_type');
+            $table->integer('parent_type');
             $table->string('parent_name');
             $table->string('parent_age');
             $table->string('parent_occupation');

@@ -149,7 +149,9 @@
                         <x-label>
                             Contact Number
                         </x-label>
-                        <x-input wire:model="contact" />
+                        <x-input
+                        type="number"
+                        wire:model="contact" />
                         <x-error fieldName="contact" />
 
                     </div>
@@ -481,7 +483,7 @@
                                 <x-label>
                                     Sibling's Age
                                 </x-label>
-                                <x-input type="text" wire:model="siblings.{{ $index }}.age" />
+                                <x-input type="number" wire:model="siblings.{{ $index }}.age" />
                             </div>
                             <div class="relative mb-3 px-4">
                                 <x-label>
@@ -618,7 +620,8 @@
                             <div class="relative mb-3">
                                 <x-label for="school_year">School Year</x-label>
                                 <x-input wire:model="education.{{ $i }}.school_year" id="school_year"
-                                    class="w-full" />
+                                type="number"
+                                class="w-full" />
                             </div>
                         </div>
                     @endforeach
@@ -654,7 +657,7 @@
                             <x-label>
                                 Year
                             </x-label>
-                            <x-input type="text" wire:model="rewards.{{ $index }}.year" />
+                            <x-input type="number" wire:model="rewards.{{ $index }}.year" />
                         </div>
                     </x-grid>
                 @endforeach

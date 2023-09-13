@@ -156,7 +156,7 @@
         <script src="{{ asset('assets/js/cards.js') }}" defer></script>
         <script src="{{ asset('assets/js/notification.js') }}" defer></script>
         <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
-{{-- Qrcode --}}
+        <script src="{{ asset('assets/js/chart.min.js') }}"></script>
         <script src="{{ asset('assets/js/qrcode.js') }}"></script>
 
 

@@ -41,7 +41,7 @@
                                     First Name
                                 </x-label>
                                 <div class="relative">
-                                    <x-input wire:model.debounce.300ms="studentName" @focus="isOpen = true"
+                                    <x-input wire:model.debounce.100ms="studentName" @focus="isOpen = true"
                                         @click.away="isOpen = false" @keydown.escape="isOpen = false"
                                         @keydown="isOpen = true" type="text" id="studentName" name="studentName"
                                         placeholder="Start typing to search." />
@@ -52,6 +52,14 @@
                                         class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold">
                                         &times;
                                     </span>
+
+                                    <div wire:loading wire:target="selectStudent">
+                                        <span class="text-sm text-green-500">
+                                            Loading...
+                                        </span>
+                                    </div>
+
+
                                     @if ($studentName && count($students) > 0)
                                         <ul class="bg-white border border-gray-300 mt-2 rounded-md w-full max-h-48 overflow-auto absolute z-10"
                                             x-show="isOpen">
@@ -64,6 +72,8 @@
                                                 </li>
                                             @endforeach
                                         @elseif ($studentName)
+
+
                                             <span class="text-red-500 text-sm">
                                                 No Student Found
                                             </span>
@@ -161,7 +171,7 @@
                             <x-label>
                                 Contaact Number
                             </x-label>
-                            <x-input wire:model="contact" />
+                            <x-input wire:model="contact" type="number" />
                             <x-error fieldName="contact" />
 
                         </div>
@@ -187,7 +197,7 @@
                             <x-label>
                                 Number of Siblings
                             </x-label>
-                            <x-input wire:model="number_of_siblings" />
+                            <x-input wire:model="number_of_siblings" type="number" />
                             <x-error fieldName="number_of_siblings" />
 
                         </div>
@@ -347,7 +357,7 @@
                             <x-label>
                                 Office Contact No.
                             </x-label>
-                            <x-input wire:model="father_office_contact" />
+                            <x-input wire:model="father_office_contact" type="number" />
                             <x-error fieldName="father_office_contact" />
 
                         </div>
@@ -419,9 +429,9 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Contaact No.
+                                Contact No.
                             </x-label>
-                            <x-input wire:model="mother_contact" />
+                            <x-input wire:model="mother_contact" type="number" />
                             <x-error fieldName="mother_contact" />
 
                         </div>
@@ -430,7 +440,7 @@
                             <x-label>
                                 Office Contact No.
                             </x-label>
-                            <x-input wire:model="mother_office_contact" />
+                            <x-input wire:model="mother_office_contact" type="number" />
                             <x-error fieldName="mother_office_contact" />
 
                         </div>
@@ -578,7 +588,7 @@
                 <x-label>
                     Contact No.
                 </x-label>
-                <x-input wire:model="guardian_contact" />
+                <x-input wire:model="guardian_contact" type="number" />
                 <x-error fieldName="guardian_contact" />
 
             </div>

@@ -38,14 +38,16 @@ final class AnecdotaTable extends PowerGridComponent
             ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
             ->select(
                 'anecdotal.*',
-                'anecdotal.id as studentID',
+                'anecdotal.id as AnecdotalID',
                 'anecdotal.created_at',
                 'students.created_at as created',
                 'offenses.created_at as created_offense',
                 'offenses.offenses',
                 'offenses.id as OffenseID',
+                'students.id as StudentID'
             );
     }
+
 
 
     public function relationSearch(): array

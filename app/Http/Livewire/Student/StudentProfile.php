@@ -25,6 +25,7 @@ class StudentProfile extends Component
 
     public $disableSubmitButton = false;
     public $living_with = null;
+
     protected $listeners = [
         'resetName'
     ];
@@ -54,7 +55,7 @@ class StudentProfile extends Component
 
         $students = [];
 
-        if (strlen($this->studentName) >= 3) {
+        if (strlen($this->studentName) >= 2) {
             $students = Students::where('status', 0)->where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('middle_name', 'like', '%' . $this->studentName . '%')
@@ -238,6 +239,8 @@ class StudentProfile extends Component
     {
         $this->studentName = '';
         $this->studentId = '';
+        $this->middle_name= '';
+        $this->last_name = '';
     }
 
     private function resetForm()

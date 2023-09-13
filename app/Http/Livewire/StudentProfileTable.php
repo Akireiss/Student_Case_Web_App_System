@@ -42,7 +42,7 @@ final class StudentProfileTable extends PowerGridComponent
                 'students.last_name',
                 'barangay.barangay as barangay',
                 'municipal.municipality as municipal'
-            )->orderByDesc('profile.created_at');
+            );
     }
 
     public function relationSearch(): array

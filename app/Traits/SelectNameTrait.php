@@ -27,7 +27,7 @@ trait SelectNameTrait
     public function updatedStudentName($value)
     {
         if (empty($value)) {
-            $this->resetForm();
+            $this->resetName();
         }
     }
 
