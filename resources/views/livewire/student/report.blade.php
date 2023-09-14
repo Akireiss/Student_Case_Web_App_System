@@ -44,6 +44,12 @@
                                             class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold">
                                             &times;
                                         </span>
+
+                                        <div wire:loading wire:target="selectStudent">
+                                            <span class="text-sm text-green-500">
+                                                Loading...
+                                            </span>
+                                        </div>
                                         @if ($studentName && count($students) > 0)
                                             <ul class="bg-white border border-gray-300 mt-2 rounded-md w-full max-h-48 overflow-auto absolute z-10"
                                                 x-show="isOpen">
@@ -89,9 +95,7 @@
                                 <x-label>
                                     Classroom
                                 </x-label>
-                                <x-input disabled
-
-                                :value="$classroom && $classroom->section
+                                <x-input disabled :value="$classroom && $classroom->section
                                     ? 'Grade: ' . $classroom->grade_level . ' ' . $classroom->section
                                     : ''" />
                             </div>
@@ -159,7 +163,7 @@
                             Additional Information
                         </h6>
 
-                        <x-grid columns="3" gap="4" px="0" mt="4">
+                        <x-grid columns="2" gap="4" px="0" mt="4">
 
 
                             <div class="w-full px-4">
@@ -185,7 +189,8 @@
                                     <x-label>
                                         Remarks (Short Description)
                                     </x-label>
-                                    <x-input type="text" name="short_description" wire:model="short_description" />
+                                    <x-input type="text" name="short_description"
+                                        wire:model="short_description" />
                                     <x-error fieldName="short_description" />
 
                                 </div>
@@ -199,6 +204,19 @@
                                file:bg-gray-100 file:mr-4
                                file:py-2.5 file:px-4">
                             </div>
+
+                            <div class="w-full px-4">
+
+                                <x-label>Story</x-label>
+                                    <textarea id="message" rows="4"
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Write the story behind the report here"></textarea>
+
+
+                            </div>
+
+
                         </x-grid>
 
 
@@ -221,13 +239,10 @@
 
                         </x-grid>
 
-
-
-
                         <div class="flex justify-end items-center">
                             <x-text-alert />
                             <div wire:loading wire:target="store" class="mx-4">
-                                Loading
+                                Loading...
                             </div>
                             <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                         </div>
@@ -240,38 +255,40 @@
 
 
     @if ($studentName && $studentId)
-    <div class="px-4 py-3">
-        @if (count($cases) > 0)
-            @php
-                $totalOffenses = 0;
-                $totalPending = 0;
-                $totalProcess = 0;
-                $totalResolved = 0;
-            @endphp
-            @foreach ($cases as $case)
-                @if ($case->offenses)
-                    @php
-                        $totalOffenses += 1;
-                        if ($case->case_status == '0') {
-                            $totalPending += 1;
-                        } elseif ($case->case_status == '1') {
-                            $totalProcess += 1;
-                        } elseif ($case->case_status == '2') {
-                            $totalResolved += 1;
-                        }
-                    @endphp
-                @endif
-            @endforeach
-            <p class="text-red-500 text-md  text-center">{{ $studentName }} has a total of {{ $totalOffenses }} offenses.
-           {{ $totalPending }} Pending cases | {{ $totalProcess}} Process cases | {{ $totalResolved }} Resolved cases
-            </p>
-        @else
-        <p class="text-green-500 text-md text-center">
-            No cases found for {{ $studentName }}
-        </p>
-        @endif
-    </div>
-@endif
+        <div class="px-4 py-3">
+            @if (count($cases) > 0)
+                @php
+                    $totalOffenses = 0;
+                    $totalPending = 0;
+                    $totalProcess = 0;
+                    $totalResolved = 0;
+                @endphp
+                @foreach ($cases as $case)
+                    @if ($case->offenses)
+                        @php
+                            $totalOffenses += 1;
+                            if ($case->case_status == '0') {
+                                $totalPending += 1;
+                            } elseif ($case->case_status == '1') {
+                                $totalProcess += 1;
+                            } elseif ($case->case_status == '2') {
+                                $totalResolved += 1;
+                            }
+                        @endphp
+                    @endif
+                @endforeach
+                <p class="text-red-500 text-md  text-center">{{ $studentName }} has a total of {{ $totalOffenses }}
+                    offenses.
+                    {{ $totalPending }} Pending cases | {{ $totalProcess }} Process cases | {{ $totalResolved }}
+                    Resolved cases
+                </p>
+            @else
+                <p class="text-green-500 text-md text-center">
+                    No cases found for {{ $studentName }}
+                </p>
+            @endif
+        </div>
+    @endif
 
 
 

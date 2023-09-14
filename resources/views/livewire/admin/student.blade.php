@@ -31,7 +31,7 @@
                             Add New Student
                         </h6>
 
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
                                     <x-label>First Name</x-label>
@@ -56,8 +56,10 @@
                                     <x-error fieldName="last_name" />
                                 </div>
                             </div>
+                        </div>
 
 
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
@@ -70,16 +72,35 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label>Classrooom</x-label>
-                                    <x-select name="classroom_id" wire:model="classroom_id" required>
-                                        @foreach ($classrooms as $classroom)
-                                            <option value="{{ $classroom->id }}">Grade:{{ $classroom->grade_level }}
-                                                {{ $classroom->section }}</option>
-                                        @endforeach
+                                    <x-label>Gender</x-label>
+                                    <x-select name="gender" wire:model="gender" required>
+                                        <option value="0">Male</option>
+                                        <option value="1">Female</option>
                                     </x-select>
-                                    <x-error fieldName="classroom_id" />
+                                    <x-error fieldName="gender" />
                                 </div>
                             </div>
+
+
+                        </div>
+
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Classrooom</x-label>
+                                <x-select name="classroom_id" wire:model="classroom_id" required>
+                                    @foreach ($classrooms as $classroom)
+                                        <option value="{{ $classroom->id }}">Grade:{{ $classroom->grade_level }}
+                                            {{ $classroom->section }}</option>
+                                    @endforeach
+                                </x-select>
+                                <x-error fieldName="classroom_id" />
+                            </div>
+                        </div>
+
+
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
@@ -91,12 +112,14 @@
                                     <x-error fieldName="status" />
                                 </div>
                             </div>
+
                         </div>
+
 
                         <div class="flex justify-end items-center">
                             <x-text-alert />
                             <div wire:loading wire:target="store" class="mx-4">
-                                Loading
+                                Loading...
                             </div>
                             <x-button type="submit" wire:loading.attr="disabled">Add Student</x-button>
                         </div>

@@ -25,6 +25,7 @@ class Students extends Model
         'middle_name',
         'last_name',
         'lrn',
+        'gender',
         'status',
 
     ];

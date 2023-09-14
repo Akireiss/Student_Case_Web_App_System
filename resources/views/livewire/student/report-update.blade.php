@@ -184,6 +184,9 @@
                             <span class="text-red-500 text-sm mr-2">
                                 Accepting it will update the status to ongoing
                             </span>
+                            <div wire:loading wire:target="acceptAnecdotal" class="mx-4">
+                                Loading...
+                            </div>
                             <x-button wire:click="acceptAnecdotal" wire:loading.attr="disabled">
                                 Accept
                             </x-button>
@@ -262,7 +265,7 @@
                         <div wire:loading wire:target="update" class="mx-4">
                             Loading...
                         </div>
-                        <x-button type="submit" wire:loading.attr="disabled" wire:click="update">Update</x-button>
+                        <x-button type="submit" wire:loading.attr="disabled" wire:click="update">Resolved</x-button>
                     </div>
 
                 </div>
