@@ -61,4 +61,12 @@ trait SelectNameTrait
         $this->cases = [];
         $this->resetErrorBag(['studentId']);
     }
+
+    public function resetName()
+    {
+        $this->studentName = '';
+        $this->studentId = '';
+        $this->middle_name= '';
+        $this->last_name = '';
+    }
 }

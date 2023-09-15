@@ -106,6 +106,7 @@ final class StudentTable extends PowerGridComponent
             ->addColumn('first_name_lower', fn(Students $model) => strtolower(e($model->first_name)))
 
             ->addColumn('last_name')
+            ->addColumn('gender')
 
             ->addColumn('classroom', fn(Students $model) => "{$model->grade_level} - {$model->section}")
 
@@ -147,6 +148,10 @@ final class StudentTable extends PowerGridComponent
                 ->editOnClick()
                 ->searchable(),
 
+            Column::make('Gender', 'gender')
+            ->sortable(),
+
+
             Column::make('Grade Level', 'grade_level')
                 ->sortable(),
 
@@ -173,8 +178,6 @@ final class StudentTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('first_name')->operators(['contains']),
-            Filter::inputText('last_name')->operators(['contains']),
             Filter::select('grade_level', 'grade_level')
             ->dataSource(Classroom::select('grade_level')->distinct()->get())
             ->optionValue('grade_level')

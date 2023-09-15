@@ -9,6 +9,8 @@ trait StudentTrait
     public $last_name;
     public $lrn;
     public $classroom_id;
+    public $gender;
+
 
     protected $rules = [
         'first_name' => 'required|string',

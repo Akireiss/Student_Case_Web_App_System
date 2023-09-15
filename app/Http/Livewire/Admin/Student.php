@@ -37,6 +37,7 @@ class Student extends Component
             'last_name' => $this->last_name,
             'lrn' => $this->lrn,
             'classroom_id' => $this->classroom_id,
+            'gender' => $this->gender,
             'status' => $this->status,
         ]);
 
@@ -51,6 +52,7 @@ class Student extends Component
         $this->first_name = '';
         $this->middle_name = '';
         $this->last_name = '';
+        $this->gender = '';
         $this->lrn = '';
         $this->classroom_id = null;
         $this->status = null;
