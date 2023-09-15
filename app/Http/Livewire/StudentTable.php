@@ -61,8 +61,7 @@ final class StudentTable extends PowerGridComponent
                 'students.status',
                 'classrooms.grade_level as grade_level',
                 'classrooms.section as section'
-            )
-            ->orderByDesc('students.created_at');
+            );
     }
 
 
@@ -106,7 +105,7 @@ final class StudentTable extends PowerGridComponent
             ->addColumn('first_name_lower', fn(Students $model) => strtolower(e($model->first_name)))
 
             ->addColumn('last_name')
-            ->addColumn('gender')
+            ->addColumn('gender', fn(Students $model) => $model?->getGenderTextAttribute())
 
             ->addColumn('classroom', fn(Students $model) => "{$model->grade_level} - {$model->section}")
 
@@ -189,6 +188,10 @@ final class StudentTable extends PowerGridComponent
             Filter::select('status', 'students.status')
             ->dataSource(Students::codes())
             ->optionValue('status')
+            ->optionLabel('label'),
+            Filter::select('gender', 'students.gender')
+            ->dataSource(Students::codesGender())
+            ->optionValue('gender')
             ->optionLabel('label'),
 
 

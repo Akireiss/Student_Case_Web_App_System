@@ -12,9 +12,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Students extends Model
 {
     use HasFactory;
-    use StatusTrait;
-
-
 
     protected $table = 'students';
 
@@ -55,20 +52,53 @@ class Students extends Model
         return $this->hasMany(Report::class, 'anecdotal_id');
     }
 
-
-
-
-
-
-
     public static function codes()
     {
         return collect(
             [
                 ['status' => 0, 'label' => 'Active'],
                 ['status' => 1, 'label' => 'Inactive'],
+                ['status' => 2, 'label' => 'Completter'],
+                ['status' => 3, 'label' => 'Graduate'],
             ]
         );
     }
+
+
+    public function getStatusTextAttribute()
+    {
+        $statusCodes = [
+            0 => 'Active',
+            1 => 'Inactive',
+            2 => 'Completter',
+            3 => 'Graduate',
+        ];
+
+        return $statusCodes[$this->attributes['status']] ?? '';
+    }
+
+
+
+
+    public function getGenderTextAttribute()
+    {
+        $statusCodes = [
+            0 => 'Male',
+            1 => 'Female',
+        ];
+
+        return $statusCodes[$this->attributes['gender']] ?? '';
+    }
+
+    public static function codesGender()
+    {
+        return collect(
+            [
+                ['gender' => 0, 'label' => 'Male'],
+                ['gender' => 1, 'label' => 'Female'],
+            ]
+        );
+    }
+
 
 }

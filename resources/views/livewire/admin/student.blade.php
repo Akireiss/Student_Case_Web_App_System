@@ -108,6 +108,8 @@
                                     <x-select name="status" wire:model="status" required>
                                         <option value="0">Active</option>
                                         <option value="1">Inactive</option>
+                                        <option value="2">Competter</option>
+                                        <option value="3">Graduate</option>
                                     </x-select>
                                     <x-error fieldName="status" />
                                 </div>

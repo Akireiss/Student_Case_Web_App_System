@@ -14,8 +14,6 @@ class Student extends Component
     public $isSubmitting = false;
 
 
-
-
     public function render()
     {
         $classrooms = Classroom::all();

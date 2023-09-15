@@ -17,6 +17,6 @@ trait StudentTrait
         'last_name' => 'required|string',
         'lrn' => 'required|numeric',
         'classroom_id' => 'required',
-        'status' => 'required|in:0,1',
+        'status' => 'required',
     ];
 }
