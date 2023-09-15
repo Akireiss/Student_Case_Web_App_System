@@ -14,6 +14,7 @@ use Livewire\WithFileUploads;
 
 class Report extends Component
 {
+    //test
     public $offense_id;
     public $observation;
     public $desired;
