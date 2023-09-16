@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SendReminders;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -10,10 +11,10 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
-    protected function schedule(Schedule $schedule): void
-    {
-        $schedule->command('backup:run')->everyMinute();
-    }
+    // protected function schedule(Schedule $schedule): void
+    // {
+    //     $schedule->command('backup:run')->everyMinute();
+    // }
 
     /**
      * Register the commands for the application.
@@ -24,4 +25,11 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+
+
+    protected function schedule(Schedule $schedule)
+{
+    $schedule->command(SendReminders::class)->everyMinute();
+}
+
 }

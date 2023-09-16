@@ -146,7 +146,7 @@ final class ReportHistoryTable extends PowerGridComponent
     {
         return [
             Rule::button('edit')
-                ->when(fn($report) => $report->anecdotal->case_status === 1)
+                ->when(fn($report) => $report->anecdotal->case_status === 1 || $report->anecdotal->case_status === 2)
                 ->hide(),
         ];
     }

@@ -30,6 +30,7 @@ class Anecdotal extends Model
         'letter',
         'case_status',
         'grade_level',
+        'story',
         'status'
 
     ];

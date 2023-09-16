@@ -20,6 +20,8 @@ class DashboardController extends Controller
     public function getDashboardData(Request $request)
     {
         $studentQuery = Students::where('status', 0);
+        $male = Students::where('status', 0)->where('gender', 0);
+        $female = Students::where('status', 0)->where('gender', 1);
         $caseQuery = Anecdotal::query();
 
         if ($request->input('time_range') === 'yearly') {
@@ -27,8 +29,15 @@ class DashboardController extends Controller
             if ($currentMonth >= 8) { // August to December
                 $studentQuery->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
                 $caseQuery->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
+
+                //male
+                $male->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
+                $female->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
             } else { // January to May
                 $studentQuery->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')]);
+                $male->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')]);
+                $female->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')]);
+
                 $caseQuery->where(function($query) {
                     $query->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')])
                           ->orWhereBetween('created_at', [date('Y-m-d', strtotime('-1 year', strtotime('August 1'))), date('Y-m-d', strtotime('-1 year', strtotime('May 31')))]);
@@ -37,6 +46,8 @@ class DashboardController extends Controller
         }
 
         $totalStudents = $studentQuery->count();
+        $totalMale = $male->count();
+        $totalFemale = $female->count();
         $totalCases = $caseQuery->count();
         $pendingCases = $caseQuery->where('case_status', 0)->count();
         $resolvedCases = $caseQuery->where('case_status', 2)->count();
@@ -47,6 +58,9 @@ class DashboardController extends Controller
             'totalCases' => $totalCases,
             'pendingCases' => $pendingCases,
             'resolvedCases' => $resolvedCases,
+            'totalMale' => $totalMale,
+            'totalFemale' => $totalFemale,
+
         ]);
     }
 

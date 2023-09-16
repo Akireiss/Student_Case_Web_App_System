@@ -28,6 +28,7 @@ class ReportHistory extends Component
     public $reportId;
     public $description;
     public $letter;
+    public $story;
     public $selectedActions = [];
     public $gravityOptions = [
         0 => 'Low Severity',
@@ -51,6 +52,7 @@ class ReportHistory extends Component
         $this->offense_id = $anecdotal->offense_id;
         $this->short_description = $anecdotal->short_description;
         $this->letter = $anecdotal->letter;
+        $this->story = $anecdotal->story;
         $this->studentId = $anecdotal->student->id;
         $this->studentName = $anecdotal->student->first_name . ' ' . $anecdotal->student->last_name;
         $this->user_id = $reportData->users->name;
@@ -78,6 +80,7 @@ class ReportHistory extends Component
             'desired' => $this->desired,
             'outcome' => $this->outcome,
             'gravity' => $this->gravity,
+            'story' => $this->story,
             'short_description' => $this->short_description,
             'letter' => $letterPath,
         ]);

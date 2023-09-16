@@ -27,7 +27,7 @@ class Report extends Component
     public $short_description;
     public $cases = [];
     public $selectedActions = [];
-
+    public $story;
     public $actions_id = null;
     public $outcome_update = null;
     public $outcome_remarks = null;
@@ -113,6 +113,7 @@ class Report extends Component
             'outcome' => $this->outcome,
             'grade_level' => $this->classroom->section . ' ' . $this->classroom->grade_level ?? '',
             'letter' => $letterPath,
+            'story' => $this->story,
         ]);
 
         $anecdotal->actions()->create([
@@ -151,6 +152,7 @@ class Report extends Component
         $this->observation = '';
         $this->desired = '';
         $this->outcome = '';
+        $this->story = '';
         $this->offense_id = null;
         $this->letter = null;
         $this->selectedActions = [];

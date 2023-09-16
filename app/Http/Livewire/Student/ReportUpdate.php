@@ -11,6 +11,7 @@ class ReportUpdate extends Component
 {
 
     public $outcome;
+    public $story;
     public $outcome_remarks;
     public $actions_id;
     public $anecdotal;

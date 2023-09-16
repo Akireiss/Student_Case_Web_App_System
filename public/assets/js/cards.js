@@ -17,6 +17,8 @@ $(document).ready(function() {
                 $('#total-cases').text(data.totalCases);
                 $('#pending-cases').text(data.pendingCases);
                 $('#resolved-cases').text(data.resolvedCases);
+                $('#total-male').text(data.totalMale);
+                $('#total-female').text(data.totalFemale);
             },
             error: function() {
                 console.log('Failed to fetch dashboard data.');

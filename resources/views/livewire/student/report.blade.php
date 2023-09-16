@@ -208,7 +208,7 @@
                             <div class="w-full px-4">
 
                                 <x-label>Story</x-label>
-                                    <textarea id="message" rows="4"
+                                    <textarea id="message" rows="4" wire:model="story"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                         placeholder="Write the story behind the report here"></textarea>

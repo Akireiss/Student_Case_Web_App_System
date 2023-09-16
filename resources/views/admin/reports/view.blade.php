@@ -110,7 +110,7 @@
                         Additional Information
                     </h6>
 
-                    <x-grid columns="3" gap="4" px="0" mt="4">
+                    <x-grid columns="2" gap="4" px="0" mt="4">
 
 
                         <div class="w-full px-4">
@@ -132,6 +132,12 @@
                             </div>
                         </div>
 
+                    </x-grid>
+
+
+                    <x-grid columns="2" gap="4" px="0" mt="4">
+
+
                         <div class="w-full px-4">
                             <x-label>Letter</x-label>
                             <div x-data="{ isZoomed: false }">
@@ -149,13 +155,28 @@
                                 @endif
                             </div>
                         </div>
-                </div>
+
+
+
+
+                        <div class="w-full px-4">
+
+                            <x-label>Story</x-label>
+                                <textarea id="message" rows="4" wire:model="story"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+                                    rounded-lg border border-gray-300 " disabled
+                                    placeholder="Write the story behind the report here">{{ $anecdotal?->story ?? 'No Data' }}
+                                </textarea>
+
+
+                        </div>
+
 
 
 
                 </x-grid>
 
-<div class="px-4">
+<div>
 
     <h6 class="text-sm my-6 px-4 font-bold uppercase">
         Actions Taken
@@ -164,7 +185,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
 
                     <div class="relative mb-3">
-                        <div class="flex items-center space-x-2 mx-4">
+                        <div class="flex items-center space-x-2">
                             <x-checkbox wire:model="actions" checked disabled value="Parent Teacher Meeting" />
                             <x-label>Parent Teacher Meeting</x-label>
                         </div>

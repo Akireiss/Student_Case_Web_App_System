@@ -11,6 +11,8 @@ use App\Http\Livewire\Adviser\Dashboard;
 use App\Http\Livewire\Student\StudentForm;
 use App\Http\Livewire\Adviser\ReferStudent;
 use App\Http\Livewire\Student\ReportUpdate;
+use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Livewire\Adviser\ReportHistory;
 use App\Http\Livewire\Adviser\StudentProfile;
 use App\Http\Controllers\Admin\ReportController;
@@ -227,3 +229,8 @@ Route::get('/get-ongoing-actions',
 //ResolvedCase
 Route::get('admin/resolved-cases', ResolvedCases::class);
 //Test
+//Test Schedule
+//Route::get('/test', [ScheduleController::class, 'sendTestNotification'])->name('notifications.create');
+// Route::post('/test/store', [ScheduleController::class, 'store'])->name('notifications.store');
+Route::get('/reminders/create', [ReminderController::class, 'create'])->name('reminders.create');
+Route::post('/reminders', [ReminderController::class, 'store'])->name('reminders.store');

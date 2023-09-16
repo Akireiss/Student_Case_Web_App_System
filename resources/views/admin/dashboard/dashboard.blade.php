@@ -108,6 +108,47 @@
         </div>
 
 
+
+
+
+
+
+        <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
+
+
+            <a href="{{ url('admin/resolved-cases') }}">
+
+                <div class="py-1">
+                    <div class=" p-4 bg-white  border-l-4 border-blue-500
+                    rounded-lg shadow-md mb-1 "
+                    role="alert" id="weekly-alert">
+                    <p class="font-bold">Male</p>
+                    <p>Total Male:
+                        <span id="total-male"></span></p>
+                    </div>
+                </div>
+            </a>
+
+
+
+            <a href="{{ url('admin/resolved-cases') }}">
+
+                <div class="py-1">
+                    <div class=" p-4 bg-white border-l-4 border-pink-500
+                    rounded-lg shadow-md mb-1 "
+                    role="alert" id="weekly-alert">
+                    <p class="font-bold">Female</p>
+                    <p>Total Female:
+                        <span id="total-female"></span></p>
+                    </div>
+                </div>
+            </a>
+
+
+
+        </div>
+
+
         <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
 
 
