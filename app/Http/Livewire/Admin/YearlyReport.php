@@ -31,10 +31,20 @@ class YearlyReport extends Component
                 },
             ])->get();
 
-        return view('livewire.admin.yearly-report', compact('classrooms'))
+        $groupedClassrooms = $classrooms->groupBy('grade_level')->map(function ($group) {
+            return $group->reduce(function ($carry, $classroom) {
+                $carry->total_students += $classroom->total_students;
+                $carry->total_hs_male += $classroom->total_hs_male;
+                $carry->total_hs_female += $classroom->total_hs_female;
+                $carry->total_sh_male += $classroom->total_sh_male;
+                $carry->total_sh_female += $classroom->total_sh_female;
+                return $carry;
+            }, $group[0]);
+        });
+        $groupedClassrooms = $groupedClassrooms->sortBy('grade_level');
+        return view('livewire.admin.yearly-report', compact('groupedClassrooms'))
             ->extends('layouts.dashboard.index')
             ->section('content');
     }
-
 
 }

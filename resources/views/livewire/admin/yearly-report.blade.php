@@ -10,8 +10,11 @@
             </svg>
         </x-buttontype>
         <ul x-show="open" @click.away="open = false" class="absolute z-50 mt-2 py-2 bg-white border border-gray-300 rounded-lg shadow-lg w-full">
-            <li><a href="#" wire:click="$set('selectedOption', 'High School')" class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">High School</a></li>
-            <li><a href="#" wire:click="$set('selectedOption', 'Senior High')" class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">Senior High</a></li>
+            <li><a href="#" wire:click="$set('selectedOption', 'High School')"
+                class="block px-4 py-2 text-gray-800
+                 hover:bg-gray-500 hover:text-white">High School</a></li>
+            <li><a href="#" wire:click="$set('selectedOption', 'Senior High')"
+                 class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">Senior High</a></li>
         </ul>
     </div>
 
@@ -23,20 +26,19 @@
             </svg>
         </x-buttontype>
         <ul x-show="open" @click.away="open = false" class="absolute z-50 mt-2 py-2 bg-white border border-gray-300 rounded-lg shadow-lg w-full">
-            <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">High School</a></li>
-            <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">Senior High</a></li>
+            <li><a href="#" class="block px-4 py-2 text-gray-800
+                 hover:bg-gray-500 hover:text-white">High School</a></li>
         </ul>
     </div>
 
 </div>
-
-@foreach ($classrooms as $classroom)
+@foreach ($groupedClassrooms as $gradeLevel => $classroom)
     <x-form title="">
         <x-slot name="actions"></x-slot>
 
         <x-slot name="slot">
             <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                Grade: {{ $classroom->grade_level }}
+                Grade: {{ $gradeLevel }}
             </h6>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -44,7 +46,7 @@
                     <div class="relative mb-3">
                         {{-- Label --}}
                         <x-label>Grade Level</x-label>
-                        <x-input disabled value="{{ $classroom->grade_level }}" />
+                        <x-input disabled value="{{ $gradeLevel }}" />
                     </div>
                 </div>
 
@@ -55,7 +57,6 @@
                         $classroom->total_hs_male : $classroom->total_sh_male }}" />
                     </div>
                 </div>
-
 
                 <div class="w-full px-4">
                     <div class="relative mb-3">
@@ -68,12 +69,9 @@
                 <div class="w-full px-4">
                     <div class="relative mb-3">
                         <x-label>Total</x-label>
-                        <x-input disabled value="{{ $selectedOption === 'High School' ?
-                         $classroom->total_students :
-                         $classroom->total_students  }}" />
+                        <x-input disabled value="{{ $classroom->total_students }}" />
                     </div>
                 </div>
-
             </div>
         </x-slot>
     </x-form>

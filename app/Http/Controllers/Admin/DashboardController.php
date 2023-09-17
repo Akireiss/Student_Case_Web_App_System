@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
         if ($request->input('time_range') === 'yearly') {
             $currentMonth = date('n');
-            if ($currentMonth >= 8) { // August to December
+            if ($currentMonth >= 8) {
                 $studentQuery->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
                 $caseQuery->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
 
