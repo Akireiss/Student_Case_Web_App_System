@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('lrn')->nullable();
             $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
 
-            $table->foreign('classroom_id')->references('id')->on('classrooms');
+            $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -3,12 +3,12 @@
     <x-form title="Add Students">
         <x-slot name="actions">
             <x-link href="{{ url('admin/settings/students') }}">
-
+Back
 
             </x-link>
         </x-slot>
 
-        <form wire:submit.prevent="update">
+        <form wire:submit="update">
             <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                 Add New Student
             </h6>
@@ -17,7 +17,7 @@
                 <div class="w-full px-4">
                     <div class="relative mb-3">
                         <x-label>First Name</x-label>
-                        <x-input type="text" name="first_name" wire:model="first_name" required />
+                        <x-input type="text" name="first_name" wire:model="first_name" />
                         <x-error fieldName="first_name" />
                     </div>
                 </div>
@@ -76,13 +76,20 @@
                 </div>
             </div>
 
-            <div class="flex justify-end items-center">
+            <div class="flex justify-end items-center space-x-2">
                 <x-text-alert />
                 <div wire:loading wire:target="update" class="mx-4">
                     Loading...
                 </div>
                 <x-button type="submit" wire:loading.attr="disabled">Update </x-button>
-            </div>
-        </form>
+                 <x-button wire:click="deleteStudent({{ $student }})"
+                 class="bg-red-500 hover:bg-red-700">Delete</x-button>
+            </form>
+        </div>
     </x-form>
+
+
 </div>
+
+
+

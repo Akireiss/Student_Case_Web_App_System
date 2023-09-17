@@ -27,6 +27,11 @@ class Students extends Model
 
     ];
 
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class, 'classroom_id');
+    }
+
     public function anecdotal()
     {
         return $this->hasMany(Anecdotal::class, 'student_id');
@@ -37,10 +42,6 @@ class Students extends Model
     }
 
 
-    public function classroom()
-    {
-        return $this->belongsTo(Classroom::class, 'classroom_id');
-    }
 
     public function profile()
     {
@@ -99,6 +100,7 @@ class Students extends Model
             ]
         );
     }
+
 
 
 }

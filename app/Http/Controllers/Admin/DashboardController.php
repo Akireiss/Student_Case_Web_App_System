@@ -20,8 +20,9 @@ class DashboardController extends Controller
     public function getDashboardData(Request $request)
     {
         $studentQuery = Students::where('status', 0);
-        $male = Students::where('status', 0)->where('gender', 0);
-        $female = Students::where('status', 0)->where('gender', 1);
+        $male = Students::whereIn('status', [0, 2])->where('gender', 0)->get();
+        $female = Students::whereIn('status', [0, 2])->where('gender', 1)->get();
+
         $caseQuery = Anecdotal::query();
 
         if ($request->input('time_range') === 'yearly') {

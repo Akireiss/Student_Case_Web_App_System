@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Livewire\Student\Report;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Adviser\Dashboard;
+use App\Http\Livewire\Admin\YearlyReport;
 use App\Http\Livewire\Student\StudentForm;
 use App\Http\Livewire\Adviser\ReferStudent;
 use App\Http\Livewire\Student\ReportUpdate;
 use App\Http\Controllers\ReminderController;
-use App\Http\Controllers\ScheduleController;
 use App\Http\Livewire\Adviser\ReportHistory;
 use App\Http\Livewire\Adviser\StudentProfile;
 use App\Http\Controllers\Admin\ReportController;
@@ -136,7 +136,8 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             //Generate Report
             Route::get('generate-report', [GenerateReportController::class, 'index']);
-
+            //Yearly Report
+            Route::get('yearly-report', YearlyReport::class);
         });
     });
 

@@ -76,13 +76,14 @@ class Report extends Component
         $students = [];
 
         if (strlen($this->studentName) >= 3) {
-            $students = Students::where('status', 0)->where(function ($query) {
+            $students = Students::whereIn('status', [0, 2])->where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('middle_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
                     ->orWhereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
             })->get();
         }
+
         $actions = Action::all();
         $offenses = Offenses::pluck('offenses', 'id')->all();
 

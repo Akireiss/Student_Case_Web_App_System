@@ -122,7 +122,7 @@
                 Additional Information
             </h6>
 
-            <x-grid columns="3" gap="4" px="0" mt="4">
+            <x-grid columns="2" gap="4" px="0" mt="4">
 
 
                 <div class="w-full px-4">
@@ -145,6 +145,11 @@
                     </div>
                 </div>
 
+            </x-grid>
+
+
+            <x-grid columns="2" gap="4" px="0" mt="4">
+
                 <div class="w-full px-4">
                     <x-label>Letter</x-label>
                     <div x-data="{ isZoomed: false }" x-clock>
@@ -161,6 +166,18 @@
                             <p>No Letter Uploaded</p>
                         @endif
                     </div>
+                </div>
+
+
+                <div class="w-full px-4">
+
+                    <x-label>Story</x-label>
+                        <textarea id="message" rows="4"  disabled
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Write the story behind the report here">{{ $report->anecdotal?->story ?? 'No Data' }}</textarea>
+
+
                 </div>
 
 

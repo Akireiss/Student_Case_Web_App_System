@@ -52,5 +52,40 @@ class Classroom extends Model
     }
 
 
+    //Student Count High School
+    //1 active: high school
+    public function totalHsFemale()
+    {
+        return $this->students->where('gender', 0)->where('status', 0)->count();
+    }
+
+    public function totalHsMale()
+    {
+        return $this->students->where('gender', 1)->where('status', 0)->count();
+    }
+
+    public function totalHighSchool()
+    {
+        return $this->students->where('status', 0)->count();
+    }
+
+
+    //Senior High
+    //2 Becuse Complter = Still active
+    public function totalShFemale()
+    {
+        return $this->students->where('gender', 0)->where('status', 2)->count();
+    }
+
+    public function totalShMale()
+    {
+        return $this->students->where('gender', 1)->where('status', 2)->count();
+    }
+
+    public function totalSeniorHigh()
+    {
+        return $this->students->where('status', 2)->count();
+    }
+
 
 }

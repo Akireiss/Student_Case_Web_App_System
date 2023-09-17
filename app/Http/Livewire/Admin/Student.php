@@ -55,4 +55,6 @@ class Student extends Component
         $this->classroom_id = null;
         $this->status = null;
     }
+
+
 }

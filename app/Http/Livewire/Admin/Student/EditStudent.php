@@ -23,16 +23,7 @@ class EditStudent extends Component
         $this->status = $student->status;
         $this->classroom_id = $student->classroom_id;
     }
-    public function render()
-    {
-        $classrooms = Classroom::all();
-        return view('livewire.admin.student.edit-student', [
-            'student' => $this->student,
-            'classrooms' => $classrooms, // Use the correct variable name here
-        ])
-            ->extends('layouts.dashboard.index')
-            ->section('content');
-    }
+
 
     public function update()
     {
@@ -55,6 +46,28 @@ class EditStudent extends Component
     {
         $students = Students::findOrFail($student);
         return view('admin.settings.students.view', compact('students'));
+    }
+
+    public function deleteStudent($studentId)
+    {
+        $student = Students::find($studentId);
+        if (!$student) {
+            return redirect()->to('admin/settings/students');
+        }
+        $student->delete();
+
+    }
+
+
+    public function render()
+    {
+        $classrooms = Classroom::all();
+        return view('livewire.admin.student.edit-student', [
+            'student' => $this->student,
+            'classrooms' => $classrooms,
+        ])
+            ->extends('layouts.dashboard.index')
+            ->section('content');
     }
 
 }
