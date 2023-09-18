@@ -44,7 +44,6 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="w-full px-4">
                     <div class="relative mb-3">
-                        {{-- Label --}}
                         <x-label>Grade Level</x-label>
                         <x-input disabled value="{{ $gradeLevel }}" />
                     </div>

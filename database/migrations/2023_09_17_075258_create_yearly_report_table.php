@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('yearly_report', function (Blueprint $table) {
             $table->id();
+            $table->json('data');
+            $table->integer('category');
+            $table->string('school_year');
             $table->timestamps();
         });
     }
