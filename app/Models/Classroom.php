@@ -68,8 +68,6 @@ class Classroom extends Model
     {
         return $this->students->where('status', 0)->count();
     }
-
-
     //Senior High
     //2 Becuse Complter = Still active
     public function totalShFemale()
