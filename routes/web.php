@@ -15,6 +15,7 @@ use App\Http\Livewire\Student\ReportUpdate;
 use App\Http\Controllers\ReminderController;
 use App\Http\Livewire\Adviser\ReportHistory;
 use App\Http\Livewire\Adviser\StudentProfile;
+use App\Http\Controllers\Admin\HelpController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Livewire\Admin\Student\EditStudent;
 use App\Http\Livewire\Admin\Teacher\EditTeacher;
@@ -235,3 +236,7 @@ Route::get('admin/resolved-cases', ResolvedCases::class);
 // Route::post('/test/store', [ScheduleController::class, 'store'])->name('notifications.store');
 Route::get('/reminders/create', [ReminderController::class, 'create'])->name('reminders.create');
 Route::post('/reminders', [ReminderController::class, 'store'])->name('reminders.store');
+
+
+//Help Area
+Route::get('help', [HelpController::class, 'index']);
