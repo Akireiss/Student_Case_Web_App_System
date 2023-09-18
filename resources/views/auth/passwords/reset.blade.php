@@ -27,8 +27,8 @@
                                   required autocomplete="email" autofocus/>
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                    <span class="text-red-500 text-sm " role="alert">
+                                        <strong class="text-red-500 text-sm">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -43,8 +43,8 @@
                                  name="password" required autocomplete="new-password"/>
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                    <span class="text-red-500 text-sm " role="alert">
+                                        <strong class="text-red-500 text-sm">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
