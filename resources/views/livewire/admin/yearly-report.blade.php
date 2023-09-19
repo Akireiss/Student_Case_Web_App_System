@@ -32,49 +32,80 @@
     </div>
 
 </div>
-@foreach ($groupedClassrooms as $gradeLevel => $classroom)
-    <x-form title="">
-        <x-slot name="actions"></x-slot>
 
-        <x-slot name="slot">
+
+<div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
+
+    <form wire:submit.prevent="saveReport">
+        @foreach ($groupedClassrooms as $gradeLevel => $classroom)
+        <div class="w-full">
             <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                 Grade: {{ $gradeLevel }}
             </h6>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div class="w-full px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div class="w-full px-4 hidden">
                     <div class="relative mb-3">
+                        {{-- Label --}}
                         <x-label>Grade Level</x-label>
                         <x-input disabled value="{{ $gradeLevel }}" />
                     </div>
                 </div>
-
                 <div class="w-full px-4">
                     <div class="relative mb-3">
                         <x-label>Male</x-label>
-                        <x-input disabled value="{{ $selectedOption === 'High School' ?
-                        $classroom->total_hs_male : $classroom->total_sh_male }}" />
+                        <x-input disabled wire:model="{{ $selectedOption === 'High School' ? 'groupedClassrooms.'
+                         . $gradeLevel . '.total_hs_male' : 'groupedClassrooms.' . $gradeLevel . '.total_sh_male' }}" />
                     </div>
                 </div>
-
                 <div class="w-full px-4">
                     <div class="relative mb-3">
                         <x-label>Female</x-label>
-                        <x-input disabled value="{{ $selectedOption === 'High School' ?
-                        $classroom->total_hs_female : $classroom->total_sh_female }}" />
+                        <x-input disabled wire:model="{{ $selectedOption === 'High School' ? 'groupedClassrooms.'
+                        . $gradeLevel . '.total_hs_female' : 'groupedClassrooms.' . $gradeLevel . '.total_sh_female' }}" />
                     </div>
                 </div>
-
                 <div class="w-full px-4">
                     <div class="relative mb-3">
                         <x-label>Total</x-label>
-                        <x-input disabled value="{{ $classroom->total_students }}" />
+                        <x-input disabled wire:model="{{ $selectedOption === 'High School' ? 'groupedClassrooms.'
+                        . $gradeLevel . '.total_students' : 'groupedClassrooms.' . $gradeLevel . '.total_students' }}" />
                     </div>
                 </div>
             </div>
-        </x-slot>
-    </x-form>
-@endforeach
+        </div>
+    @endforeach
 
+
+
+        <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
+            Other Information
+          </h6>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+        <div class="w-full px-4">
+            <div class="relative mb-3">
+                <x-label>Category</x-label>
+                <x-input disabled wire:model="selectedOption" />
+            </div>
+        </div>
+        <div class="w-full px-4">
+            <div class="relative mb-3">
+                <x-label>Year Level</x-label>
+                <x-input wire:model="yearLevel" />
+            </div>
+        </div>
+
+        </div>
+
+        <div class="flex justify-end items-center mx-4">
+            <x-text-alert />
+            <div wire:loading wire:target="saveReport" class="mx-4">
+                Loading..
+            </div>
+            <x-button type="submit" wire:click="saveReport" wire:loading.attr="disabled">Save Report</x-button>
+        </div>
+
+        </form>
 
 </div>
