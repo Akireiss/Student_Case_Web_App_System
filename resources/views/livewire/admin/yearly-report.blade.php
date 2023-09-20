@@ -37,7 +37,8 @@
 <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
 
     <form wire:submit.prevent="saveReport">
-        @foreach ($groupedClassrooms as $gradeLevel => $classroom)
+        @forelse($groupedClassrooms as $gradeLevel => $classroom)
+
         <div class="w-full">
             <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                 Grade: {{ $gradeLevel }}
@@ -74,7 +75,17 @@
                 </div>
             </div>
         </div>
-    @endforeach
+
+
+        @empty
+        <div>
+            <p>
+                No Classroom found
+            </p>
+        </div>
+        @endforelse
+
+
 
 
 
