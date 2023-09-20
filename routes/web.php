@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Student\AuthController;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Student;
@@ -240,3 +241,7 @@ Route::post('/reminders', [ReminderController::class, 'store'])->name('reminders
 
 //Help Area
 Route::get('help', [HelpController::class, 'index']);
+//Student Authentication
+Route::get('student/lrn/{profileId}', [AuthController::class, 'login'])->name('student.login');
+//Login here
+Route::post('student/login/{profileId}', [AuthController::class, 'auth'])->name('student.auth');

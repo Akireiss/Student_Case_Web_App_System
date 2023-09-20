@@ -78,4 +78,11 @@
     </div>
     @endif
 
+
+{{-- Form here to verify the lrn if it matches the student lrn --}}
+
+
+
+
+
 </div>

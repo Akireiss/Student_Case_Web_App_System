@@ -29,21 +29,13 @@ class StudentForm extends Component
 
         if ($profile) {
             $this->resetErrorBag();
-            return redirect()->route('student.profile.data', $profile->id);
+            return redirect()->route('student.login', $profile->id);
+            // return redirect()->route('student.profile.data', $profile->id);
         } else {
             $this->addError('studentId', 'This student has no profile. You can create a profile for this student.');
             $this->showCreateLink = true;
         }
     }
-
-    public function clearStudent()
-    {
-        $this->studentId = null;
-        $this->studentName = '';
-        $this->isOpen = false;
-        $this->resetErrorBag();
-    }
-
     public function render()
     {
         $students = [];
@@ -62,11 +54,20 @@ class StudentForm extends Component
         ])->extends('layouts.app')
             ->section('content');
     }
+
     public function resetForm()
     {
         $this->studentName = '';
         $this->studentId = null;
         $this->cases = [];
         $this->resetErrorBag(['studentId']);
+    }
+
+    public function clearStudent()
+    {
+        $this->studentId = null;
+        $this->studentName = '';
+        $this->isOpen = false;
+        $this->resetErrorBag();
     }
 }
