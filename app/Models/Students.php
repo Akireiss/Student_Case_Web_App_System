@@ -101,6 +101,9 @@ class Students extends Model
         );
     }
 
-
+    //Test
+    public function yearlyReport() {
+        return $this->hasMany(YearlyReport::class);
+    }
 
 }

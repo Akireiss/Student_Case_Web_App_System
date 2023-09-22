@@ -34,15 +34,27 @@
 </div>
 
 
+<div class="flex justify-between items-center">
+    <h6 class="text-lg font-bold text-left ">
+      Report
+    </h6>
+
+</div>
+
 <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
 
     <form wire:submit.prevent="saveReport">
         @forelse($groupedClassrooms as $gradeLevel => $classroom)
 
         <div class="w-full">
-            <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+
+            <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
                 Grade: {{ $gradeLevel }}
             </h6>
+
+            {{-- <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                Grade: {{ $classroom->yearlyReport()->school_year }}
+            </h6> --}}
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 <div class="w-full px-4 hidden">
@@ -86,9 +98,6 @@
         @endforelse
 
 
-
-
-
         <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
             Other Information
           </h6>
@@ -119,9 +128,56 @@
 
         </form>
 
+</div>
 
 
+    {{-- Additional Form --}}
+    <x-form title="">
+        <x-slot name="actions">
 
+        </x-slot>
+
+        <x-slot name="slot">
+
+            <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+              Completion Rate
+            </h6>
+            <!-- Personal information form fields -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="w-full px-4">
+                    <div class="relative mb-3">
+                        {{-- Label --}}
+                        <x-label>Completters</x-label>
+                        <x-input/>
+                    </div>
+                </div>
+
+
+                <div class="w-full px-4">
+                    <div class="relative mb-3">
+                        <x-label for="section">Enrollment</x-label>
+                        <x-input/>
+
+                    </div>
+                </div>
+
+                <div class="w-full px-4">
+                    <div class="relative mb-3">
+                        <x-label>Percent Cr</x-label>
+                        <x-input/>
+                    </div>
+                </div>
+
+                <div class="w-full px-4">
+                    <div class="relative mb-3">
+                        <x-label>Status</x-label>
+                        <x-input/>
+                    </div>
+                </div>
+            </div>
+
+        </x-slot>
+    </x-form>
 
 
 

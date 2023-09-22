@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use stdClass;
 use Livewire\Component;
 use App\Models\Classroom;
 use App\Models\YearlyReport as Yearly;
@@ -35,7 +36,7 @@ class YearlyReport extends Component
             ])->get();
 
         $groupedClassrooms = $classrooms->groupBy('grade_level')->map(function ($group) {
-            $total = new \stdClass;
+            $total = new stdClass;
             $total->total_hs_male = $group->sum('total_hs_male');
             $total->total_hs_female = $group->sum('total_hs_female');
             $total->total_sh_male = $group->sum('total_sh_male');
