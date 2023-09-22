@@ -63,7 +63,6 @@
                                     <div class="relative mb-3">
                                         <x-label>Status</x-label>
                                         <x-select name="status" wire:model="status" required >
-                                            <option value="" selected>Select from the rest</option>
                                             <option value="0">Active</option>
                                             <option value="1">Inactive</option>
                                         </x-select>
@@ -78,7 +77,7 @@
                             <div class="flex justify-end items-center">
                                 <x-text-alert />
                                 <div wire:loading wire:target="store" class="mx-4">
-                                    Loading
+                                    Loading...
                                 </div>
                                 <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                             </div>
