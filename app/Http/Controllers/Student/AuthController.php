@@ -10,6 +10,8 @@ use App\Http\Livewire\Admin\Student;
 
 class AuthController extends Controller
 {
+
+
     public function login($profileId) {
         // You can remove this line since $profileId is already passed as a parameter
         // $profileId = Profile::findOrFail($profileId);
@@ -18,6 +20,8 @@ class AuthController extends Controller
         return view('student.profile-data.auth', compact('profileId'));
     }
     public function auth(Request $request, $profileId) {
+
+
         $profile = Profile::findOrFail($profileId);
         $studentLrn = $profile->student->lrn;
         $lrnInput = $request->input('lrn');
@@ -31,7 +35,7 @@ class AuthController extends Controller
             return redirect()->route('student.profile.data', $profile->id);
         } else {
             // If they don't match, show an error message and redirect back to the login form
-            return redirect()->route('student.login', ['profileId' => $profileId])->with('error', 'Invalid LRN');
+            return redirect()->route('student.login', ['profileId' => $profileId])->with('message', 'Invalid LRN');
         }
     }
 

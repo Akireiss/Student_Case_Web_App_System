@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
+<div class="container mx-auto px-12 mt-3">
+
+    <x-alert/>
+</div>
 
 
 <div class="mx-auto container lg:w-1/2 mt-36 ms:px-4">
@@ -30,7 +29,8 @@
                 <div class="w-full px-4">
                     <div class="relative mb-3">
                         <x-label>Last Four Digits of LRN</x-label>
-                        <x-input name="lrn" type="text" required autofocus />
+                        <x-input max="4"
+                        name="lrn" type="text" required autofocus />
                     </div>
                 </div>
 
