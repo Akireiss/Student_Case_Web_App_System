@@ -174,6 +174,8 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             Route::get('students/{student}/edit', ReferStudent::class)->name('adviser.students.edit');
             Route::get('students/{student}/view', [ReferStudent::class,'view'])->name('adviser.students.view');
+            //HS Issue
+            Route::get('students/{student}/view', [ReferStudent::class,'view'])->name('adviser.students.view');
 
 
             //*Account Management
@@ -207,6 +209,8 @@ Route::get('student/profile/data/{form_id}/view',
  [StudentDataController::class, 'view']);
 //*student form update
 Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
+//Cases
+// Route::get('student/view/cases/{student}', [StudentDataController::class, 'viewCases']);
 
 
 //*end-points

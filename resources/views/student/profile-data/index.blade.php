@@ -34,12 +34,11 @@
                         <x-button id="saveImageButton">
                             Save Image
                         </x-button>
+                        {{-- the link:: a href="{{ url('/student/profile/data/') }}" --}}
                         <x-button id="saveImageButton">
                             Copy Link
                         </x-button>
                     </div>
-
-
 
 
                 </div>
@@ -95,7 +94,8 @@
 
                     <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-white ">View</span>
                 </a>
-                <a href="{{ url('student/profile/data/' . $form->id . '/view') }}"
+
+                <a href="{{ url('student/view/cases' . $form->student->id ) }}"
                     class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  class="w-5 mb-2 h-5 group-hover:text-white text-gray-500">
