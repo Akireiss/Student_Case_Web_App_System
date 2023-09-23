@@ -33,7 +33,7 @@
                                         Student Name
                                     </x-label>
                                     <div class="relative">
-                                        <x-input wire:model.debounce.300ms="studentName" @focus="isOpen = true"
+                                        <x-input required wire:model.debounce.300ms="studentName" @focus="isOpen = true"
                                             @click.away="isOpen = false" @keydown.escape="isOpen = false"
                                             @keydown="isOpen = true" type="text" id="studentName" name="studentName"
                                             placeholder="Start typing to search." />
@@ -128,7 +128,7 @@
                                     <x-label>
                                         Observation
                                     </x-label>
-                                    <x-input type="text" name="observation" wire:model="observation" />
+                                    <x-input require type="text" name="observation" wire:model="observation" />
                                     <x-error fieldName="observation" />
 
                                 </div>
@@ -171,7 +171,7 @@
                                     <x-label>
                                         Gravity of offense
                                     </x-label>
-                                    <x-select name="gravity" wire:model="gravity">
+                                    <x-select name="gravity" wire:model="gravity" required>
                                         <option value="0">Low Severity</option>
                                         <option value="1">Moderate Severity</option>
                                         <option value="2">Medium Severity</option>
@@ -208,10 +208,11 @@
                             <div class="w-full px-4">
 
                                 <x-label>Story</x-label>
-                                    <textarea id="message" rows="4" wire:model="story"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+                                <textarea id="message" rows="4" wire:model="story" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Write the story behind the report here"></textarea>
+                                    placeholder="Write the story behind the report here"></textarea>
+                                <x-error fieldName="story" />
 
 
                             </div>

@@ -29,13 +29,12 @@ final class OffenseTable extends PowerGridComponent
     */
     public function setUp(): array
     {
-        $this->showCheckBox();
 
         return [
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->showSearchInput(),
+            Header::make(),
             Footer::make()
                 ->showRecordCount(mode: 'full')
                 ->showPerPage()
@@ -43,53 +42,17 @@ final class OffenseTable extends PowerGridComponent
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Datasource
-    |--------------------------------------------------------------------------
-    | Provides data to your Table using a Model or Collection
-    |
-    */
-
-    /**
-     * PowerGrid datasource.
-     *
-     * @return Builder<\App\Models\Offenses>
-     */
     public function datasource(): Builder
     {
         return Offenses::query();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Relationship Search
-    |--------------------------------------------------------------------------
-    | Configure here relationships to be used by the Search and Table Filters.
-    |
-    */
-
-    /**
-     * Relationship search.
-     *
-     * @return array<string, array<int, string>>
-     */
     public function relationSearch(): array
     {
         return [];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Add Column
-    |--------------------------------------------------------------------------
-    | Make Datasource fields available to be used as columns.
-    | You can pass a closure to transform/modify the data.
-    |
-    | ❗ IMPORTANT: When using closures, you must escape any value coming from
-    |    the database using the `e()` Laravel Helper function.
-    |
-    */
+
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
@@ -106,20 +69,7 @@ final class OffenseTable extends PowerGridComponent
             });
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Include Columns
-    |--------------------------------------------------------------------------
-    | Include the columns added columns, making them visible on the Table.
-    | Each column can be configured with properties, filters, actions...
-    |
-    */
 
-    /**
-     * PowerGrid Columns.
-     *
-     * @return array<int, Column>
-     */
     public function columns(): array
     {
         $isToggleable = true;
@@ -148,11 +98,7 @@ final class OffenseTable extends PowerGridComponent
         ]);
     }
 
-    /**
-     * PowerGrid Filters.
-     *
-     * @return array<int, Filter>
-     */
+
     public function filters(): array
     {
         return [
@@ -160,20 +106,6 @@ final class OffenseTable extends PowerGridComponent
             Filter::boolean('status')->label('Inactive', 'Active'),
         ];
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Method
-    |--------------------------------------------------------------------------
-    | Enable the method below only if the Routes below are defined in your app.
-    |
-    */
-
-    /**
-     * PowerGrid Offenses Action Buttons.
-     *
-     * @return array<int, Button>
-     */
 
 
     public function actions(): array

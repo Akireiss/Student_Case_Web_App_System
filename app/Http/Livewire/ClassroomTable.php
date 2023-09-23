@@ -16,7 +16,6 @@ final class ClassroomTable extends PowerGridComponent
 
     public function setUp(): array
     {
-        $this->showCheckBox();
 
         return [
             Exportable::make('export')
@@ -35,11 +34,10 @@ final class ClassroomTable extends PowerGridComponent
     {
         return Classroom::query()
             ->join('employees', 'classrooms.employee_id', '=', 'employees.id')
-            ->with('employees')
             ->select(
-                'classrooms.id',
-                'classrooms.created_at',
-            );
+                'classrooms.*',
+                'employees.employees as employee_name'
+                );
     }
 
 

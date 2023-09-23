@@ -24,13 +24,12 @@ final class StudentTable extends PowerGridComponent
     */
     public function setUp(): array
     {
-        $this->showCheckBox();
 
         return [
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->showSearchInput(),
+            Header::make(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),

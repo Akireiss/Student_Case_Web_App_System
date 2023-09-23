@@ -42,10 +42,11 @@ class Report extends Component
         'gravity' => 'required',
         'short_description' => 'nullable',
         'observation' => 'required',
-        'desired' => 'required',
+        'desired' => 'nullable',
         'outcome' => 'required',
         'letter' => 'nullable | image',
         'selectedActions' => 'required',
+        'story' => 'required',
     ];
 
     protected $messages = [

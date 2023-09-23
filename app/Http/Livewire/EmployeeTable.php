@@ -23,7 +23,7 @@ final class EmployeeTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->showSearchInput(),
+            Header::make(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(mode: 'full')
@@ -79,6 +79,7 @@ final class EmployeeTable extends PowerGridComponent
     {
         return [
             Filter::inputText('employees')->operators(['contains']),
+            Filter::inputText('refference_number')->operators(['contains']),
             Filter::boolean('status')->label('Inactive', 'Active'),
             Filter::datetimepicker('created_at'),
         ];

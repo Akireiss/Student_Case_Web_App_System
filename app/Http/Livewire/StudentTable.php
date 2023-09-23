@@ -16,13 +16,6 @@ final class StudentTable extends PowerGridComponent
     use ActionButton;
     use WithExport;
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Features Setup
-    |--------------------------------------------------------------------------
-    | Setup Table's general features
-    |
-    */
     public function setUp(): array
     {
 
@@ -37,19 +30,6 @@ final class StudentTable extends PowerGridComponent
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Datasource
-    |--------------------------------------------------------------------------
-    | Provides data to your Table using a Model or Collection
-    |
-    */
-
-    /**
-     * PowerGrid datasource.
-     *
-     * @return Builder<\App\Models\Students>
-     */
     public function datasource(): Builder
     {
         return Students::query()
@@ -63,37 +43,11 @@ final class StudentTable extends PowerGridComponent
             );
     }
 
-
-
-    /*
-    |--------------------------------------------------------------------------
-    |  Relationship Search
-    |--------------------------------------------------------------------------
-    | Configure here relationships to be used by the Search and Table Filters.
-    |
-    */
-
-    /**
-     * Relationship search.
-     *
-     * @return array<string, array<int, string>>
-     */
     public function relationSearch(): array
     {
         return [];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Add Column
-    |--------------------------------------------------------------------------
-    | Make Datasource fields available to be used as columns.
-    | You can pass a closure to transform/modify the data.
-    |
-    | ❗ IMPORTANT: When using closures, you must escape any value coming from
-    |    the database using the `e()` Laravel Helper function.
-    |
-    */
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
@@ -108,7 +62,7 @@ final class StudentTable extends PowerGridComponent
 
             ->addColumn('classroom', fn(Students $model) => "{$model->grade_level} - {$model->section}")
 
-            ->addColumn('lrn', fn (Students $model) => $model->lrn ?: 'No Data')
+            ->addColumn('lrn', fn(Students $model) => $model->lrn ?: 'No Data')
 
             ->addColumn('students.status')
             ->addColumn('status', fn(Students $model) => $model?->getStatusTextAttribute())
@@ -116,29 +70,14 @@ final class StudentTable extends PowerGridComponent
             ->addColumn('students.created_at');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Include Columns
-    |--------------------------------------------------------------------------
-    | Include the columns added columns, making them visible on the Table.
-    | Each column can be configured with properties, filters, actions...
-    |
-    */
-
-    /**
-     * PowerGrid Columns.
-     *
-     * @return array<int, Column>
-     */
     public function columns(): array
     {
         return [
             Column::make('First name', 'first_name')
                 ->sortable()
                 ->withCount('Total Students', true, false)
-                ->searchableRaw('students(students.first_name, students.last_name,")'),
-
-
+                ->searchableRaw('students(students.first_name, students.last_name,")')
+                ->editOnClick(),
 
 
             Column::make('Last name', 'last_name')
@@ -147,7 +86,7 @@ final class StudentTable extends PowerGridComponent
                 ->searchable(),
 
             Column::make('Gender', 'gender')
-            ->sortable(),
+                ->sortable(),
 
 
             Column::make('Grade Level', 'grade_level')
@@ -168,95 +107,51 @@ final class StudentTable extends PowerGridComponent
         ];
     }
 
-    /**
-     * PowerGrid Filters.
-     *
-     * @return array<int, Filter>
-     */
+
     public function filters(): array
     {
         return [
+            Filter::inputText('first_name')->operators(['contains']),
+            Filter::inputText('last_name')->operators(['contains']),
             Filter::select('grade_level', 'grade_level')
-            ->dataSource(Classroom::select('grade_level')->distinct()->get())
-            ->optionValue('grade_level')
-            ->optionLabel('grade_level'),
+                ->dataSource(Classroom::select('grade_level')->distinct()->get())
+                ->optionValue('grade_level')
+                ->optionLabel('grade_level'),
             Filter::select('section', 'section')
-            ->dataSource(Classroom::select('section')->distinct()->get())
-            ->optionValue('section')
-            ->optionLabel('section'),
+                ->dataSource(Classroom::select('section')->distinct()->get())
+                ->optionValue('section')
+                ->optionLabel('section'),
             Filter::select('status', 'students.status')
-            ->dataSource(Students::codes())
-            ->optionValue('status')
-            ->optionLabel('label'),
+                ->dataSource(Students::codes())
+                ->optionValue('status')
+                ->optionLabel('label'),
             Filter::select('gender', 'students.gender')
-            ->dataSource(Students::codesGender())
-            ->optionValue('gender')
-            ->optionLabel('label'),
+                ->dataSource(Students::codesGender())
+                ->optionValue('gender')
+                ->optionLabel('label'),
 
 
         ];
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Method
-    |--------------------------------------------------------------------------
-    | Enable the method below only if the Routes below are defined in your app.
-    |
-    */
-
-    /**
-     * PowerGrid Student Action Buttons.
-     *
-     * @return array<int, Button>
-     */
 
 
     public function actions(): array
     {
-       return [
-        Button::make('edit', 'Edit')
-        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-        ->route('student.edit', function (\App\Models\Students $model) {
-            return ['student' => $model->id];
-        }),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('student.edit', function (\App\Models\Students $model) {
+                    return ['student' => $model->id];
+                }),
 
 
-        Button::make('view', 'View')
-        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-        ->route('student.view', function (\App\Models\Students $model) {
-            return ['student' => $model->id];
-        }),
+            Button::make('view', 'View')
+                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('student.view', function (\App\Models\Students $model) {
+                    return ['student' => $model->id];
+                }),
         ];
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Rules
-    |--------------------------------------------------------------------------
-    | Enable the method below to configure Rules for your Table and Action Buttons.
-    |
-    */
-
-    /**
-     * PowerGrid Student Action Rules.
-     *
-     * @return array<int, RuleActions>
-     */
-
-    /*
-    public function actionRules(): array
-    {
-       return [
-
-           //Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($student) => $student->id === 1)
-                ->hide(),
-        ];
-    }
-    */
-
     public array $first_name = [];
     public array $last_name = [];
     public array $lrn = [];

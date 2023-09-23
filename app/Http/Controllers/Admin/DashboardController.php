@@ -19,40 +19,12 @@ class DashboardController extends Controller
 
     public function getDashboardData(Request $request)
     {
-        $studentQuery = Students::where('status', 0);
-        $male = Students::whereIn('status', [0, 2])->where('gender', 0)->get();
-        $female = Students::whereIn('status', [0, 2])->where('gender', 1)->get();
-
-        $caseQuery = Anecdotal::query();
-
-        if ($request->input('time_range') === 'yearly') {
-            $currentMonth = date('n');
-            if ($currentMonth >= 8) {
-                $studentQuery->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
-                $caseQuery->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
-
-                //male
-                $male->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
-                $female->whereBetween('created_at', [date('Y-08-01'), date('Y-12-31')]);
-            } else { // January to May
-                $studentQuery->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')]);
-                $male->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')]);
-                $female->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')]);
-
-                $caseQuery->where(function($query) {
-                    $query->whereBetween('created_at', [date('Y-01-01'), date('Y-05-31')])
-                          ->orWhereBetween('created_at', [date('Y-m-d', strtotime('-1 year', strtotime('August 1'))), date('Y-m-d', strtotime('-1 year', strtotime('May 31')))]);
-                });
-            }
-        }
-
-        $totalStudents = $studentQuery->count();
-        $totalMale = $male->count();
-        $totalFemale = $female->count();
-        $totalCases = $caseQuery->count();
-        $pendingCases = $caseQuery->where('case_status', 0)->count();
-        $resolvedCases = $caseQuery->where('case_status', 2)->count();
-
+        $totalStudents = Students::whereIn('status', [0, 2])->count();
+        $totalMale = Students::whereIn('status', [0, 2])->where('gender', 0)->count();
+        $totalFemale = Students::whereIn('status', [0, 2])->where('gender', 1)->count();
+        $totalCases = Anecdotal::count();
+        $pendingCases = Anecdotal::where('case_status', 0)->count();
+        $resolvedCases = Anecdotal::where('case_status', 2)->count();
 
         return response()->json([
             'totalStudents' => $totalStudents,
@@ -61,7 +33,6 @@ class DashboardController extends Controller
             'resolvedCases' => $resolvedCases,
             'totalMale' => $totalMale,
             'totalFemale' => $totalFemale,
-
         ]);
     }
 

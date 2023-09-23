@@ -1,16 +1,8 @@
 $(document).ready(function() {
-    let timeRange = 'yearly';
-
-    $('#toggle-time-range').click(function() {
-        timeRange = (timeRange === 'all') ? 'yearly' : 'all';
-        updateDashboardData(timeRange);
-    });
-
-    function updateDashboardData(timeRange) {
+    function updateDashboardData() {
         $.ajax({
             url: '/get-dashboard-data',
             method: 'GET',
-            data: { time_range: timeRange },
             dataType: 'json',
             success: function(data) {
                 $('#total-students').text(data.totalStudents);
@@ -25,11 +17,11 @@ $(document).ready(function() {
             }
         });
     }
-    updateDashboardData(timeRange);
 
-    // Set interval
+    updateDashboardData();
+
     setInterval(function() {
-        updateDashboardData(timeRange);
+        updateDashboardData();
     }, 1000);
 });
 
