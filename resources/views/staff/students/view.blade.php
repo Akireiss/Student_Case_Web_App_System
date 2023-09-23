@@ -81,8 +81,10 @@
 
 
         @if ($student->anecdotal->isEmpty())
-            <p>No cases found for this student.</p>
+            <p class="text-green-500 text-center font-bold">No cases found for this student.</p>
         @else
+        <p class="text-left font-bold text-xl">Student Cases</p>
+
             @foreach ($student->anecdotal as $report)
                 <x-form title="">
                     <x-slot name="actions">
@@ -110,7 +112,7 @@
                                 <x-label>
                                     Referred By
                                 </x-label>
-                                {{-- <x-input value="{{ $report->report?->user?->name ?? 'No Reporter Found' }}" disabled /> --}}
+                                <x-input value="{{ $report->user?->name ?? 'No Reporter Found' }}" disabled />
                             </div>
 
 

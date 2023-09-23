@@ -29,7 +29,7 @@ final class StudentProfileTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->showSearchInput() ->showToggleColumns(),
+            Header::make()->showToggleColumns(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(mode: 'full')
@@ -156,6 +156,8 @@ final class StudentProfileTable extends PowerGridComponent
     public function filters(): array
     {
         return [
+            Filter::inputText('first_name')->operators(['contains']),
+            Filter::inputText('last_name')->operators(['contains']),
             Filter::select('sex', 'sex')
             ->dataSource(Profile::select('sex')->distinct()->get())
             ->optionValue('sex')
