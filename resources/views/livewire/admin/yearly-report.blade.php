@@ -18,18 +18,7 @@
         </ul>
     </div>
 
-    <div x-data="{ open: false }" class="relative inline-block text-left">
-        <x-buttontype @click="open = !open">
-            Year Level
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4 ml-2">
-                <path d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </x-buttontype>
-        <ul x-show="open" @click.away="open = false" class="absolute z-50 mt-2 py-2 bg-white border border-gray-300 rounded-lg shadow-lg w-full">
-            <li><a href="#" class="block px-4 py-2 text-gray-800
-                 hover:bg-gray-500 hover:text-white">High School</a></li>
-        </ul>
-    </div>
+
 
 </div>
 
@@ -106,7 +95,8 @@
         <div class="w-full px-4">
             <div class="relative mb-3">
                 <x-label>Category</x-label>
-                <x-input disabled wire:model="selectedOption" />
+                <x-input disabled
+                wire:model="selectedOption" />
             </div>
         </div>
         <div class="w-full px-4">
@@ -131,7 +121,7 @@
 </div>
 
 
-    {{-- Additional Form --}}
+@if ($selectedOption === 'Senior High')
     <x-form title="">
         <x-slot name="actions">
 
@@ -144,19 +134,21 @@
             </h6>
             <!-- Personal information form fields -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+
                 <div class="w-full px-4">
                     <div class="relative mb-3">
-                        {{-- Label --}}
                         <x-label>Completters</x-label>
-                        <x-input/>
+                        <x-input wire:model="totalStudents" disabled />
                     </div>
                 </div>
 
 
                 <div class="w-full px-4">
                     <div class="relative mb-3">
-                        <x-label for="section">Enrollment</x-label>
-                        <x-input/>
+                        <x-label for="section"
+                       >Enrollment</x-label>
+                        <x-input  wire:model="totalEnrollment"  disabled/>
 
                     </div>
                 </div>
@@ -164,13 +156,14 @@
                 <div class="w-full px-4">
                     <div class="relative mb-3">
                         <x-label>Percent Cr</x-label>
-                        <x-input/>
+                        <x-input disabled
+                        wire:model="completionPercent"/>
                     </div>
                 </div>
 
                 <div class="w-full px-4">
                     <div class="relative mb-3">
-                        <x-label>Status</x-label>
+                        <x-label>Year Level</x-label>
                         <x-input/>
                     </div>
                 </div>
@@ -180,6 +173,111 @@
     </x-form>
 
 
+{{-- Another Form --}}
+
+<x-form title="">
+    <x-slot name="actions">
+
+    </x-slot>
+
+    <x-slot name="slot">
+
+        <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+          Promotion Rate
+        </h6>
+        <!-- Personal information form fields -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+
+<div class="w-full px-4">
+    <div class="relative mb-3">
+        <x-label>Promotes</x-label>
+        <x-input disabled wire:model="totalPromotion" />
+    </div>
+</div>
+
+
+
+            <div class="w-full px-4">
+                <div class="relative mb-3">
+                    <x-label for="section"
+                   >Enrollment</x-label>
+                    <x-input wire:model="totalEnrollment"  disabled/>
+
+                </div>
+            </div>
+
+            <div class="w-full px-4">
+                <div class="relative mb-3">
+                    <x-label>Percent PR</x-label>
+                    <x-input disabled
+                    wire:model="promotionPercent"/>
+                </div>
+            </div>
+
+            <div class="w-full px-4">
+                <div class="relative mb-3">
+                    <x-label>Year Level</x-label>
+                    <x-input/>
+                </div>
+            </div>
+        </div>
+
+    </x-slot>
+</x-form>
+
+
+{{-- //Dropout Rate Form --}}
+
+<x-form title="">
+    <x-slot name="actions">
+
+    </x-slot>
+
+    <x-slot name="slot">
+        <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+          Drop Out Rate
+        </h6>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+
+            <div class="w-full px-4">
+                <div class="relative mb-3">
+                    <x-label>Drop Out</x-label>
+                    <x-input wire:model="totalDropOut" disabled />
+                </div>
+            </div>
+
+
+            <div class="w-full px-4">
+                <div class="relative mb-3">
+                    <x-label for="section"
+                   >Enrollment</x-label>
+                    <x-input wire:model="totalEnrollment" disabled/>
+
+                </div>
+            </div>
+
+            <div class="w-full px-4">
+                <div class="relative mb-3">
+                    <x-label>Percent Dr</x-label>
+                    <x-input disabled wire:model="dropOutRate"
+                  />
+                </div>
+            </div>
+
+            <div class="w-full px-4">
+                <div class="relative mb-3">
+                    <x-label>Year Level</x-label>
+                    <x-input/>
+                </div>
+            </div>
+        </div>
+
+    </x-slot>
+</x-form>
+
+@endif
 
 
 

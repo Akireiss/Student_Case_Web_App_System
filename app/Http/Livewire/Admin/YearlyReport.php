@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Students;
 use stdClass;
 use Livewire\Component;
 use App\Models\Classroom;
@@ -12,7 +13,17 @@ class YearlyReport extends Component
     public $yearLevel;
     public $selectedOption = 'High School';
     public $groupedClassrooms = [];
+    public $totalStudents;
+    public $totalEnrollment;
+    //total dropout
+    public $totalDropOut;
+    //promotion
+    public $totalPromotion;
 
+    //calculation
+    public $completionPercent;
+    public $promotionPercent;
+    public $dropOutRate;
 
     public function render()
     {
@@ -45,12 +56,51 @@ class YearlyReport extends Component
             return $total;
         });
 
-        // Sort by grade_level
         $this->groupedClassrooms = $groupedClassrooms->sortKeys();
+        $completter = $this->totalStudents = Students::whereHas('classroom', function ($query) {
+            $query->where('grade_level', 11);
+        })->where('status', 2)->count();
+        //dropout
+        $dropout = $this->totalDropOut = Students::whereHas('classroom', function ($query) {
+            $query->whereIn('grade_level', [11, 12]);
+        })->where('status', 1)->count();
+        //promotion
+        $promotion = $this->totalPromotion = Students::where(function ($query) {
+            // Check for Grade 11 students updated to Grade 12 within the past year
+            $query->whereHas('classroom', function ($query) {
+                $query->where('grade_level', 11)->where('updated_at', '>=', now()->subYear());
+            });
 
-        return view('livewire.admin.yearly-report')
+            // Check for Grade 12 students
+            $query->orWhereHas('classroom', function ($query) {
+                $query->where('grade_level', 12);
+            });
+        })->count();
+
+
+        //totalEnrollment
+        $enrollment = $this->totalEnrollment = Students::whereHas('classroom', function ($query) {
+            $query->whereIn('grade_level', [11, 12]);
+        })->where('status', 2)->count();
+
+        //Computing all
+        $this->completionPercent = ($completter / $enrollment) * 100;
+        $this->promotionPercent = ($promotion / $enrollment) * 100;
+        $this->dropOutRate = ($dropout / $enrollment) * 100;
+
+        //End Senior High
+
+        //High School
+
+
+        //End School
+
+
+        return view('livewire.admin.yearly-report', [
+        ])
             ->extends('layouts.dashboard.index')
             ->section('content');
+
     }
 
     public function saveReport()

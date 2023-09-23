@@ -19,7 +19,6 @@ final class AnecdotaTable extends PowerGridComponent
 
     public function setUp(): array
     {
-        $this->showCheckBox();
 
         return [
             Exportable::make('export')

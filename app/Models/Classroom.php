@@ -23,6 +23,11 @@ class Classroom extends Model
         'grade_level',
         'status'
     ];
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
    public function student()
     {
         return $this->hasMany(Students::class, 'classroom_id', 'id');
@@ -34,10 +39,7 @@ class Classroom extends Model
         return $this->hasMany(Students::class);
     }
 
-    public function employee()
-    {
-        return $this->belongsTo(Employee::class);
-    }
+
 
 
 
