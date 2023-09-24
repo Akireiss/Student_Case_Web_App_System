@@ -1,6 +1,7 @@
 <x-form title="Student Profile" class="p-4">
 
     <x-slot name="actions">
+
         <x-link href="{{ url('student/profile/data/' . $profile->id) }}">
             Back
         </x-link>
@@ -8,6 +9,7 @@
 @auth
 
     @if(auth()->user()->role === 1)
+
         <x-slot name="actions">
             <x-link href="{{ url('admin/student-profile') }}">
                 Back

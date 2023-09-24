@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PdfController;
 use App\Http\Controllers\Student\AuthController;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\AddUser;
@@ -242,9 +243,11 @@ Route::get('help', [HelpController::class, 'index']);
 Route::get('student/lrn/{profileId}', [AuthController::class, 'login'])->name('student.login');
 //Login here
 Route::post('student/login/{profileId}', [AuthController::class, 'auth'])->name('student.auth');
-
-
-
 //students here
 //Cases
 Route::get('student/view/cases/{studentID}', [StudentDataController::class, 'viewCases']);
+
+//Pdf Here
+Route::get('generate-pdf/{id}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
+
+
