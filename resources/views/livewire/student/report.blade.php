@@ -1,6 +1,6 @@
 <div>
     <div class="mx-auto">
-        <div class="flex justify-end items-center">
+        <div class="flex justify-end  items-center">
             {{-- <h6 class="text-xl font-bold text-left ">
                 Report Student
             </h6> --}}
@@ -63,9 +63,10 @@
                                                     </li>
                                                 @endforeach
                                             @elseif ($studentName)
-                                                <span class="text-red-500 text-sm">
-                                                    No Student Found
-                                                </span>
+                                            <div class="px-4 py-2 cursor-pointer hover:bg-gray-200 bg-white border border-gray-300 mt-2 rounded-md w-full">
+                                                No Student Found
+
+                                            </div>
                                             </ul>
                                         @endif
                                     </div>
