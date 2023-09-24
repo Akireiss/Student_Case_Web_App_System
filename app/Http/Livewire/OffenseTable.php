@@ -61,9 +61,12 @@ final class OffenseTable extends PowerGridComponent
             /** Example of custom column using a closure **/
             ->addColumn('offenses_lower', fn(Offenses $model) => strtolower(e($model->offenses)))
 
+
             ->addColumn('description', function (Offenses $model) {
-                return Str::words(e($model->description), 8); //Gets the first 8 words
+                return Str::words(e($model->description), 8);
             })
+
+
             ->addColumn('status', function (Offenses $model) {
                 return ($model->status ? 'Inactive' : 'Active');
             });
@@ -110,18 +113,18 @@ final class OffenseTable extends PowerGridComponent
 
     public function actions(): array
     {
-       return [
-        Button::make('edit', 'Edit')
-        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-        ->route('admin.offense.edit', function (Offenses $model) {
-            return ['offense' => $model->id];
-        }),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('admin.offense.edit', function (Offenses $model) {
+                    return ['offense' => $model->id];
+                }),
 
-        Button::make('view', 'View')
-        ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-        ->route('admin.offense.view', function (Offenses $model) {
-            return ['offense' => $model->id];
-        }),
+            Button::make('view', 'View')
+                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('admin.offense.view', function (Offenses $model) {
+                    return ['offense' => $model->id];
+                }),
 
         ];
     }

@@ -49,9 +49,8 @@ final class EmployeeTable extends PowerGridComponent
             ->addColumn('employees_lower', fn(Employee $model) => strtolower(e($model->employees)))
 
             ->addColumn('refference_number')
-            ->addColumn('status', fn(Employee $model) => $model?->getStatusTextAttribute() ?? 'No Data')
+            ->addColumn('status', fn(Employee $model) => $model?->getStatusTextAttribute() ?? 'No Data');
 
-            ->addColumn('created_at_formatted', fn(Employee $model) => Carbon::parse($model->created_at)->format('F j, Y'));
     }
 
     public function columns(): array
@@ -68,10 +67,6 @@ final class EmployeeTable extends PowerGridComponent
 
             Column::make('Status', 'status')
                 ->sortable(),
-
-            Column::make('Date Added', 'created_at_formatted', 'created_at')
-                ->sortable(),
-
         ];
     }
 
@@ -81,7 +76,6 @@ final class EmployeeTable extends PowerGridComponent
             Filter::inputText('employees')->operators(['contains']),
             Filter::inputText('refference_number')->operators(['contains']),
             Filter::boolean('status')->label('Inactive', 'Active'),
-            Filter::datetimepicker('created_at'),
         ];
     }
 
