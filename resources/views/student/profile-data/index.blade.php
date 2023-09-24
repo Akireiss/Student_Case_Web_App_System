@@ -3,7 +3,7 @@
 @section('content')
     <section class="pt-12 min-h-screen ">
         <div class="w-full lg:w-4/12 px-4 mx-auto">
-            <div class="relative flex flex-col min-w-0 break-words bg-gray-100 w-full mb-6 shadow-xl rounded-lg mt-16">
+            <div class="relative flex flex-col min-w-0 break-words bg-gray-100 w-full mb-6 shadow-md rounded-lg mt-16">
                 <div class="px-6">
                     <div class="flex flex-wrap justify-center mt-6">
                         <div class="w-full px-4 flex justify-center">
@@ -13,13 +13,18 @@
                                     $formId = $form;
                                 @endphp
                                 @if ($formId)
-                                    <img src="data:image/png;base64,
-        {{ base64_encode(
+                                    {{-- <img src="data:image/png;base64,{{ base64_encode(
             QrCode::format('png')->merge(public_path('logo.PNG'), 0.3, true)->size(200)->generate(url('/student/profile/data/' . $form->id)),
         ) }}"
                                         alt="QR Code"
                                         class="shadow-md rounded-md  h-auto align-middle
-                                    border-none">
+                                    border-none"> --}}
+                                    <div class="shadow-md rounded-lg h-auto align-middle b-500 ">
+                                        {!! QrCode::size(200)->generate(url('/student/profile/data/' . $form->id)); !!}
+                                    </div>
+
+
+
                                 @else
                                     <div>
                                         No Data
@@ -30,7 +35,7 @@
                         </div>
 
                     </div>
-                    <div class="text-center mt-12">
+                    <div class="text-center mt-6">
                         <h3 class="text-xl font-semibold leading-normal text-gray-700 mb-2">
                             {{ $form->student->first_name }} {{ $form->student->last_name }}
                         </h3>
