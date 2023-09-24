@@ -4,7 +4,7 @@ flex flex-wrap items-center justify-between w-full
 px-4 py-5 tracking-wide bg-white  md:px-8  ">
     <!-- Left nav -->
     <div class="flex items-center lg:px-44 text-gray-600 hover:text-gray-900   ">
-        <a href="#" class="text-2xl ">
+        <a href="#" class="text-2xl font-bold text-green-500 ">
             CZCMNHS
         </a>
     </div>

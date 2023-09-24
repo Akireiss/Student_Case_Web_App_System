@@ -2,9 +2,9 @@
 
     <div x-data="{ showTable: true, showForm: false }">
         <div x-show="showTable">
-            <div class="flex items-center justify-between my-6">
+            <div class="flex items-center justify-between my-2">
                 <h6 class="text-lg font-semibold text-gray-600 dark:text-gray-300 flex-shrink-0">
-                    List Of Students
+                    {{-- List Of Students --}}
                 </h6>
                 <div class="flex justify-end  mt-4">
                     <x-button x-on:click="showTable = false; showForm = true">

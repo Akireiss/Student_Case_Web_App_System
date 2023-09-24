@@ -1,9 +1,9 @@
 <div>
 
     <div class="flex justify-between items-center">
-        <h6 class="text-xl font-bold">
-            Grade: {{ auth()->user()->classroom->grade_level }} {{ auth()->user()->classroom->section }} Profiles
-        </h6>
+        <div class="">
+        Table: Grade: {{ auth()->user()->classroom->grade_level }} {{ auth()->user()->classroom->section }} Profiles
+        </div>
         <div>
             <x-link :href="url('adviser/student-profile/add')">
                 Add

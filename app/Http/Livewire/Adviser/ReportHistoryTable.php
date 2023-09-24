@@ -24,7 +24,7 @@ final class ReportHistoryTable extends PowerGridComponent
     public function setUp(): array
     {
         return [
-            Header::make(),
+            Header::make()->includeViewOnTop('components.datatable'),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),

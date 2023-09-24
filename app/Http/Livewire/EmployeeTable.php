@@ -23,7 +23,7 @@ final class EmployeeTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make(),
+            Header::make()->includeViewOnTop('components.datatable'),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(mode: 'full')

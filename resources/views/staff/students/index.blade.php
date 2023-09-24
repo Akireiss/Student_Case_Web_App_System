@@ -1,9 +1,9 @@
 @extends('layouts.dashboard.index')
 
 @section('content')
-<h6 class="text-xl font-bold text-left ">
-    Grade:  {{ auth()->user()->classroom->grade_level }}  {{ auth()->user()->classroom->section }} Students
- </h6>
+<div>
+    Table: Grade:  {{ auth()->user()->classroom->grade_level }}  {{ auth()->user()->classroom->section }} Students
+ </div>
  <div>
      <livewire:adviser.student-table/>
  </div>

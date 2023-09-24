@@ -34,7 +34,7 @@ final class OffenseTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make(),
+            Header::make()->includeViewOnTop('components.datatable'),
             Footer::make()
                 ->showRecordCount(mode: 'full')
                 ->showPerPage()

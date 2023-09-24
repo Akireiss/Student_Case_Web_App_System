@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.index')
 @section('content')
-    <x-form title="Add Offenses">
+    <x-form title="">
         <x-slot name="actions">
             <x-link href="{{ url('admin/settings/offenses') }}">
                 Back
