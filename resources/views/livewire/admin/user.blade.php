@@ -1,10 +1,6 @@
 <div>
     <div class="mx-auto py-8">
 
-        <h6 class="text-xl font-bold text-left ">
-Update your information heress
-        </h6>
-
         <div class="bg-white dark:bg-gray-800 rounded shadow-lg p-10 px-4 md:p-8 mb-6">
             <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3">
 
@@ -118,7 +114,14 @@ Update your information heress
 
 
                             <div class="flex justify-end items-center my-4">
-                                <x-text-alert />
+                                <div id="messageContainer">
+                                    @if (session()->has('success'))
+                                        <span class="text-green-500 mx-4">
+                                            {{ session('success') }}
+                                        </span>
+                                    @endif
+                                </div>
+
                                 <div wire:loading wire:target="updatePassword" class="mx-4">
                                     Loading...
                                 </div>

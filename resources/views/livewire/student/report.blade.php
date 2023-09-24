@@ -1,9 +1,9 @@
 <div>
     <div class="mx-auto">
-        <div class="flex justify-between items-center">
-            <h6 class="text-xl font-bold text-left ">
+        <div class="flex justify-end items-center">
+            {{-- <h6 class="text-xl font-bold text-left ">
                 Report Student
-            </h6>
+            </h6> --}}
             @if (auth()->user()->role == '1')
                 <x-button x-on:click="showForm = false; showTable = true">
                     Back

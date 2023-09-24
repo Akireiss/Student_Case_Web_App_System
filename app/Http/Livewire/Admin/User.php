@@ -38,32 +38,31 @@ class User extends Component
     public function render()
     {
         return view('livewire.admin.user')
-        ->extends('layouts.dashboard.index')
-        ->section('content');
+            ->extends('layouts.dashboard.index')
+            ->section('content');
     }
-
 
     protected $rules = [
         'currentPassword' => 'required',
-         'newPassword' => 'required|min:8',
-        ];
+        'newPassword' => 'required|min:8',
+    ];
 
-        public function updatePassword()
-        {
-           $this->validate();
+    public function updatePassword()
+    {
+        $this->validate();
 
-            if (!Hash::check($this->currentPassword, auth()->user()->password)) {
-                $this->addError('currentPassword', 'The current password is incorrect.');
-                return;
-            }
-
-            auth()->user()->update([
-                'password' => Hash::make($this->newPassword),
-            ]);
-
-            $this->reset(['currentPassword', 'newPassword', 'passwordConfirmation']);
-
-            session()->flash('message', 'Password updated successfully.');
+        if (!Hash::check($this->currentPassword, auth()->user()->password)) {
+            $this->addError('currentPassword', 'The current password is incorrect.');
+            return;
         }
+
+        auth()->user()->update([
+            'password' => Hash::make($this->newPassword),
+        ]);
+
+        $this->reset(['currentPassword', 'newPassword', 'passwordConfirmation']);
+
+        session()->flash('success', 'Password updated successfully.');
+    }
 
 }
