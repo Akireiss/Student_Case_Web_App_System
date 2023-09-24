@@ -1,6 +1,6 @@
 <div>
 
-    <x-form title="Student Information">
+    <x-form title="">
         @guest
         <x-slot name="actions">
             <x-button onclick="window.history.back()">Back</x-button>

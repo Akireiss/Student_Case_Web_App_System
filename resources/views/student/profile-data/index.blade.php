@@ -1,118 +1,114 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex flex-col h-screen justify-center items-center">
-        <p class="text-xl mb-4 text-bold text-center  font-bold">
-            {{ $form->student->first_name }} {{ $form->student->middle_name }} {{ $form->student->last_name }}
-        </p>
+    <section class="pt-12 min-h-screen ">
+        <div class="w-full lg:w-4/12 px-4 mx-auto">
+            <div class="relative flex flex-col min-w-0 break-words bg-gray-100 w-full mb-6 shadow-xl rounded-lg mt-16">
+                <div class="px-6">
+                    <div class="flex flex-wrap justify-center mt-6">
+                        <div class="w-full px-4 flex justify-center">
+                            <div class="relative">
 
-        <p class="text-xl mb-4 text-bold text-center font-bold">
-          Grade:{{ $form->student->classroom?->grade_level ?? "No Data"}}  {{ $form->student->classroom?->section  ?? "No Data"}}
-        </p>
-        <div class="mx-auto mt-4 flex flex-col items-center space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-8">
-            @php
-                $formId = $form;
-            @endphp
-            @if ($formId)
-                <div class="text-center">
-
-                    <div class="space-y-4">
-
-                        <div class="bg-gray-100 shadow-md p-4 shadow-lg   ">
-                            <img class="w-48 h-48 mx-auto mb-2"
-                                src="data:image/png;base64,
+                                @php
+                                    $formId = $form;
+                                @endphp
+                                @if ($formId)
+                                    <img src="data:image/png;base64,
         {{ base64_encode(
             QrCode::format('png')->merge(public_path('logo.PNG'), 0.3, true)->size(200)->generate(url('/student/profile/data/' . $form->id)),
         ) }}"
-                                alt="QR Code">
+                                        alt="QR Code"
+                                        class="shadow-md rounded-md  h-auto align-middle
+                                    border-none">
+                                @else
+                                    <div>
+                                        No Data
+                                    </div>
+                                @endif
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="text-center mt-12">
+                        <h3 class="text-xl font-semibold leading-normal text-gray-700 mb-2">
+                            {{ $form->student->first_name }} {{ $form->student->last_name }}
+                        </h3>
+                        <div class="text-sm leading-normal mt-0 mb-2 text-gray-600 font-bold uppercase">
+                            Grade:{{ $form->student->classroom?->grade_level ?? 'No Data' }}
+                            {{ $form->student->classroom?->section ?? 'No Data' }}
+                        </div>
+                        <div class="text-sm leading-normal mb-2 text-gray-600 font-bold uppercase mt-10">
+                            Castor Z. Concepcion Memorial National High School
                         </div>
                     </div>
 
+                    <div class="w-full px-4 text-center mt-5 md:mt-5">
+                        <div class="flex justify-center py-4 lg:pt-4 pt-8">
 
-                    <div class="flex mx-auto flex-row space-x-2 mt-2">
+                            <a href="{{ url('student/profile/data/' . $form->id) }}" class="mr-4 p-3 text-center flex flex-col items-center ">
+                                <span class="text-xl font-bold block uppercase tracking-wide text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </span>
+                                <span class="text-sm text-gray-600 font-bold text-center mt-2 hover:border-b hover:border-green-500">Profile</span>
+                            </a>
 
-                        <x-button id="saveImageButton">
-                            Save Image
-                        </x-button>
-                        {{-- the link:: a href="{{ url('/student/profile/data/') }}" --}}
-                        <x-button id="saveImageButton">
-                            Copy Link
-                        </x-button>
+
+                            <a href="{{ url('student/profile/data/' . $form->id . '/view') }}" class="mr-4 p-3 text-center flex flex-col items-center">
+                                <span class="text-xl font-bold block uppercase tracking-wide">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                    class="w-6 h-6 mb-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </span>
+                                <span class="text-sm text-gray-600 font-bold hover:border-b hover:border-green-500">View</span>
+                            </a>
+
+
+                            <a href="{{ url('student-profile/data/' . $form->id . '/edit') }}" class="mr-4 p-3 text-center flex flex-col items-center">
+                                <span class="text-xl font-bold block uppercase tracking-wide">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-6 h-6 mb-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                    </svg>
+                                </span>
+                                <span class="text-sm text-gray-600 font-bold hover:border-b hover:border-green-500">Edit</span>
+                            </a>
+
+
+                            <a href="{{ url('student/view/cases/' . $form->student->id) }}" class="lg:mr-4 p-3 text-center flex flex-col items-center">
+                                <span class="text-xl font-bold block uppercase tracking-wide">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-6 h-6 mb-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
+                                    </svg>
+                                </span>
+                                <span class="text-sm text-gray-600 font-bold hover:border-b hover:border-green-500">Cases</span>
+                            </a>
+
+                        </div>
                     </div>
 
-
                 </div>
-            @else
-                <div>
-                    No Data
-                </div>
-            @endif
-        </div>
-
-
-
-        <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white">
-            <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
-                <a href="{{ url('student/profile/data/' .$form->id) }}" type="button"
-                    class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                    <svg class="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-white " aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-                    </svg>
-                    <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-white ">Profile</span>
-                </a>
-
-
-
-                <a href="{{ url('student-profile/data/' . $form->id . '/edit') }}"
-                    class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-
-
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="w-5 h-5 mb-2 group-hover:text-white text-gray-500">
-                        <path
-                            d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-                        <path
-                            d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-                    </svg>
-
-
-
-                    <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-white ">Edit</span>
-                </a>
-                <a href="{{ url('student/profile/data/' . $form->id . '/view') }}"
-                    class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="w-5 mb-2 h-5 group-hover:text-white text-gray-500">
-                        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                        <path fill-rule="evenodd"
-                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
-                            clip-rule="evenodd" />
-                    </svg>
-
-                    <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-white ">View</span>
-                </a>
-
-                <a href="{{ url('student/view/cases/' . $form->student->id) }}"
-                    class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  class="w-5 mb-2 h-5 group-hover:text-white text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
-                      </svg>
-
-
-                    <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-white ">View</span>
-                </a>
             </div>
         </div>
-
-
-    </div>
-
-
-    {{-- Need more revsion here --}}
+        <footer class="relative  pt-8 pb-6 mt-8">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap items-center md:justify-between justify-center">
+                    <div class="w-full md:w-6/12 px-4 mx-auto text-center">
+                        <div class="text-sm text-blueGray-500 font-semibold py-1">
+                            © 2023 <a href="https://github.com/Akireiss/Student_Web_Case_CZCMHS" target="_blank"
+                                class="hover:underline text-center">
+                                Capstone Project</a> | Don Mariano Marcos Memorial State University</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
     <script>
         document.getElementById('saveImageButton').addEventListener('click', function() {
             const qrCodeImage = document.querySelector('.w-48.h-48');

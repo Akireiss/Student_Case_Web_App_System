@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-        <div class="px-16  mx-auto mt-10">
+        <div class="lg:px-12 md:mx-24 mt-1 px-4  ">
             <x-cases :student="$student"/>
         </div>
 

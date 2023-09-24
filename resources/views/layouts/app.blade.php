@@ -5,7 +5,7 @@
     <main class="">
         @yield('content')
     </main>
-    <x-footer />
+    {{-- <x-footer /> --}}
     </div>
 
 
