@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="flex flex-col h-screen justify-center items-center">
-        <p class="text-xl mb-4 text-bold text-2xl text-center  font-bold">
+        <p class="text-xl mb-4 text-bold text-center  font-bold">
             {{ $form->student->first_name }} {{ $form->student->middle_name }} {{ $form->student->last_name }}
         </p>
 
-        <p class="text-xl mb-4 text-bold text-2xl text-center font-bold">
+        <p class="text-xl mb-4 text-bold text-center font-bold">
           Grade:{{ $form->student->classroom?->grade_level ?? "No Data"}}  {{ $form->student->classroom?->section  ?? "No Data"}}
         </p>
         <div class="mx-auto mt-4 flex flex-col items-center space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-8">
@@ -53,7 +53,7 @@
 
         <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white">
             <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
-                <a href="{{ url('student/profile/data/{form_id}') }}" type="button"
+                <a href="{{ url('student/profile/data/' .$form->id) }}" type="button"
                     class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                     <svg class="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-white " aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -95,7 +95,7 @@
                     <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-white ">View</span>
                 </a>
 
-                <a href="{{ url('student/view/cases' . $form->student->id ) }}"
+                <a href="{{ url('student/view/cases/' . $form->student->id) }}"
                     class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  class="w-5 mb-2 h-5 group-hover:text-white text-gray-500">

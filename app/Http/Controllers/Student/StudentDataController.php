@@ -20,9 +20,10 @@ class StudentDataController extends Controller
         return view('student.profile.view', compact('profile'));
     }
 
-    // public function viewCases() {
-    //     return view('');
-    // }
+    public function viewCases($studentID) {
+        $student = Students::findOrFail($studentID);
+        return view('student.profile-data.cases',compact('student'));
+    }
 
 
 

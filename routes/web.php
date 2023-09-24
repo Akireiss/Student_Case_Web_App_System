@@ -209,8 +209,6 @@ Route::get('student/profile/data/{form_id}/view',
  [StudentDataController::class, 'view']);
 //*student form update
 Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
-//Cases
-// Route::get('student/view/cases/{student}', [StudentDataController::class, 'viewCases']);
 
 
 //*end-points
@@ -228,11 +226,6 @@ Route::get('/get-ongoing-actions',
 [DashboardController::class, 'getOngoingCases']);
 
 
-
-//Dynamic Pages
-// Route::get('admin/dashboard',[SidebarController::class, 'dashboard'])->name('admin.dashboard.dashboard');
-// Route::get('admin/reports', [SidebarController::class, 'reports'])->name('livewire.student.report');
-
 //ResolvedCase
 Route::get('admin/resolved-cases', ResolvedCases::class);
 //Test
@@ -249,3 +242,9 @@ Route::get('help', [HelpController::class, 'index']);
 Route::get('student/lrn/{profileId}', [AuthController::class, 'login'])->name('student.login');
 //Login here
 Route::post('student/login/{profileId}', [AuthController::class, 'auth'])->name('student.auth');
+
+
+
+//students here
+//Cases
+Route::get('student/view/cases/{studentID}', [StudentDataController::class, 'viewCases']);

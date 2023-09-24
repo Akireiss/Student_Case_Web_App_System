@@ -1,8 +1,9 @@
-@extends('layouts.dashboard.index')
+@extends('layouts.app')
 @section('content')
-    <div>
-        <x-cases :student="$student"/>
 
-    </div>
+        <div class="px-16  mx-auto mt-10">
+            <x-cases :student="$student"/>
+        </div>
+
 
 @endsection
