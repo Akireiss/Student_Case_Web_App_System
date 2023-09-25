@@ -202,8 +202,11 @@ Route::resource('students', ReportHistory::class);
 Route::get('student/form', StudentForm::class);
 // Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
 Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
+
+
 //*Student Profile Data
-Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])->name('student.profile.data');
+Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])
+->name('student.profile.data')->middleware('profileAuth');
 
 
 Route::get('student/profile/data/{form_id}/view',

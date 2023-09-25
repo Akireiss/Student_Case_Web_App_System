@@ -36,7 +36,7 @@
                                         <x-input required wire:model.debounce.300ms="studentName" @focus="isOpen = true"
                                             @click.away="isOpen = false" @keydown.escape="isOpen = false"
                                             @keydown="isOpen = true" type="text" id="studentName" name="studentName"
-                                            placeholder="Start typing to search." />
+                                            placeholder="Type at least 3 words to search" />
                                         <x-error fieldName="studentName" />
                                         <x-error fieldName="studentId" />
 
@@ -281,8 +281,8 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                 @endforeach
                 <p class="text-red-500 text-md  text-center">{{ $studentName }} has a total of {{ $totalOffenses }}
                     offenses.
-                    {{ $totalPending }} Pending cases | {{ $totalProcess }} Process cases | {{ $totalResolved }}
-                    Resolved cases
+                    {{ $totalPending }} Pending Cases | {{ $totalProcess }} Process Cases | {{ $totalResolved }}
+                    Resolved Cases
                 </p>
             @else
                 <p class="text-green-500 text-md text-center">

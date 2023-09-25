@@ -5,6 +5,9 @@
         * {
             font-family: Verdana, Arial, sans-serif;
         }
+        .page-break {
+    page-break-after: always;
+}
         table {
             font-size: x-small;
         }
@@ -243,10 +246,10 @@
         @if ($profile->education->isNotEmpty())
             @foreach ($profile->education as $educ)
                 <tr>
-                    <td>Grade: {{ $educ->grade_level }}</td>
-                    <td>{{ $educ->school_name }}</td>
-                    <td>{{ $educ->school_year }}</td>
-                    <td>{{ $educ->grade_section }}</td>
+                    <td>Grade: {{ $educ?->grade_level ?? 'No Data' }}</td>
+                    <td>{{ $educ?->school_name ?? 'No Data' }}</td>
+                    <td>{{ $educ?->school_year ?? 'No Data' }}</td>
+                    <td>{{ $educ?->grade_section ?? 'No Data'}}</td>
                 </tr>
             @endforeach
         @else
@@ -254,6 +257,52 @@
                 <td colspan="4">No education records available.</td>
             </tr>
         @endif
+    </table>
+
+    {{-- Page 2 --}}
+    <div class="page-break"></div>
+
+    <table class="inline">
+        <tr>
+            <td class="bold">Name some of your Academic and Extra-Curricular Awards:
+        </tr>
+    </table>
+
+    <table  class="inline">
+
+        @if ($profile->awards->isNotEmpty())
+            @foreach ($profile->awards as $award)
+                <tr>
+                    <td>{{ $award->award_name }}</td>
+                    <td>{{ $award->award_year }}</td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="4">No record found.</td>
+            </tr>
+        @endif
+    </table>
+
+    <table  class="inline">
+            <tr>
+                <td colspan="4">What is yor favorite subject/s:{{$profile->favorite_subject  }}</td>
+
+            </tr>
+            <tr>
+                <td colspan="4">What is yor favorite subject/s:{{$profile->difficult_subject  }}</td>
+
+            </tr>
+            <tr>
+                <td colspan="4">What school organizations are you afiliated?:{{$profile->school_organization  }}</td>
+
+            </tr>
+
+            <tr>
+                <td colspan="4"> What do you plan to do after graduating Senior High School?:{{$profile->graduation_plan  }}</td>
+
+            </tr>
+
     </table>
 
 

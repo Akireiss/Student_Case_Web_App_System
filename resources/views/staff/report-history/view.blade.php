@@ -140,7 +140,7 @@
                         <x-label>
                             Remarks (Short Description)
                         </x-label>
-                        <x-input disabled type="text" value="{{ $report->anecdotal?->remarks ?? 'No Data' }}" />
+                        <x-input disabled type="text" value="{{ $report->anecdotal?->short_description ?? 'No Data' }}" />
 
                     </div>
                 </div>
