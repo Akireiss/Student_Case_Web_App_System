@@ -4,7 +4,7 @@
 <x-form title="">
     <x-slot name="actions">
 
-        <x-link href="">
+        <x-link :href="url('admin/settings/audit-trail')">
             Back
         </x-link>
     </x-slot>
@@ -45,24 +45,38 @@
 
         </div>
 
-
+        @if ($activity->event === 'updated')
         <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
             Changes
-         </h6>
+        </h6>
 
-            <div class="w-full px-4">
-                <div class="relative mb-3">
-                    <x-label>Old Properties</x-label>
-                    {{-- <x-input disabled value="{{ json_encode($activity->properties['attributes']) }}"/> --}}
-                </div>
+        <div class="w-full px-4">
+            <div class="relative mb-3">
+                <x-label>Old Properties</x-label>
+                <x-input disabled value="{{ $formattedOld }}"/>
             </div>
+        </div>
 
-            <div class="w-full px-4">
-                <div class="relative mb-3">
-                    <x-label>New Properties</x-label>
-                    {{-- <x-input disabled value="{{json_encode($activity->old->properties)}}"/> --}}
-                </div>
+        <div class="w-full px-4">
+            <div class="relative mb-3">
+                <x-label>New Properties</x-label>
+                <x-input disabled value="{{ $formattedNew }}"/>
             </div>
+        </div>
+    @elseif ($activity->event === 'created')
+        <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
+            Data
+        </h6>
+        <div class="w-full px-4">
+            <div class="relative mb-3">
+                <x-label>Properties</x-label>
+                <x-textarea disabled>{{ $formattedNew }}</x-textarea>
+            </div>
+        </div>
+    @endif
+
+
+
 
         </div>
 

@@ -26,8 +26,10 @@ class Student extends Component
     public function store()
     {
         $this->validate();
-
         $this->isSubmitting = true;
+
+        $classroom = Classroom::find($this->classroom_id);
+        $department = in_array($classroom->grade_level, [7, 8, 9, 10]) ? 0 : 1;
 
         Students::create([
             'first_name' => $this->first_name,
@@ -37,6 +39,7 @@ class Student extends Component
             'classroom_id' => $this->classroom_id,
             'gender' => $this->gender,
             'status' => $this->status,
+            'department' => $department
         ]);
 
         $this->resetForm();
