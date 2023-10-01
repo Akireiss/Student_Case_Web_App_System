@@ -22,7 +22,7 @@ final class StudentProfileTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),
-            Header::make()->showSearchInput()->includeViewOnTop('components.datatable'),
+            Header::make()->showSearchInput()->showToggleColumns()->includeViewOnTop('components.datatable'),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -111,12 +111,12 @@ final class StudentProfileTable extends PowerGridComponent
     {
         return [
             Button::make('edit', 'Edit')
-                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                 ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
                 ->route('admin.profile.edit', function(\App\Models\Profile $model) {
                     return ['profile' => $model->id];
                 }),
             Button::make('view', 'View')
-                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                 ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
                 ->route('admin.profile.show', function(\App\Models\Profile $model) {
                     return ['profile' => $model->id];
                 }),

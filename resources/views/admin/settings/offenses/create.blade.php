@@ -29,15 +29,14 @@
                     <div class="w-full px-4">
                         <div class="relative mb-3">
                             <x-label>
-                              Status
+                                Category
                             </x-label>
-                            <x-select name="status">
-                                <option value="0" >Active</option>
-                                <option value="1">Inactive</option>
+                            <x-select name="category">
+                                <option value="0">Minor</option>
+                                <option value="1">Grave</option>
                             </x-select>
                         </div>
                     </div>
-
 
                     <div class="w-full px-4">
                         <div class="relative mb-3">
@@ -48,14 +47,31 @@
                             </x-textarea>
                         </div>
                     </div>
-                </div>
-                <div class="flex justify-end">
-                    <x-button type="submit">Add</x-button>
-                </div>
 
+
+                    <div class="w-full px-4">
+                        <div class="relative mb-3">
+                            <x-label>
+                              Status
+                            </x-label>
+                            <x-select name="status">
+                                <option value="0" >Active</option>
+                                <option value="1">Inactive</option>
+                            </x-select>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="flex justify-end items-center">
+                    <div id="messageContainer">
+                    <x-alert/>
+                    </div>
+                    <x-button type="submit">Add </x-button>
+                </div>
             </form>
 
-            <!-- Add any additional sections or form fields here -->
         </x-slot>
     </x-form>
 @endsection

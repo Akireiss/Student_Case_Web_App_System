@@ -130,6 +130,8 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('audit-trail', function () {
                 return view('admin.settings.audit-trail.index');
             });
+            Route::get('audit-trail/view/{activity}', [HelpController::class, 'show'])->name('activity.view');
+
 
             // Students Area
             Route::get('students', Student::class);
@@ -159,7 +161,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('student-profile/{profile}/edit', StudentProfileUpdate::class)
             ->name('adviser.profile.edit');
 
-            Route::get('student-profile/{profile}/view', [StudentProfile::class, 'show'])->name('profile.view');
+            Route::get('student-profile/{profile}/view', [StudentProfile::class, 'show'])->name('adviser.profile.view');
             //*History
             Route::get('report/history', function() {
                 return view('staff.report-history.index');
@@ -176,7 +178,6 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('students/{student}/edit', ReferStudent::class)->name('adviser.students.edit');
             Route::get('students/{student}/view', [ReferStudent::class,'view'])->name('adviser.students.view');
             //HS Issue
-            Route::get('students/{student}/view', [ReferStudent::class,'view'])->name('adviser.students.view');
 
 
             //*Account Management
@@ -197,22 +198,6 @@ Route::middleware(['auth', 'role'])->group(function () {
         });
 });
 
-//*students
-Route::resource('students', ReportHistory::class);
-Route::get('student/form', StudentForm::class);
-// Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
-Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
-
-
-//*Student Profile Data
-Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])
-->name('student.profile.data')->middleware('profileAuth');
-
-
-Route::get('student/profile/data/{form_id}/view',
- [StudentDataController::class, 'view']);
-//*student form update
-Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
 
 
 //*end-points
@@ -250,7 +235,48 @@ Route::post('student/login/{profileId}', [AuthController::class, 'auth'])->name(
 //Cases
 Route::get('student/view/cases/{studentID}', [StudentDataController::class, 'viewCases']);
 
+//*students
+Route::resource('students', ReportHistory::class);
+Route::get('student/form', StudentForm::class);
+// Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
+Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
+
+
+//*Student Profile Data
+Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])
+->name('student.profile.data')->middleware('profileAuth');
+
+
+Route::get('student/profile/data/{form_id}/view',
+ [StudentDataController::class, 'view']);
+//*student form update
+Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Pdf Here
 Route::get('generate-pdf/{id}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
+Route::get('test/pdf', [PdfController::class, 'testPdf']);
 
 

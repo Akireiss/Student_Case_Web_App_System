@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.index')
 @section('content')
-    <div>
+<div>
         <x-cases :student="$student"/>
 
     </div>

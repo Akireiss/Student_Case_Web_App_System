@@ -22,7 +22,7 @@
                     <form wire:submit.prevent="store" enctype="multipart/form-data">
                         @csrf
                         <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                            Student Information
+                            Reffer Student
                         </h6>
                         <x-grid columns="2" gap="4" px="0" mt="0">
 
@@ -241,11 +241,13 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 
                         </x-grid>
 
-                        <div class="flex justify-end items-center">
+                        <div class="flex justify-end items-center space-x-2">
                             <x-text-alert />
                             <div wire:loading wire:target="store" class="mx-4">
                                 Loading...
                             </div>
+                            <x-buttontype wire:loading.attr="disabled" wire:click="resetReport"
+                            class="bg-red-500 text-white hover:bg-red-600">Clear</x-buttontype>
                             <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                         </div>
                     </form>
@@ -281,7 +283,7 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                 @endforeach
                 <p class="text-red-500 text-md  text-center">{{ $studentName }} has a total of {{ $totalOffenses }}
                     offenses.
-                    {{ $totalPending }} Pending Cases | {{ $totalProcess }} Process Cases | {{ $totalResolved }}
+                    {{ $totalPending }} Pending Cases | {{ $totalProcess }} Inprocess Cases | {{ $totalResolved }}
                     Resolved Cases
                 </p>
             @else

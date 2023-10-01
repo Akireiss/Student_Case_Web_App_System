@@ -24,7 +24,10 @@ final class ReportHistoryTable extends PowerGridComponent
     public function setUp(): array
     {
         return [
-            Header::make()->includeViewOnTop('components.datatable'),
+            Exportable::make('export')
+            ->striped()
+            ->type(Exportable::TYPE_CSV),
+            Header::make()->includeViewOnTop('components.datatable')->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -55,6 +58,8 @@ final class ReportHistoryTable extends PowerGridComponent
     public function relationSearch(): array
     {
         return [
+            'users' => ['name'],
+            'anecdotal' => ['students.first_name', 'students.last_name']
         ];
     }
 
@@ -102,38 +107,38 @@ final class ReportHistoryTable extends PowerGridComponent
 
     if (auth()->user()->role === 0) {
         $buttons[] = Button::make('view', 'View')
-            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
             ->route('user.report.view', function (\App\Models\Report $model) {
                 return ['report' => $model->id];
             });
 
         $buttons[] = Button::make('edit', 'Edit')
-            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
             ->route('user.report.edit', function (\App\Models\Report $model) {
                 return ['report' => $model->id];
             });
 
     }elseif (auth()->user()->role === 1) {
         $buttons[] = Button::make('view', 'View')
-            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
             ->route('admin.report.view', function (\App\Models\Report $model) {
                 return ['report' => $model->id];
             });
 
         $buttons[] = Button::make('edit', 'Edit')
-            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
             ->route('admin.report.edit', function (\App\Models\Report $model) {
                 return ['report' => $model->id];
             });
     } elseif (auth()->user()->role === 2) {
         $buttons[] = Button::make('view', 'View')
-            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
             ->route('report.view', function (\App\Models\Report $model) {
                 return ['report' => $model->id];
             });
 
         $buttons[] = Button::make('edit', 'Edit')
-            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
             ->route('report.edit', function (\App\Models\Report $model) {
                 return ['report' => $model->id];
             });

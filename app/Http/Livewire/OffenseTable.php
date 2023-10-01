@@ -34,7 +34,7 @@ final class OffenseTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->includeViewOnTop('components.datatable'),
+            Header::make()->includeViewOnTop('components.datatable')->showSearchInput(),
             Footer::make()
                 ->showRecordCount(mode: 'full')
                 ->showPerPage()
@@ -115,13 +115,13 @@ final class OffenseTable extends PowerGridComponent
     {
         return [
             Button::make('edit', 'Edit')
-                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
                 ->route('admin.offense.edit', function (Offenses $model) {
                     return ['offense' => $model->id];
                 }),
 
             Button::make('view', 'View')
-                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
                 ->route('admin.offense.view', function (Offenses $model) {
                     return ['offense' => $model->id];
                 }),

@@ -18,15 +18,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use LogsActivity;
     use StatusTrait;
-
-
-    protected static $logAttributes = ['name', 'email', 'password'];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'users';
 
     protected $fillable = [
         'name',
@@ -40,49 +32,26 @@ class User extends Authenticatable
     const ROLE_STAFF = 2;
 
 
-    public function classroom() {
+    public function classroom()
+    {
         return $this->belongsTo(Classroom::class);
     }
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * The attributes that should be cast.
-
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-
 
     public function reports()
     {
         return $this->hasMany(Report::class);
     }
 
-//    Logs Activities
-
-    public function getActivitylogOptions(): LogOptions
+    //for adviser
+    public function students()
     {
-        return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'password']);
-    }
-
-    // public function student() {
-    //     return $this->hasMany(Students::class, 'classroom_id', 'classroom_id');
-    // }
-
-//for adviser
-    public function students() {
         return $this->hasMany(Students::class, 'classroom_id', 'classroom_id');
     }
 
@@ -112,6 +81,27 @@ class User extends Authenticatable
             ['role' => 2, 'label' => 'Adviser'],
         ]);
     }
+
+
+    //Log Activity
+
+    protected static $logAttributes = ['name', 'email'];
+    protected static $logName = 'user';
+    protected static $logOnlyDirty = true;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email'])
+            ->useLogName('User')
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "A user has been {$eventName}";
+    }
+
 
 
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('vitamins', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('profile_id');
-            $table->string('vitamins');
+            $table->string('vitamins')->nullable();
 
             $table->foreign('profile_id')->references('id')->on('profile')->onDelete('cascade');
             $table->timestamps(false);

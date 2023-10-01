@@ -22,14 +22,11 @@
     </div>
 @endif
 
-
-
 @if(request()->is('admin/settings/students'))
     <div>
         Table: Students
     </div>
 @endif
-
 
 @if(request()->is('admin/settings/offenses'))
     <div>
@@ -37,18 +34,21 @@
     </div>
 @endif
 
-
-
 @if(request()->is('admin/settings/report/history'))
     <div>
         Table: Report History
     </div>
 @endif
 
-
 @if(request()->is('admin/settings/audit-trail'))
     <div>
         Table: Audit Trail
+    </div>
+@endif
+
+@if(request()->is('admin/user/accounts'))
+    <div>
+        Table: User Accounts
     </div>
 @endif
 

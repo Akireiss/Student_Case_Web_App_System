@@ -1,5 +1,5 @@
 <div>
-<div class="md:px-10 mx-3">
+<div class="md:p-4 mx-3">
 
     <x-form title="">
 
@@ -30,7 +30,7 @@
                                 First Name
                             </x-label>
                             <div class="relative">
-                                <x-input wire:model.debounce.300ms="studentName" @focus="isOpen = true"
+                                <x-input required wire:model.debounce.300ms="studentName" @focus="isOpen = true"
                                     @click.away="isOpen = false" @keydown.escape="isOpen = false"
                                     @keydown="isOpen = true" type="text" id="studentName" name="studentName"
                                     placeholder="Start typing to search." />
@@ -66,7 +66,7 @@
                         <x-label>
                             Last Name
                         </x-label>
-                        <x-input wire:model="last_name" readonly />
+                        <x-input wire:model="last_name" disabled />
 
                     </div>
 
@@ -74,7 +74,7 @@
                         <x-label>
                             Middle Name
                         </x-label>
-                        <x-input wire:model="middle_name" />
+                        <x-input wire:model="middle_name" disabled />
                         <x-error fieldName="m_name" />
 
                     </div>
@@ -417,7 +417,7 @@
                         <x-label>
                             Office Contact No.
                         </x-label>
-                        <x-input wire:model="mother_office_contact" />
+                        <x-input type="number" wire:model="mother_office_contact" />
                         <x-error fieldName="mother_office_contact" />
 
                     </div>
@@ -556,7 +556,7 @@
                         <x-label>
                             Relationship with the guardian
                         </x-label>
-                        <x-input wire:model="relationship" />
+                        <x-input  wire:model="relationship" />
                         <x-error fieldName="relationship" />
 
                     </div>
@@ -568,7 +568,7 @@
                         <x-label>
                             Contact No.
                         </x-label>
-                        <x-input wire:model="guardian_contact" />
+                        <x-input type="number" wire:model="guardian_contact" />
                         <x-error fieldName="guardian_contact" />
 
                     </div>

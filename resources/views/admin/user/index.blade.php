@@ -3,9 +3,9 @@
 @section('content')
     <div class="mx-auto">
         <div class="flex justify-between items-center">
-            <h6 class="text-xl font-bold text-left ">
+            {{-- <h6 class="text-xl font-bold text-left ">
                 Users List
-            </h6>
+            </h6> --}}
 
         </div>
         <div>

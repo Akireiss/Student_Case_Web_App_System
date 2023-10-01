@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('accidents', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('profile_id');
-            $table->string('accidents');
+            $table->string('accidents')->nullable();
 
 
             $table->foreign('profile_id')->references('id')->on('profile')->onDelete('cascade');

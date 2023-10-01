@@ -72,12 +72,6 @@ class Anecdotal extends Model
     }
 
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['student_id', 'short_description', 'outcome']);
-    }
-
     // !Table
     public static function codes()
     {
@@ -88,7 +82,7 @@ class Anecdotal extends Model
         ]);
     }
 
-        public static function gravityCodes()
+    public static function gravityCodes()
     {
         return collect([
             ['gravity' => 0, 'label' => 'Low Severity'],
@@ -138,5 +132,48 @@ class Anecdotal extends Model
     }
 
 
+    //Log Activity
+    protected static $logAttributes = [
+        'student_id',
+        'offense_id',
+        'gravity',
+        'short_description',
+        'observation',
+        'desired',
+        'outcome',
+        'letter',
+        'case_status',
+        'grade_level',
+        'story',
+        'status'
+    ];
+    protected static $logName = 'user';
+    protected static $logOnlyDirty = true;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'student_id',
+                'offense_id',
+                'gravity',
+                'short_description',
+                'observation',
+                'desired',
+                'outcome',
+                'letter',
+                'case_status',
+                'grade_level',
+                'story',
+                'status'
+            ])
+            ->useLogName('User')
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "A report has been {$eventName}";
+    }
 
 }

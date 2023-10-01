@@ -16,8 +16,13 @@ class Activity extends Model
     protected $fillable = [
         'log_name',
         'description',
-        'event'
+        'event',
+        'properties',
+        'causer_id',
     ];
 
+    public function users() {
+        return $this->belongsTo(User::class, 'causer_id');
+    }
 
 }

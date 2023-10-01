@@ -27,10 +27,11 @@ class OffensesController extends Controller
         $offenses->offenses = $validatedData['offenses'];
         $offenses->description = $validatedData['description'];
         $offenses->status = $request->status == true ? '1' : '0';
+        $offenses->category = $request->category == true ? '1' : '0';
 
         $offenses->save();
 
-        return redirect('admin/settings/offenses')->with('message', 'Upload Succesfull');
+        return redirect()->back()->with('success', 'Added Successfully');
 
     }
 

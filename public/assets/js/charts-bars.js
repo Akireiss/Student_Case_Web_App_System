@@ -6,7 +6,7 @@ const barConfig = {
         datasets: [
             {
                 label: 'Pending',
-                backgroundColor: '#EB3859',
+                backgroundColor: 'red',
                 borderWidth: 1,
                 data: [],
             },

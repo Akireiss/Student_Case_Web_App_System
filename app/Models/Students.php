@@ -5,14 +5,15 @@ namespace App\Models;
 use App\Models\Profile;
 use App\Models\Anecdotal;
 use App\Models\Classroom;
-use App\Traits\StatusTrait;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Students extends Model
 {
     use HasFactory;
-
+    use LogsActivity;
     protected $table = 'students';
 
 
@@ -24,7 +25,7 @@ class Students extends Model
         'lrn',
         'gender',
         'status',
-
+        'department'
     ];
 
     public function classroom()
@@ -40,8 +41,6 @@ class Students extends Model
     {
         return $this->belongsTo(Student::class, 'student_id');
     }
-
-
 
     public function profile()
     {
@@ -59,8 +58,7 @@ class Students extends Model
             [
                 ['status' => 0, 'label' => 'Active'],
                 ['status' => 1, 'label' => 'Inactive'],
-                ['status' => 2, 'label' => 'Completter'],
-                ['status' => 3, 'label' => 'Graduate'],
+                ['status' => 2, 'label' => 'Graduate'],
             ]
         );
     }
@@ -71,8 +69,7 @@ class Students extends Model
         $statusCodes = [
             0 => 'Active',
             1 => 'Inactive',
-            2 => 'Completter',
-            3 => 'Graduate',
+            2 => 'Graduate',
         ];
 
         return $statusCodes[$this->attributes['status']] ?? '';
@@ -101,9 +98,47 @@ class Students extends Model
         );
     }
 
-    //Test
-    public function yearlyReport() {
-        return $this->hasMany(YearlyReport::class);
+
+
+    public function getDepartmentTextAttribute()
+    {
+        $statusCodes = [
+            0 => 'High School',
+            1 => 'Senior High School',
+        ];
+
+        return $statusCodes[$this->attributes['department']] ?? '';
     }
 
+    public static function codesDepartment()
+    {
+        return collect(
+            [
+                ['department' => 0, 'label' => 'High School'],
+                ['department' => 1, 'label' => 'Senior High School'],
+            ]
+        );
+    }
+
+    // public function yearlyReport() {
+    //     return $this->hasMany(YearlyReport::class);
+    // }
+
+
+    protected static $logAttributes = ['first_name', 'last_name', 'lrn', 'gender'
+    , 'gender', 'status', 'department'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['first_name', 'last_name', 'lrn', 'gender'
+            , 'gender', 'status', 'department'])
+            ->useLogName('User')
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "An student has been {$eventName}";
+    }
 }

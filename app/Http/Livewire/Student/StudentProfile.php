@@ -25,11 +25,9 @@ class StudentProfile extends Component
 
     public $disableSubmitButton = false;
     public $living_with = null;
-
     protected $listeners = [
         'resetName'
     ];
-
 
     public function selectStudent($id, $name)
     {
@@ -47,7 +45,7 @@ class StudentProfile extends Component
             $this->resetErrorBag(['studentId']);
         }
 
-        $this->disableSubmitButton = false;
+        $this->disableSubmitButton = true;
     }
 
     public function render()
@@ -181,8 +179,8 @@ class StudentProfile extends Component
 
 
         foreach ($this->vitamins as $vitamin) {
-            if (empty($vitamin) || $vitamin === 'No Data') {
-                $vitamin = 'No Data';
+            if (empty($vitamin) || $vitamin === null) {
+                $vitamin = null;
             }
 
             $profile->vitamins()->create([
@@ -191,8 +189,8 @@ class StudentProfile extends Component
         }
 
         foreach ($this->medicines as $medicine) {
-            if (empty($medicine) || $medicine === 'No Data') {
-                $medicine = 'No Data';
+            if (empty($medicine) || $medicine === null) {
+                $medicine = null;
             }
 
             $profile->medicines()->create([
@@ -201,8 +199,8 @@ class StudentProfile extends Component
         }
 
         foreach ($this->operations as $operation) {
-            if (empty($operation) || $operation === 'No Data') {
-                $operation = 'No Data';
+            if (empty($operation) || $operation === null) {
+                $operation = null;
             }
 
             $profile->operations()->create([
@@ -212,8 +210,8 @@ class StudentProfile extends Component
 
 
         foreach ($this->accidents as $accident) {
-            if (empty($accident) || $accident === 'No Data') {
-                $accident = 'No Data';
+            if (empty($accident) || $accident === null) {
+                $accident = null;
             }
 
             $profile->accidents()->create([
@@ -222,15 +220,14 @@ class StudentProfile extends Component
         }
 
 
-       if (Auth::check() && (Auth::user()->role == 1 || Auth::user()->role == 2)) {
+    if (Auth::check() && (Auth::user()->role == 1 || Auth::user()->role == 2)) {
     session()->flash('message', 'Successfully Saved');
     $this->resetForm();
-} else {
+        } else {
     $createdForm = Profile::latest()->first();
     Session::put('created_form_id', $createdForm->id);
-
     // Redirect with the created_form_id as a query parameter
-    return redirect()->route('student.profile.data', ['form_id' => $createdForm->id]);
+    return redirect()->route('student.login', ['profileId' => $createdForm->id]);
 }
 
     }

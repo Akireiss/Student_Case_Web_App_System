@@ -1,35 +1,50 @@
 <?php
-
-namespace App\Http\Livewire\Student\Profile;
+namespace App\Traits;
 
 use App\Models\Profile;
-use App\Traits\ProfileValidationTrait;
-use Livewire\Component;
-use App\Models\Barangay;
-use App\Models\Province;
 use App\Models\Students;
-use App\Models\Municipal;
-use App\Models\ParentStatus;
-use App\Traits\SelectNameTrait;
-use App\Traits\WireModelTraits;
-use App\Traits\RewardSiblingTrait;
-use App\Traits\UpdateAddressTrait;
 
-class StudentProfileUpdate extends Component
+trait ProfileUpdateTrait
 {
-    use UpdateAddressTrait;
-    use SelectNameTrait;
-    use WireModelTraits;
-    use RewardSiblingTrait;
-    use ProfileValidationTrait;
+    public $studentName = '';
+    public $studentId = null;
+    public $isOpen = false;
+    public $showError = false;
+
+
+
     public $parent_statuses = [];
     public $profileId;
     public $profile;
-    protected $listeners = [
-        'resetName'
-    ];
 
-    public function selectStudent($id, $name)
+    public function toggleDropdown()
+    {
+        $this->isOpen = !$this->isOpen;
+    }
+
+    public function updatedStudentName($value)
+    {
+        if (empty($value)) {
+            $this->resetName();
+        }
+    }
+
+    public function updated()
+    {
+        $this->showError = false;
+    }
+
+    public function resetName()
+    {
+        $this->studentName = '';
+        $this->studentId = '';
+        $this->middle_name= '';
+        $this->last_name = '';
+    }
+
+
+
+    public function selectStudentProfile($id, $name)
     {
         $this->studentId = $id;
         $this->studentName = $name;
@@ -40,12 +55,13 @@ class StudentProfileUpdate extends Component
 
         if ($existingProfile) {
             $this->addError('studentId', 'Student Already Has A Profile');
+            $this->disableSubmitButton = true;
         } else {
             $this->resetErrorBag(['studentId']);
-            $this->resetErrorBag(['studentName']);
         }
 
         $this->disableSubmitButton = false;
+          $this->showError = false;
     }
     public function mount($profile)
     {
@@ -173,7 +189,6 @@ class StudentProfileUpdate extends Component
 
     public function updateProfile()
     {
-        $this->validate();
         $this->profile->update([
             'student_id' => $this->studentId,
             'suffix' => $this->suffix,
@@ -308,37 +323,6 @@ class StudentProfileUpdate extends Component
 
         session()->flash('message', 'Updated successfully.');
     }
-
-
-    public function render()
-    {
-        $students = [];
-
-        if (strlen($this->studentName) >= 3) {
-            $students = Students::whereIn('status', [0, 2])->where(function ($query) {
-                $query->where('first_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhere('middle_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
-            })->get();
-        }
-        $provinces = Province::all();
-        $municipalities = Municipal::all();
-        $barangays = Barangay::all();
-
-        $layout = auth()->check() ? 'layouts.dashboard.index' : 'layouts.app';
-
-        return view('livewire.student.profile.student-profile-update', [
-            'profile' => $this->profile,
-            'provinces' => $provinces,
-            'municipalities' => $municipalities,
-            'barangays' => $barangays,
-            'students' => $students,
-        ])
-        ->extends($layout)
-        ->section('content');
-    }
-
 
 
 }

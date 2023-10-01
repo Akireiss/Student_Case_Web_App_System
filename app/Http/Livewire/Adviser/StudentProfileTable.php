@@ -184,13 +184,13 @@ final class StudentProfileTable extends PowerGridComponent
     {
        return [
            Button::make('view', 'View')
-               ->class('bg-green-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('profile.view', function(\App\Models\Profile $model) {
+                 ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+               ->route('adviser.profile.view', function(\App\Models\Profile $model) {
                     return  ['profile' => $model->id];
                }),
 
                Button::make('edit', 'Edit')
-               ->class('bg-green-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                 ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
                ->route('adviser.profile.edit', function(\App\Models\Profile $model) {
                     return  ['profile' => $model->id];
                }),

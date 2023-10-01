@@ -19,9 +19,9 @@ class DashboardController extends Controller
 
     public function getDashboardData(Request $request)
     {
-        $totalStudents = Students::whereIn('status', [0, 2])->count();
-        $totalMale = Students::whereIn('status', [0, 2])->where('gender', 0)->count();
-        $totalFemale = Students::whereIn('status', [0, 2])->where('gender', 1)->count();
+        $totalStudents = Students::where('status', 0)->count();
+        $totalMale = Students::where('status', 0)->where('gender', 0)->count();
+        $totalFemale = Students::where('status', 0)->where('gender', 1)->count();
         $totalCases = Anecdotal::count();
         $pendingCases = Anecdotal::where('case_status', 0)->count();
         $resolvedCases = Anecdotal::where('case_status', 2)->count();

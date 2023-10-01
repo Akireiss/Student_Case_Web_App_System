@@ -19,7 +19,7 @@
         <div x-cloak x-show="showForm">
             <div>
 
-                <x-form title="Add Students">
+                <x-form title="">
                     <x-slot name="actions">
                         <x-button x-on:click="showForm = false; showTable = true">
                             Back
@@ -108,8 +108,7 @@
                                     <x-select name="status" wire:model="status" required>
                                         <option value="0">Active</option>
                                         <option value="1">Inactive</option>
-                                        <option value="2">Competter</option>
-                                        <option value="3">Graduate</option>
+                                        <option value="2">Graduate</option>
                                     </x-select>
                                     <x-error fieldName="status" />
                                 </div>

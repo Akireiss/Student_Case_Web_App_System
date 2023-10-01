@@ -13,8 +13,8 @@ class Teacher extends Component
     public function render()
     {
         return view('livewire.admin.teacher')
-        ->extends('layouts.dashboard.index')
-        ->section('content');
+            ->extends('layouts.dashboard.index')
+            ->section('content');
     }
 
     public function store()

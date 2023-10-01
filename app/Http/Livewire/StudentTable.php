@@ -22,7 +22,7 @@ final class StudentTable extends PowerGridComponent
         return [
             Exportable::make('export')
                 ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+                ->type(Exportable::TYPE_CSV),
             Header::make()->includeViewOnTop('components.datatable'),
             Footer::make()
                 ->showPerPage()
@@ -45,7 +45,9 @@ final class StudentTable extends PowerGridComponent
 
     public function relationSearch(): array
     {
-        return [];
+        return [
+
+        ];
     }
 
     public function addColumns(): PowerGridColumns
@@ -62,6 +64,9 @@ final class StudentTable extends PowerGridComponent
 
             ->addColumn('classroom', fn(Students $model) => "{$model->grade_level} - {$model->section}")
 
+
+            ->addColumn('department', fn(Students $model) => $model?->getDepartmentTextAttribute())
+
             ->addColumn('lrn', fn(Students $model) => $model->lrn ?: 'No Data')
 
             ->addColumn('students.status')
@@ -76,7 +81,7 @@ final class StudentTable extends PowerGridComponent
             Column::make('First name', 'first_name')
                 ->sortable()
                 ->withCount('Total Students', true, false)
-                ->searchableRaw('students(students.first_name, students.last_name,")')
+
                 ->editOnClick(),
 
 
@@ -85,15 +90,19 @@ final class StudentTable extends PowerGridComponent
                 ->editOnClick()
                 ->searchable(),
 
-            Column::make('Gender', 'gender')
+            Column::make('Gender', 'gender', 'students.gender')
                 ->sortable(),
 
-
-            Column::make('Grade Level', 'grade_level')
+            Column::make('Grade Level', 'grade_level', 'students.grade_level')
                 ->sortable(),
+
 
             Column::make('Section', 'section')
                 ->sortable(),
+
+                Column::make('Department', 'department', 'students.department')
+                ->sortable(),
+
 
             Column::make('Lrn', 'lrn')
                 ->editOnClick()
@@ -113,7 +122,21 @@ final class StudentTable extends PowerGridComponent
         return [
             Filter::inputText('first_name')->operators(['contains']),
             Filter::inputText('last_name')->operators(['contains']),
-            Filter::select('grade_level', 'grade_level')
+
+            Filter::select('status', 'students.status')
+                ->dataSource(Students::codes())
+                ->optionValue('status')
+                ->optionLabel('label'),
+            // Filter::select('gender', 'students.gender')
+            //     ->dataSource(Students::codesGender())
+            //     ->optionValue('gender')
+            //     ->optionLabel('label'),
+            Filter::select('department', 'students.department')
+                ->dataSource(Students::codesDepartment())
+                ->optionValue('department')
+                ->optionLabel('label'),
+
+                Filter::select('grade_level', 'grade_level')
                 ->dataSource(Classroom::select('grade_level')->distinct()->get())
                 ->optionValue('grade_level')
                 ->optionLabel('grade_level'),
@@ -121,14 +144,6 @@ final class StudentTable extends PowerGridComponent
                 ->dataSource(Classroom::select('section')->distinct()->get())
                 ->optionValue('section')
                 ->optionLabel('section'),
-            Filter::select('status', 'students.status')
-                ->dataSource(Students::codes())
-                ->optionValue('status')
-                ->optionLabel('label'),
-            Filter::select('gender', 'students.gender')
-                ->dataSource(Students::codesGender())
-                ->optionValue('gender')
-                ->optionLabel('label'),
 
 
         ];
@@ -139,14 +154,14 @@ final class StudentTable extends PowerGridComponent
     {
         return [
             Button::make('edit', 'Edit')
-                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                  ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
                 ->route('student.edit', function (\App\Models\Students $model) {
                     return ['student' => $model->id];
                 }),
 
 
             Button::make('view', 'View')
-                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                  ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
                 ->route('student.view', function (\App\Models\Students $model) {
                     return ['student' => $model->id];
                 }),

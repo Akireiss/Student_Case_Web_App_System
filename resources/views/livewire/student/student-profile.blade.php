@@ -41,10 +41,10 @@
                                     First Name
                                 </x-label>
                                 <div class="relative">
-                                    <x-input wire:model.debounce.100ms="studentName" @focus="isOpen = true"
+                                    <x-input required wire:model.debounce.100ms="studentName" @focus="isOpen = true"
                                         @click.away="isOpen = false" @keydown.escape="isOpen = false"
                                         @keydown="isOpen = true" type="text" id="studentName" name="studentName"
-                                        placeholder="Start typing to search." />
+                                        placeholder="Type at least 3 words to search" />
                                     <x-error fieldName="studentName" /> <!-- Use the correct field name here -->
                                     <x-error fieldName="studentId" /> <!-- Use the correct field name here -->
 
@@ -72,8 +72,6 @@
                                                 </li>
                                             @endforeach
                                         @elseif ($studentName)
-
-
                                             <span class="text-red-500 text-sm">
                                                 No Student Found
                                             </span>
@@ -169,7 +167,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Contaact Number
+                                Contact Number
                             </x-label>
                             <x-input wire:model="contact" type="number" />
                             <x-error fieldName="contact" />
@@ -261,7 +259,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>Province</x-label>
-                            <x-select wire:model="selectedCity">
+                            <x-select wire:model="selectedCity" required>
                                 @foreach ($provinces as $province)
                                     <option value="{{ $province->id }}">{{ $province->province }}</option>
                                 @endforeach
@@ -272,7 +270,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>Municipality</x-label>
-                            <x-select wire:model="selectedMunicipality">
+                            <x-select wire:model="selectedMunicipality" required>
                                 @foreach ($municipalities as $municipality)
                                     <option value="{{ $municipality->id }}">{{ $municipality->municipality }}
                                     </option>
@@ -284,7 +282,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>Barangay</x-label>
-                            <x-select wire:model="selectedBarangay">
+                            <x-select wire:model="selectedBarangay" required>
                                 @foreach ($barangays as $barangay)
                                     <option value="{{ $barangay->id }}">
                                         {{ $barangay->barangay }}</option>
@@ -927,24 +925,15 @@
 
         </x-grid>
 
-
-
-
-
     </div>
 
-
-
-
-
-
-
-    <div class="flex justify-end items-center px-6">
+    <div class="flex justify-end items-center px-6 space-x-2">
         <x-text-alert />
         <div wire:loading wire:target="save" class="mx-4">
             Loading..
         </div>
-        <x-button type="submit" wire:loading.attr="disabled" :disabled="$disableSubmitButton">Submit</x-button>
+        <x-button type="submit"
+         wire:loading.attr="disabled" :disabled="$disableSubmitButton">Submit</x-button>
     </div>
 
     </form>

@@ -23,4 +23,11 @@ class PdfController extends Controller
         return $pdf->stream();
     }
 
+
+    public function testPdf()
+    {
+        $pdf = Pdf::loadView('testPdf');
+        return $pdf->stream();
+    }
+
 }

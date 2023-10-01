@@ -11,6 +11,9 @@ class EditOffense extends Component
     public $description;
     public $status;
     public $offense;
+    public $category;
+
+
 
     public function mount($offense)
     {
@@ -19,6 +22,7 @@ class EditOffense extends Component
         $this->offenses = $offense->offenses;
         $this->description = $offense->description;
         $this->status = $offense->status;
+        $this->category = $offense->category;
 
     }
     public function render()
@@ -26,8 +30,8 @@ class EditOffense extends Component
         return view('livewire.admin.offenses.edit-offense', [
             'offense' => $this->offense,
         ])
-        ->extends('layouts.dashboard.index')
-        ->section('content');
+            ->extends('layouts.dashboard.index')
+            ->section('content');
     }
     public function update()
     {
@@ -36,15 +40,15 @@ class EditOffense extends Component
             'description' => 'required',
             'status' => 'required|in:0,1',
         ]);
-
         $offense = Offenses::findOrFail($this->offense);
         $offense->update([
             'offenses' => $this->offenses,
             'description' => $this->description,
             'status' => $this->status,
+            'category' => $this->category,
         ]);
 
-        session()->flash('message', 'Offense updated successfully.');
+        session()->flash('message', 'Updated successfully.');
     }
 
 

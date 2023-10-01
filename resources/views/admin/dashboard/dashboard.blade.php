@@ -8,7 +8,7 @@
         </h2>
 
 
-        <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
+        <div class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3">
             <!-- Card -->
 
             <a href="{{ url('admin/settings/students') }}"
@@ -34,7 +34,8 @@
 
             <a href="{{ url('admin/settings/students') }}"
                 class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800 border-l-4 border-blue-500">
-                <div class=" p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                <div class=" p-3 mr-4 text-white bg-blue-500 rounded-full dark:text-orange-100
+                 dark:bg-orange-500">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
@@ -58,7 +59,7 @@
 
             <a href="{{ url('admin/settings/students') }}"
                 class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800 border-l-4 border-pink-500">
-                <div class=" p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                <div class=" p-3 mr-4 text-white bg-pink-500 rounded-full">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
@@ -84,7 +85,7 @@
 
 
 
-        <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
+        <div class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3">
 
 
             <!-- Card -->
@@ -116,7 +117,7 @@
             <!-- Card -->
             <div class="flex items-center p-4 bg-white  shadow-md border-l-4 border-red-500
             dark:bg-gray-800">
-                <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
+                <div class="p-3 mr-4 text-white bg-red-500 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -134,9 +135,9 @@
                 </div>
             </div>
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white
+            <div class="flex items-center p-4 bg-white border-green-500 border-l-4
               shadow-md  dark:bg-gray-800">
-                <div class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
+                <div class="p-3 mr-4 text-white bg-green-500 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -156,12 +157,9 @@
             </div>
 
 
-
-
-
         </div>
 
-
+{{--
         <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
 
 
@@ -204,12 +202,12 @@
 
 
 
-        </div>
+        </div> --}}
 
 
 
 
-        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
+        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2 mt-3">
 
             <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
                 <div class="flex justify-between items-start">
@@ -218,33 +216,7 @@
                         Cases Status For the School Year
                     </h4>
 
-                    <div x-data="{ open: false }" class="inline-block">
-                        <!-- Dropdown button -->
-                        <div class="relative inline-block text-left">
-                            <button @click="open = !open">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-                                </svg>
-                            </button>
-                            <!-- Dropdown menu -->
-                            <div x-show="open" @click.away="open = false" @click.away="open = false"
-                                class="origin-top-right absolute
-                            top-7 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
-                                <!-- Dropdown items -->
-                                <div class="py-1" role="menu" aria-orientation="vertical"
-                                    aria-labelledby="options-menu">
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        role="menuitem">Option 1</a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        role="menuitem">Option 2</a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        role="menuitem">Option 3</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
 
@@ -256,11 +228,11 @@
                         <span>Pending</span>
                     </div>
                     <div class="flex items-center">
-                        <span class="inline-block w-3 h-3 mr-1 bg-yellow-200 rounded-full bg-primary-600"></span>
+                        <span class="inline-block w-3 h-3 mr-1 bg-yellow-400 rounded-full bg-primary-600"></span>
                         <span>Ongoing</span>
                     </div>
                     <div class="flex items-center">
-                        <span class="inline-block w-3 h-3 mr-1 bg-green-500 rounded-full bg-primary-600"></span>
+                        <span class="inline-block w-3 h-3 mr-1 bg-green-600 rounded-full bg-primary-600"></span>
                         <span>Resolved</span>
                     </div>
                 </div>

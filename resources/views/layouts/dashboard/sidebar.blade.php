@@ -137,7 +137,7 @@
                             </li>
                             <li
                                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="{{ url('admin/settings/teachers') }}">Teachers</a>
+                                <a class="w-full" href="{{ url('admin/settings/teachers') }}">Staff</a>
                             </li>
                             <li
                                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
@@ -711,7 +711,7 @@
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="{{ url('admin/settings/teachers') }}">Teachers</a>
+                                    <a class="w-full" href="{{ url('admin/settings/teachers') }}">Staff</a>
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">

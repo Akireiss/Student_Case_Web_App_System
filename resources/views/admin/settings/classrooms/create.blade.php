@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.index')
 @section('content')
 {{-- Form --}}
-    <x-form title="Add Classroom">
+    <x-form title="">
         <x-slot name="actions">
             {{-- Button --}}
             <x-link href="{{ url('admin/settings/classrooms') }}">
@@ -24,7 +24,7 @@
                             {{-- Label --}}
                             <x-label>Grade Level</x-label>
                             {{-- Input Select --}}
-                            <x-select name="grade_level">
+                            <x-select name="grade_level" required>
                                     <option value="7">7</option>
                                     <option value="8">8</option>
                                     <option value="9">9</option>
@@ -38,7 +38,7 @@
                     <div class="w-full px-4">
                         <div class="relative mb-3">
                             <x-label>Section</x-label>
-                            <x-select name="section">
+                            <x-select name="section" required>
                                     <option value="Jupiter">Jupiter</option>
                                     <option value="Akasya">Akasya</option>
                                     <option value="Earth">Earth</option>
@@ -53,7 +53,7 @@
                     <div class="w-full px-4">
                         <div class="relative mb-3">
                             <x-label>Adviser</x-label>
-                            <x-select name="employee_id">
+                            <x-select name="employee_id" required>
                                 @foreach ($employees as $id => $name)
                                     <option value="{{ $id }}">{{ $name }}</option>
                                 @endforeach
@@ -64,7 +64,7 @@
                     <div class="w-full px-4">
                         <div class="relative mb-3">
                             <x-label>Status</x-label>
-                            <x-select name="status">
+                            <x-select name="status" required>
                                 <option value="0">Active</option>
                                 <option value="1">Inactive</option>
                             </x-select>
@@ -72,8 +72,11 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end">
-                    <x-button type="submit">Add</x-button>
+                <div class="flex justify-end items-center">
+                    <div id="messageContainer">
+                    <x-alert/>
+                    </div>
+                    <x-button type="submit">Add </x-button>
                 </div>
 
                 </form>

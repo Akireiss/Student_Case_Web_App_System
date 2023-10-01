@@ -1,31 +1,13 @@
-<x-form title="Student Profile" class="p-4">
+<x-form title="" class="p-4">
 
     <x-slot name="actions">
+@guest
 
-        <x-link href="{{ url('student/profile/data/' . $profile->id) }}">
-            Back
-        </x-link>
-    </x-slot>
-@auth
-
-    @if(auth()->user()->role === 1)
-
-        <x-slot name="actions">
-            <x-link href="{{ url('admin/student-profile') }}">
-                Back
-            </x-link>
-        </x-slot>
-    @endif
-
-    @if(auth()->user()->role === 2)
-        <x-slot name="actions">
-            <x-link href="{{ url('adviser/students-profile') }}">
-                Back
-            </x-link>
-        </x-slot>
-    @endif
-@endauth
-
+<x-link href="{{ url('student/profile/data/' . $profile->id) }}">
+    Back
+</x-link>
+@endguest
+</x-slot>
 
 <x-slot name="slot">
     <h6 class="text-sm my-4 px-4 font-bold uppercase mt-3 ">
@@ -396,7 +378,7 @@
 
 
 
-    <div class="px-4">
+    <div class="my-2 px-4">
         <h6 class="text-sm my-1 px-4 font-bold uppercase">
             You are currently living with:
         </h6>

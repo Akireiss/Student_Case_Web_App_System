@@ -19,7 +19,7 @@ final class ActivityTable extends PowerGridComponent
         return [
             Exportable::make('export')
                 ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+                ->type(Exportable::TYPE_CSV),
             Header::make()->showSearchInput()->includeViewOnTop('components.datatable'),
             Footer::make()
                 ->showPerPage()
@@ -33,21 +33,22 @@ final class ActivityTable extends PowerGridComponent
             ->join('users', 'activity_log.causer_id', '=', 'users.id')
             ->select('activity_log.*', 'users.name as causer_name',
             'activity_log.created_at',
-            )
-            ->latest();
+            );
     }
 
     public function relationSearch(): array
     {
-        return [];
+        return [
+            'users' => ['name'],
+        ];
     }
 
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
             ->addColumn('causer_name', fn (Activity $model) => ucfirst($model->causer_name))
-            ->addColumn('log_name', fn (Activity $model) => ucfirst($model->log_name))
-            ->addColumn('log_name_lower', fn (Activity $model) => ucfirst(e($model->log_name)))
+           // ->addColumn('log_name', fn (Activity $model) => ucfirst($model->log_name))
+            //->addColumn('log_name_lower', fn (Activity $model) => ucfirst(e($model->log_name)))
             ->addColumn('description', fn (Activity $model) => ucfirst($model->description))
             ->addColumn('event', fn (Activity $model) => ucfirst($model->event))
             ->addColumn('activity_log.created_at')
@@ -59,9 +60,9 @@ final class ActivityTable extends PowerGridComponent
     {
         return [
             Column::make('Name', 'causer_name'),
-            Column::make('Activity', 'log_name')
-                ->sortable()
-                ->searchable(),
+            // Column::make('Activity', 'log_name')
+            //     ->sortable()
+            //     ->searchable(),
             Column::make('Description', 'description')
                 ->sortable()
                 ->searchable(),
@@ -77,6 +78,18 @@ final class ActivityTable extends PowerGridComponent
     {
         return [
             Filter::datetimepicker('created_at', 'activity_log.created_at'),
+        ];
+    }
+
+
+    public function actions(): array
+    {
+        return [
+            Button::make('view', 'View')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+                ->route('activity.view', function (\App\Models\Activity $model) {
+                    return ['activity' => $model->id];
+                }),
         ];
     }
 }

@@ -54,6 +54,9 @@
         .main{
             padding: 10px;
         }
+        .left{
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -67,7 +70,7 @@
     <table class="inline">
 
         <tr class="border">
-            <td class="left">Personal Profile</td>
+            <td class="left bold">Personal Profile</td>
         </tr>
     </table>
     <table class="inline">
@@ -91,6 +94,8 @@
             <td class="border-right no-padding">Birth Place: Butubut Norte Balaoan</td>
         </tr>
     </table>
+
+
     <table class="inline">
         <tr>
             <td>Address: {{ $profile->municipal->municipality }}, {{ $profile->barangay->barangay }} </td>
@@ -105,9 +110,11 @@
         </tr>
 
     </table>
+
+
     <table class="inline">
         <tr>
-            <td class="no-padding">Religion:</td>
+            <td class="no-padding">Religion: {{ $profile->religion }}</td>
             <td class="border-right no-padding">Mother Tongue: {{ $profile->mother_tongue }}</td>
             <td class="border-right no-padding">4ps Recipeint: {{ $profile->four_ps }}</td>
             <td class="border-right">BMI: {{ $profile->bmi }}</td>
@@ -270,6 +277,12 @@
 
     <table  class="inline">
 
+
+        <tr>
+            <th class="left">Name of Award</th>
+            <th class="left">Year Achived</th>
+        </tr>
+
         @if ($profile->awards->isNotEmpty())
             @foreach ($profile->awards as $award)
                 <tr>
@@ -286,21 +299,20 @@
 
     <table  class="inline">
             <tr>
-                <td colspan="4">What is yor favorite subject/s:{{$profile->favorite_subject  }}</td>
+                <td colspan="4">What is yor favorite subject/s? {{$profile->favorite_subject  }}</td>
 
             </tr>
             <tr>
-                <td colspan="4">What is yor favorite subject/s:{{$profile->difficult_subject  }}</td>
+                <td colspan="4">What is yor favorite subject/s? {{$profile->difficult_subject  }}</td>
 
             </tr>
             <tr>
-                <td colspan="4">What school organizations are you afiliated?:{{$profile->school_organization  }}</td>
+                <td colspan="4">What school organizations are you afiliated? {{$profile->school_organization  }}</td>
 
             </tr>
 
             <tr>
-                <td colspan="4"> What do you plan to do after graduating Senior High School?:{{$profile->graduation_plan  }}</td>
-
+                <td colspan="4"> What do you plan to do after graduating Senior High School? {{$profile->graduation_plan  }}</td>
             </tr>
 
     </table>

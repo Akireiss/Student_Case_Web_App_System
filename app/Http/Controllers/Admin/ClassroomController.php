@@ -34,7 +34,7 @@ class ClassroomController extends Controller
             'employee_id' => $request->input('employee_id'),
         ]);
 
-        return redirect('admin/settings/classrooms')->with('success', 'Classroom added successfully!');
+        return redirect()->back()->with('success', 'Successfully Added');
     }
 
     /**

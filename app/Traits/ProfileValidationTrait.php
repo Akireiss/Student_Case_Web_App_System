@@ -6,6 +6,7 @@ trait ProfileValidationTrait
 
     protected $rules = [
         'studentName' => 'required',
+        'studentId' => 'required',
         'suffix' => 'nullable',
         'nickname' => 'nullable',
         'age' => 'required|numeric',
@@ -31,7 +32,7 @@ trait ProfileValidationTrait
         'difficult_subject' => 'nullable',
         'school_organization' => 'nullable',
         'plans' => 'required',
-        // Assuming this field is optional
+        // Need more revision if it's optional -josh
         'height' => 'required|numeric',
         'weight' => 'required|numeric',
         'bmi' => 'required',

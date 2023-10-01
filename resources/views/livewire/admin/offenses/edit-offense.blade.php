@@ -1,5 +1,5 @@
 <div>
-    <x-form title="Add Offenses">
+    <x-form title="">
         <x-slot name="actions">
             <x-link href="{{ url('admin/settings/offenses') }}">
                 Back
@@ -10,7 +10,7 @@
             <form wire:submit.prevent="update" >
 
                 <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                Add New Offense
+                Update Offense
                 </h6>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div class="w-full px-4">
@@ -21,6 +21,19 @@
                             <x-input type="text" wire:model="offenses" />
                         </div>
                     </div>
+
+                    <div class="w-full px-4">
+                        <div class="relative mb-3">
+                            <x-label>
+                              Category
+                            </x-label>
+                            <x-select wire:model="category">
+                                <option value="0">Minor</option>
+                                <option value="1">Grave</option>
+                            </x-select>
+                        </div>
+                    </div>
+
 
                     <div class="w-full px-4">
                         <div class="relative mb-3">
