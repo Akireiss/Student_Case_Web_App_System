@@ -128,7 +128,7 @@
         </x-slot>
 
         <x-slot name="slot">
-
+            <form wire:submit.prevent="save">
             <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
               Completion Rate
             </h6>
@@ -164,23 +164,14 @@
                 <div class="w-full px-4">
                     <div class="relative mb-3">
                         <x-label>Year Level</x-label>
-                        <x-input/>
+                        <x-input wire:model="CrYear"/>
                     </div>
                 </div>
             </div>
 
-        </x-slot>
-    </x-form>
 
 
-{{-- Another Form --}}
 
-<x-form title="">
-    <x-slot name="actions">
-
-    </x-slot>
-
-    <x-slot name="slot">
 
         <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
           Promotion Rate
@@ -218,23 +209,15 @@
             <div class="w-full px-4">
                 <div class="relative mb-3">
                     <x-label>Year Level</x-label>
-                    <x-input/>
+                    <x-input wire:model="PrYear"/>
                 </div>
             </div>
         </div>
 
-    </x-slot>
-</x-form>
 
 
-{{-- //Dropout Rate Form --}}
 
-<x-form title="">
-    <x-slot name="actions">
 
-    </x-slot>
-
-    <x-slot name="slot">
         <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
           Drop Out Rate
         </h6>
@@ -266,14 +249,34 @@
                 </div>
             </div>
 
+
+
             <div class="w-full px-4">
                 <div class="relative mb-3">
                     <x-label>Year Level</x-label>
-                    <x-input/>
+                    <x-input wire:model="DrYear"/>
                 </div>
             </div>
         </div>
 
+        <div class="w-full px-4">
+            <div class="relative mb-3">
+                <x-label>Category</x-label>
+                <x-input disabled
+                wire:model="selectedOption" />
+            </div>
+        </div>
+
+
+        <div class="flex justify-end items-center mx-4">
+            <x-text-alert />
+            <div wire:loading wire:target="save" class="mx-4">
+                Loading...
+            </div>
+            <x-button type="submit"  wire:loading.attr="disabled">Save </x-button>
+        </div>
+
+            </form>
     </x-slot>
 </x-form>
 

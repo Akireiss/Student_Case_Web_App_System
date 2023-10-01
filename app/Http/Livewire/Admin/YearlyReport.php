@@ -25,6 +25,12 @@ class YearlyReport extends Component
     public $promotionPercent;
     public $dropOutRate;
 
+    //year selection
+    public $CrYear;
+    public $PrYear;
+    public $DrYear;
+
+
     public function render()
     {
         $gradeLevel = $this->selectedOption === 'Senior High' ? [11, 12] : [7, 8, 9, 10];
@@ -39,10 +45,10 @@ class YearlyReport extends Component
                     $query->where('gender', 1)->where('status', 0);
                 },
                 'students as total_sh_male' => function ($query) {
-                    $query->where('gender', 0)->where('status', 2);
+                    $query->where('gender', 0)->where('status', 0);
                 },
                 'students as total_sh_female' => function ($query) {
-                    $query->where('gender', 1)->where('status', 2);
+                    $query->where('gender', 1)->where('status', 0);
                 },
             ])->get();
 
@@ -59,7 +65,7 @@ class YearlyReport extends Component
         $this->groupedClassrooms = $groupedClassrooms->sortKeys();
         $completter = $this->totalStudents = Students::whereHas('classroom', function ($query) {
             $query->where('grade_level', 11);
-        })->where('status', 2)->count();
+        })->where('status', 0)->count();
         //dropout
         $dropout = $this->totalDropOut = Students::whereHas('classroom', function ($query) {
             $query->whereIn('grade_level', [11, 12]);
@@ -77,31 +83,29 @@ class YearlyReport extends Component
             });
         })->count();
 
-
         //totalEnrollment
         $enrollment = $this->totalEnrollment = Students::whereHas('classroom', function ($query) {
             $query->whereIn('grade_level', [11, 12]);
-        })->where('status', 2)->count();
+        })->where('status', 0)->count();
 
-        //Computing all
-        $this->completionPercent = ($completter / $enrollment) * 100;
-        $this->promotionPercent = ($promotion / $enrollment) * 100;
-        $this->dropOutRate = ($dropout / $enrollment) * 100;
+        // Check if $enrollment is zero before performing division
+        //Senior High
+        $this->completionPercent = $enrollment > 0 ? ($completter / $enrollment) * 100 : 0;
+        $this->promotionPercent = $enrollment > 0 ? ($promotion / $enrollment) * 100 : 0;
+        $this->dropOutRate = $enrollment > 0 ? ($dropout / $enrollment) * 100 : 0;
 
         //End Senior High
 
         //High School
 
-
         //End School
-
 
         return view('livewire.admin.yearly-report', [
         ])
             ->extends('layouts.dashboard.index')
             ->section('content');
-
     }
+
 
     public function saveReport()
     {
@@ -124,5 +128,52 @@ class YearlyReport extends Component
         session()->flash('message', 'Report Successfully Added');
 
     }
+
+    public function save() {
+   // Determine the type based on the selected option
+   $type = 0; // Default to Completion Rate
+   if ($this->selectedOption === 'Promotion Rate') {
+       $type = 1;
+   } elseif ($this->selectedOption === 'Drop Out Rate') {
+       $type = 2;
+   }
+   //! need more revisionss
+   // Create an array for the selected rate
+   $rate = [
+       'Completters' => $this->totalStudents,
+       'Enrollment' => $this->totalEnrollment,
+       'Percent Cr' => $this->completionPercent,
+   ];
+
+   // Determine the column name based on the type
+   $columnName = 'completion_rate';
+   if ($type === 1) {
+       $rate = [
+           'Promotes' => $this->totalPromotion,
+           'Enrollment' => $this->totalEnrollment,
+           'Percent PR' => $this->promotionPercent,
+       ];
+       $columnName = 'promotion_rate';
+   } elseif ($type === 2) {
+       $rate = [
+           'Drop Out' => $this->totalDropOut,
+           'Enrollment' => $this->totalEnrollment,
+           'Percent Dr' => $this->dropOutRate,
+       ];
+       $columnName = 'drop_out_rate';
+   }
+
+   // Create a new Yearly instance and save it
+   $yearly = new Yearly([
+       'data' => json_encode($rate),
+       'category' => $this->selectedOption,
+       'school_year' => $this->yearLevel,
+       'type' => $type,
+   ]);
+
+   $yearly->save();
+
+   session()->flash('message', 'Yearly report saved successfully.');
+}
 
 }

@@ -9,12 +9,13 @@ class YearlyReport extends Model
 {
     use HasFactory;
 
-    protected $table = 'yearly_report';
-    protected $fillable = [
-        'data',
-        'category',
-        'school_year',
-    ];
+        protected $table = 'yearly_report';
+        protected $fillable = [
+            'data',//json format
+            'category',
+            'school_year',
+            'type'
+        ];
 
 
 }
