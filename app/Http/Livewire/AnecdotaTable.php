@@ -104,7 +104,6 @@ final class AnecdotaTable extends PowerGridComponent
             Filter::datetimepicker('created_at_formatted', 'anecdotal.created_at')
                 ->params([
                     'only_future' => false,
-                    'no_weekends' => true,
                 ]),
             Filter::select('case_status', 'case_status')
                 ->dataSource(Anecdotal::codes())

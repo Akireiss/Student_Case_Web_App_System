@@ -20,7 +20,7 @@
                                         class="shadow-md rounded-md  h-auto align-middle
                                     border-none"> --}}
                                     <div class="shadow-md rounded-lg h-auto align-middle b-500 ">
-                                        {!! QrCode::size(200)->generate(url('/student/profile/data/' . $form->id)); !!}
+                                        {!! QrCode::size(200)->generate(url('student/lrn' . $form->id)); !!}
                                     </div>
 
 
