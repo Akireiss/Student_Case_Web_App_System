@@ -99,22 +99,23 @@ class ReportHistory extends Component
     }
 
     //Delete Image
-public function deleteImage($imageId)
-{
-    $image = AnecdotalImages::find($imageId);
+    public function deleteImage($imageId)
+    {
+        $image = AnecdotalImages::find($imageId);
 
-    if ($image) {
-        $filename = $image->images;
+        if ($image) {
+            $filename = $image->images;
+            $filePath = 'uploads/' . $filename;
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
+            }
 
-        $filePath = 'uploads/' . $filename;
-
-        if (Storage::disk('public')->exists($filePath)) {
-            Storage::disk('public')->delete($filePath);
+            // Delete the image record from the database
+            $image->delete();
+            $this->emit('imageDeleted');
         }
-        $image->delete();
-        $this->emit('imageDeleted');
     }
-}
+
 
 public function render()
 {

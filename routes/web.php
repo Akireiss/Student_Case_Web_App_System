@@ -101,8 +101,6 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('student-profile/{offense}/update', EditOffense::class)
             ->name('admin.offense.edit');
 
-
-
             // Employees
             Route::get('teachers', Teacher::class);
             Route::get('teachers/update/{employee}', EditTeacher::class)

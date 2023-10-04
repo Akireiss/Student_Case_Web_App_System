@@ -3,7 +3,7 @@
 <div class="mx-auto">
     <div class="flex items-center justify-between">
         <h6 class="text-xl font-bold px-4">
-            Report Information
+            {{-- Report Information --}}
         </h6>
         <div class="flex justify-end">
             <x-link :href="url('admin/reports')">
@@ -18,7 +18,7 @@
 
                 <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
                     <h6 class="text-sm my-1 px-4 font-bold uppercase ">
-                        Student Information
+                      Report Information
                     </h6>
 
                     <x-grid columns="2" gap="4" px="0" mt="0">
@@ -140,8 +140,8 @@
                         <div class="w-full px-4">
                             <x-label>Letter</x-label>
                             <div x-data="{ isZoomed: false }" x-clock>
-                                @if ($report->anecdotal->images->isNotEmpty())
-                                    @foreach ($report->anecdotal->images as $image)
+                                @if ($anecdotal->images->isNotEmpty())
+                                    @foreach ($anecdotal->images as $image)
                                         <a href="{{ asset('storage/' . $image->images) }}" target="_blank" rel="noopener noreferrer">
                                             <img src="{{ asset('storage/' . $image->images) }}" alt="Anecdotal Image"
                                                  class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
