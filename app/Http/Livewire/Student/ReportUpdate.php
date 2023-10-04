@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Student;
 
 use App\Models\Action;
 use App\Models\AnecdotalOutcome;
+use App\Notifications\StatusNotification;
 use Livewire\Component;
 use App\Models\Anecdotal;
 
@@ -43,7 +44,17 @@ class ReportUpdate extends Component
         $this->anecdotalData->update(['case_status' => 1]);
         $this->anecdotalData = $this->anecdotalData->fresh();
         $this->showMeetingOutcomeForm = true;
+
+        $report = $this->anecdotalData->report->first();
+
+        if ($report) {
+            $user = $report->user;
+            if ($user) {
+                $user->notify(new StatusNotification($this->anecdotalData));
+            }
+        }
     }
+
 
 
     public function update()

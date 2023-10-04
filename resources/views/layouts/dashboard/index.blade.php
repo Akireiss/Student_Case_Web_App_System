@@ -38,7 +38,8 @@
                             </div>
                         </div>
                         <ul class="flex items-center flex-shrink-0 space-x-2">
-                            <livewire:components.notification />
+                            <livewire:components.notification :userId="auth()->user()->id" />
+
                             @can('admin-access')
                             <div class="relative" x-data="{ open: false }">
                                 <button  id="dropdownInformationButton"

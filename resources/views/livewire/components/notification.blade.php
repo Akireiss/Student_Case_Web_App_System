@@ -1,6 +1,6 @@
 <div>
 
-    @can('adviser-access')
+
     <li class="flex">
 
 
@@ -45,28 +45,23 @@
                style="max-height: 300px; overflow-y: auto;">
                <li>
                    <div>
-                    @foreach($reports as $report)
-                    <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                        <div class="ml-2 text-sm">
-                            @if ($report->anecdotal->case_status === 1)
-                                <div class="text-gray-800">Your Report to
-                                    {{ $report->anecdotal->student->first_name }}
-                                    {{ $report->anecdotal->student->last_name }} has been accepted
-                                </div>
-                            @elseif ($report->anecdotal->case_status === 2)
-                                <div class="text-gray-800">Your Report to
-                                    {{ $report->anecdotal->student->first_name }}
-                                    {{ $report->anecdotal->student->last_name }} has been resolved
-                                </div>
-                            @else
-                                <div class="text-gray-800">No Notification</div>
-                            @endif
-                            <div class="text-red-500 text-sm">
-                                {{ $report->anecdotal->created_at->diffForHumans() }}
-                            </div>
-                        </div>
+
+                    @forelse($notifications as $notification)
+                    <div class="alert alert-success" role="alert">
+                        {{ $notification->data['message'] }}
+                        <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+                            Mark as read
+                        </a>
                     </div>
-                @endforeach
+
+                    @if($loop->last)
+                        <a href="#" id="mark-all">
+                            Mark all as read
+                        </a>
+                    @endif
+                @empty
+                    There are no new notifications
+                @endforelse
 
 
                    </div>
@@ -77,7 +72,7 @@
         </div>
 
     </li>
-@endcan
+
 
 @push('scripts')
 

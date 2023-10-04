@@ -51,7 +51,7 @@ function updatePieChart() {
         options: {
             title: {
                 display: true,
-                text: "Offense Counts"
+             //   text: "Offense Counts"
             }
         }
     });

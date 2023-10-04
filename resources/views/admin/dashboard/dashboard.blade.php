@@ -34,7 +34,8 @@
 
             <a href="{{ url('admin/settings/students') }}"
                 class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800 border-l-4 border-blue-500">
-                <div class=" p-3 mr-4 text-white bg-blue-500 rounded-full dark:text-orange-100
+                <div
+                    class=" p-3 mr-4 text-white bg-blue-500 rounded-full dark:text-orange-100
                  dark:bg-orange-500">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -89,8 +90,7 @@
 
 
             <!-- Card -->
-            <a href="{{ url('admin/reports') }}"
-                class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800">
+            <a href="{{ url('admin/reports') }}" class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800">
                 <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -135,7 +135,8 @@
                 </div>
             </div>
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white border-green-500 border-l-4
+            <div
+                class="flex items-center p-4 bg-white border-green-500 border-l-4
               shadow-md  dark:bg-gray-800">
                 <div class="p-3 mr-4 text-white bg-green-500 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -159,7 +160,7 @@
 
         </div>
 
-{{--
+        {{--
         <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
 
 
@@ -213,7 +214,7 @@
                 <div class="flex justify-between items-start">
 
                     <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                        Cases Status For the School Year
+                        Total Number Of Case Status
                     </h4>
 
 
@@ -242,14 +243,14 @@
 
             <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
                 <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                    Action Usage
+                    Total Number Of Offenses
                 </h4>
                 <canvas id="myChartPie"></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
                     <!-- Chart legend -->
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
-                        <span>Succesfull Actions</span>
+                        <span>Offenses</span>
                     </div>
 
                 </div>
@@ -259,11 +260,10 @@
 
             <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
                 <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                    Action Usage
+                    Total Number Of Successfull Actions
                 </h4>
                 <canvas id="myChart"></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
-                    <!-- Chart legend -->
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
                         <span>Succesfull Actions</span>
@@ -271,9 +271,6 @@
 
                 </div>
             </div>
-
-
-
 
 
 
