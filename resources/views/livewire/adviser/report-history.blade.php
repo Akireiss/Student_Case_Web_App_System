@@ -168,32 +168,46 @@
             </x-grid>
 
             <x-grid columns="2" gap="4" px="0" mt="4">
-
-
                 <div class="w-full px-4">
                     <x-label>Letter</x-label>
-                    <input type="file" name="letter" wire:model="letter"
-                        class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
-          file:bg-transparent file:border-0
-          file:bg-gray-100 file:mr-4
-          file:py-2.5 file:px-4">
-                    <div x-data="{ isZoomed: false }" x-clock>
-                        @if ($report->anecdotal->letter)
-                            <img src="{{ asset('storage/' . $report->anecdotal->letter) }}" alt="Letter Image"
-                                class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer"
-                                @click="isZoomed = !isZoomed" x-bind:class="{ 'max-h-full max-w-full': isZoomed }">
-                            <div x-show="isZoomed" @click.away="isZoomed = false"
-                                class="fixed inset-0 z-50 flex items-center justify-center bg-opacity-80">
-                                <img src="{{ asset('storage/' . $report->anecdotal->letter) }}"
-                                    alt="Zoomed Letter Image" class="w-4/5 h-4/5 object-cover cursor-pointer"
-                                    @click="isZoomed = !isZoomed">
-                            </div>
+                    <input type="file" name="images[]" wire:model="letter" multiple
+                    class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
+                    file:bg-transparent file:border-0
+                    file:bg-gray-100 file:mr-4
+                    file:py-2.5 file:px-4">
+                    <x-error fieldName="letter" />
+                    <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2 mt-2">
+                        @if ($report->anecdotal->images->isNotEmpty())
+                            @foreach ($report->anecdotal->images as $image)
+                                <div class="relative">
+                                    <a href="{{ asset('storage/' . $image->images) }}" target="_blank" rel="noopener noreferrer">
+                                        <img src="{{ asset('storage/' . $image->images) }}" alt="Anecdotal Image"
+                                             class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
+                                    </a>
+                                    <button type="button" class="absolute top-0 right-0 text-red-500 font-bold text-xs hover:underline"
+                                            wire:click="deleteImage({{ $image->id }})">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                             fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                              </svg>
+
+                                        </button>
+                                </div>
+
+
+                                {{-- <button type="button" class="text-red-500 hover:underline"
+                                    style="background: none; border: none; padding: 0; cursor: pointer;"
+                                    wire:click="deleteImage({{ $image->id }})">
+                                Delete
+                            </button> --}}
+                            @endforeach
                         @else
-                            <p>No Letter Uploaded</p>
+                            <div>
+                                <p class="font-medium text-sm text-gray-600 text-left">No Images Uploaded</p>
+                            </div>
                         @endif
                     </div>
                 </div>
-
 
 
                 <div class="w-full px-4">

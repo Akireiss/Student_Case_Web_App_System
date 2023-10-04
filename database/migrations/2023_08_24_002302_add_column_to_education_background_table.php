@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('education_background', function (Blueprint $table) {
-            $table->string('grade_level')->nullable();
         });
     }
 

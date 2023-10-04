@@ -49,7 +49,7 @@ return new class extends Migration
             $table->decimal('height')->nullable();
             $table->decimal('weight')->nullable();
             $table->decimal('bmi')->nullable();
-            $table->string('disability');
+            $table->string('disability')->nullable();
             $table->string('food_allergy');
             $table->string('status')->default('0');
 

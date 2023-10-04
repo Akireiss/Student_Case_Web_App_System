@@ -199,12 +199,15 @@
 
                             <div class="w-full px-4">
                                 <x-label>Letter</x-label>
-                                <input type="file" name="letter" wire:model="letter"
+                                <input type="file" name="letter[]" wire:model="letter" multiple
                                     class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
-                               file:bg-transparent file:border-0
-                               file:bg-gray-100 file:mr-4
-                               file:py-2.5 file:px-4">
+                                    file:bg-transparent file:border-0
+                                    file:bg-gray-100 file:mr-4
+                                    file:py-2.5 file:px-4">
+                                    <x-error fieldName="letter" />
+
                             </div>
+
 
                             <div class="w-full px-4">
 

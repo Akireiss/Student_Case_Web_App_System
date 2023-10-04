@@ -137,21 +137,21 @@
 
                     <x-grid columns="2" gap="4" px="0" mt="4">
 
-
                         <div class="w-full px-4">
                             <x-label>Letter</x-label>
-                            <div x-data="{ isZoomed: false }">
-                                @if ($anecdotal->letter)
-                                    <img src="{{ asset('storage/' . $anecdotal->letter) }}" alt="Letter Image"
-                                        class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer"
-                                        @click="isZoomed = !isZoomed" x-bind:class="{ 'max-h-full max-w-full': isZoomed }">
-                                    <div x-show="isZoomed" @click.away="isZoomed = false"
-                                        class="fixed inset-0 z-50 flex items-center justify-center bg-opacity-80">
-                                        <img src="{{ asset('storage/' . $anecdotal->letter) }}" alt="Zoomed Letter Image"
-                                            class="w-4/5 h-4/5 object-cover cursor-pointer" @click="isZoomed = !isZoomed">
-                                    </div>
+                            <div x-data="{ isZoomed: false }" x-clock>
+                                @if ($report->anecdotal->images->isNotEmpty())
+                                    @foreach ($report->anecdotal->images as $image)
+                                        <a href="{{ asset('storage/' . $image->images) }}" target="_blank" rel="noopener noreferrer">
+                                            <img src="{{ asset('storage/' . $image->images) }}" alt="Anecdotal Image"
+                                                 class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
+                                        </a>
+                                    @endforeach
                                 @else
-                                    <p>No Letter Uploaded</p>
+                                <div>
+                                    <p class=" font-medium text-sm
+                                    text-gray-600 text-left">No Images Uploaded</p>
+                                </div>
                                 @endif
                             </div>
                         </div>

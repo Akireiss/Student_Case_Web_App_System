@@ -2,16 +2,18 @@
 
 namespace App\Http\Livewire\Adviser;
 
-use App\Models\Actions;
-use App\Models\ActionsTaken;
 use App\Models\Report;
+use App\Models\Actions;
 use Livewire\Component;
 use App\Models\Offenses;
 use App\Models\Students;
 use App\Models\Anecdotal;
+use App\Models\ActionsTaken;
+use Livewire\WithFileUploads;
+use App\Models\AnecdotalImages;
 use App\Traits\SelectNameTrait;
 use Illuminate\Support\Facades\Auth;
-use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class ReportHistory extends Component
 {
@@ -27,7 +29,7 @@ class ReportHistory extends Component
     public $short_description;
     public $reportId;
     public $description;
-    public $letter;
+    public $image;
     public $story;
     public $selectedActions = [];
     public $gravityOptions = [
@@ -67,11 +69,7 @@ class ReportHistory extends Component
 
     public function update()
     {
-        $letterPath = null;
         $report = Report::findOrFail($this->reportId);
-        if ($this->letter) {
-            $letterPath = $this->letter->store('uploads', 'public');
-        }
 
         $report->anecdotal->update([
             'student_id' => $this->studentId,
@@ -82,8 +80,15 @@ class ReportHistory extends Component
             'gravity' => $this->gravity,
             'story' => $this->story,
             'short_description' => $this->short_description,
-            'letter' => $letterPath,
         ]);
+
+        foreach ($this->images as $image) {
+            $path = $image->store('uploads', 'public');
+
+            $report->anecdotal->images()->create([
+                'images' => $path,
+            ]);
+        }
 
         $report->anecdotal->actionsTaken()->delete();
         foreach ($this->selectedActions as $selectedAction) {
@@ -93,39 +98,53 @@ class ReportHistory extends Component
         session()->flash('message', 'Report updated successfully.');
     }
 
-    public function render()
-    {
-        $students = [];
+    //Delete Image
+public function deleteImage($imageId)
+{
+    $image = AnecdotalImages::find($imageId);
 
-        if (strlen($this->studentName) >= 3) {
-            $students = Students::where(function ($query) {
-                $query->where('first_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
-                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
-            })->get();
-        }
+    if ($image) {
+        $filename = $image->images;
 
-        $offenses = Offenses::pluck('offenses', 'id')->all();
-        $actions = Actions::all();
-        $report = Report::findOrFail($this->reportId);
-        if ($report->user_id != auth()->user()->id) {
-            abort(403);
+        $filePath = 'uploads/' . $filename;
+
+        if (Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
         }
-        return view('livewire.adviser.report-history', compact('report', 'offenses', 'actions', 'students'))
-            ->extends('layouts.dashboard.index')->section('content');
+        $image->delete();
+        $this->emit('imageDeleted');
+    }
+}
+
+public function render()
+{
+    $students = [];
+
+    if (strlen($this->studentName) >= 3) {
+        $students = Students::where(function ($query) {
+            $query->where('first_name', 'like', '%' . $this->studentName . '%')
+                ->orWhere('last_name', 'like', '%' . $this->studentName . '%')
+                ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $this->studentName . '%']);
+        })->get();
     }
 
-
-
-
-    public function view($id)
-    {
-        $report = Report::findOrFail($id);
-        if ($report->user_id != auth()->user()->id) {
-            abort(403);
-        }
-        $anecdotal = $report->anecdotal;
-        return view('staff.report-history.view', compact('report'));
+    $offenses = Offenses::pluck('offenses', 'id')->all();
+    $actions = Actions::all();
+    $report = Report::findOrFail($this->reportId);
+    if ($report->user_id != auth()->user()->id) {
+        abort(403);
     }
+    return view('livewire.adviser.report-history', compact('report', 'offenses', 'actions', 'students'))
+        ->extends('layouts.dashboard.index')->section('content');
+}
 
+public function view($id)
+{
+    $report = Report::findOrFail($id);
+    if ($report->user_id != auth()->user()->id) {
+        abort(403);
+    }
+    $anecdotal = $report->anecdotal;
+    return view('staff.report-history.view', compact('report'));
+}
 }

@@ -15,16 +15,22 @@ class ActionSeeder extends Seeder
     {
         $actions = [
             [
-                'action_taken' => 'Anecdotal Collect',
+                'action_taken' => 'Conference with the student',
             ],
             [
-                'action_taken' => 'Parent Teacher Meeting',
+                'action_taken' => 'Written explanation from the studnent',
             ],
             [
-                'action_taken' => 'Office Guidance',
+                'action_taken' => 'Administer approriate classroom based consequence',
             ],
             [
-                'action_taken' => 'Anecdotal Collect',
+                'action_taken' => 'Reteach/ Reinforce expectations',
+            ],
+            [
+                'action_taken' => 'Notify Parents',
+            ],
+            [
+                'action_taken' => 'Document Action Taken',
             ],
 
         ];

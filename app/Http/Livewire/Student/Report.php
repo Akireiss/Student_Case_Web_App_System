@@ -19,7 +19,7 @@ class Report extends Component
     public $observation;
     public $desired;
     public $outcome;
-    public $letter;
+    public $letter  = [];
     public $user_id;
     public $classroom;
     public $grade_level;
@@ -44,7 +44,7 @@ class Report extends Component
         'observation' => 'required',
         'desired' => 'nullable',
         'outcome' => 'required',
-        'letter' => 'nullable | image',
+        'letter' => 'nullable',
         'selectedActions' => 'required',
         'story' => 'required',
     ];
@@ -99,11 +99,8 @@ class Report extends Component
     public function store()
     {
         $this->validate();
-        $letterPath = null;
 
-        if ($this->letter) {
-            $letterPath = $this->letter->store('uploads', 'public');
-        }
+
 
         $anecdotal = Anecdotal::create([
             'student_id' => $this->studentId,
@@ -114,9 +111,18 @@ class Report extends Component
             'desired' => $this->desired,
             'outcome' => $this->outcome,
             'grade_level' => $this->classroom->section . ' ' . $this->classroom->grade_level ?? '',
-            'letter' => $letterPath,
             'story' => $this->story,
         ]);
+
+        foreach ($this->letter as $file) {
+            $path = $file->store('uploads', 'public');
+
+            // Create a record in the anecdotal_images table
+            $anecdotal->images()->create([
+                'images' => $path,
+            ]);
+        }
+
 
         $anecdotal->actions()->create([
             'actions_id' => $this->actions_id,
@@ -155,8 +161,10 @@ class Report extends Component
         $this->desired = '';
         $this->outcome = '';
         $this->story = '';
+        $this->grade_level = '';
+        $this->classroom = '';
         $this->offense_id = null;
-        $this->letter = null;
+        $this->path = [];
         $this->selectedActions = [];
     }
 

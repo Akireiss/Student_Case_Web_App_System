@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
+            $table->integer('gender')->comment('0:male, 1:female');
             $table->string('lrn')->nullable();
+            $table->integer('department')->comment('0: HS | 1: SH');
             $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
 
             $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');

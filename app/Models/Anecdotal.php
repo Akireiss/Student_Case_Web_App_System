@@ -34,7 +34,10 @@ class Anecdotal extends Model
         'status'
 
     ];
-
+    public function images()
+    {
+        return $this->hasMany(AnecdotalImages::class, 'anecdotal_id');
+    }
 
     public function students()
     {

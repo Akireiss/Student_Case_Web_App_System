@@ -20,7 +20,7 @@ return new class extends Migration
             $table->mediumText('observation');
             $table->mediumText('desired');
             $table->mediumText('outcome');
-            $table->string('letter')->nullable();
+            $table->mediumText('story');
             $table->string('grade_level');
             $table->tinyInteger('case_status')->default('0')->comment('0:pending | 1: accept | 2: inprogress | 3: closed');
 

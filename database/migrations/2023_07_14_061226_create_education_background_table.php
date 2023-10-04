@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('school_name');
             $table->string('school_year');
             $table->string('grade_section');
+            $table->string('grade_level');
+
 
             $table->foreign('profile_id')->references('id')->on('profile')->onDelete('cascade');
         });
