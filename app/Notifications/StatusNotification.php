@@ -2,11 +2,12 @@
 
 namespace App\Notifications;
 
+use Carbon\Carbon;
 use App\Models\Anecdotal;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class StatusNotification extends Notification
 {
@@ -25,8 +26,15 @@ class StatusNotification extends Notification
 
     public function toArray($notifiable)
     {
-        return [
-            'message' => 'Your anecdotal has been accepted.',
-        ];
+
+    $createdDate = Carbon::parse($this->anecdotal->created_at);
+    $message = "Your report to {$this->anecdotal->student->first_name}  {$this->anecdotal->student->last_name}
+     about {$createdDate->diffForHumans()}
+    has been accepted";
+
+    return [
+        'message' => $message,
+    ];
     }
+
 }

@@ -239,7 +239,7 @@
                        Meeting Outcome Update
                     </h6>
 
-                    <x-grid columns="3" gap="4" px="0" mt="4">
+                    <x-grid columns="4" gap="4" px="0" mt="4">
 
 
                         <div class="w-full px-4">
@@ -277,6 +277,16 @@
                                 </x-select>
                             </div>
                         </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Notify after the resolving the case
+                                </x-label>
+                                <x-input type="number" wire:model.defer="reminderDays"/>
+                            </div>
+                        </div>
+
 
 
                     </x-grid>
