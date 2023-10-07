@@ -122,12 +122,15 @@ public function getResolvedCases()
 public function getSuccessfulActions()
 {
     $successfulActions = DB::table('anecdotal_outcome')
-        ->select(DB::raw('count(*) as count, (SELECT action FROM anecdotal_outcome) as action'))
+        ->select(DB::raw('count(*) as count, action as label'))
         ->where('outcome', '=', 0)
+        ->groupBy('action') // Group by 'action' instead of 'outcome'
         ->get();
 
     return response()->json($successfulActions);
 }
+
+
 
 
 

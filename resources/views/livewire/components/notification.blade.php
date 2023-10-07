@@ -37,37 +37,35 @@
 
                 <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
             </button>
-            <div x-ref="panel" x-show="open" x-transition.origin.top.left
-            x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')"
-            style="display: none;" class="absolute right-0 w-64 rounded-md bg-white shadow-md">
-           <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
-               aria-labelledby="dropdownHelperButton"
-               style="max-height: 300px; overflow-y: auto;">
-               <li>
-                   <div>
+            <div
+    x-ref="panel"
+    x-show="open"
+    x-transition.origin.top.left
+    x-on:click.outside="close($refs.button)"
+    :id="$id('dropdown-button')"
+    style="display: none;"
+    class="absolute right-0 w-64 max-h-60 rounded-md bg-white shadow-md overflow-y-auto" id="overflow"
+>
+    @forelse($notifications->take(5) as $notification)
+    <div class="p-2 text-sm hover:bg-gray-100">
+        <p class="text-gray-800">{{ $notification->data['message'] }}</p>
+        <a href="#" class="block mt-2 text-xs text-blue-500 hover:text-blue-700">
+            Mark as read
+        </a>
+    </div>
+    @if($loop->last)
+    <a href="#" class="block p-2 text-xs text-blue-500 hover:text-blue-700">
+        Mark all as read
+    </a>
+    @endif
+    @empty
+    <div class="p-2 text-sm">
+        There are no new notifications
+    </div>
+    @endforelse
+</div>
 
-                    @forelse($notifications as $notification)
-                    <div class="alert alert-success" role="alert">
-                        {{ $notification->data['message'] }}
-                        <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
-                            Mark as read
-                        </a>
-                    </div>
 
-                    @if($loop->last)
-                        <a href="#" id="mark-all">
-                            Mark all as read
-                        </a>
-                    @endif
-                @empty
-                    There are no new notifications
-                @endforelse
-
-
-                   </div>
-               </li>
-           </ul>
-       </div>
 
         </div>
 
@@ -86,6 +84,32 @@
 </script>
 
 @endpush
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const panel = document.querySelector("#overflow");
+
+    panel.addEventListener("scroll", function () {
+        panel.style.setProperty("--scroll-progress", panel.scrollTop / (panel.scrollHeight - panel.clientHeight));
+    });
+});
+
+</script>
 </div>
 
+<style>
+    #overflow {
+        max-height: 240px; /* Set the maximum height for the scrollbar */
+        overflow-y: auto; /* Enable the vertical scrollbar */
+
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+
+        /* Track styles */
+        scrollbar-track-color: #F3F4F6;
+
+        /* Thumb styles */
+        scrollbar-face-color: #00bf4c;
+        scrollbar-height: calc(100% - var(--scroll-progress) * 100%);
+    }
+</style>
 

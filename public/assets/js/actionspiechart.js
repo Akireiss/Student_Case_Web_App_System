@@ -7,7 +7,7 @@ function updateChart() {
             var dataCounts = [];
 
             data.forEach(function (item) {
-                labels.push(item.action);
+                labels.push(item.label); // Use 'item.label' as the label
                 dataCounts.push(item.count);
             });
 
@@ -38,6 +38,5 @@ function updateChart() {
 
 // Initial chart rendering
 updateChart();
-
 
 setInterval(updateChart, 10000);
