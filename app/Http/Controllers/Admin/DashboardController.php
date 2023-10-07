@@ -119,18 +119,18 @@ public function getResolvedCases()
     return response()->json(['resolvedCount' => $resolvedCount]);
 }
 
-
 public function getSuccessfulActions()
 {
     $successfulActions = DB::table('anecdotal_outcome')
-        ->join('actions', 'anecdotal_outcome.actions_id', '=', 'actions.id')
-        ->select('actions.action_taken as actions', DB::raw('count(*) as count'))
-        ->where('anecdotal_outcome.outcome', '=', 'Succesfull')
-        ->groupBy('actions')
+        ->select(DB::raw('count(*) as count, (SELECT action FROM anecdotal_outcome) as action'))
+        ->where('outcome', '=', 0)
         ->get();
 
     return response()->json($successfulActions);
 }
+
+
+
 
 public function getOngoingCases()
 {

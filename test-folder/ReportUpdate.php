@@ -15,7 +15,7 @@ class ReportUpdate extends Component
     public $outcome;
     public $story;
     public $outcome_remarks;
-    public $action;
+    public $actions_id;
     public $anecdotal;
     public $anecdotalData;
     public $showMeetingOutcomeForm = false;
@@ -24,7 +24,7 @@ class ReportUpdate extends Component
     protected $rules = [
         'outcome' => 'required',
         'outcome_remarks' => 'required',
-        'action' => 'required',
+        'actions_id' => 'required',
     ];
     public function mount($anecdotal)
     {
@@ -32,13 +32,13 @@ class ReportUpdate extends Component
         $this->anecdotalData = Anecdotal::findOrFail($anecdotal);
         $this->outcome = $this->anecdotalData->actions->outcome;
         $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;
-        $this->action = $this->anecdotalData->actions->action;
+        $this->actions_id = $this->anecdotalData->actions->actions_id;
 
         if ($this->anecdotalData->case_status == 1 || $this->anecdotalData->case_status == 2) {
             $this->showMeetingOutcomeForm = true;
             $this->outcome = $this->anecdotalData->actions->outcome;
             $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;
-            $this->action = $this->anecdotalData->actions->action;
+            $this->actions_id = $this->anecdotalData->actions->actions_id;
 
         }
     }
@@ -68,7 +68,7 @@ class ReportUpdate extends Component
             ->firstOrFail();
 
         $anecdotalOutcome->update([
-            'action' => $this->action,
+            'actions_id' => $this->actions_id,
             'outcome' => $this->outcome,
             'outcome_remarks' => $this->outcome_remarks,
         ]);
@@ -99,8 +99,11 @@ class ReportUpdate extends Component
 
     public function render()
     {
+        $actions = Action::all();
+        dd($actions);
         return view('livewire.student.report-update', [
             'anecdotalData' => $this->anecdotalData,
+            'actions' => $actions
         ])->extends('layouts.dashboard.index')->section('content');
     }
 

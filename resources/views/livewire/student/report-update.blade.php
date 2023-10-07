@@ -5,7 +5,7 @@
     <div class="mx-auto">
         <div class="flex items-center justify-between">
             <h6 class="text-xl font-bold px-4">
-                Report Information
+                {{-- Report Status : {{ $anecdotalData->getStatusTextAttribute() }} --}}
             </h6>
             <div class="flex justify-end">
                 <x-link :href="url('admin/reports')">
@@ -43,8 +43,11 @@
                                 <x-label>
                                     Referred By
                                 </x-label>
-                                {{-- <x-input value="{{ $anecdotal->report->first()?->users->name ?? 'No Reporter Found' }}" --}}
-                                    {{-- disabled /> --}}
+                                @if ($anecdotalData->report->first())
+                                <x-input value="{{ $anecdotalData->report->first()->user->name }}" disabled />
+                            @endif
+
+
                             </div>
                         </div>
 
@@ -57,18 +60,18 @@
                     <x-grid columns="2" gap="4" px="0" mt="4">
                         <div class="w-full px-4">
                             <x-label>
-                                Minor Offenses
+                                Grade Level
                             </x-label>
-                            <x-input value="{{ $anecdotalData->Minoroffenses?->offenses ?? 'No Offenses Found' }}"
-                                disabled />
+                            <x-input value=" Grade: {{ $anecdotalData->grade_level }}" disabled />
                         </div>
 
                         <div class="w-full px-4">
                             <x-label>
-                                Grave Offenses
+                                Offenses
                             </x-label>
-                            <x-input value="{{ $anecdotalData->Graveoffenses?->offenses ?? 'No Offenses Found' }}"
-                                disabled />
+                            <x-input
+                                value="{{ $anecdotalData->offenses?->offenses ?? 'No Offenses Found' }}"
+                                disabled disabled />
                         </div>
                     </x-grid>
 
@@ -129,7 +132,7 @@
                                 <x-label>
                                     Remarks (Short Description)
                                 </x-label>
-                                <x-input disabled type="text" value="{{ $anecdotalData?->remarks ?? 'No Data' }}" />
+                                <x-input disabled type="text" value="{{ $anecdotalData?->short_description ?? 'No Data' }}" />
 
                             </div>
                         </div>
@@ -144,9 +147,11 @@
                                 @if ($anecdotalData->images->isNotEmpty())
                                     @foreach ($anecdotalData->images as $image)
                                         <div class="relative">
-                                            <a href="{{ asset('storage/' . $image->images) }}" target="_blank" rel="noopener noreferrer">
-                                                <img src="{{ asset('storage/' . $image->images) }}" alt="Anecdotal Image"
-                                                     class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
+                                            <a href="{{ asset('storage/' . $image->images) }}" target="_blank"
+                                                rel="noopener noreferrer">
+                                                <img src="{{ asset('storage/' . $image->images) }}"
+                                                    alt="Anecdotal Image"
+                                                    class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
                                             </a>
 
                                         </div>
@@ -164,21 +169,16 @@
                         <div class="w-full px-4">
 
                             <x-label>Story</x-label>
-                                <textarea id="message" rows="4"  disabled
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+                            <textarea id="message" rows="4" disabled
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
                                     rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Write the story behind the report here">{{ $anecdotalData?->story ?? 'No Data' }}
+                                placeholder="Write the story behind the report here">{{ $anecdotalData?->story ?? 'No Data' }}
                                 </textarea>
 
 
                         </div>
 
-
-
-
                 </div>
-
-
 
                 </x-grid>
 
@@ -188,15 +188,25 @@
                         Actions Taken
                     </h6>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
-
-                        <div class="relative mb-3">
-                            <div class="flex items-center space-x-2">
-                                <x-checkbox wire:model="actions" checked disabled value="Parent Teacher Meeting" />
-                                <x-label>Parent Teacher Meeting</x-label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 px-4">
+                        @if ($anecdotalData->actionsTaken->isNotEmpty())
+                            @foreach ($anecdotalData->actionsTaken as $actions)
+                                <div class="relative mb-3">
+                                    <div class="flex items-center space-x-2">
+                                        <x-checkbox checked disabled value="{{ $actions->actions }}" />
+                                        <x-label>{{ $actions->actions }}</x-label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="col-span-4">
+                                <p class="mx-4 text-left text-gray-500">
+                                    No Actions Taken
+                                </p>
                             </div>
-                        </div>
+                        @endif
                     </div>
+
 
                 </div>
 
@@ -222,36 +232,26 @@
     </div>
 
 
-
-
-
-
-
-
-
-
     @if ($showMeetingOutcomeForm)
+    {{-- Still need some adjustment --}}
         <div class="w-full mx-auto mt-6">
             <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
 
                 <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
                     <h6 class="text-sm my-1 px-4 font-bold uppercase ">
-                       Meeting Outcome Update
+                        Meeting Outcome Update
                     </h6>
-
-                    <x-grid columns="4" gap="4" px="0" mt="4">
-
-
+                    <x-grid :columns="$anecdotalData->case_status === 1 ? 4 : 3" gap="4" px="0" mt="4">
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>
                                     Meeting Outcome
                                 </x-label>
-                               <x-select wire:model="outcome">
-                                <option value="Succesfull">Succesfull</option>
-                                <option value="Follow-up">Follow-up</option>
-                                <option value="Referral">Referral </option>
-                               </x-select>
+                                <x-select wire:model="outcome" required  >
+                                    <option value="0">Succesfull</option>
+                                    <option value="1">Follow-up</option>
+                                    <option value="2">Refferral</option>
+                                </x-select>
                             </div>
                         </div>
 
@@ -260,7 +260,7 @@
                                 <x-label>
                                     Remarks (Short Description)
                                 </x-label>
-                                <x-input wire:model="outcome_remarks" />
+                                <x-input wire:model="outcome_remarks" required  />
                             </div>
                         </div>
 
@@ -269,36 +269,48 @@
                                 <x-label>
                                     Action Taken
                                 </x-label>
-                                <x-select name="action_id" wire:model="actions_id">
-                                    @foreach ($actions as $action)
-                                        <option value="{{ $action->id }}">
-                                            {{ $action->action_taken }}</option>
-                                    @endforeach
+                                <x-select name="action_id" wire:model="action" required>
+                                    <option value="Parent Guidance Meeting">Parent Guidance Meeting</option>
+                                    <option value="Anecdotal Collect">Anecdotal Collect</option>
+                                    <option value="Reinforce expectations">Reinforce expectations</option>
+                                    <option value="Notify Parents">Notify Parents</option>
                                 </x-select>
                             </div>
                         </div>
 
+                        @if ($anecdotalData->case_status === 1)
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>
-                                    Notify after the resolving the case
+                                    Reminder after the case (Days)
                                 </x-label>
-                                <x-input type="number" wire:model.defer="reminderDays"/>
+                                <x-input type="number" wire:model.defer="reminderDays" />
                             </div>
                         </div>
-
-
-
+                        @endif
                     </x-grid>
 
 
-                    <div class="flex justify-end items-center">
-                        <x-text-alert />
-                        <div wire:loading wire:target="update" class="mx-4">
-                            Loading...
+
+                    @if ($anecdotalData->case_status === 1)
+                        <div class="flex justify-end items-center">
+                            <x-text-alert />
+                            <div wire:loading wire:target="update" class="mx-5">
+                                Loading...
+                            </div>
+
+                            <x-button type="submit" wire:loading.attr="disabled"
+                                wire:click="update">Resolved</x-button>
                         </div>
-                        <x-button type="submit" wire:loading.attr="disabled" wire:click="update">Resolved</x-button>
+                    @elseif ($anecdotalData->case_status === 2)
+                    <div class="flex justify-end items-center mx-4">
+                        <p class="font-medium text-md text-green-500">
+                            The case has been resolved last {{ $anecdotalData->updated_at->format('F j, Y') }}
+                        </p>
                     </div>
+
+                    @endif
+
 
                 </div>
 

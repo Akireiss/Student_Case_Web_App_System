@@ -27,9 +27,9 @@ class StatusNotification extends Notification
     public function toArray($notifiable)
     {
 
-    $createdDate = Carbon::parse($this->anecdotal->created_at);
+    // $createdDate = Carbon::parse($this->anecdotal->created_at);
     $message = "Your report to {$this->anecdotal->student->first_name}  {$this->anecdotal->student->last_name}
-     about {$createdDate->diffForHumans()}
+     about
     has been accepted";
 
     return [

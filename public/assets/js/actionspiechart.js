@@ -7,7 +7,7 @@ function updateChart() {
             var dataCounts = [];
 
             data.forEach(function (item) {
-                labels.push(item.actions);
+                labels.push(item.action);
                 dataCounts.push(item.count);
             });
 

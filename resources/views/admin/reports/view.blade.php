@@ -215,7 +215,7 @@
                                 <x-label>
                                     Meeting Outcomes
                                 </x-label>
-                                <x-input disabled value="{{ $anecdotal->actions?->outcome ?? 'No Data' }}"/>
+                                <x-input disabled value="{{ $anecdotal->actions?->getActionTextAttribute() ?? 'No Data' }}"/>
                             </div>
                         </div>
                         <div class="w-full px-4">
@@ -231,7 +231,7 @@
                                 <x-label>
                                     Action Taken
                                 </x-label>
-                                <x-input disabled value="{{ $anecdotal->actions?->actions_id ?? 'No Data' }}"/>
+                                <x-input disabled value="{{ $anecdotal->actions?->action ?? 'No Data' }}"/>
                             </div>
                         </div>
                     </x-grid>

@@ -34,13 +34,13 @@ class Anecdotal extends Model
         'status'
 
     ];
+    public function report()
+    {
+        return $this->hasMany(Report::class, 'anecdotal_id');
+    }
     public function images()
     {
         return $this->hasMany(AnecdotalImages::class, 'anecdotal_id');
-    }
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function students()
@@ -62,10 +62,7 @@ class Anecdotal extends Model
         return $this->belongsTo(Offenses::class, 'offense_id');
     }
 
-    public function report()
-    {
-        return $this->hasMany(Report::class, 'anecdotal_id');
-    }
+
 
 
     // TODO: for anecdotal table (still need some adjustment)
