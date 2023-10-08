@@ -8,14 +8,42 @@ use Illuminate\Support\Facades\Auth;
 
 class Notification extends Component
 {
+    public $selectedNotificationId;
 
     public $userId; // You can also use public $notifiableId;
 
-    public function mount($userId)
+
+public function mount($userId)
 {
     $this->userId = $userId;
+
+    // Listen for the "refreshNotifications" event and refresh the notifications list
+    $this->listeners['refreshNotifications'] = 'refreshNotifications';
 }
 
+public function refreshNotifications()
+{
+    // Fetch updated notifications list
+    $this->notifications = Auth::user()->unreadNotifications;
+}
+
+
+public function markAsRead($notificationId)
+{
+    // Find the notification by its ID
+    $notification = \App\Models\Notification::find($notificationId);
+
+    // Mark the notification as read
+    if ($notification) {
+        $notification->markAsRead();
+    }
+
+    // Reset the selected notification ID
+    $this->selectedNotificationId = null;
+
+    // Refresh the notifications list
+    $this->emit('refreshNotifications');
+}
 
 public function render()
 {

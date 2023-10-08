@@ -32,13 +32,13 @@
                         </button>
 
 
-                        <div class="flex justify-center flex-1 lg:mr-32">
-                            <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-                                {{-- Data Here --}}
-                            </div>
+                        <div >
+
+
                         </div>
                         <ul class="flex items-center flex-shrink-0 space-x-2">
                             <livewire:components.notification :userId="auth()->user()->id" />
+                                {{-- @include('includes.notification') --}}
                             <li>
 
                                 <li class="relative">
@@ -114,6 +114,7 @@
         <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
         <script src="{{ asset('assets/js/chart.min.js') }}"></script>
         <script src="{{ asset('assets/js/qrcode.js') }}"></script>
+        <script src="{{ asset('assets/js/dropdown.js') }}"></script>
 
 
 

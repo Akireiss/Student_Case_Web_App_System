@@ -932,8 +932,8 @@
         <div wire:loading wire:target="save" class="mx-4">
             Loading..
         </div>
-        <x-button type="submit"
-         wire:loading.attr="disabled" :disabled="$disableSubmitButton">Submit</x-button>
+        <x-button type="submit" wire:loading.attr="disabled" :disabled="$disableSubmitButton">Submit</x-button>
+
     </div>
 
     </form>

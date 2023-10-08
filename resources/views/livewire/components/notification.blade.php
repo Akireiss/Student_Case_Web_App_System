@@ -49,9 +49,10 @@
     @forelse($notifications->take(5) as $notification)
     <div class="p-2 text-sm hover:bg-gray-100">
         <p class="text-gray-800">{{ $notification->data['message'] }}</p>
-        <a href="#" class="block mt-2 text-xs text-blue-500 hover:text-blue-700">
+        <button type="button" wire:click="markAsRead({{ $notification->id }})" class="block mt-2 text-xs text-blue-500 hover:text-blue-700">
             Mark as read
-        </a>
+        </button>
+
     </div>
     @if($loop->last)
     <a href="#" class="block p-2 text-xs text-blue-500 hover:text-blue-700">

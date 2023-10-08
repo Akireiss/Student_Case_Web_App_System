@@ -23,11 +23,11 @@ class StudentProfile extends Component
     use WireModelTraits;
     use AddSiblingRewardTrait;
 
-    public $disableSubmitButton = false;
     public $living_with = null;
     protected $listeners = [
         'resetName'
     ];
+    public $disableSubmitButton = false;
 
     public function selectStudent($id, $name)
     {
@@ -40,13 +40,13 @@ class StudentProfile extends Component
 
         if ($existingProfile) {
             $this->addError('studentId', 'Student Already Has A Profile');
-            $this->disableSubmitButton = true;
+            $this->disableSubmitButton = true; // Disable the button when a profile exists
         } else {
             $this->resetErrorBag(['studentId']);
+            $this->disableSubmitButton = false; // Enable the button when no profile exists
         }
-
-        $this->disableSubmitButton = true;
     }
+
 
     public function render()
     {

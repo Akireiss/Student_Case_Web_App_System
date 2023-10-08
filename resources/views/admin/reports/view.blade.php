@@ -30,7 +30,7 @@
                                     Student Name
                                 </x-label>
                                 <x-input type="text" name="offenses"
-                                 value="{{ $anecdotal->student->first_name }}"
+                                 value="{{ $anecdotal->student->first_name }} {{ $anecdotal->student->middle_name }} {{ $anecdotal->student->last_name }}"
                                     disabled />
                             </div>
 
@@ -127,7 +127,7 @@
                                 <x-label>
                                     Remarks (Short Description)
                                 </x-label>
-                                <x-input disabled  type="text" value="{{ $anecdotal?->remarks ?? 'No Data' }}" />
+                                <x-input disabled  type="text" value="{{ $anecdotal?->short_description ?? 'No Data' }}" />
 
                             </div>
                         </div>

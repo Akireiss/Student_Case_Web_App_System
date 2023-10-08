@@ -110,7 +110,7 @@ class Report extends Component
             'observation' => $this->observation,
             'desired' => $this->desired,
             'outcome' => $this->outcome,
-            'grade_level' => $this->classroom->section . ' ' . $this->classroom->grade_level ?? '',
+            'grade_level' => $this->classroom->grade_level . ' ' . $this->classroom->section ?? '',
             'story' => $this->story,
         ]);
 

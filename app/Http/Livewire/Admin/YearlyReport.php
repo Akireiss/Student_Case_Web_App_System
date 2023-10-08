@@ -108,72 +108,83 @@ class YearlyReport extends Component
 
 
     public function saveReport()
-    {
-        $data = [];
+{
+    // Initialize an empty array to store aggregated data
+    $data = [];
 
-        foreach ($this->groupedClassrooms as $gradeLevel => $classroom) {
-            $data[] = [
-                'grade_level' => $gradeLevel,
-                'male' => $this->selectedOption === 'High School' ? $classroom['total_hs_male'] : $classroom['total_sh_male'],
-                'female' => $this->selectedOption === 'High School' ? $classroom['total_hs_female'] : $classroom['total_sh_female'],
-                'total' => $classroom['total_students'],
-            ];
-        }
-
-        Yearly::create([
-            'data' => json_encode($data),
-            'category' => $this->selectedOption,
-            'school_year' => $this->yearLevel,
-        ]);
-        session()->flash('message', 'Report Successfully Added');
-
+    foreach ($this->groupedClassrooms as $gradeLevel => $classroom) {
+        // Add data from each classroom to the $data array
+        $data[] = [
+            'grade_level' => $gradeLevel,
+            'male' => $this->selectedOption === 'High School' ? $classroom['total_hs_male'] : $classroom['total_sh_male'],
+            'female' => $this->selectedOption === 'High School' ? $classroom['total_hs_female'] : $classroom['total_sh_female'],
+            'total' => $classroom['total_students'],
+        ];
     }
 
-    public function save() {
-   // Determine the type based on the selected option
-   $type = 0; // Default to Completion Rate
-   if ($this->selectedOption === 'Promotion Rate') {
-       $type = 1;
-   } elseif ($this->selectedOption === 'Drop Out Rate') {
-       $type = 2;
-   }
-   //! need more revisionss
-   // Create an array for the selected rate
-   $rate = [
-       'Completters' => $this->totalStudents,
-       'Enrollment' => $this->totalEnrollment,
-       'Percent Cr' => $this->completionPercent,
-   ];
+    // Save the aggregated data as a single record
+    Yearly::create([
+        'data' => json_encode($data),
+        'category' => $this->selectedOption,
+        'school_year' => $this->yearLevel,
+    ]);
 
-   // Determine the column name based on the type
-   $columnName = 'completion_rate';
-   if ($type === 1) {
-       $rate = [
-           'Promotes' => $this->totalPromotion,
-           'Enrollment' => $this->totalEnrollment,
-           'Percent PR' => $this->promotionPercent,
-       ];
-       $columnName = 'promotion_rate';
-   } elseif ($type === 2) {
-       $rate = [
-           'Drop Out' => $this->totalDropOut,
-           'Enrollment' => $this->totalEnrollment,
-           'Percent Dr' => $this->dropOutRate,
-       ];
-       $columnName = 'drop_out_rate';
-   }
-
-   // Create a new Yearly instance and save it
-   $yearly = new Yearly([
-       'data' => json_encode($rate),
-       'category' => $this->selectedOption,
-       'school_year' => $this->yearLevel,
-       'type' => $type,
-   ]);
-
-   $yearly->save();
-
-   session()->flash('message', 'Yearly report saved successfully.');
+    session()->flash('message', 'Report Successfully Added');
 }
+
+public function save()
+{
+    $rates = [];
+
+    // Define the Completion Rate with its associated year
+    $completionRate = [
+        'Completters' => $this->totalStudents,
+        'Enrollment' => $this->totalEnrollment,
+        'Percent Cr' => $this->completionPercent,
+    ];
+    $rates[] = [
+        'type' => 0,
+        'rate' => $completionRate,
+        'year' => $this->CrYear, // Include the year for Completion Rate
+    ];
+
+    // Define the Promotion Rate with its associated year
+    $promotionRate = [
+        'Promotes' => $this->totalPromotion,
+        'Enrollment' => $this->totalEnrollment,
+        'Percent PR' => $this->promotionPercent,
+    ];
+    $rates[] = [
+        'type' => 1,
+        'rate' => $promotionRate,
+        'year' => $this->PrYear, // Include the year for Promotion Rate
+    ];
+
+    // Define the Drop Out Rate with its associated year
+    $dropOutRate = [
+        'Drop Out' => $this->totalDropOut,
+        'Enrollment' => $this->totalEnrollment,
+        'Percent Dr' => $this->dropOutRate,
+    ];
+    $rates[] = [
+        'type' => 2,
+        'rate' => $dropOutRate,
+        'year' => $this->DrYear, // Include the year for Drop Out Rate
+    ];
+
+    // Save each rate type as a separate Yearly instance
+   // Save each rate type as a separate Yearly instance
+foreach ($rates as $rateData) {
+    Yearly::create([
+        'data' => json_encode($rateData['rate']),
+        'category' => $this->selectedOption,
+        'school_year' => $rateData['year'], // Use the year from rateData
+        'type' => $rateData['type'],
+    ]);
+}
+
+    session()->flash('message', 'Yearly reports saved successfully.');
+}
+
 
 }
