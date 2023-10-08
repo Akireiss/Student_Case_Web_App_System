@@ -143,6 +143,158 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Completters</x-label>
+                                <x-input wire:model="ShTotalStudents" disabled />
+                            </div>
+                        </div>
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label for="section">Enrollment</x-label>
+                                <x-input wire:model="ShTotalEnrollment" disabled />
+
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Percent Cr</x-label>
+                                <x-input disabled wire:model="ShCompletionPercent" />
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Year Level</x-label>
+                                <x-input wire:model="ShCrYear" />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                        Promotion Rate
+                    </h6>
+                    <!-- Personal information form fields -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Promotes</x-label>
+                                <x-input disabled wire:model="ShTotalPromotion" />
+                            </div>
+                        </div>
+
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label for="section">Enrollment</x-label>
+                                <x-input wire:model="ShTotalEnrollment" disabled />
+
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Percent PR</x-label>
+                                <x-input disabled wire:model="ShPromotionPercent" />
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Year Level</x-label>
+                                <x-input wire:model="ShPrYear" />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                        Drop Out Rate
+                    </h6>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Drop Out</x-label>
+                                <x-input wire:model="ShTotalDropOut" disabled />
+                            </div>
+                        </div>
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label for="section">Enrollment</x-label>
+                                <x-input wire:model="ShTotalEnrollment" disabled />
+
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Percent Dr</x-label>
+                                <x-input disabled wire:model="ShDropOutRate" />
+                            </div>
+                        </div>
+
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Year Level</x-label>
+                                <x-input wire:model="ShDrYear" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full px-4">
+                        <div class="relative mb-3">
+                            <x-label>Category</x-label>
+                            <x-input disabled wire:model="selectedOption" />
+                        </div>
+                    </div>
+
+
+                    <div class="flex justify-end items-center mx-4">
+                        <x-text-alert />
+                        <div wire:loading wire:target="save" class="mx-4">
+                            Loading...
+                        </div>
+                        <x-button type="submit" wire:loading.attr="disabled">Save </x-button>
+                    </div>
+
+                </form>
+            </x-slot>
+        </x-form>
+
+        @elseif ($selectedOption === 'High School')
+        <x-form title="">
+            <x-slot name="actions">
+
+            </x-slot>
+
+            <x-slot name="slot">
+                <form wire:submit.prevent="saveReportHs">
+                    <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                        Completion Rate
+                    </h6>
+{{--
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Completters</x-label>
                                 <x-input wire:model="totalStudents" disabled />
                             </div>
                         </div>
@@ -170,7 +322,7 @@
                             </div>
                         </div>
                     </div>
-
+ --}}
 
 
 
@@ -185,7 +337,7 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Promotes</x-label>
-                                <x-input disabled wire:model="totalPromotion" />
+                                <x-input disabled wire:model="HsTotalPromotion" />
                             </div>
                         </div>
 
@@ -194,7 +346,7 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label for="section">Enrollment</x-label>
-                                <x-input wire:model="totalEnrollment" disabled />
+                                <x-input wire:model="HsTotalEnrollment" disabled />
 
                             </div>
                         </div>
@@ -202,14 +354,14 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Percent PR</x-label>
-                                <x-input disabled wire:model="promotionPercent" />
+                                <x-input disabled wire:model="HsPromotionPercent" />
                             </div>
                         </div>
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Year Level</x-label>
-                                <x-input wire:model="PrYear" />
+                                <x-input wire:model="HsPrYear" />
                             </div>
                         </div>
                     </div>
@@ -227,7 +379,7 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Drop Out</x-label>
-                                <x-input wire:model="totalDropOut" disabled />
+                                <x-input wire:model="HsTotalDropOut" disabled />
                             </div>
                         </div>
 
@@ -235,7 +387,7 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label for="section">Enrollment</x-label>
-                                <x-input wire:model="totalEnrollment" disabled />
+                                <x-input wire:model="HsTotalEnrollment" disabled />
 
                             </div>
                         </div>
@@ -243,7 +395,7 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Percent Dr</x-label>
-                                <x-input disabled wire:model="dropOutRate" />
+                                <x-input disabled wire:model="HsDropOutRate" />
                             </div>
                         </div>
 
@@ -252,7 +404,7 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Year Level</x-label>
-                                <x-input wire:model="DrYear" />
+                                <x-input wire:model="HsDrYear" />
                             </div>
                         </div>
                     </div>
@@ -267,7 +419,7 @@
 
                     <div class="flex justify-end items-center mx-4">
                         <x-text-alert />
-                        <div wire:loading wire:target="save" class="mx-4">
+                        <div wire:loading wire:target="saveReportHs" class="mx-4">
                             Loading...
                         </div>
                         <x-button type="submit" wire:loading.attr="disabled">Save </x-button>
