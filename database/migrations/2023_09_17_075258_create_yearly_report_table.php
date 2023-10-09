@@ -16,7 +16,7 @@ return new class extends Migration
             $table->json('data');
             $table->integer('category');
             $table->string('school_year');
-            $table->string('type')->nullable();
+            $table->string('type')->default(0);
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\PdfController;
+use App\Http\Controllers\Admin\YearlyReportController;
 use App\Http\Controllers\Student\AuthController;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\AddUser;
@@ -23,7 +24,6 @@ use App\Http\Livewire\Admin\Student\EditStudent;
 use App\Http\Livewire\Admin\Teacher\EditTeacher;
 use App\Http\Livewire\Admin\Offenses\EditOffense;
 use App\Http\Controllers\Admin\OffensesController;
-use App\Http\Controllers\GenerateReportController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Livewire\Admin\Dashboard\ResolvedCases;
@@ -138,7 +138,11 @@ Route::middleware(['auth', 'role'])->group(function () {
             ->name('student.view');
 
             //Generate Report
-            Route::get('generate-report', [GenerateReportController::class, 'index']);
+            Route::get('yearly-report/view/{yearlyReport}',
+             [YearlyReportController::class, 'index'])
+             ->name('yearly-report.view');
+
+
             //Yearly Report
             Route::get('yearly-report', YearlyReport::class);
         });

@@ -1,7 +1,32 @@
 <div>
-    <!-- resources/views/livewire/admin/yearly-report.blade.php -->
+
+
+    <div x-data="{ showTable: true, showForm: false }">
+        <div x-show="showTable">
+            <div class="flex items-center justify-between my-2">
+                <h6 class="text-lg font-semibold text-gray-600 dark:text-gray-300 flex-shrink-0">
+                    {{-- List Of Students --}}
+                </h6>
+                <div class="flex justify-end  mt-4">
+                    <x-button x-on:click="showTable = false; showForm = true">
+                        Add
+                    </x-button>
+                </div>
+            </div>
+            <div>
+                <livewire:yearly-report-table/>
+            </div>
+        </div>
+
+
+        <div x-cloak x-show="showForm">
+            <div>
+
+
 
     <div class="flex justify-end space-x-2">
+
+
         <div x-data="{ open: false }" class="relative inline-block text-left">
             <x-buttontype @click="open = !open">
                 {{ $selectedOption }}
@@ -20,16 +45,18 @@
                         class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">Senior High</a></li>
             </ul>
         </div>
-
+        <x-button x-on:click="showForm = false; showTable = true">
+            Back
+        </x-button>
 
 
     </div>
 
 
     <div class="flex justify-between items-center">
-        <h6 class="text-lg font-bold text-left ">
+        {{-- <h6 class="text-lg font-bold text-left ">
             Report
-        </h6>
+        </h6> --}}
 
     </div>
 
@@ -105,15 +132,23 @@
                 </div>
                 <div class="w-full px-4">
                     <div class="relative mb-3">
-                        <x-label>Year Level</x-label>
-                        <x-input wire:model="yearLevel" />
+                        <x-label> School Year</x-label>
+                        <x-input wire:model="yearLevel" required />
+                        <x-error fieldName="yearLevel" />
+
                     </div>
                 </div>
 
             </div>
 
             <div class="flex justify-end items-center mx-4">
-                <x-text-alert />
+                <div id="messageContainer">
+                    @if (session()->has('success'))
+                        <span class="text-green-500 mx-4">
+                            {{ session('success') }}
+                        </span>
+                    @endif
+                </div>
                 <div wire:loading wire:target="saveReport" class="mx-4">
                     Loading..
                 </div>
@@ -166,7 +201,8 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Year Level</x-label>
-                                <x-input wire:model="ShCrYear" />
+                                <x-input wire:model="ShCrYear" required />
+                                <x-error fieldName="ShCrYear" />
                             </div>
                         </div>
                     </div>
@@ -209,7 +245,9 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Year Level</x-label>
-                                <x-input wire:model="ShPrYear" />
+                                <x-input wire:model="ShPrYear" required />
+                                <x-error fieldName="ShPrYear" />
+
                             </div>
                         </div>
                     </div>
@@ -252,7 +290,9 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Year Level</x-label>
-                                <x-input wire:model="ShDrYear" />
+                                <x-input wire:model="ShDrYear" required />
+                                <x-error fieldName="ShDrYear" />
+
                             </div>
                         </div>
                     </div>
@@ -276,8 +316,7 @@
                 </form>
             </x-slot>
         </x-form>
-
-        @elseif ($selectedOption === 'High School')
+    @elseif ($selectedOption === 'High School')
         <x-form title="">
             <x-slot name="actions">
 
@@ -285,10 +324,10 @@
 
             <x-slot name="slot">
                 <form wire:submit.prevent="saveReportHs">
-                    <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                    {{-- <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                         Completion Rate
-                    </h6>
-{{--
+                    </h6> --}}
+                    {{--
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
 
@@ -355,13 +394,15 @@
                             <div class="relative mb-3">
                                 <x-label>Percent PR</x-label>
                                 <x-input disabled wire:model="HsPromotionPercent" />
+
                             </div>
                         </div>
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Year Level</x-label>
-                                <x-input wire:model="HsPrYear" />
+                                <x-input wire:model="HsPrYear" required/>
+                                <x-error fieldName="HsPrYear" />
                             </div>
                         </div>
                     </div>
@@ -404,7 +445,9 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Year Level</x-label>
-                                <x-input wire:model="HsDrYear" />
+                                <x-input wire:model="HsDrYear" required/>
+                                <x-error fieldName="HsDrYear" />
+
                             </div>
                         </div>
                     </div>
@@ -432,6 +475,9 @@
 
 
 
+
+
+</div>
 
 
 
