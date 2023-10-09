@@ -1,100 +1,303 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<style>
-     table.inline {
+    <title>Invoice</title>
+
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial, sans-serif;
+        }
+
+        table {
+            font-size: x-small;
             border-collapse: collapse;
-            width: 100%;
+
         }
-        table.inline td {
+
+        table td {
             border: 1px solid black;
             padding: 5px;
         }
 
-        table.inline th {
+        table th {
             border: 1px solid black;
-            padding: 5px;
+
         }
 
-        .text-left{
-            text-align:left
+        .gray {
+            background-color: lightgray
         }
-        .bold{
+
+        .bold {
             font-weight: bold;
+            padding: 8px;
         }
-        th{
-            border: : 1px solid black;
+
+        .checkbox {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+            /* background-color: #000; */
+            display: inline-block;
+            /* Display the checkbox inline */
+            margin-right: 5px;
+            /* Add some spacing between checkbox and label */
         }
-        .right{
-            margin: 50px;
+
+        .label {
+            display: inline-block;
+            /* Display the label inline */
         }
-        .border-left{
-            border: 1px solid black right
+
+        .center {
+            text-align: center;
+            /* Center align the content within all <td> elements */
         }
-        .box{
-            padding: 20px;
-        }
-</style>
+    </style>
+</head>
+
 <body>
 
-    <table class="inline">
+    <table width="80%">
+        <tbody>
+            <tr>
+                <td class="bold">CZCMNHS INDIVIDUAL INVENTORY</td>
 
-            <th class="bold text-left">CZCMNHS INDIVIDUAL INVENTORY</th>
-           <th class="text-left right">Guidance Form 1</th>
-           <th class="box">
+            </tr>
+            <tr>
+                <td>Personal Profile</td>
+            </tr>
+        </tbody>
+    </table>
 
-ssssss
-           </th>
+    <table width="80%">
+        <thead style="background-color: lightgray;">
+
+        </thead>
+        <tbody>
+            <tr>
+                <td width="70%">Last Name:</td>
+                <td>Age:</td>
+
+            </tr>
+            <tr>
+                <td>First Name:</td>
+                <td>Suffix:</td>
+            </tr>
+            <tr>
+                <td>Middle Name:</td>
+                <td>Sex:</td>
+            </tr>
+
+
+        </tbody>
+
 
     </table>
 
-    <table class="inline">
-            <td class="bold">Personal Information</td>
-            <td class="bold"></td>
-    </table>
-    <table class="inline">
-        <tr>
-            <th class="bold text-left">Last Name:</th>
-            <th class="bold text-left">Age:</th>
-            <th ></th>
-        </tr>
-        <tr>
-            <th class="bold text-left">First Name:</th>
-            <th class="bold text-left">Suffix:</th>
-            <th ></th>
-        </tr>
-        <tr>
-            <th class="bold text-left">Middle Name:</th>
-            <th class="bold text-left">Sex:</th>
-            <th class="bold text-left border-left"></th>
-        </tr>
 
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td width="30%">Last Name:</td>
+                <td width="28.5%">Age:</td>
+                <td width="25%">Age:</td>
+                <td width="21%"></td>
+            </tr>
+        </tbody>
     </table>
 
-        <table class="inline">
-        <tr>
-            <th class="bold text-left">Nickname:</th>
-            <th class="bold text-left">Birthdate:</th>
-            <th class="bold text-left">Birth Place:</th>
-            <th class="bold text-left">Height</th>
-        </tr>
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td width="40%">Address:</td>
+                <td width="40%">Contact Number:</td>
+                <td width="20%">Height:</td>
+            </tr>
+            <tr>
+                <td width="40%">Birth Order:</td>
+                <td width="40%">No of Siblings:</td>
+                <td width="20%">Weight:</td>
+
+            </tr>
+        </tbody>
+    </table>
 
 
-        <tr>
-            <th class="bold text-left">Nickname:</th>
-            <th class="bold text-left">Birthdate:</th>
-            <th class="bold text-left">Birth Place:</th>
-            <th class="bold text-left">Weight</th>
-        </tr>
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td width="30%">Religion:</td>
+                <td width="28.Grade and SectionTongue:</td>
+        <td width="25%">4ps Receipient:</td>
+                <td width="21%">BMI</td>
+            </tr>
+        </tbody>
+    </table>
 
 
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td width="79.5%" class="bold">Family Background:</td>
+                <td width="20%">Do you have dissability?</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td width="30%"></td>
+                <td width="28.5%">Father</td>
+                <td width="25%">Mother</td>
+                <td width="21%">
+                    <div class="checkbox"></div>
+                    <label class="label">Yes</label>
+                </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <td width="30%">Name</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">
+                    <div class="checkbox"></div>
+                    <label class="label">No</label>
+                </td>
+            </tr>
+            <tr>
+                <td width="30%">Place of Birth</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">If yes, what it is?<br>
+
+                </td>
+            </tr>
+            <tr>
+                <td width="30%">Age</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%"></td>
+            </tr>
+            <tr>
+                <td width="30%">Occupation</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">Food Allergy</td>
+            </tr>
+            <tr>
+                <td width="30%">Place of Work</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">
+                    <div class="checkbox"></div>
+                    <label class="label">Yes</label>
+                </td>
+
+            </tr>
+            <tr>
+                <td width="30%">Contact No.</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">
+
+                    <div class="checkbox"></div>
+                    <label class="label">No</label>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="30%">Office Monthly Income</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">If yes, what it is?<br>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td width="30%">Monthly Income.</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">
+
+                </td>
+            </tr>
+
+
+        </tbody>
 
     </table>
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td width="79.5%"> List down the names of Siblings that are studying in CZCMNHS</td>
+                <td width="20%">Medicine taken in</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td width="30%" class="center">Name</td>
+                <td width="28.5%" class="center">Age</td>
+                <td width="25%" class="center">Grade and Section</td>
+                <td width="21%">
+                    1
+                </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <td width="30%">s</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">
+
+                </td>
+            </tr>
+            <tr>
+                <td width="30%">s</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">
+
+                </td>
+            </tr>
+            <tr>
+                <td width="30%">s</td>
+                <td width="28.5%"></td>
+                <td width="25%"></td>
+                <td width="21%">
+
+                </td>
+            </tr>
+
+        </tbody>
+
+
+
+
+
+
 
 </body>
+
 </html>
