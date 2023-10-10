@@ -24,9 +24,16 @@ class PdfController extends Controller
     }
 
 
-    public function testPdf()
+    public function testPdf($id)
     {
-        $pdf = Pdf::loadView('testPdf');
+
+        $profile = Profile::with('family')->find($id);
+
+        if (!$profile) {
+            abort(403);
+        }
+        $pdf = Pdf::loadView('testPdf', ['profile' => $profile]);
+
         return $pdf->stream();
     }
 

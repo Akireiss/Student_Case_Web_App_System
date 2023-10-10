@@ -272,7 +272,8 @@
 
     <table class="inline">
         <tr>
-            <td class="bold">Name some of your Academic and Extra-Curricular Awards:
+            <td class="bold">Name some of your
+                Academic and Extra-Curricular Awards:
         </tr>
     </table>
 

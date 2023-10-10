@@ -279,6 +279,6 @@ Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
 
 //Pdf Here
 Route::get('generate-pdf/{id}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
-Route::get('test/pdf', [PdfController::class, 'testPdf']);
+Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 
 
