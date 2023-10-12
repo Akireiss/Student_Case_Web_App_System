@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class YearlyReport extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
+    use LogsActivity;
 
         protected $table = 'yearly_report';
         protected $fillable = [
@@ -34,4 +38,23 @@ class YearlyReport extends Model
                     return 'Unknown';
             }
         }
+
+
+    protected static $logAttributes = ['data', 'category', 'school_year'];
+    protected static $logName = 'user';
+    protected static $logOnlyDirty = true;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['data', 'category', 'school_year'])
+            ->useLogName('User')
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "Yearly report has been {$eventName}";
+    }
+
 }

@@ -24,7 +24,7 @@ final class AnecdotaTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),
-            Header::make()->showSearchInput()->showToggleColumns()->includeViewOnTop('components.datatable'),
+            Header::make()->showToggleColumns()->showSearchInput()->includeViewOnTop('components.datatable'),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(mode: 'full'),
@@ -60,12 +60,8 @@ final class AnecdotaTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-        ->addColumn('first_name', function (Anecdotal $model) {
-            return $model->students->first_name . ' ' . $model->students->last_name;
-        })
-            // ->addColumn('last_name', function (Anecdotal $model) {
-            //     return $model->students->last_name;
-            // })
+            ->addColumn('students.first_name')
+            ->addColumn('students.last_name')
 
             ->addColumn('offenses')
 
@@ -84,9 +80,8 @@ final class AnecdotaTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Full Name', 'first_name')->sortable()
-                ->withCount('Total Reports', true, false),
-            // Column::make('Last Name', 'last_name')->sortable(),
+            Column::make('First Name', 'students.first_name'),
+            Column::make('Last Name', 'students.last_name'),
             Column::make('Offenses', 'offenses'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
             Column::make('Submitted at', 'created_at_formatted', 'anecdotal.created_at')->sortable(),
@@ -99,8 +94,8 @@ final class AnecdotaTable extends PowerGridComponent
     {
 
         return [
-            // Filter::inputText('first_name')->operators(['contains']),
-            // Filter::inputText('last_name')->operators(['contains']),
+            Filter::inputText('students.first_name')->operators(['contains']),
+             Filter::inputText('students.last_name')->operators(['contains']),
             Filter::datetimepicker('created_at_formatted', 'anecdotal.created_at')
                 ->params([
                     'only_future' => false,

@@ -141,4 +141,12 @@ class Students extends Model
     {
         return "An student has been {$eventName}";
     }
+
+    //Test
+    protected $appends = ['full_name'];
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

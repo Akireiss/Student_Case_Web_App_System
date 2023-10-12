@@ -222,6 +222,7 @@
         </tr>
     @endif
     </table>
+
     <table class="inline">
         <tr>
             <td >You are currently living with: {{$profile->living_with}} </td>
@@ -233,6 +234,7 @@
             <td >Guardian Name: {{ $profile->guardian_name }}</td>
         </tr>
     </table>
+
     <table class="inline">
         <tr>
             <td>Relationship with the guardian:  {{ $profile->guardian_relationship }} </td>
