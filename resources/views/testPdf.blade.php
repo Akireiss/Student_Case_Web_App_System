@@ -278,7 +278,7 @@
         <tbody>
             <tr>
                 <td width="79.5%"> List down the names of Siblings that are studying in CZCMNHS</td>
-                <td width="20%">Medicine taken in</td>
+                <td width="20%" class="bold">Medicine taken in</td>
 
             </tr>
         </tbody>
@@ -376,7 +376,7 @@
                 </td>
 
 
-                <td width="20%">
+                <td width="20%" class="bold">
                     Vitamins taken in
                 </td>
 
@@ -604,7 +604,6 @@
                         <td width="23.5%">
                             {{ $educations->grade_section }}
                         </td>
-
                         <td width="20%">
                             {{ $educations->school_year }}
                         </td>
@@ -754,6 +753,60 @@
 
         </tbody>
     </table>
+
+    <br>
+
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td class="bold">
+                    Anecdotal Records
+                </td>
+            </tr>
+
+        </tbody>
+
+
+
+
+
+    </table>
+    <table width="100%">
+
+        <tbody>
+            <tr>
+                <td width="26%" class="center">Observed Behavior</td>
+                <td width="26%" class="center">Desired Behavior</td>
+                <td width="26%" class="center">Outcome</td>
+                <td width="21%" class="center">Date
+                </td>
+            </tr>
+
+        </tbody>
+
+
+
+        @if ($profile->student->anecdotal)
+        @foreach ($profile->student->anecdotal as $studentAnecdotal )
+
+        <tbody>
+            <tr>
+                <td width="26%" >{{ $studentAnecdotal->observation }}</td>
+                <td width="26%" >{{ $studentAnecdotal->desired }}</td>
+                <td width="26%" >{{ $studentAnecdotal->outcome }}</td>
+                <td width="21%" >{{ $studentAnecdotal->created_at->format('F j, Y') }}</td>
+
+                </td>
+            </tr>
+        </tbody>
+        @endforeach
+        @endif
+
+
+    </table>
+
+
 </body>
 
 </html>

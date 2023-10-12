@@ -20,7 +20,7 @@ class PdfController extends Controller
 
         $pdf = Pdf::loadView('pdf.pdf', ['profile' => $profile]);
 
-        return $pdf->stream();
+        return $pdf->download();
     }
 
 

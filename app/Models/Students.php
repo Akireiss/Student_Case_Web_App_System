@@ -27,16 +27,16 @@ class Students extends Model
         'status',
         'department'
     ];
+    public function anecdotal()
+    {
+        return $this->hasMany(Anecdotal::class, 'student_id');
+    }
 
     public function classroom()
     {
         return $this->belongsTo(Classroom::class, 'classroom_id');
     }
 
-    public function anecdotal()
-    {
-        return $this->hasMany(Anecdotal::class, 'student_id');
-    }
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');
