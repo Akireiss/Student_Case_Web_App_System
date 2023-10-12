@@ -46,9 +46,10 @@
 
                         <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 md:grid-cols-5">
 
-
                             <div class="md:col-span-5">
+                                <x-label>Password</x-label>
                                 <div class="relative">
+
                                     <x-input type="password" id="password" wire:model="password"
                                      name="password" x-bind:type="showPassword ? 'text' : 'password'"
                                         required autocomplete="new-password"  minlength="8" />

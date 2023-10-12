@@ -74,7 +74,7 @@
 
 <body>
 
-    <table width="80%">
+    <table width="100%">
         <tbody>
             <tr>
                 <td class="bold">CZCMNHS INDIVIDUAL INVENTORY</td>
@@ -86,7 +86,7 @@
         </tbody>
     </table>
 
-    <table width="80%">
+    <table width="100%">
         <thead style="background-color: lightgray;">
 
         </thead>

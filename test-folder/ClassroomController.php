@@ -14,18 +14,13 @@ class ClassroomController extends Controller
         return view('admin.settings.classrooms.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $employees = Employee::pluck('employees', 'id');
         return view('admin.settings.classrooms.create', compact('employees'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $classroom = Classroom::create([
@@ -37,9 +32,6 @@ class ClassroomController extends Controller
         return redirect()->back()->with('success', 'Successfully Added');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $classroom = Classroom::findOrFail($id);
@@ -47,9 +39,6 @@ class ClassroomController extends Controller
       return view('admin.settings.classrooms.view', compact('classroom', 'employees'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $classroom = Classroom::findOrFail($id);
@@ -58,9 +47,7 @@ class ClassroomController extends Controller
         return view('admin.settings.classrooms.edit', compact('classroom', 'employees'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Classroom $classroom)
     {
         $validatedData = $request->validate([

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\PdfController;
 use App\Http\Controllers\Admin\YearlyReportController;
 use App\Http\Controllers\Student\AuthController;
+use App\Http\Livewire\Admin\Classroom\Classroom;
+use App\Http\Livewire\Admin\Classroom\ClassroomUpdate;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Student;
@@ -107,15 +109,13 @@ Route::middleware(['auth', 'role'])->group(function () {
             ->name('teacher.edit');
             Route::get('teachers/view/{employee}', [EditTeacher::class, 'view'])
             ->name('teacher.view');
-            // Classrooms
-            Route::get('classrooms', [ClassroomController::class, 'index']);
-            Route::get('classroom/create', [ClassroomController::class, 'create']);
-            Route::post('classroom/store', [ClassroomController::class, 'store'])->name('admin.classroom.store');
-            Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
-            //Edit Classroom
-            Route::get('classrooms/{classroom}/edit', [ClassroomController::class, 'edit'])->name('classroom.edit');
-            //View Classrooms
-            Route::get('classroom/{classroom}/view', [ClassroomController::class, 'show'])->name('classroom.view');
+            //Classroom
+            Route::get('classrooms', \App\Http\Livewire\Admin\Classroom\Classroom::class);
+            Route::get('classrooms/{classroom}/view', [Classroom::class, 'view'])->name('classroom.view');
+
+            Route::get('classrooms/{classroom}/edit', ClassroomUpdate::class)->name('classroom.edit');
+
+
 
             // Report History
             Route::get('report/history', function() {
@@ -257,28 +257,7 @@ Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Pdf Here
 Route::get('generate-pdf/{id}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
 Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
-
 

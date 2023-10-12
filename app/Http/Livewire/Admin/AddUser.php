@@ -25,7 +25,7 @@ class AddUser extends Component
     ];
     public function render()
     {
-        $classrooms = Classroom::all();
+        $classrooms = Classroom::where('status', 0)->get();
         return view('livewire.admin.add-user', compact('classrooms'))
             ->extends('layouts.dashboard.index')
             ->section('content');
