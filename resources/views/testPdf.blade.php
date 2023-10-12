@@ -9,9 +9,10 @@
         * {
             font-family: Verdana, Arial, sans-serif;
         }
+
         .page-break {
-    page-break-after: always;
-}
+            page-break-after: always;
+        }
 
         table {
             font-size: x-small;
@@ -128,7 +129,8 @@
 
         <tbody>
             <tr>
-                <td width="40%">Address: {{ $profile->municipal->municipality }},{{ $profile->barangay->barangay }} </td>
+                <td width="40%">Address: {{ $profile->municipal->municipality }},{{ $profile->barangay->barangay }}
+                </td>
                 <td width="40%">Contact Number: {{ $profile->contact }}</td>
                 <td width="20%">Height: {{ $profile->height }}</td>
             </tr>
@@ -148,7 +150,7 @@
             <tr>
                 <td width="30%">Religion:{{ $profile->religion }}</td>
                 <td width="28.5%">Mother Tongue: {{ $profile->mother_tongue }}</td>
-        <td width="25%">4ps Receipient:{{ $profile->four_ps }}</td>
+                <td width="25%">4ps Receipient:{{ $profile->four_ps }}</td>
                 <td width="21%">BMI:{{ $profile->bmi }}</td>
             </tr>
         </tbody>
@@ -185,91 +187,88 @@
         </tbody>
         <tbody>
 
-        @foreach ($profile->family as $father)
-        @if ($father->parent_type === 0)
+            @foreach ($profile->family as $father)
+                @if ($father->parent_type === 0)
+                    @foreach ($profile->family as $mother)
+                        @if ($mother->parent_type === 1)
+                            <tr>
+                                <td width="30%">Name</td>
+                                <td width="28.5%">{{ $father->parent_name }}</td>
+                                <td width="25%">{{ $mother->parent_name }}</td>
+                                <td width="21%">
+                                    <div class="checkbox @if ($profile->disability === 'No') check @endif"></div>
+                                    <label class="label">No</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Place of Birth</td>
+                                <td width="28.5%">{{ $father->parent_birth_place }}</td>
+                                <td width="25%">{{ $mother->parent_birth_place }}</td>
+                                <td width="21%">
+                                    If yes, what is it?
+                                    @if ($profile->disability !== 'No')
+                                        {{ $profile->disability }}
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Age</td>
+                                <td width="28.5%">{{ $father->parent_age }}</td>
+                                <td width="25%">{{ $mother->parent_age }}</td>
+                                <td width="21%"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Occupation</td>
+                                <td width="28.5%">{{ $father->parent_occupation }}</td>
+                                <td width="25%">{{ $mother->parent_occupation }}</td>
+                                <td width="21%">Food Allergy</td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Place of Work</td>
+                                <td width="28.5%">{{ $father->parent_work_address }}</td>
+                                <td width="25%">{{ $mother->parent_work_address }}</td>
+                                <td width="21%">
+                                    <div class="checkbox @if ($profile->food_allergy !== 'No') check @endif"></div>
 
-        @foreach ($profile->family as $mother)
-        @if ($mother->parent_type === 1)
-            <tr>
-                <td width="30%">Name</td>
-                <td width="28.5%">{{ $father->parent_name }}</td>
-                <td width="25%">{{ $mother->parent_name }}</td>
-                <td width="21%">
-                    <div class="checkbox @if ($profile->disability === 'No') check @endif"></div>
-                    <label class="label">No</label>
-                </td>
-            </tr>
-            <tr>
-                <td width="30%">Place of Birth</td>
-                <td width="28.5%">{{ $father->parent_birth_place }}</td>
-                <td width="25%">{{ $mother->parent_birth_place }}</td>
-                <td width="21%">
-                    If yes, what is it?
-                    @if ($profile->disability !== 'No')
-                        {{ $profile->disability }}
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <td width="30%">Age</td>
-                <td width="28.5%">{{ $father->parent_age }}</td>
-                <td width="25%">{{ $mother->parent_age }}</td>
-                <td width="21%"></td>
-            </tr>
-            <tr>
-                <td width="30%">Occupation</td>
-                <td width="28.5%">{{ $father->parent_occupation }}</td>
-                <td width="25%">{{ $mother->parent_occupation }}</td>
-                <td width="21%">Food Allergy</td>
-            </tr>
-            <tr>
-                <td width="30%">Place of Work</td>
-                <td width="28.5%">{{ $father->parent_work_address }}</td>
-                <td width="25%">{{ $mother->parent_work_address }}</td>
-                <td width="21%">
-                    <div class="checkbox @if ($profile->food_allergy !== 'No') check @endif"></div>
+                                    <label class="label">Yes</label>
+                                </td>
 
-                    <label class="label">Yes</label>
-                </td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Contact No.</td>
+                                <td width="28.5%">{{ $father->parent_contact }}</td>
+                                <td width="25%">{{ $mother->parent_contact }}</td>
+                                <td width="21%">
 
-            </tr>
-            <tr>
-                <td width="30%">Contact No.</td>
-                <td width="28.5%">{{ $father->parent_contact }}</td>
-                <td width="25%">{{ $mother->parent_contact }}</td>
-                <td width="21%">
+                                    <div class="checkbox @if ($profile->food_allergy === 'No') check @endif"></div>
+                                    <label class="label">No</label>
+                                </td>
+                            </tr>
 
-                    <div class="checkbox @if ($profile->food_allergy === 'No') check @endif"></div>
-                    <label class="label">No</label>
-                </td>
-            </tr>
+                            <tr>
+                                <td width="30%">Office Monthly Income</td>
+                                <td width="28.5%">{{ $father->parent_office_contact }}</td>
+                                <td width="25%">{{ $mother->parent_office_contact }}</td>
+                                <td width="21%"> If yes, what is it?
+                                    @if ($profile->food_allergy !== 'No')
+                                        {{ $profile->disability }}
+                                    @endif
 
-            <tr>
-                <td width="30%">Office Monthly Income</td>
-                <td width="28.5%">{{ $father->parent_office_contact }}</td>
-                <td width="25%">{{ $mother->parent_office_contact }}</td>
-                <td width="21%"> If yes, what is it?
-                    @if ($profile->food_allergy !== 'No')
-
-                        {{ $profile->disability }}
-                    @endif
-
-                </td>
-            </tr>
+                                </td>
+                            </tr>
 
 
-            <tr>
-                <td width="30%">Monthly Income.</td>
-                <td width="28.5%">{{ $father->parent_monthly_income }}</td>
-                <td width="25%">{{ $mother->parent_monthly_income }}</td>
-                <td width="21%">
+                            <tr>
+                                <td width="30%">Monthly Income.</td>
+                                <td width="28.5%">{{ $father->parent_monthly_income }}</td>
+                                <td width="25%">{{ $mother->parent_monthly_income }}</td>
+                                <td width="21%">
 
-                </td>
-            </tr>
-
-            @endif
-            @endforeach
-            @endif
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endif
             @endforeach
         </tbody>
 
@@ -295,36 +294,36 @@
                 <td width="25%" class="center">Grade and Section</td>
                 <td width="21%">
                     @if ($profile->medicines->count() > 0)
-                    1.{{ $profile->medicines[0]->medicine }}
-                    <!-- Display other medicine attributes as needed -->
-                @else
-                    1.
-                @endif
+                        1) {{ $profile->medicines[0]->medicine }}
+                        <!-- Display other medicine attributes as needed -->
+                    @else
+                        1)
+                    @endif
                 </td>
             </tr>
         </tbody>
         <tbody>
             @if ($profile->siblings->isNotEmpty())
-            @foreach ($profile->siblings as $sibling)
-            <tr>
-                <td width="30%">{{ $sibling->sibling_name }}</td>
-                <td width="28.5%">{{ $sibling->sibling_age }}</td>
-                <td width="25%">{{ $sibling->sibling_grade_section }}</td>
-                <td width="21%">
-                   @if ($profile->medicines->count() > 1)
-                   2.{{ $profile->medicines[1]->medicine }}
-                    <!-- Display other medicine attributes as needed -->
-                @else
-                    2.
-                @endif
-                </td>
-            </tr>
-            @endforeach
+                @foreach ($profile->siblings as $sibling)
+                    <tr>
+                        <td width="30%">{{ $sibling->sibling_name }}</td>
+                        <td width="28.5%">{{ $sibling->sibling_age }}</td>
+                        <td width="25%">{{ $sibling->sibling_grade_section }}</td>
+                        <td width="21%">
+                            @if ($profile->medicines->count() > 1)
+                                2) {{ $profile->medicines[1]->medicine }}
+                                <!-- Display other medicine attributes as needed -->
+                            @else
+                                2)
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
             @else
-            <tr>
-                <td width="81.5%">No Record Found</td>
-            </tr>
-        @endif
+                <tr>
+                    <td width="81.5%">No Record Found</td>
+                </tr>
+            @endif
 
         </tbody>
     </table>
@@ -337,16 +336,16 @@
 
 
                     <div class="checkbox @if ($profile->living_with === 'both-parent') check @endif"></div>
-<label class="label" value="both-parent">both Parents</label>
+                    <label class="label" value="both-parent">both Parents</label>
 
-<div class="checkbox @if ($profile->living_with === 'father-only') check @endif"></div>
-<label class="label" value="father-only">Father only</label>
+                    <div class="checkbox @if ($profile->living_with === 'father-only') check @endif"></div>
+                    <label class="label" value="father-only">Father only</label>
 
-<div class="checkbox @if ($profile->living_with === 'mother-only') check @endif"></div>
-<label class="label" value="mother-only">Mother only</label>
+                    <div class="checkbox @if ($profile->living_with === 'mother-only') check @endif"></div>
+                    <label class="label" value="mother-only">Mother only</label>
 
-<div class="checkbox @if ($profile->living_with === 'n/a') check @endif"></div>
-<label class="label" value="n/a">n/a</label>
+                    <div class="checkbox @if ($profile->living_with === 'n/a') check @endif"></div>
+                    <label class="label" value="n/a">n/a</label>
 
 
 
@@ -355,11 +354,10 @@
 
                 <td width="20%">
                     @if ($profile->medicines->count() > 2)
-                    3.{{ $profile->medicines[2]->medicine }}
-
-                @else
-                    3.
-                @endif
+                        3) {{ $profile->medicines[2]->medicine }}
+                    @else
+                        3)
+                    @endif
                 </td>
 
             </tr>
@@ -379,7 +377,7 @@
 
 
                 <td width="20%">
-
+                    Vitamins taken in
                 </td>
 
             </tr>
@@ -389,61 +387,68 @@
     <table width="100%">
 
         <tbody>
-                @if ($profile->parent_status)
-            @foreach ($profile->parent_status as $parentStatus)
+            @if ($profile->parent_status)
+                @foreach ($profile->parent_status as $parentStatus)
+                    <tr>
+                        <td width="26%">
+                            <div class="checkbox @if ($parentStatus->parent_status === 'Living Together') check @endif"></div>
+
+                            <label class="label">Living Together</label>
+                        </td>
+                        <td width="26%">
+                            <div class="checkbox @if ($parentStatus->parent_status === 'Separated') check @endif"></div>
+
+                            <label class="label">Separated</label>
+                        </td>
+
+                        <td width="27.5%">
+                            <div class="checkbox @if ($parentStatus->parent_status === 'Legally Separated') check @endif"></div>
+
+                            <label class="label">Legally Separated</label>
+                        </td>
 
 
-                <tr>
-                    <td width="26%">
-             <div class="checkbox @if ($parentStatus->parent_status === 'Living Together') check @endif"></div>
+                        <td width="20%">
+                            @if ($profile->vitamins->count() > 0)
+                            1) {{ $profile->vitamins[0]->vitamins }}
 
-                        <label class="label">Living Together</label>
-                    </td>
-                    <td width="26%">
-                        <div class="checkbox @if ($parentStatus->parent_status === 'Separated') check @endif"></div>
-
-                        <label class="label">Separated</label>
-                    </td>
-
-                    <td width="27.5%">
-                        <div class="checkbox @if ($parentStatus->parent_status === 'Legally Separated') check @endif"></div>
-
-                        <label class="label">Legally Separated</label>
-                    </td>
+                        @else
+                            1)
+                        @endif
+                        </td>
+                    </tr>
 
 
-                    <td width="20%">
+                    <tr>
+                        <td width="26%">
+                            <div class="checkbox @if ($parentStatus->parent_status === 'With another partner') check @endif"></div>
 
-                    </td>
-                </tr>
+                            <label class="label">With another partner</label>
+                        </td>
+                        <td width="26%">
+                            <div class="checkbox @if ($parentStatus->parent_status === 'Father is OFW') check @endif"></div>
 
+                            <label class="label">Father is OFW</label>
+                        </td>
 
-                <tr>
-                    <td width="26%">
-                         <div class="checkbox @if ($parentStatus->parent_status === 'With another partner') check @endif"></div>
+                        <td width="27.5%">
+                            <div class="checkbox @if ($parentStatus->parent_status === 'Mother is OFW') check @endif"></div>
 
-                        <label class="label">With another partner</label>
-                    </td>
-                    <td width="26%">
-                         <div class="checkbox @if ($parentStatus->parent_status === 'Father is OFW') check @endif"></div>
-
-                        <label class="label">Father is OFW</label>
-                    </td>
-
-                    <td width="27.5%">
-                         <div class="checkbox @if ($parentStatus->parent_status === 'Mother is OFW') check @endif"></div>
-
-                        <label class="label">Mother is OFW</label>
-                    </td>
+                            <label class="label">Mother is OFW</label>
+                        </td>
 
 
-                    <td width="20%">
+                        <td width="20%">
+                            @if ($profile->vitamins->count() > 0)
+                            2) {{ $profile->vitamins[1]->vitamins }}
 
-                    </td>
-                </tr>
-
+                        @else
+                            2)
+                        @endif
+                        </td>
+                    </tr>
                 @endforeach
-                @endif
+            @endif
         </tbody>
     </table>
 
@@ -458,7 +463,12 @@
 
 
                 <td width="20%">
-
+                    @if ($profile->vitamins->count() > 0)
+                    3) {{ $profile->vitamins[2]->vitamins }}
+                    <!-- Display other medicine attributes as needed -->
+                @else
+                    3)
+                @endif
                 </td>
 
             </tr>
@@ -477,8 +487,8 @@
 
                 </td>
 
-                <td width="20%">
-
+                <td width="20%" class="bold">
+                    Accident experienced
                 </td>
 
             </tr>
@@ -491,7 +501,7 @@
 
         <tbody>
             <tr>
-                <td width="56.5%">Occupation: {{ $profile->guardian_contact }}
+                <td width="56.5%">Occupation: {{ $profile->guardian_occupation }}
 
                 </td>
                 <td width="23%">Age: {{ $profile->guardian_age }}
@@ -499,7 +509,12 @@
                 </td>
 
                 <td width="20%">
-
+                    @if ($profile->accidents->count() > 0)
+                    1) {{ $profile->accidents[0]->accidents }}
+                    <!-- Display other medicine attributes as needed -->
+                @else
+                    1)
+                @endif
                 </td>
 
             </tr>
@@ -510,13 +525,18 @@
 
         <tbody>
             <tr>
-                <td width="79.5%">Address:
+                <td width="79.5%">Address: {{ $profile->guardian_address }}
 
                 </td>
 
 
                 <td width="20%">
-
+                    @if ($profile->accidents->count() > 0)
+                    2) {{ $profile->accidents[1]->accidents }}
+                    <!-- Display other medicine attributes as needed -->
+                @else
+                    2)
+                @endif
                 </td>
 
             </tr>
@@ -533,7 +553,12 @@
 
 
                 <td width="20%">
-
+                    @if ($profile->accidents->count() > 0)
+                    3) {{ $profile->accidents[2]->accidents }}
+                    <!-- Display other medicine attributes as needed -->
+                @else
+                    3)
+                @endif
                 </td>
 
             </tr>
@@ -557,7 +582,7 @@
                 </td>
 
                 <td width="20%">
-School Year
+                    School Year
                 </td>
 
             </tr>
@@ -566,21 +591,31 @@ School Year
 
 
         <tbody>
-            <tr>
-                <td width="15%">
-                    .
-                </td>
-                <td width="41%">
+            @if ($profile->education)
+                @foreach ($profile->education as $educations)
+                    <tr>
+                        <td width="15%">
+                            Grade:{{ $educations->grade_level }}
+                        </td>
+                        <td width="41%">
+                            {{ $educations->school_name }}
+
+                        </td>
+                        <td width="23.5%">
+                            {{ $educations->grade_section }}
+                        </td>
+
+                        <td width="20%">
+                            {{ $educations->school_year }}
+                        </td>
+
+                    </tr>
+                @endforeach
+            @else
+                <td width="100%">
 
                 </td>
-                <td width="23.5%">
-                </td>
-
-                <td width="20%">
-                </td>
-
-            </tr>
-
+            @endif
 
         </tbody>
     </table>
@@ -625,18 +660,21 @@ School Year
 
 
         <tbody>
+            @if($profile->awards)
+@foreach ($profile->awards as  $awards)
             <tr>
                 <td width="79.5%">
-s
+                    {{ $awards->award_name }}
                 </td>
 
 
                 <td width="20%">
-
+                    {{ $awards->award_year }}
                 </td>
 
             </tr>
-
+            @endforeach
+            @endif
         </tbody>
     </table>
 
@@ -644,17 +682,17 @@ s
 
         <tbody>
             <tr>
-                <td>What is yor favorite subject/s?
+                <td>What is yor favorite subject/s? {{ $profile->favorite_subject }}
                 </td>
             </tr>
             <tr>
                 <td>
-                    What subject do you find difficult?
+                    What subject do you find difficult? {{ $profile->difficult_subject }}
                 </td>
             </tr>
             <tr>
                 <td>
-                    What school organizations are you afiliated?
+                    What school organizations are you afiliated? {{ $profile?->school_organization ?? ''}}
                 </td>
             </tr>
             <tr>
@@ -671,42 +709,47 @@ s
 
         <tbody>
 
-                <tr>
-                    <td width="33%">
-                        <div class="checkbox"></div>
-                        <label class="label">Living Together</label>
-                    </td>
-                    <td width="33%">
-                        <div class="checkbox"></div>
-                        <label class="label">Separated</label>
-                    </td>
+            <tr>
+                <td width="33%">
+                    <div class="checkbox @if ($profile->graduation_plan === 'Go to College') check @endif"></div>
 
-                    <td width="33%">
-                        <div class="checkbox"></div>
-                        <label class="label">Legally Separated</label>
-                    </td>
+                    <label class="label">Go to College</label>
+                </td>
+                <td width="33%">
+                <div class="checkbox @if ($profile->graduation_plan === 'Work as a skilled worker') check @endif"></div>
 
-                </tr>
+                    <label class="label">Work as a skilled worker</label>
+                </td>
 
+                <td width="33%">
+                <div class="checkbox @if ($profile->graduation_plan === 'Pursue TESDA certificates') check @endif"></div>
 
-                <tr>
-                    <td width="33%">
-                        <div class="checkbox"></div>
-                        <label class="label">With another partner</label>
-                    </td>
-                    <td width="33%">
-                        <div class="checkbox"></div>
-                        <label class="label">Father is OFW</label>
-                    </td>
+                    <label class="label">Pursue TESDA certificates</label>
+                </td>
 
-                    <td width="33%">
-                        <div class="checkbox"></div>
-                        <label class="label">Mother is OFW</label>
-                    </td>
+            </tr>
 
 
+            <tr>
+                <td width="33%">
+                <div class="checkbox @if ($profile->graduation_plan === 'Engage in Business') check @endif"></div>
 
-                </tr>
+                    <label class="label">Engage in Business</label>
+                </td>
+                <td width="33%">
+                <div class="checkbox @if ($profile->graduation_plan === 'Work to help parents') check @endif"></div>
+
+                    <label class="label">Work to help parents</label>
+                </td>
+
+                <td width="33%">
+                <div class="checkbox @if ($profile->graduation_plan === 'Undecided') check @endif"></div>
+                    <label class="label">Undecided</label>
+                </td>
+
+
+
+            </tr>
 
 
         </tbody>
