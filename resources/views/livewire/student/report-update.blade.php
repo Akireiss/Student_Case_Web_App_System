@@ -247,11 +247,13 @@
                                 <x-label>
                                     Meeting Outcome
                                 </x-label>
-                                <x-select wire:model="outcome" required  >
+                                <x-select wire:model="outcome" required>
                                     <option value="0">Succesfull</option>
                                     <option value="1">Follow-up</option>
                                     <option value="2">Refferral</option>
                                 </x-select>
+                                <x-error fieldName="outcome"/>
+
                             </div>
                         </div>
 
@@ -261,6 +263,8 @@
                                     Remarks (Short Description)
                                 </x-label>
                                 <x-input wire:model="outcome_remarks" required  />
+                                <x-error fieldName="outcome_remarks" />
+
                             </div>
                         </div>
 
@@ -275,6 +279,8 @@
                                     <option value="Reinforce expectations">Reinforce expectations</option>
                                     <option value="Notify Parents">Notify Parents</option>
                                 </x-select>
+                                <x-error fieldName="action"/>
+
                             </div>
                         </div>
 

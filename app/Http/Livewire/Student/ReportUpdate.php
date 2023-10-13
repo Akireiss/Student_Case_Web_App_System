@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Student;
 
+use App\Notifications\AdminDelayedNotification;
 use Carbon\Carbon;
 use App\Models\Action;
 use Livewire\Component;
@@ -78,23 +79,24 @@ class ReportUpdate extends Component
 
         session()->flash('message', 'Updated Successfully');
 
-        // Send the notification to the authenticated user
+        // Send the notification to the authenticated useryr
         $user = auth()->user();
 
         // Pass the $this->anecdotalData model instance to the notification
-        $user->notify(new StatusNotification($this->anecdotalData, $this->reminderDays));
+        $user->notify(new AdminDelayedNotification($this->anecdotalData, $this->reminderDays));
     }
-
 
     public function scheduleReminder($reminderDays)
     {
         $manilaTimeZone = 'Asia/Manila';
         Carbon::setTestNow(Carbon::now($manilaTimeZone));
         $reminderTime = Carbon::now()->addDays($reminderDays);
-        auth()->user()->notify((new StatusNotification($this->reminderDays))->delay($reminderTime));
+
+        // Call delay() on the notification, not on auth()->user()
+        auth()->user()->notify((new AdminDelayedNotification($this->anecdotalData))->delay($reminderTime));
+
         Carbon::setTestNow();
     }
-
 
 
     public function render()

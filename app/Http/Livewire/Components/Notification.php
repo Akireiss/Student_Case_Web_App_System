@@ -16,45 +16,37 @@ class Notification extends Component
 public function mount($userId)
 {
     $this->userId = $userId;
-
-    // Listen for the "refreshNotifications" event and refresh the notifications list
     $this->listeners['refreshNotifications'] = 'refreshNotifications';
 }
 
 public function refreshNotifications()
 {
-    // Fetch updated notifications list
     $this->notifications = Auth::user()->unreadNotifications;
 }
 
 
 public function markAsRead($notificationId)
 {
-    // Find the notification by its ID
     $notification = \App\Models\Notification::find($notificationId);
 
-    // Mark the notification as read
     if ($notification) {
         $notification->markAsRead();
     }
-
-    // Reset the selected notification ID
     $this->selectedNotificationId = null;
-
-    // Refresh the notifications list
     $this->emit('refreshNotifications');
 }
 
 public function render()
 {
-    // Get the currently authenticated user
     $user = Auth::user();
-
-    // Fetch unread notifications for the user
-    $notifications = $user->unreadNotifications;
+    $currentTime = now(); // Get the current timestamp
+    $notifications = $user->unreadNotifications->filter(function ($notification) use ($currentTime) {
+        return $notification->created_at <= $currentTime;
+    });
 
     return view('livewire.components.notification', compact('notifications'));
 }
+
 
 }
 

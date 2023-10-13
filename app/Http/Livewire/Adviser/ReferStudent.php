@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\Adviser;
 
-use App\Models\Classroom;
-use App\Models\Students;
-use App\Traits\StudentTrait;
+use App\Models\User;
+use App\Notifications\RefferNotification;
 use Livewire\Component;
+use App\Models\Students;
+use App\Models\Classroom;
+use App\Traits\StudentTrait;
 
 class ReferStudent extends Component
 {
@@ -26,21 +28,29 @@ class ReferStudent extends Component
 
 
     public function update()
-    {
-        $this->validate();
-        $student = $this->student;
+{
+    $this->validate();
+    $student = $this->student;
 
-        $student->update([
-            'first_name' => $this->first_name,
-            'middle_name' => $this->middle_name,
-            'last_name' => $this->last_name,
-            'lrn' => $this->lrn,
-            'classroom_id' => $this->classroom_id,
-            'status' => $this->status,
-        ]);
-        session()->flash('message', 'Student updated successfully.');
+    $student->update([
+        'first_name' => $this->first_name,
+        'middle_name' => $this->middle_name,
+        'last_name' => $this->last_name,
+        'lrn' => $this->lrn,
+        'classroom_id' => $this->classroom_id,
+        'status' => $this->status,
+    ]);
 
+    $adminUsers = User::where('role', 1)->get();
+
+    // Send notification to each admin user
+    foreach ($adminUsers as $adminUser) {
+        $adminUser->notify(new RefferNotification($this->student));
     }
+
+    session()->flash('message', 'Student updated successfully.');
+}
+
 
     public function render()
     {

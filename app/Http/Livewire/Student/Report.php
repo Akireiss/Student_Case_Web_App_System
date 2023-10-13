@@ -86,7 +86,8 @@ class Report extends Component
         }
 
         $actions = Action::all();
-        $offenses = Offenses::pluck('offenses', 'id')->where('status', '0')->all();
+        $offenses = Offenses::where('status', '0')->pluck('offenses', 'id')->all();
+
 
         return view('livewire.student.report', [
             'offenses' => $offenses,
