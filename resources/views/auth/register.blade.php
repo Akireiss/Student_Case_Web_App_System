@@ -1,5 +1,6 @@
 @include('layouts.header')
 
+<div class="mt-16 ">
     <x-authentication-card>
         <section>
 
@@ -78,8 +79,8 @@
             </div>
 
         </form>
-
     </x-authentication-card>
+</div>
 
     <div class="max-w-lg mx-auto text-center mt-12 mb-6">
         <p class="text-black">Already have an account? <a href="/login" class="font-bold hover:underline">Login</a>.</p>

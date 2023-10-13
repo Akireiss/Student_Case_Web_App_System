@@ -115,6 +115,7 @@
         <script src="{{ asset('assets/js/chart.min.js') }}"></script>
         <script src="{{ asset('assets/js/qrcode.js') }}"></script>
         <script src="{{ asset('assets/js/dropdown.js') }}"></script>
+        <script src="{{ asset('assets/js/validation.js') }}"></script>
 
 
 

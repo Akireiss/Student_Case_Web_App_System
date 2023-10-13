@@ -11,7 +11,7 @@ use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
-final class OffenseTable extends PowerGridComponent
+final class OFfensesTable extends PowerGridComponent
 {
     use ActionButton;
     use WithExport;
@@ -61,11 +61,9 @@ final class OffenseTable extends PowerGridComponent
             /** Example of custom column using a closure **/
             ->addColumn('offenses_lower', fn(Offenses $model) => strtolower(e($model->offenses)))
 
-
             ->addColumn('description', function (Offenses $model) {
                 return Str::words(e($model->description), 8);
             })
-
 
             ->addColumn('status', function (Offenses $model) {
                 return ($model->status ? 'Inactive' : 'Active');
@@ -79,15 +77,10 @@ final class OffenseTable extends PowerGridComponent
         return [
             Column::make('Offenses', 'offenses')
                 ->sortable()
-                ->searchable()
                 ->editOnClick(),
-
-
             Column::make('Description', 'description')
-                ->sortable()
-                ->searchable()
-                ->editOnClick(),
-
+                ->editOnClick()
+                ->sortable(),
 
             Column::make('Status', 'status'),
 
@@ -105,7 +98,6 @@ final class OffenseTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('description')->operators(['contains']),
             Filter::boolean('status')->label('Inactive', 'Active'),
         ];
     }
@@ -128,7 +120,6 @@ final class OffenseTable extends PowerGridComponent
 
         ];
     }
-
     protected array $rules = [
         'description.*' => ['required'],
         'offenses.*' => ['required'],

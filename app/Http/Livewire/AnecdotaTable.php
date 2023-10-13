@@ -24,7 +24,7 @@ final class AnecdotaTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),
-            Header::make()->showToggleColumns()->showSearchInput()->includeViewOnTop('components.datatable'),
+            Header::make()->showToggleColumns()->includeViewOnTop('components.datatable'),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(mode: 'full'),

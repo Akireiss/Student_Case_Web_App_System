@@ -18,7 +18,7 @@
   </div>
 
     <div>
-        <livewire:offense-table/>
+        <livewire:o-ffenses-table/>
     </div>
 
 

@@ -1,47 +1,55 @@
 @extends('layouts.app')
+
 @section('content')
-    <div class="mx-auto container lg:w-1/2 mt-36 ms:px-4 px-4">
-        <x-form title="">
-            <x-slot name="actions">
-                <x-link href="{{ url('student/form') }}">
-                    Back
-                </x-link>
-            </x-slot>
+<div class="mt-64"> <!-- Use flex to center content -->
+    <x-authentication-card>
+        <section>
+            <a href="/">
+                <img src="{{ asset('assets/image/logo.png') }}" class="w-40 mx-auto mb-2">
+            </a>
+        </section>
 
-            <x-slot name="slot">
+        <div class="mx-4">
+            <p class="text-gray-600 pt-2 font-bold">Login here.</p>
+        </div>
 
-                <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                    Login using the last four digits of your LRN
-                </h6>
+        <form method="POST" action="{{ route('student.auth', ['profileId' => $profileId]) }}">
+            @csrf
 
-                <form method="POST" action="{{ route('student.auth', ['profileId' => $profileId]) }}">
+            <div class="w-full px-4">
+                <div class="relative mb-3">
+                    <x-label>Last Four Digits of your LRN</x-label>
+                    <x-input id="lrnInput" name="lrn" class="w-full"
+                     type="number" required autofocus />
+                    @if (session()->has('message'))
+                        <span class="text-red-500 text-sm">
+                            {{ session('message') }}
+                        </span>
+                    @endif
+                </div>
+            </div>
 
+            <input type="hidden" name="profileId" value="{{ $profileId }}">
 
-                    @csrf
+            <div class="w-full px-4 flex justify-end">
+                <x-button>
+                    Login
+                </x-button>
+            </div>
+        </form>
+    </x-authentication-card>
+</div>
 
-                    <div class="w-full px-4">
-                        <div class="relative mb-3">
-                            <x-label>Last Four Digits of LRN</x-label>
-                            <x-input max="4" name="lrn" type="text" required autofocus />
-                            @if (session()->has('message'))
-                                <span class="text-red-500 text-sm">
-                                    {{ session('message') }}
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+<script>
+    const lrnInput = document.getElementById('lrnInput');
 
-                    <input type="hidden" name="profileId" value="{{ $profileId }}">
+    lrnInput.addEventListener('input', function() {
+        const inputValue = this.value;
+        const sanitizedValue = inputValue.replace(/\D/g, '');
+        if (sanitizedValue.length > 4) {
+            this.value = sanitizedValue.slice(0, 4);
+        }
+    });
+</script>
 
-                    <div class="w-full px-4 flex justify-end">
-                        <x-button>
-                            Login
-                        </x-button>
-                    </div>
-                </form>
-
-
-            </x-slot>
-        </x-form>
-    </div>
 @endsection
