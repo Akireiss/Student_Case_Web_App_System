@@ -72,6 +72,12 @@
             </h6>
             <x-grid columns="2" gap="4" px="0" mt="4">
 
+                <div class="w-full px-4">
+                    <x-label>
+                        Grade Level
+                    </x-label>
+            <x-input disabled wire:model="grade_level"/>
+                </div>
 
 
                 <div class="w-full px-4">
@@ -234,7 +240,7 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 
             <x-grid columns="4" gap="4" px="0" mt="4">
                 @foreach ($actions as $action)
-                    <div class="relative mb-3">
+                    <div class="relative mb-3 px-4">
                         <div class="flex items-center space-x-2">
                             <x-checkbox wire:model="selectedActions" value="{{ $action->action_taken }}" />
                             <x-label>{{ $action->action_taken }}</x-label>

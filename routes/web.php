@@ -63,7 +63,11 @@ Route::middleware(['auth', 'role'])->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('dashboard', [DashboardController::class, 'index']);
             //Reports
-            Route::get('reports', \App\Http\Livewire\Admin\Report::class);
+
+            Route::get('reports', [ReportController::class, 'index']);
+            Route::get('reports/create', Report::class);
+
+
             Route::get('report/add', [ReportController::class, 'create']);
             Route::get('reports/{anecdotal}/view', [ReportController::class, 'view'])
             ->name('anecdotal.view');

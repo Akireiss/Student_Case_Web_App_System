@@ -1,15 +1,17 @@
+@extends('layouts.dashboard.index')
+@section('content')
 <div>
-    <div x-data="{ showTable: true, showForm: false }">
-        <div x-show="showTable">
+
+
             <div class="flex items-center justify-between my-2">
                 <h6 class="text-lg font-semibold
                   text-gray-600 dark:text-gray-300 flex-shrink-0">
                     {{-- List Of Reports --}}
                 </h6>
                 <div class="flex justify-end">
-                    <x-button x-on:click="showTable = false; showForm = true">
+                    <x-link href="{{ url('admin/reports/create') }}">
                         Add
-                    </x-button>
+                    </x-link>
                 </div>
             </div>
             <div>
@@ -17,11 +19,8 @@
             </div>
         </div>
 
-        <div x-cloak x-show="showForm">
-
-            <livewire:student.report />
-
-        </div>
-    </div>
 
 </div>
+
+
+@endsection

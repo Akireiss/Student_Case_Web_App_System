@@ -32,6 +32,8 @@ class ReportHistory extends Component
     public $image;
     public $story;
     public $selectedActions = [];
+
+    public $grade_level;
     public $gravityOptions = [
         0 => 'Low Severity',
         1 => 'Moderate Severity',
@@ -55,6 +57,7 @@ class ReportHistory extends Component
         $this->short_description = $anecdotal->short_description;
         $this->letter = $anecdotal->letter;
         $this->story = $anecdotal->story;
+        $this->grade_level = $anecdotal->grade_level;
         $this->studentId = $anecdotal->student->id;
         $this->studentName = $anecdotal->student->first_name . ' ' . $anecdotal->student->last_name;
         $this->user_id = $reportData->users->name;

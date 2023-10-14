@@ -86,7 +86,7 @@
 
 
                         <div class="md:col-span-5">
-                                    <x-label>Password</x-label>
+                                    <x-label>New Password</x-label>
                                     <div class="relative">
                                         <x-input type="password" id="password"
                                          name="password" x-bind:type="showPassword ? 'text' : 'password'"

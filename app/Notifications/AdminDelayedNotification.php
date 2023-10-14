@@ -2,30 +2,36 @@
 
 namespace App\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class AdminDelayedNotification extends Notification
 {
     use Queueable;
-    public function __construct($anecdotalData)
+    protected $anecdotalData;
+    protected $reminderDays;
+
+    public function __construct($anecdotalData, $reminderDays)
     {
-        $this->anecdotal = $anecdotalData;
+        $this->anecdotalData = $anecdotalData;
+        $this->reminderDays = $reminderDays;
     }
 
-    public function via(object $notifiable): array
+    public function via($notifiable)
     {
         return ['database'];
     }
 
-
-    public function toArray(object $notifiable): array
+    public function toDatabase($notifiable)
     {
-        $message = "This is to notify the report you resolved last 3 days ago";
         return [
-            'message' => $message
+            'message' => "This is to notify the report you resolved {$this->reminderDays} days ago",
         ];
     }
+
+
+
 }

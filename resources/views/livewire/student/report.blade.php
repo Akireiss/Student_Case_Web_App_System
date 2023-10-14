@@ -1,17 +1,11 @@
 <div>
     <div class="mx-auto">
         <div class="flex justify-end  items-center">
-            {{-- <h6 class="text-xl font-bold text-left ">
-                Report Student
-            </h6> --}}
             @if (auth()->user()->role == '1')
-                <x-button x-on:click="showForm = false; showTable = true">
+                <x-link href="{{ url('admin/reports') }}">
                     Back
-                </x-button>
+                </x-link>
             @endif
-
-
-
         </div>
 
         <div class="w-full mx-auto mt-6">

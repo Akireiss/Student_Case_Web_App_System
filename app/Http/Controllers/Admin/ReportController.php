@@ -22,5 +22,9 @@ class ReportController extends Controller
          compact('anecdotal', 'cases', 'totalCases', 'pendingCases', 'ongoingCases', 'resolvedCases'));
     }
 
+    public function index() {
+        return view('admin.reports.index');
+    }
+
 
 }

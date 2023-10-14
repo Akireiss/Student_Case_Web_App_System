@@ -62,38 +62,49 @@ class ReportUpdate extends Component
     }
 
 
-    public function update()
-    {
-        $this->validate();
-        $anecdotalOutcome = AnecdotalOutcome::where('anecdotal_id', $this->anecdotalData->id)
-            ->firstOrFail();
 
-        $anecdotalOutcome->update([
-            'action' => $this->action,
-            'outcome' => $this->outcome,
-            'outcome_remarks' => $this->outcome_remarks,
-        ]);
+public function update()
+{
+    $this->validate();
+    $anecdotalOutcome = AnecdotalOutcome::where('anecdotal_id', $this->anecdotalData->id)
+        ->firstOrFail();
 
-        $this->anecdotalData->update(['case_status' => 2]);
-        $this->anecdotalData = $this->anecdotalData->fresh();
+    $anecdotalOutcome->update([
+        'action' => $this->action,
+        'outcome' => $this->outcome,
+        'outcome_remarks' => $this->outcome_remarks,
+    ]);
 
-        session()->flash('message', 'Updated Successfully');
+    $this->anecdotalData->update(['case_status' => 2]);
+    $this->anecdotalData = $this->anecdotalData->fresh();
 
-        // Send the notification to the authenticated useryr
-        $user = auth()->user();
+    session()->flash('message', 'Updated Successfully');
 
-        // Pass the $this->anecdotalData model instance to the notification
-        $user->notify(new AdminDelayedNotification($this->anecdotalData, $this->reminderDays));
-    }
+    // Calculate the reminder time
+    $reminderTime = Carbon::now()->addDays($this->reminderDays);
 
+    // Send the notification to the authenticated user
+    $user = auth()->user();
+
+    // Schedule the notification with the delay
+    $notification = (new AdminDelayedNotification($this->anecdotalData, $this->reminderDays))
+        ->delay($reminderTime);
+
+    // Call the notify method on the user with the notification instance
+    $user->notify($notification);
+}
     public function scheduleReminder($reminderDays)
     {
         $manilaTimeZone = 'Asia/Manila';
         Carbon::setTestNow(Carbon::now($manilaTimeZone));
         $reminderTime = Carbon::now()->addDays($reminderDays);
 
-        // Call delay() on the notification, not on auth()->user()
-        auth()->user()->notify((new AdminDelayedNotification($this->anecdotalData))->delay($reminderTime));
+        // You can set the notification's created_at when creating the notification
+        $notification = (new AdminDelayedNotification($this->anecdotalData))
+            ->delay($reminderTime);
+
+        // Call notify on the user with the notification instance
+        auth()->user()->notify($notification);
 
         Carbon::setTestNow();
     }
