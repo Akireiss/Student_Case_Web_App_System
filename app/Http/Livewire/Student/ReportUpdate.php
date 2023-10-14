@@ -2,13 +2,17 @@
 
 namespace App\Http\Livewire\Student;
 
-use App\Notifications\AdminDelayedNotification;
+use App\Models\ScheduledNotification;
 use Carbon\Carbon;
 use App\Models\Action;
 use Livewire\Component;
 use App\Models\Anecdotal;
+use Illuminate\Support\Str;
+use App\Models\Notification;
 use App\Models\AnecdotalOutcome;
+use Illuminate\Support\Facades\Auth;
 use App\Notifications\StatusNotification;
+use App\Notifications\AdminDelayedNotification;
 
 class ReportUpdate extends Component
 {
@@ -63,52 +67,48 @@ class ReportUpdate extends Component
 
 
 
-public function update()
-{
-    $this->validate();
-    $anecdotalOutcome = AnecdotalOutcome::where('anecdotal_id', $this->anecdotalData->id)
-        ->firstOrFail();
-
-    $anecdotalOutcome->update([
-        'action' => $this->action,
-        'outcome' => $this->outcome,
-        'outcome_remarks' => $this->outcome_remarks,
-    ]);
-
-    $this->anecdotalData->update(['case_status' => 2]);
-    $this->anecdotalData = $this->anecdotalData->fresh();
-
-    session()->flash('message', 'Updated Successfully');
-
-    // Calculate the reminder time
-    $reminderTime = Carbon::now()->addDays($this->reminderDays);
-
-    // Send the notification to the authenticated user
-    $user = auth()->user();
-
-    // Schedule the notification with the delay
-    $notification = (new AdminDelayedNotification($this->anecdotalData, $this->reminderDays))
-        ->delay($reminderTime);
-
-    // Call the notify method on the user with the notification instance
-    $user->notify($notification);
-}
-    public function scheduleReminder($reminderDays)
+    public function update()
     {
-        $manilaTimeZone = 'Asia/Manila';
-        Carbon::setTestNow(Carbon::now($manilaTimeZone));
-        $reminderTime = Carbon::now()->addDays($reminderDays);
+        $this->validate();
+        $anecdotalOutcome = AnecdotalOutcome::where('anecdotal_id', $this->anecdotalData->id)
+            ->firstOrFail();
 
-        // You can set the notification's created_at when creating the notification
-        $notification = (new AdminDelayedNotification($this->anecdotalData))
-            ->delay($reminderTime);
+        $anecdotalOutcome->update([
+            'action' => $this->action,
+            'outcome' => $this->outcome,
+            'outcome_remarks' => $this->outcome_remarks,
+        ]);
 
-        // Call notify on the user with the notification instance
-        auth()->user()->notify($notification);
+        $this->anecdotalData->update(['case_status' => 2]);
+        $this->anecdotalData = $this->anecdotalData->fresh();
 
-        Carbon::setTestNow();
+
+            $user = Auth::user();
+
+            $data = [
+                'message' => 'sample data',
+            ];
+
+            // Calculate the notification date based on the reminder days
+            $notificationDate = now()->addDays($this->reminderDays);
+
+            // Create a new notification and save it to the database
+            $notification = new ScheduledNotification([
+
+                'user_id' => $user->id,
+                'data' => json_encode($data),
+            ]);
+
+            // Set the 'created_at' attribute to the calculated notification date
+            $notification->created_at = $notificationDate;
+
+            $notification->save();
+
+        session()->flash('message', 'Updated Successfully');
+
+
+
     }
-
 
     public function render()
     {
