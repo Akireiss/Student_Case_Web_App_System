@@ -19,12 +19,10 @@ class DashboardController extends Controller
     {
         $currentDate = now()->startOfDay(); // Start of the current day
 
-        $delayedNotif = ScheduledNotification::where(function ($query) use ($currentDate) {
-            $query->whereDate('created_at', '<=', $currentDate) // Old notifications
-                  ->orWhere('read_at', null); // New notifications
-        })
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $delayedNotif = ScheduledNotification::whereDate('created_at', '<=', $currentDate) // Equal or older notifications
+            ->where('read_at', null)//wher
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         // Encode the JSON data in each notification before passing it to the view
         $delayedNotif->each(function ($notification) {
@@ -33,6 +31,7 @@ class DashboardController extends Controller
 
         return view('admin.dashboard.dashboard', compact('delayedNotif'));
     }
+
     public function markAsRead(Request $request, ScheduledNotification $notification)
     {
         $notification->update(['read_at' => now()]);
