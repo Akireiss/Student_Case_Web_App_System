@@ -39,6 +39,10 @@ class AnecdotalOutcome extends Model
         return $this->belongsTo(Actions::class, 'actions_id');
     }
 
+    public function anecdotal() {
+        return $this->belongsTo(Anecdotal::class, 'anecdotal_id');
+    }
+
 
 
 }

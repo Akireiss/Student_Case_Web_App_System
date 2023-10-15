@@ -7,6 +7,35 @@
             Dashboard
         </h2>
 
+        {{-- Alerts --}}
+        @foreach ($delayedNotif as $notification)
+        <div class="bg-green-100 border border-green-400 text-black px-4 py-2 rounded relative my-3" role="alert">
+            <div class="flex space-x-4">
+                <span class="block sm:inline">{{ $notification->data['message'] }}</span>
+                <span class="block sm:inline">
+                    <a class="underline" href="{{ url('admin/student/recent-cases/' . $notification->data['link']) }}">
+                        View Recent Cases
+                    </a>
+                </span>
+            </div>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-2">
+                <button type="button" class="mark-as-read" data-notification-id="{{ $notification->id }}">
+                    <svg class="fill-current h-6 w-6 text-green-500" role="button"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <title>Close</title>
+                        <path
+                            d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                    </svg>
+                </button>
+            </span>
+        </div>
+
+    @endforeach
+
+
+
+        {{-- End Alert --}}
+
 
         <div class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3">
             <!-- Card -->
@@ -97,10 +126,10 @@
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25
-                    0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
-                     0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
-                      1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
-                       0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                        0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
+                         0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
+                          1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
+                           0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
                     </svg>
 
 
@@ -242,7 +271,7 @@
 
 
             <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
-                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                <h4 class="mb-2 font-semibold text-gray-800 dark:text-gray-300">
                     Total Number Of Offenses
                 </h4>
                 <canvas id="myChartPie"></canvas>
@@ -276,4 +305,53 @@
 
         </div>
     </div>
+
+    <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
+
+    <script>
+$(document).ready(function () {
+    // Define a function to fetch new notifications
+    function fetchNewNotifications() {
+        $.ajax({
+            type: 'GET',
+            url: '/fetch-new-notifications',
+            success: function (data) {
+                // Process the new notifications and update the UI
+                // For example, append new notifications to the existing list
+            }
+        });
+    }
+
+    // Call the function to fetch new notifications initially
+    fetchNewNotifications();
+
+    // Periodically fetch new notifications (adjust the interval as needed)
+    var refreshInterval = 30000; // 30 seconds
+    setInterval(fetchNewNotifications, refreshInterval);
+
+    $('.mark-as-read').click(function () {
+        var notificationId = $(this).data('notification-id');
+        var notificationElement = $(this).closest('.bg-green-100');
+
+        $.ajax({
+            type: 'POST',
+            url: '/mark-notification-read/' + notificationId,
+            data: {
+                '_token': '{{ csrf_token() }}'
+            },
+            success: function (data) {
+                // Optionally, update the UI to reflect that the notification has been marked as read.
+                notificationElement.fadeOut(); // Remove the notification from view
+            }
+        });
+    });
+
+    $('.close-notification').click(function () {
+        var notificationElement = $(this).closest('.bg-green-100');
+        notificationElement.fadeOut(); // Remove the notification from view
+    });
+});
+
+
+                    </script>
 @endsection

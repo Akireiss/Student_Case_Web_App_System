@@ -13,6 +13,7 @@ class ScheduledNotification extends Model
 
     protected $fillable = [
         'user_id',
-        'data'
+        'data',//json
+        'read_at'
     ];
 }

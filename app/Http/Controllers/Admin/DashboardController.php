@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\ScheduledNotification;
 use Carbon\Carbon;
 use App\Models\Students;
 use App\Models\Anecdotal;
@@ -12,9 +13,31 @@ use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
+
+
     public function index()
     {
-        return view('admin.dashboard.dashboard');
+        $currentDate = now()->startOfDay(); // Start of the current day
+
+        $delayedNotif = ScheduledNotification::where(function ($query) use ($currentDate) {
+            $query->whereDate('created_at', '<=', $currentDate) // Old notifications
+                  ->orWhere('read_at', null); // New notifications
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        // Encode the JSON data in each notification before passing it to the view
+        $delayedNotif->each(function ($notification) {
+            $notification->data = json_decode($notification->data, true);
+        });
+
+        return view('admin.dashboard.dashboard', compact('delayedNotif'));
+    }
+    public function markAsRead(Request $request, ScheduledNotification $notification)
+    {
+        $notification->update(['read_at' => now()]);
+
+        return response()->json(['message' => 'Notification marked as read']);
     }
 
     public function getDashboardData(Request $request)

@@ -67,6 +67,11 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('reports', [ReportController::class, 'index']);
             Route::get('reports/create', Report::class);
 
+            //Recent cases from the scheduled resolved cases
+            Route::get('student/recent-cases/{id}', [ReportController::class, 'recentCases']);
+
+
+
 
             Route::get('report/add', [ReportController::class, 'create']);
             Route::get('reports/{anecdotal}/view', [ReportController::class, 'view'])
@@ -220,19 +225,23 @@ Route::get('/get-successful-actions', [DashboardController::class, 'getSuccessfu
 Route::get('/get-ongoing-actions',
 [DashboardController::class, 'getOngoingCases']);
 
+//Delayed notif endpoints
+Route::post('/mark-notification-read/{notification}', [DashboardController::class, 'markAsRead'])->name('mark-notification-read');
+
+
 
 //ResolvedCase
 Route::get('admin/resolved-cases', ResolvedCases::class);
-//Test
+
 //Test Schedule
-//Route::get('/test', [ScheduleController::class, 'sendTestNotification'])->name('notifications.create');
-// Route::post('/test/store', [ScheduleController::class, 'store'])->name('notifications.store');
 Route::get('/reminders/create', [ReminderController::class, 'create'])->name('reminders.create');
 Route::post('/reminders', [ReminderController::class, 'store'])->name('reminders.store');
 
 
 //Help Area
 Route::get('help', [HelpController::class, 'index']);
+
+//Student Area
 //Student Authentication
 Route::get('student/lrn/{profileId}', [AuthController::class, 'login'])->name('student.login');
 //Login here
@@ -247,19 +256,14 @@ Route::get('student/form', StudentForm::class);
 // Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
 Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
 
-
 //*Student Profile Data
 Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])
 ->name('student.profile.data')->middleware('profileAuth');
-
 
 Route::get('student/profile/data/{form_id}/view',
  [StudentDataController::class, 'view']);
 //*student form update
 Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
-
-
-
 
 //Pdf Here
 Route::get('generate-pdf/{id}', [PdfController::class, 'generatePdf'])->name('generate-pdf');

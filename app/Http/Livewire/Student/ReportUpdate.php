@@ -82,27 +82,26 @@ class ReportUpdate extends Component
         $this->anecdotalData->update(['case_status' => 2]);
         $this->anecdotalData = $this->anecdotalData->fresh();
 
+        $user = Auth::user();
 
-            $user = Auth::user();
+        $message = 'Reminder for ' . $anecdotalOutcome->anecdotal->students->first_name . '  ' . $anecdotalOutcome->anecdotal->students->last_name .
+            'case, that resolved last ' . $anecdotalOutcome->updated_at->format('F j, Y');
 
-            $data = [
-                'message' => 'sample data',
-            ];
+        $data = [
+            'message' => $message,
+            'link' => $anecdotalOutcome->anecdotal->students->id
+        ];
 
-            // Calculate the notification date based on the reminder days
-            $notificationDate = now()->addDays($this->reminderDays);
+        $notification = new ScheduledNotification([
 
-            // Create a new notification and save it to the database
-            $notification = new ScheduledNotification([
+            'user_id' => $user->id,
+            'data' => json_encode($data),
+        ]);
 
-                'user_id' => $user->id,
-                'data' => json_encode($data),
-            ]);
+        // Set the 'created_at' attribute to the calculated notification date
+        $notification->created_at = $this->reminderDays;
 
-            // Set the 'created_at' attribute to the calculated notification date
-            $notification->created_at = $notificationDate;
-
-            $notification->save();
+        $notification->save();
 
         session()->flash('message', 'Updated Successfully');
 

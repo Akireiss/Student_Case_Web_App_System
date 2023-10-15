@@ -34,6 +34,12 @@ class Anecdotal extends Model
         'status'
 
     ];
+
+    public function outcomes() {
+        return $this->hasOne(AnecdotalOutcome::class)->latest('updated_at');
+    }
+
+
     public function report()
     {
         return $this->hasMany(Report::class, 'anecdotal_id');

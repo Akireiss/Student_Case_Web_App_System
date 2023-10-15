@@ -118,7 +118,7 @@
                                 <x-label>
                                     Gravity of offense
                                 </x-label>
-                                <x-input disabled  type="text" name="gravity" value="{{ $anecdotal?->gravity ?? 'No Data' }}" />
+                                <x-input disabled  type="text" name="gravity" value="{{ $anecdotal?->getGravityTextAttribute() ?? 'No Data' }}" />
                             </div>
                         </div>
 

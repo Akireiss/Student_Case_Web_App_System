@@ -288,12 +288,13 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>
-                                    Reminder after the case (Days)
+                                    Reminder to this case
                                 </x-label>
-                                <x-input type="number" wire:model.defer="reminderDays" />
+                                <x-input type="date" wire:model.defer="reminderDays" min="{{ now()->toDateString() }}" />
                             </div>
                         </div>
-                        @endif
+                    @endif
+
                     </x-grid>
 
 
