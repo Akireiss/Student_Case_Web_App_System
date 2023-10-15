@@ -1,5 +1,6 @@
 @extends('layouts.dashboard.index')
 @section('content')
+@if ($anecdotalRecords->isNotEmpty())
     @foreach ($anecdotalRecords as $anecdotal)
         <div class="mx-auto">
 
@@ -245,6 +246,9 @@
                                         </div>
                                     @endif
                             </div>
+
+
+
     @endif
 
     </div>
@@ -253,4 +257,10 @@
     </div>
     </div>
     @endforeach
+
+    @else
+    <p class="text-center font-medium text-md text-green-500">
+    No Recent Case Found For This Student
+    </p>
+@endif
 @endsection
