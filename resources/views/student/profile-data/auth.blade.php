@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="mt-64"> <!-- Use flex to center content -->
-    <x-authentication-card>
+
+<div class="flex justify-center items-center mt-36 ">
+    <div class="max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-md w-full">
+
         <section>
             <a href="/">
                 <img src="{{ asset('assets/image/logo.png') }}" class="w-40 mx-auto mb-2">
@@ -37,8 +39,14 @@
                 </x-button>
             </div>
         </form>
-    </x-authentication-card>
+    </div>
 </div>
+</div>
+
+<div class="mx-auto text-center mb-6">
+    <p class="text-black">Don't have an account? <a href="/student/profile/create" class="font-bold hover:underline">Create here.</a>.</p>
+</div>
+@include('components.footer')
 
 <script>
     const lrnInput = document.getElementById('lrnInput');

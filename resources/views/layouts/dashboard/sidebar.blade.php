@@ -1,5 +1,5 @@
-<aside class="z-20 hidden w-64 overflow-y-auto bg-white md:block flex-shrink-0">
-    <div class="py-4 text-gray-500 dark:text-gray-400">
+<aside class="z-20 hidden w-64 overflow-y-auto bg-white  md:block flex-shrink-0">
+    <div class="py-4 text-gray-500 ">
         <a class="ml-6 text-lg font-bold text-green-800 dark:text-green-600" href="#">
             CZCMNHS
         </a>
@@ -12,7 +12,8 @@
                         class=" {{ request()->is('home') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                     aria-hidden="true"></span>
 
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                         href="{{ url('home') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                             <path fill-rule="evenodd"
@@ -34,7 +35,8 @@
                     <span
                         class=" {{ request()->is('admin/dashboard') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                     aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                         href="{{ url('admin/dashboard') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                             <path fill-rule="evenodd"
@@ -59,7 +61,8 @@
                     <span
                         class=" {{ request()->is('admin/reports') ||  request()->is('admin/reports/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                         aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                         href="{{ url('admin/reports') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                             <path fill-rule="evenodd"
@@ -80,8 +83,8 @@
                     <span
                         class=" {{ request()->is('admin/student-profile') ||  request()->is('admin/student-profile/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                             aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150
-                         hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 text-gray-600
+                         hover:text-gray-700"
                         href="{{ url('admin/student-profile') }}">
 
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
@@ -100,14 +103,14 @@
             @endcan
 
 
-
             @can('admin-access')
                 <li class="relative px-6 py-3" x-data="{ isPagesMenuOpen: false }">
                     <span
                         class=" {{ request()->is('admin/settings/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                             aria-hidden="true"></span>
                     <button
-                        class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 text-gray-700
+                         hover:text-gray-600"
                         x-on:click="isPagesMenuOpen = !isPagesMenuOpen" aria-haspopup="true">
                         <span class="inline-flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
@@ -129,36 +132,37 @@
                             x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-xl"
                             x-transition:leave="transition-all ease-in-out duration-300"
                             x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
-                            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+                            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner
+                             bg-gray-50  "
                             aria-label="submenu">
                             <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/classrooms') }}">Classrooms</a>
                             </li>
                             <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/teachers') }}">Staff</a>
                             </li>
                             <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/students') }}">Student</a>
                             </li>
                             <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/offenses') }}">Offenses</a>
                             </li>
                             <li
-                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                             <a class="w-full" href="{{ url('admin/settings/report/history') }}">Report History</a>
                             </li>
                             <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/audit-trail') }}">Audit Trail</a>
                             </li>
 
 
                         <li
-                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                         <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Report</a>
                     </li>
                         </ul>
@@ -178,7 +182,7 @@
                         <span
                             class=" {{ request()->is('adviser/dashboard') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                         aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150 hover:text-gray-600"
                             href="{{ url('adviser/dashboard') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -203,7 +207,8 @@
                         <span
                             class=" {{ request()->is('adviser/report/student') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                      aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/report/student') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -226,7 +231,8 @@
                         <span
                             class=" {{ request()->is('adviser/students-profile') || request()->is('adviser/student-profile/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                      aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/students-profile') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -246,7 +252,8 @@
                         <span
                             class=" {{ request()->is('adviser/students') ||  request()->is('adviser/students/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                  aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/students') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -269,7 +276,8 @@
                 <li class="relative px-6 py-3">
                     <span class="{{ request()->is('adviser/report/history') ||  request()->is('adviser/report/history/*') ? 'absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}"
                           aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                        href="{{ url('adviser/report/history') }}">
 
 
@@ -287,7 +295,8 @@
 
 
 
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                        href="{{ url('report/history') }}">
 
 
@@ -309,7 +318,8 @@
                         <span
                             class=" {{ request()->is('adviser/update-acc') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                  aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/update-acc') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -332,7 +342,8 @@
 
                     <li class="relative px-6 py-3" x-data="{ isPagesMenuOpenAcc: false }">
                         <button
-                            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 text-gray-700
+                             hover:text-gray-700 "
                             x-on:click="isPagesMenuOpenAcc = !isPagesMenuOpenAcc" aria-haspopup="true">
                             <span class="inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -354,23 +365,23 @@
                                 x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-xl"
                                 x-transition:leave="transition-all ease-in-out duration-300"
                                 x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
-                                class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+                                class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50  "
                                 aria-label="submenu">
 
                     </li>
                     @can('admin-access')
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                             <a class="w-full" href="{{ url('admin/update-acc') }}">Update Account</a>
                         </li>
                     @endcan
 
                     @can('admin-access')
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                             <a class="w-full" href="{{ url('admin/add-acc') }}">Add Account</a>
                         </li>
                     @endcan
                     @can('admin-access')
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                             <a class="w-full" href="{{ url('admin/user/accounts') }}">User Accounts</a>
                         </li>
                     @endcan
@@ -386,7 +397,8 @@
                 <span
                 class=" {{ request()->is('help') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
      aria-hidden="true"></span>
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                     href="{{url('help') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                         <path
@@ -405,7 +417,7 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit"
-                     class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                     class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-700 text-gray-700">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                         class="w-5 h-5  ">
                         <path fill-rule="evenodd"
@@ -433,13 +445,14 @@
     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
     x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"
-    class="fixed inset-0 z-10 flex items-end bg-opacity-50 sm:items-center sm:justify-center"></div>
-<aside class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-700 md:hidden"
+    class="fixed inset-0 z-10 flex items-end bg-opacity-50 sm:items-center sm:justify-center">
+</div>
+<aside class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white  md:hidden"
     x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
     x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
     x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0 transform -translate-x-20">
-    <div class="py-4 text-gray-500 dark:text-gray-400">
+    <div class="py-4 text-gray-500 ">
         <a class="ml-6 text-lg font-bold text-green-800 dark:text-green-600" href="#">
             CZCMNHS
         </a>
@@ -452,7 +465,8 @@
                         class=" {{ request()->is('admin/dashboard') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                         aria-hidden="true"></span>
 
-                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                        hover:text-gray-700 "
                         href="{{ url('admin/dashboard') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                             <path fill-rule="evenodd"
@@ -475,7 +489,8 @@
                     <span
                         class=" {{ request()->is('admin/reports') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                     aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                         href="{{ url('admin/reports') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                             <path fill-rule="evenodd"
@@ -496,7 +511,8 @@
                     <span
                         class=" {{ request()->is('admin/student-profile') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                     aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                    hover:text-gray-700"
                         href="{{ url('admin/student-profile') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                             <path fill-rule="evenodd"
@@ -521,7 +537,8 @@
                         <span
                             class=" {{ request()->is('adviser/dashboard') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                     aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/dashboard') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -546,7 +563,8 @@
                         <span
                             class=" {{ request()->is('adviser/report/student') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                  aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/report/student') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -568,7 +586,8 @@
                     <span
                         class=" {{ request()->is('home') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
              aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                         href="{{ url('home') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="w-5 h-5">
@@ -591,7 +610,8 @@
                         <span
                             class=" {{ request()->is('adviser/students-profile') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
                  aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/students-profile') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -611,7 +631,8 @@
                         <span
                             class=" {{ request()->is('adviser/students') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
              aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/students') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -629,11 +650,12 @@
                 @endcan
 
                 {{-- User | Adviser | Access --}}
-                <li class="relative px-6 py-3">
+                {{-- <li class="relative px-6 py-3">
                     <span
                         class=" {{ request()->is('adviser/report/history') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
              aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                         href="{{ url('adviser/report/history') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="w-5 h-5">
@@ -644,7 +666,7 @@
 
                         <span class="ml-4">Report History</span>
                     </a>
-                </li>
+                </li> --}}
                 {{-- End Access --}}
 
 
@@ -653,7 +675,8 @@
                         <span
                             class=" {{ request()->is('adviser/update-acc') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
              aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                             href="{{ url('adviser/update-acc') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
@@ -677,7 +700,7 @@
                 @can('admin-access')
                     <li class="relative px-6 py-3" x-data="{ isOpen: false }">
                         <button
-                            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors text-gray-700 duration-150 hover:text-gray-700 "
                             @click="isOpen = !isOpen" aria-haspopup="true">
                             <span class="inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -702,31 +725,35 @@
                                 x-transition:leave="transition ease-in duration-200"
                                 x-transition:leave-start="opacity-100 transform scale-100"
                                 x-transition:leave-end="opacity-0 transform scale-95"
-                                class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+                                class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50  "
                                 aria-label="submenu">
 
                                 <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                     <a class="w-full" href="{{ url('admin/settings/classrooms') }}">Classrooms</a>
                                 </li>
                                 <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                     <a class="w-full" href="{{ url('admin/settings/teachers') }}">Staff</a>
                                 </li>
                                 <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                     <a class="w-full" href="{{ url('admin/settings/students') }}">
                                         Student
                                     </a>
                                 </li>
                                 <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                     <a class="w-full" href="{{ url('admin/settings/offenses') }}">
                                         Offenses
                                     </a>
                                 </li>
                                 <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
+                            <a class="w-full" href="{{ url('admin/settings/report/history') }}">Report History</a>
+                            </li>
+                                <li
+                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                     <a class="w-full" href="{{ url('admin/settings/audit-trail') }}">Audit Trail</a>
 
                                 </li>
@@ -742,7 +769,7 @@
 
                     <li class="relative px-6 py-3" x-data="{ isOpen: false }">
                         <button
-                            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 text-gray-700 hover:text-gray-700 "
                             @click="isOpen = !isOpen" aria-haspopup="true">
                             <span class="inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -766,12 +793,12 @@
                                 x-transition:leave="transition ease-in duration-200"
                                 x-transition:leave-start="opacity-100 transform scale-100"
                                 x-transition:leave-end="opacity-0 transform scale-95"
-                                class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+                                class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50  "
                                 aria-label="submenu">
 
                                 @can('adviser-access')
                                     <li
-                                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                         <a class="w-full" :href="url('adviser/update-acc')">
                                             Update Account
                                         </a>
@@ -779,7 +806,7 @@
                                 @endcan
                                 @can('admin-access')
                                     <li
-                                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                         <a class="w-full" href="{{ url('admin/update-acc') }}">
                                             Update Account
                                         </a>
@@ -787,14 +814,14 @@
                                 @endcan
                                 @can('admin-access')
                                     <li
-                                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                         <a class="w-full" href="{{ url('admin/add-acc') }}">
                                             Add Account
                                         </a>
                                     </li>
                                 @endcan
                                     @can('admin-access')
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                             <a class="w-full" href="{{ url('admin/user/accounts') }}">User Accounts</a>
                         </li>
                     @endcan
@@ -808,7 +835,8 @@
                     <span
                     class=" {{ request()->is('help') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
          aria-hidden="true"></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
                         href="{{ url('help') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="w-5 h-5">
@@ -827,7 +855,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit"
-                         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 text-gray-700 hover:text-gray-700 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="w-5 h-5  ">
                             <path fill-rule="evenodd"

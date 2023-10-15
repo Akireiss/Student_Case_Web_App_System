@@ -1,62 +1,59 @@
 @include('layouts.header')
-<div class="mt-36">
-    <x-authentication-card>
-        <section>
 
+<div class="flex justify-center items-center mt-24">
+    <div class="max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-md w-full">
+
+        <section>
             <a href="/">
                 <img src="assets/image/logo.png" alt="" class="w-40 mx-auto mb-2">
             </a>
+            <p class="text-gray-600 pt-2 font-bold">Login here.</p>
         </section>
 
-        <div>
-            <p class="text-gray-600 pt-2 font-bold">Login here.</p>
-        </div>
-        <form method="POST" action="{{ route('login') }}" class="flex flex-col">
+        <form method="POST" action="{{ route('login') }}" >
             @csrf
 
-            <div class="mb-6 pt-3 rounded ">
+            <div class="mb-6 pt-3 rounded">
                 <x-label for="email">Email</x-label>
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                    autofocus autocomplete="username" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
                 @error('email')
                     <span class="text-red-500 text-sm mt-1" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-
             </div>
 
-            <div class="mb-6 pt-3 rounded ">
+            <div class="mb-6 pt-3 rounded">
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                    autocomplete="current-password" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
                 @error('password')
                     <span class="text-red-500 text-sm mt-1" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-between mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        href="{{ route('password.request') }}">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
 
-                <x-button class="ml-4">
+                <x-button>
                     {{ __('Log in') }}
                 </x-button>
             </div>
         </form>
-        </section>
-        </main>
-    </x-authentication-card>
+
+
+    </div>
+
+
 </div>
 
-    <div class="max-w-lg mx-auto text-center mt-12 mb-6">
-        <p class="text-black">Don't have an account? <a href="/register" class="font-bold hover:underline">Register</a>.</p>
-    </div>
+<div class="mx-auto text-center mb-6">
+    <p class="text-black">Don't have an account? <a href="/register" class="font-bold hover:underline">Register</a>.</p>
+</div>
+
 @include('components.footer')

@@ -3,7 +3,7 @@
 @section('content')
     <div>
 
-        <h2 class="m-1 text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-3">
+        <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
             Dashboard
         </h2>
 
@@ -41,7 +41,7 @@
             <!-- Card -->
 
             <a href="{{ url('admin/settings/students') }}"
-                class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800">
+                class="flex items-center p-4 bg-white  shadow-md  ">
                 <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -50,10 +50,10 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <p class="mb-2 text-sm font-medium text-gray-600 ">
                         Total students
                     </p>
-                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" id="total-students">
+                    <p class="text-lg font-semibold text-gray-700 " id="total-students">
 
                     </p>
                 </div>
@@ -62,7 +62,7 @@
 
 
             <a href="{{ url('admin/settings/students') }}"
-                class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800 border-l-4 border-blue-500">
+                class="flex items-center p-4 bg-white  shadow-md   border-l-4 border-blue-500">
                 <div
                     class=" p-3 mr-4 text-white bg-blue-500 rounded-full dark:text-orange-100
                  dark:bg-orange-500">
@@ -72,12 +72,11 @@
                         </path>
                     </svg>
                 </div>
-                <div role="alert" id="weekly-alert>
-                <p class=" mb-2 text-sm font-medium text-gray-600
-                    dark:text-gray-400">
+                <div role="alert" id="weekly-alert">
+                    <p class="mb-2 text-sm font-medium text-gray-600 ">
                     Total Male
                     </p>
-                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" id="total-male">
+                    <p class="text-lg font-semibold text-gray-700 " id="total-male">
 
                     </p>
                 </div>
@@ -88,7 +87,7 @@
 
 
             <a href="{{ url('admin/settings/students') }}"
-                class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800 border-l-4 border-pink-500">
+                class="flex items-center p-4 bg-white  shadow-md   border-l-4 border-pink-500">
                 <div class=" p-3 mr-4 text-white bg-pink-500 rounded-full">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -96,12 +95,11 @@
                         </path>
                     </svg>
                 </div>
-                <div role="alert" id="weekly-alert>
-                <p class=" mb-2 text-sm font-medium text-gray-600
-                    dark:text-gray-400">
+                <div role="alert" id="weekly-alert">
+                    <p class="mb-2 text-sm font-medium text-gray-600">
                     Total Female
                     </p>
-                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" id="total-female">
+                    <p class="text-lg font-semibold text-gray-700 " id="total-female">
 
                     </p>
                 </div>
@@ -119,7 +117,7 @@
 
 
             <!-- Card -->
-            <a href="{{ url('admin/reports') }}" class="flex items-center p-4 bg-white  shadow-md  dark:bg-gray-800">
+            <a href="{{ url('admin/reports') }}" class="flex items-center p-4 bg-white  shadow-md  ">
                 <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -136,16 +134,16 @@
 
                 </div>
                 <div>
-                    <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                          <p class="mb-2 text-sm font-medium text-gray-600 ">
                         Total Cases
                     </p>
-                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" id="total-cases">
+                    <p class="text-lg font-semibold text-gray-700 " id="total-cases">
                     </p>
                 </div>
             </a>
             <!-- Card -->
             <div class="flex items-center p-4 bg-white  shadow-md border-l-4 border-red-500
-            dark:bg-gray-800">
+            ">
                 <div class="p-3 mr-4 text-white bg-red-500 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
@@ -155,10 +153,10 @@
 
                 </div>
                 <div>
-                    <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                          <p class="mb-2 text-sm font-medium text-gray-600 ">
                         Pending Cases
                     </p>
-                    <p id="pending-cases" class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    <p id="pending-cases" class="text-lg font-semibold text-gray-700 ">
 
                     </p>
                 </div>
@@ -166,7 +164,7 @@
             <!-- Card -->
             <div
                 class="flex items-center p-4 bg-white border-green-500 border-l-4
-              shadow-md  dark:bg-gray-800">
+              shadow-md  ">
                 <div class="p-3 mr-4 text-white bg-green-500 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
@@ -177,10 +175,10 @@
                 </div>
 
                 <div>
-                    <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                          <p class="mb-2 text-sm font-medium text-gray-600 ">
                         Resolved Cases
                     </p>
-                    <p id="resolved-cases" class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    <p id="resolved-cases" class="text-lg font-semibold text-gray-700 ">
 
                     </p>
                 </div>
@@ -239,10 +237,10 @@
 
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2 mt-3">
 
-            <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
+            <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
                 <div class="flex justify-between items-start">
 
-                    <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                    <h4 class="mb-4 font-semibold text-gray-800 ">
                         Total Number Of Case Status
                     </h4>
 
@@ -251,7 +249,7 @@
 
 
                 <canvas id="bars"></canvas>
-                <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 ">
                     <!-- Chart legend -->
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 bg-red-500 rounded-full"></span>
@@ -270,12 +268,12 @@
 
 
 
-            <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
-                <h4 class="mb-2 font-semibold text-gray-800 dark:text-gray-300">
+            <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
+                <h4 class="mb-2 font-semibold text-gray-800 ">
                     Total Number Of Offenses
                 </h4>
                 <canvas id="myChartPie"></canvas>
-                <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 ">
                     <!-- Chart legend -->
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
@@ -287,12 +285,12 @@
 
 
 
-            <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
-                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+            <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
+                <h4 class="mb-4 font-semibold text-gray-800 ">
                     Total Number Of Successfull Actions
                 </h4>
                 <canvas id="myChart"></canvas>
-                <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 ">
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
                         <span>Succesfull Actions</span>

@@ -8,8 +8,6 @@
     <title>CZCMNHS</title>
     <link rel="icon" href="{{ asset('assets/image/logo.png') }}" type="image/x-icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('assets/css/tailwind.output.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/tailwind.css') }}" />
     @livewireStyles
 </head>
 <body>

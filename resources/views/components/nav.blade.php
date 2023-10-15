@@ -60,7 +60,8 @@ px-4 py-5 tracking-wide bg-white  md:px-8  ">
             <div class="mr-3">
 
 <a href="login"
-class="inline-block px-4 no-underline hover:text-gray-900 text-gray-600
+class="inline-block px-4 no-underline font-semibold text-gray-700
+hover:text-gray-700
 hover:border-b hover:border-green-500">
 Login
 </a>
@@ -69,7 +70,8 @@ Login
 
 <div class="mr-3">
     <a href="register"
-    class="inline-block px-4 no-underline hover:text-gray-900 text-gray-600
+    class="inline-block px-4 no-underline font-semibold text-gray-700
+    hover:text-gray-700
     hover:border-b hover:border-green-500">
     Register
 </a>
@@ -84,7 +86,8 @@ Login
 
             <div class="mr-3">
                 <a href="admin/dashboard"
-                class="inline-block px-4 no-underline hover:text-gray-900 text-gray-600
+                class="inline-block px-4 no-underline font-semibold text-gray-700
+                hover:text-gray-700
                 hover:border-b hover:border-green-500">
                 Dashboard
             </a>
@@ -93,7 +96,8 @@ Login
 
             <div class="mr-3">
                 <a href="adviser/dashboard"
-                class="inline-block px-4 no-underline hover:text-gray-900 text-gray-600
+                class="inline-block px-4 no-underline font-semibold text-gray-700
+                hover:text-gray-700
                 hover:border-b hover:border-green-500">
                 Dashboard
             </a>

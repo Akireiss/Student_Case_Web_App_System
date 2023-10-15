@@ -1,7 +1,8 @@
 @include('layouts.header')
 
-<div class="mt-16 ">
-    <x-authentication-card>
+<div class="flex justify-center items-center mt-20 ">
+    <div class="max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-md w-full">
+
         <section>
 
                         <a href="/">
@@ -15,8 +16,7 @@
 
         <form method="POST" action="{{ route('register') }}"
          x-data="{ showPassword: false, passwordMismatch: false }"
-        x-on:submit="checkPasswordsMatch()"
-        class="flex flex-col">
+        x-on:submit="checkPasswordsMatch()">
         @csrf
             <div class="mb-6 pt-3 rounded ">
                 <x-label for="name" value="{{ __('Name') }}" />
@@ -79,10 +79,11 @@
             </div>
 
         </form>
-    </x-authentication-card>
+    </div>
+</div>
 </div>
 
-    <div class="max-w-lg mx-auto text-center mt-12 mb-6">
+    <div class="max-w-lg mx-auto text-center mb-6">
         <p class="text-black">Already have an account? <a href="/login" class="font-bold hover:underline">Login</a>.</p>
     </div>
     @include('components.footer')

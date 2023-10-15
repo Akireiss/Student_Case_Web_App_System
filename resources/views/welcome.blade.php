@@ -16,8 +16,9 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-5 mt-20">
 
     <div class="flex flex-col justify-center items-center space-y-4 md:text-left text-center md:px-44 ">
-        <p class="text-lg md:text-xl uppercase tracking-wider text-gray-600 ">CASTOR Z. CONCEPCION MEMORIAL NATIONAL HIGH SCHOOL</p>
-        <h1 class="text-left lg:text-4xl font-extrabold leading-tight text-gray-600">
+        <p class="text-lg md:text-xl uppercase tracking-wider text-gray-600 font-semibold">CASTOR Z. CONCEPCION MEMORIAL NATIONAL HIGH SCHOOL</p>
+        <h1 class="text-left lg:text-4xl font-extrabold leading-tight  text-gray-700
+        hover:text-gray-700">
             A Happy School,
             Sustaining Excellence.
         </h1>

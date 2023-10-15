@@ -15,9 +15,9 @@
             @include('layouts.dashboard.sidebar')
             {{-- End of sidebar --}}
             <div class="flex flex-col flex-1 w-full">
-                <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-700">
+                <header class="z-10 py-4 bg-white shadow-md ">
                     <div
-                        class="container flex items-center justify-between h-full px-6 mx-auto text-green-600 dark:text-green-300">
+                        class="container flex items-center justify-between h-full px-6 mx-auto text-green-600 ">
                         <!-- Mobile hamburger -->
 
 
@@ -52,27 +52,35 @@
                                       </button>
 
 
-                                    <div id="dropdownArea" class="hidden absolute top-11 left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                                      <div class="px-4 py-3 text-sm text-black">
+                                    <div id="dropdownArea" class="hidden absolute top-11 left-0 z-10 bg-white divide-y divide-gray-100
+                                     rounded-lg shadow w-44  dark:divide-gray-600">
+                                      <div class="px-4 py-3 text-sm font-semibold text-gray-700
+                                      hover:text-gray-700">
                                         <div> {{ auth()->user()->getRoleTextAttribute() }}</div>
-                                        <div class="font-medium truncate">
+                                        <div class="text-sm font-semibold text-gray-700
+                                        hover:text-gray-700">
                                             {{ auth()->user()->email }}
                                         </div>
                                       </div>
-                                      <ul class="text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
+                                      <ul class="text-sm font-semibold text-gray-700
+                                      hover:text-gray-700" aria-labelledby="dropdownInformationButton">
                                         <li>
-                                          <a href="{{ url('admin/dashboard') }}" class="block px-4 py-2  text-black">Dashboard</a>
+                                          <a href="{{ url('admin/dashboard') }}" class="block px-4 py-2  text-sm font-semibold text-gray-700
+                                      hover:text-gray-700">Dashboard</a>
                                         </li>
                                         <li>
-                                          <a href="{{ url('admin/update-acc') }}" class="block px-4 py-2  text-black">Account</a>
+                                          <a href="{{ url('admin/update-acc') }}" class="block px-4 py-2  text-sm font-semibold text-gray-700
+                                      hover:text-gray-700">Account</a>
                                         </li>
                                         <li>
                                           <a href="{{ url('admin/settings/report/history') }}" class="block px-4 py-2
-                                           text-black">Report History</a>
+                                           text-sm font-semibold text-gray-700
+                                      hover:text-gray-700">Report History</a>
                                         </li>
                                       </ul>
                                       <div class="py-2">
-                                        <a href="#" class="block px-4 py-2 text-sm text-black">Sign out</a>
+                                        <a href="#" class="block px-4 py-2  text-sm font-semibold text-gray-700
+                                      hover:text-gray-700">Sign out</a>
                                       </div>
                                     </div>
                                   </li>
