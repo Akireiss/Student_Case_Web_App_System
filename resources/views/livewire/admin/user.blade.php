@@ -1,13 +1,13 @@
 <div>
     <div class="mx-auto py-8">
 
-        <div class="bg-white dark:bg-gray-800 rounded shadow-lg p-10 px-4 md:p-8 mb-6">
+        <div class="bg-white  rounded shadow-lg p-10 px-4 md:p-8 mb-6">
             <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3">
 
 
-                <div class="text-gray-600 dark:text-gray-400">
-                    <p class="font-medium text-lg dark:text-gray-200 text-gray-600">Personal Details</p>
-                    <p className="dark:text-gray-400">Please fill out all the fields.</p>
+                <div class="text-gray-600 ">
+                    <p class="font-medium text-lg  text-gray-600">Personal Details</p>
+                    <p className="">Please fill out all the fields.</p>
                 </div>
 
 
@@ -46,9 +46,9 @@
             </div>
 
             <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3  mt-5">
-                <div class="text-gray-600 dark:text-gray-400">
-                    <p class="font-medium text-lg dark:text-gray-200 text-gray-600">Password</p>
-                    <p className="dark:text-gray-400">Update your password here.</p>
+                <div class="text-gray-600 ">
+                    <p class="font-medium text-lg  text-gray-600">Password</p>
+                    <p className="">Update your password here.</p>
                 </div>
 
                 <div class="lg:col-span-2">

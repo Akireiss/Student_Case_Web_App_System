@@ -2,17 +2,17 @@
 
     <div class="mx-auto py-8">
 
-        {{-- <h3 class="font-semibold mb-6 dark:text-gray-200 text-gray-600">Add New User</h3> --}}
+        {{-- <h3 class="font-semibold mb-6  text-gray-600">Add New User</h3> --}}
 
-        <div class="bg-white dark:bg-gray-800 rounded shadow-lg p-10  px-4 md:p-8 mb-6 ">
+        <div class="bg-white  rounded shadow-lg p-10  px-4 md:p-8 mb-6 ">
 
             <form wire:submit.prevent="store"
             x-data="{ showPassword: false, passwordMismatch: false }"
             x-on:submit="checkPasswordsMatch()"
             >
                 <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3">
-                    <div class="text-gray-600 dark:text-gray-400">
-                        <p class="font-medium text-lg dark:text-gray-200 text-gray-600">Personal Details</p>
+                    <div class="text-gray-600 ">
+                        <p class="font-medium text-lg  text-gray-600">Personal Details</p>
                         <p className="">Please fill out all the fields. </p>
                     </div>
 
@@ -37,8 +37,8 @@
                 </div>
 
                 <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3 mt-5">
-                    <div class="text-gray-600 dark:text-gray-400">
-                        <p class="font-medium text-lg dark:text-gray-200 text-gray-600">Password</p>
+                    <div class="text-gray-600 ">
+                        <p class="font-medium text-lg  text-gray-600">Password</p>
                         <p class="">Create your password here.</p>
                     </div>
 
