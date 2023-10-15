@@ -266,6 +266,9 @@ Route::get('student/profile/data/{form_id}/view',
 Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
 
 //Pdf Here
+//For View
 Route::get('generate-pdf/{id}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
+//For Table
+Route::get('generate-pdf/{profile}', [PdfController::class, 'generatePdf'])->name('admin.generate-pdf');
 Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 

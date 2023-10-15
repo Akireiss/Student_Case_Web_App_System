@@ -195,6 +195,12 @@ final class StudentProfileTable extends PowerGridComponent
                     return  ['profile' => $model->id];
                }),
 
+               Button::make('pdf', 'Pdf')
+               ->class('bg-red-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+             ->route('admin.generate-pdf', function(\App\Models\Profile $model) {
+                  return  ['profile' => $model->id];
+             }),
+
         ];
     }
 
