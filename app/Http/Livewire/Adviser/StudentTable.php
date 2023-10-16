@@ -21,7 +21,7 @@ final class StudentTable extends PowerGridComponent
         return [
             Exportable::make('export')
                 ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+                ->type(Exportable::TYPE_CSV),
             Header::make(),
             Footer::make()
                 ->showPerPage()
@@ -36,9 +36,13 @@ final class StudentTable extends PowerGridComponent
 
         return Students::where('classroom_id', $classroomId);
     }
+
+
     public function relationSearch(): array
     {
-        return [];
+        return [
+ 
+        ];
     }
 
     public function addColumns(): PowerGridColumns

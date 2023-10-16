@@ -17,7 +17,7 @@
 </x-slot>
 @endauth
 
-        <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+        <h6 class="text-sm mt-3 mb-6  font-bold uppercase">
             Student Information
         </h6>
 
@@ -90,77 +90,60 @@
 @else
     <p class="text-left font-bold text-xl">Student Cases</p>
 
-    @foreach ($student->anecdotal as $report)
-        <x-form title="">
-            <x-slot name="actions">
-            </x-slot>
+    @foreach ($student->anecdotal as $anecdotal)
+    <div class="w-full mx-auto mt-6">
+        <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
 
-            <x-slot name="slot">
-                <h6 class="text-sm my-3 px-4 font-bold uppercase ">
-                    Student Information
+            <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
+                <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                    Report Information
                 </h6>
+
                 <x-grid columns="2" gap="4" px="0" mt="0">
 
-
                     <div class="w-full px-4">
 
-                        <x-label>
-                            Student Name
-                        </x-label>
-                        <x-input type="text" name="offenses" disabled
-                            value="{{ $report->students->first_name }} {{ $report->students->last_name }}" disabled />
+                        <div class="relative mb-3">
+                            <x-label>
+                                Student Name
+                            </x-label>
+                            <x-input type="text" name="offenses"
+                                value="{{ $anecdotal->student->first_name }} {{ $anecdotal->student->middle_name }} {{ $anecdotal->student->last_name }}"
+                                disabled />
+                        </div>
+
                     </div>
 
 
                     <div class="w-full px-4">
-                        <x-label>
-                            Referred By
-                        </x-label>
-                        <x-input disabled value="{{ $report->user?->name ?? 'No Reporter Found' }}" disabled />
+                        <div class="relative mb-3">
+                            <x-label>
+                                Referred By
+                            </x-label>
+                            <x-input value="{{ $anecdotal->report->first()?->users->name ?? 'No Reporter Found' }}"
+                                disabled />
+                        </div>
                     </div>
-
-
-                    <div class="w-full px-4">
-                        <x-label>
-                            Grade Level
-                        </x-label>
-                        <x-input type="text" name="offenses" disabled
-                            value="{{ $report->students->classroom->grade_level }} {{ $report->students->classroom->section }}"
-                            disabled />
-                    </div>
-
-
-                    <div class="w-full px-4">
-                        <x-label>
-                            Date Reffered
-                        </x-label>
-                        <x-input disabled
-                            value="{{ $report ? $report->created_at->format('F j, Y') : 'No Data Found' }}" disabled />
-
-                    </div>
-
 
                 </x-grid>
 
-                <h6 class="text-sm px-4 font-bold uppercase my-3">
+                <h6 class="text-sm my-1 px-4 font-bold uppercase ">
                     Case Information
                 </h6>
 
                 <x-grid columns="2" gap="4" px="0" mt="4">
                     <div class="w-full px-4">
                         <x-label>
-                            Minor Offenses
+                            Grade Level
                         </x-label>
-                        <x-input disabled value="{{ $report->Minoroffenses?->offenses ?? 'No Offenses Found' }}"
-                            disabled />
+                        <x-input value="{{ $anecdotal->grade_level ?? 'No Data' }}" disabled />
                     </div>
 
                     <div class="w-full px-4">
                         <x-label>
                             Grave Offenses
                         </x-label>
-                        <x-input disabled value="{{ $report->Graveoffenses?->offenses ?? 'No Offenses Found' }}"
-                            disabled />
+                        <x-input value="{{ $anecdotal->offenses?->offenses ?? 'No Offenses Found' }}" disabled />
                     </div>
                 </x-grid>
 
@@ -172,7 +155,7 @@
                             <x-label>
                                 Observation
                             </x-label>
-                            <x-input value="{{ $report->anecdotal?->observation ?? 'No Observation' }}" disabled />
+                            <x-input value="{{ $anecdotal?->observation ?? 'No Observation' }}" disabled />
 
 
                         </div>
@@ -183,7 +166,7 @@
                             <x-label>
                                 Desired
                             </x-label>
-                            <x-input value="{{ $report->desired ?? 'No Desired Observation' }}" disabled />
+                            <x-input value="{{ $anecdotal?->desired ?? 'No Desired Observation' }}" disabled />
                         </div>
                     </div>
 
@@ -193,7 +176,7 @@
                                 Outcome
                             </x-label>
                             <x-input type="text" name="outcome" disabled
-                                value="{{ $report->outcome ?? 'No Outcome Observation' }}" />
+                                value="{{ $anecdotal?->outcome ?? 'No Outcome Observation' }}" />
                         </div>
                     </div>
                 </x-grid>
@@ -203,7 +186,7 @@
                     Additional Information
                 </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="4">
+                <x-grid columns="2" gap="4" px="0" mt="4">
 
 
                     <div class="w-full px-4">
@@ -212,7 +195,7 @@
                                 Gravity of offense
                             </x-label>
                             <x-input disabled type="text" name="gravity"
-                                value="{{ $report->getGravityTextAttribute() ?? 'No Data' }}" />
+                                value="{{ $anecdotal?->gravity ?? 'No Data' }}" />
                         </div>
                     </div>
 
@@ -221,57 +204,143 @@
                             <x-label>
                                 Remarks (Short Description)
                             </x-label>
-                            <x-input disabled type="text" value="{{ $report->remarks ?? 'No Data' }}" />
+                            <x-input disabled type="text"
+                                value="{{ $anecdotal?->short_description ?? 'No Data' }}" />
 
                         </div>
                     </div>
+
+                </x-grid>
+
+
+                <x-grid columns="2" gap="4" px="0" mt="4">
 
                     <div class="w-full px-4">
                         <x-label>Letter</x-label>
-                        <div x-data="{ isZoomed: false }" x-clock>
-                            @if ($report->letter)
-                                <img src="{{ asset('storage/' . $report->letter) }}" alt="Letter Image"
-                                    class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer"
-                                    @click="isZoomed = !isZoomed" x-bind:class="{ 'max-h-full max-w-full': isZoomed }">
-                                <div x-show="isZoomed" @click.away="isZoomed = false"
-                                    class="fixed inset-0 z-50 flex items-center justify-center bg-opacity-80">
-                                    <img src="{{ asset('storage/' . $report->letter) }}" alt="Zoomed Letter Image"
-                                        class="w-4/5 h-4/5 object-cover cursor-pointer" @click="isZoomed = !isZoomed">
-                                </div>
-                            @else
-                                <p>No Letter Uploaded</p>
-                            @endif
-                        </div>
-                    </div>
-
-
-
-                </x-grid>
-
-
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
-                    Actions Taken
-                </h6>
-
-                <x-grid columns="3" gap="4" px="0" mt="4">
-                    <div class="relative mb-3">
-                        <div class="flex items-center space-x-2 mx-4">
-                            @if ($report && $report->actionsTaken->isNotEmpty())
-                                @foreach ($report->actionsTaken as $action)
-                                    <x-checkbox checked disabled />
-                                    <x-label>{{ $action->actions }}</x-label>
+                        <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2">
+                            @if ($anecdotal->images->isNotEmpty())
+                                @foreach ($anecdotal->images as $image)
+                                    <a href="{{ asset('storage/' . $image->images) }}" target="_blank"
+                                        rel="noopener noreferrer">
+                                        <img src="{{ asset('storage/' . $image->images) }}" alt="Anecdotal Image"
+                                            class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
+                                    </a>
                                 @endforeach
                             @else
-                                No Action Taken Found
+                                <div>
+                                    <p
+                                        class=" font-medium text-sm
+                            text-gray-600 text-left">
+                                        No Images Uploaded</p>
+                                </div>
                             @endif
                         </div>
                     </div>
+
+
+
+
+                    <div class="w-full px-4">
+
+                        <x-label>Story</x-label>
+                        <textarea id="message" rows="4" wire:model="story"
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+                            rounded-lg border border-gray-300 "
+                            disabled placeholder="Write the story behind the report here">{{ $anecdotal?->story ?? 'No Data' }}
+                        </textarea>
+
+
+                    </div>
+
+
+
+
                 </x-grid>
-            </x-slot>
 
-            </div>
+                <div>
 
-            </div>
-        </x-form>
+                    <h6 class="text-sm my-6 px-4 font-bold uppercase">
+                        Actions Taken
+                    </h6>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+
+                        <div class="relative mb-3">
+                            <div class="flex items-center space-x-2">
+                                <x-checkbox wire:model="actions" checked disabled value="Parent Teacher Meeting" />
+                                <x-label>Parent Teacher Meeting</x-label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <hr class="my-3">
+
+                    <div class="w-full mx-auto">
+                        @if ($anecdotal->case_status == 2)
+                            <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                                Meeting Outcome Updates
+                            </h6>
+
+                            <x-grid columns="3" gap="4" px="0" mt="4">
+                                <div class="w-full px-4">
+                                    <div class="relative mb-3">
+                                        <x-label>
+                                            Meeting Outcomes
+                                        </x-label>
+                                        <x-input disabled
+                                            value="{{ $anecdotal->actions?->getActionTextAttribute() ?? 'No Data' }}" />
+                                    </div>
+                                </div>
+                                <div class="w-full px-4">
+                                    <div class="relative mb-3">
+                                        <x-label>
+                                            Remarks (Short Description)
+                                        </x-label>
+                                        <x-input disabled
+                                            value="{{ $anecdotal->actions?->outcome_remarks ?? 'No Data' }}" />
+                                    </div>
+                                </div>
+                                <div class="w-full px-4">
+                                    <div class="relative mb-3">
+                                        <x-label>
+                                            Action Taken
+                                        </x-label>
+                                        <x-input disabled
+                                            value="{{ $anecdotal->actions?->action ?? 'No Data' }}" />
+                                    </div>
+                                </div>
+
+                            </x-grid>
+
+                            {{-- Update --}}
+
+                            @if ($anecdotal->case_status === 2)
+                                <div class="flex justify-end items-center  mx-auto">
+                                    <p class="font-medium text-md text-green-500">
+                                        The case has been resolved last
+                                        {{ $anecdotal->outcomes->updated_at->format('F j, Y') }}
+                                    </p>
+                                </div>
+                                @elseif ($anecdotal->case_status === 0 || $anecdotal->case_status === 1)
+                                <div class="flex justify-end items-center mx-4">
+                                    <p class="font-medium text-md text-green-500">
+                                    Case Status: {{ $anecdotal->getStatusTextAttribute() }}
+                                    </p>
+                                </div>
+                            @endif
+                    </div>
+
+
+
+@endif
+
+</div>
+</div>
+</div>
+</div>
+</div>
     @endforeach
 @endif

@@ -67,7 +67,7 @@ final class StudentTable extends PowerGridComponent
 
             ->addColumn('department', fn(Students $model) => $model?->getDepartmentTextAttribute())
 
-            ->addColumn('lrn', fn(Students $model) => $model->lrn ?: 'No Data')
+            // ->addColumn('lrn', fn(Students $model) => $model->lrn ?: 'No Data')
 
             ->addColumn('students.status')
             ->addColumn('status', fn(Students $model) => $model?->getStatusTextAttribute())
@@ -90,8 +90,7 @@ final class StudentTable extends PowerGridComponent
                 ->editOnClick()
                 ->searchable(),
 
-            Column::make('Gender', 'gender', 'students.gender')
-                ->sortable(),
+            Column::make('Gender', 'gender', 'students.gender'),
 
             Column::make('Grade Level', 'grade_level', 'students.grade_level')
                 ->sortable(),
@@ -104,9 +103,9 @@ final class StudentTable extends PowerGridComponent
                 ->sortable(),
 
 
-            Column::make('Lrn', 'lrn')
-                ->editOnClick()
-                ->sortable(),
+            // Column::make('Lrn', 'lrn')
+            //     ->editOnClick()
+            //     ->sortable(),
 
 
             Column::make('Status', 'status', 'students.status')

@@ -28,7 +28,7 @@ final class StudentProfileTable extends PowerGridComponent
         return [
             Exportable::make('export')
                 ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+                ->type(Exportable::TYPE_CSV),
             Header::make()->showToggleColumns(),
             Footer::make()
                 ->showPerPage()
@@ -80,6 +80,7 @@ final class StudentProfileTable extends PowerGridComponent
     {
         return [
             'student' => ['first_name', 'last_name'],
+            'students' => ['first_name', 'last_name'],
         ];
     }
 

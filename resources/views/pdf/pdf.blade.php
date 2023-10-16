@@ -619,7 +619,7 @@
         </tbody>
     </table>
 
-    <div class="page-break"></div>
+    {{-- <div class="page-break"></div> --}}
 
     {{-- Second Page --}}
     <table width="100%">

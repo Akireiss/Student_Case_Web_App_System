@@ -2,7 +2,9 @@
 @section('content')
 @if ($anecdotalRecords->isNotEmpty())
     @foreach ($anecdotalRecords as $anecdotal)
-        <div class="mx-auto">
+
+
+    <div class="mx-auto">
 
 
             <div class="w-full mx-auto mt-6">
@@ -256,11 +258,19 @@
     </div>
     </div>
     </div>
+
+
     @endforeach
 
     @else
     <p class="text-center font-medium text-md text-green-500">
     No Recent Case Found For This Student
     </p>
+
+
 @endif
+
+
+
+
 @endsection
