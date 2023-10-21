@@ -56,15 +56,7 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Section</x-label>
-                                <x-select wire:model="section" required>
-                                        <option value="Jupiter">Jupiter</option>
-                                        <option value="Akasya">Akasya</option>
-                                        <option value="Earth">Earth</option>
-                                        <option value="Sun">Sun</option>
-                                        <option value="Neptune">Neptune</option>
-                                        <option value="Pluto">Pluto</option>
-                                        <option value="Venus">Venus</option>
-                                </x-select>
+                                <x-input wire:model="section"/>
                                 <x-error fieldName="section" />
 
                             </div>

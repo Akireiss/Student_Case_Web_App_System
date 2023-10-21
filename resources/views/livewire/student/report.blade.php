@@ -34,6 +34,46 @@
                                         <x-error fieldName="studentName" />
                                         <x-error fieldName="studentId" />
 
+                                        @if ($studentName && $studentId)
+
+                                            @if (count($cases) > 0)
+                                                @php
+                                                    $totalOffenses = 0;
+                                                    $totalPending = 0;
+                                                    $totalProcess = 0;
+                                                    $totalResolved = 0;
+                                                @endphp
+                                                @foreach ($cases as $case)
+                                                    @if ($case->offenses)
+                                                        @php
+                                                            $totalOffenses += 1;
+                                                            if ($case->case_status == '0') {
+                                                                $totalPending += 1;
+                                                            } elseif ($case->case_status == '1') {
+                                                                $totalProcess += 1;
+                                                            } elseif ($case->case_status == '2') {
+                                                                $totalResolved += 1;
+                                                            }
+                                                        @endphp
+                                                    @endif
+                                                @endforeach
+                                                <span class="text-red-500 text-md  text-center">{{ $studentName }} has
+                                                    a total of {{ $totalOffenses }}
+                                                    offenses.
+                                                    {{ $totalPending }} Pending Cases | {{ $totalProcess }} Inprocess
+                                                    Cases | {{ $totalResolved }}
+                                                    Resolved Cases
+                                                </span>
+                                            @else
+                                                <span class="text-green-500 text-md text-center">
+                                                    No cases found for {{ $studentName }}
+                                                </span>
+                                            @endif
+
+                                        @endif
+
+
+
                                         <span x-show="studentName !== ''" @click="studentName = ''; isOpen = false"
                                             class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold">
                                             &times;
@@ -57,10 +97,11 @@
                                                     </li>
                                                 @endforeach
                                             @elseif ($studentName)
-                                            <div class="px-4 py-2 cursor-pointer hover:bg-gray-200 bg-white border border-gray-300 mt-2 rounded-md w-full">
-                                                No Student Found
+                                                <div
+                                                    class="px-4 py-2 cursor-pointer hover:bg-gray-200 bg-white border border-gray-300 mt-2 rounded-md w-full">
+                                                    No Student Found
 
-                                            </div>
+                                                </div>
                                             </ul>
                                         @endif
                                     </div>
@@ -198,7 +239,7 @@
                                     file:bg-transparent file:border-0
                                     file:bg-gray-100 file:mr-4
                                     file:py-2.5 file:px-4">
-                                    <x-error fieldName="letter" />
+                                <x-error fieldName="letter" />
 
                             </div>
 
@@ -244,7 +285,7 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                 Loading...
                             </div>
                             <x-buttontype wire:loading.attr="disabled" wire:click="resetReport"
-                            class="bg-red-500 text-white hover:bg-red-600">Clear</x-buttontype>
+                                class="bg-red-500 text-white hover:bg-red-600">Clear</x-buttontype>
                             <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                         </div>
                     </form>
@@ -256,39 +297,39 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 
 
     @if ($studentName && $studentId)
-        <div class="px-4 py-3">
-            @if (count($cases) > 0)
-                @php
-                    $totalOffenses = 0;
-                    $totalPending = 0;
-                    $totalProcess = 0;
-                    $totalResolved = 0;
-                @endphp
-                @foreach ($cases as $case)
-                    @if ($case->offenses)
-                        @php
-                            $totalOffenses += 1;
-                            if ($case->case_status == '0') {
-                                $totalPending += 1;
-                            } elseif ($case->case_status == '1') {
-                                $totalProcess += 1;
-                            } elseif ($case->case_status == '2') {
-                                $totalResolved += 1;
-                            }
-                        @endphp
-                    @endif
-                @endforeach
-                <p class="text-red-500 text-md  text-center">{{ $studentName }} has a total of {{ $totalOffenses }}
-                    offenses.
-                    {{ $totalPending }} Pending Cases | {{ $totalProcess }} Inprocess Cases | {{ $totalResolved }}
-                    Resolved Cases
-                </p>
-            @else
-                <p class="text-green-500 text-md text-center">
-                    No cases found for {{ $studentName }}
-                </p>
-            @endif
-        </div>
+
+        @if (count($cases) > 0)
+            @php
+                $totalOffenses = 0;
+                $totalPending = 0;
+                $totalProcess = 0;
+                $totalResolved = 0;
+            @endphp
+            @foreach ($cases as $case)
+                @if ($case->offenses)
+                    @php
+                        $totalOffenses += 1;
+                        if ($case->case_status == '0') {
+                            $totalPending += 1;
+                        } elseif ($case->case_status == '1') {
+                            $totalProcess += 1;
+                        } elseif ($case->case_status == '2') {
+                            $totalResolved += 1;
+                        }
+                    @endphp
+                @endif
+            @endforeach
+            <span class="text-red-500 text-md  text-center">{{ $studentName }} has a total of {{ $totalOffenses }}
+                offenses.
+                {{ $totalPending }} Pending Cases | {{ $totalProcess }} Inprocess Cases | {{ $totalResolved }}
+                Resolved Cases
+            </span>
+        @else
+            <span class="text-green-500 text-md text-center">
+                No cases found for {{ $studentName }}
+            </span>
+        @endif
+
     @endif
 
 
