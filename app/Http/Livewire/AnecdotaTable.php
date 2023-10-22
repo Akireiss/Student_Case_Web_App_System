@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Offenses;
+use App\Models\Students;
 use App\Models\Anecdotal;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -63,8 +64,8 @@ final class AnecdotaTable extends PowerGridComponent
         return PowerGrid::columns()
             ->addColumn('students.first_name')
             ->addColumn('students.last_name')
+            ->addColumn('full_name', fn (Students $model) => e($model->fullName()))
 
-            ->addColumn('grade_level')
             ->addColumn('offenses')
 
             ->addColumn('gravity', fn(Anecdotal $model) => ($model->gravityText))
@@ -84,7 +85,6 @@ final class AnecdotaTable extends PowerGridComponent
         return [
             Column::make('First Name', 'students.first_name'),
             Column::make('Last Name', 'students.last_name'),
-            Column::make('Grade', 'grade_level'),
             Column::make('Offenses', 'offenses'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
             Column::make('Submitted at', 'created_at_formatted', 'anecdotal.created_at')->sortable(),
@@ -113,10 +113,6 @@ final class AnecdotaTable extends PowerGridComponent
                 ->optionValue('gravity')
                 ->optionLabel('label'),
 
-                Filter::select('grade_level', 'grade_level')
-                ->dataSource(Anecdotal::select('grade_level')->distinct()->get())
-                ->optionValue('grade_level')
-                ->optionLabel('grade_level'),
 
         Filter::select('offenses', 'category')
         ->dataSource(Offenses::categories())
