@@ -69,8 +69,6 @@ class Anecdotal extends Model
     }
 
 
-
-
     // TODO: for anecdotal table (still need some adjustment)
     public function student()
     {
