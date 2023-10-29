@@ -22,6 +22,7 @@ class ClassroomController extends Controller
 
 
         return view('admin.classroom.edit', compact('classroom', 'employees', 'classrooms', 'higherClass'));
+
     }
 
     public function update(Request $request, Classroom $classroom)

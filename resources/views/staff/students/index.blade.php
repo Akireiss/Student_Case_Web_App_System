@@ -7,7 +7,8 @@
         Table: Grade: {{ auth()->user()->classroom->grade_level }} {{ auth()->user()->classroom->section }} Students
     </div>
     <div>
-        <x-link href="{{ url('adviser/students/reffer') }}">Reffer</x-link>
+        <x-link href="{{ url('adviser/classroom/' . auth()->user()->classroom->id) }}">Reffer</x-link>
+
     </div>
 </div>
 

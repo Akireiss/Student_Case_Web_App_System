@@ -9,25 +9,21 @@ use App\Http\Controllers\Controller;
 
 class RefferController extends Controller
 {
-    public function index() {
-        $user = auth()->user(); // Get the authenticated user
-        $classroomId = $user->classroom_id;
+    public function index(Classroom $classroom) {
+        $classrooms = Classroom::all();
 
-        $userClassroom = Classroom::find($classroomId);
-        $nextGradeLevel = $userClassroom->grade_level + 1;
-
-        $classroom = Classroom::whereIn('grade_level', [$userClassroom->grade_level, $nextGradeLevel])
+        $maxGradeLevel = $classroom->grade_level; // Assuming you have the current classroom's grade level
+        $higherClass = Classroom::where('grade_level', $maxGradeLevel + 1)
+            ->orWhere('grade_level', $maxGradeLevel)
             ->get();
 
-        $students = Students::where('classroom_id', $classroomId)
-                            ->where('status', 0)
-                            ->get(); // Use get() to retrieve the results
-
-        return view('staff.students.reffer', compact('students', 'classroom', 'classroomId'));
+        return view('staff.students.reffer', compact('classroom', 'classrooms', 'higherClass'));
     }
 
 
-    public function update(Request $request) {
+    public function update(Request $request, Classroom $classroom)
+    {
+        // Validate the request data as needed
         $request->validate([
             'students' => 'required|array',
         ]);
@@ -46,7 +42,9 @@ class RefferController extends Controller
                 $student->save();
             }
         }
-        return redirect()->back()->with('message', 'Students have been referred to new classrooms.');
+
+        // Redirect back with a success message
+        return redirect()->back()->with('message', 'Students have been referred to new classroom');
     }
 
 
