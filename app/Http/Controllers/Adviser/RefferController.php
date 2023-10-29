@@ -42,9 +42,9 @@ class RefferController extends Controller
                 $student->save();
             }
         }
-
         // Redirect back with a success message
-        return redirect()->back()->with('message', 'Students have been referred to new classroom');
+        return redirect()->back()->with('success', 'Students have been referred to the new classroom');
+
     }
 
 
