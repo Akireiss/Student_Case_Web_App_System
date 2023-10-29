@@ -57,5 +57,3 @@ function updatePieChart() {
     });
 }
 updateChartData();
-// Update the chart every 10 seconds
-setInterval(updateChartData, 10000);

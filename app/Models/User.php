@@ -20,22 +20,22 @@ class User extends Authenticatable
     use StatusTrait;
     protected $table = 'users';
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
-        'classroom_id'
-    ];
-    const ROLE_USER = 0;
-    const ROLE_ADMIN = 1;
-    const ROLE_STAFF = 2;
+protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'role',
+    'classroom_id'
+];
+const ROLE_USER = 0;
+const ROLE_ADMIN = 1;
+const ROLE_STAFF = 2;
 
 
-    public function classroom()
-    {
-        return $this->belongsTo(Classroom::class);
-    }
+public function classroom()
+{
+    return $this->belongsTo(Classroom::class);
+}
     protected $hidden = [
         'password',
         'remember_token',

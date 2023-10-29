@@ -39,4 +39,4 @@ function updateChart() {
 // Initial chart rendering
 updateChart();
 
-setInterval(updateChart, 10000);
+// setInterval(updateChart, 10000);

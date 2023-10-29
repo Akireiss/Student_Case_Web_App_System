@@ -32,7 +32,7 @@ const barConfig = {
     },
 };
 
-const barsCtx = document.getElementById('bars').getContext('2d');
+const barsCtx = document.getElementById('bar').getContext('2d');
 const myBar = new Chart(barsCtx, barConfig);
 
 function updateChart(data) {

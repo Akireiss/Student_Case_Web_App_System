@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Admin\PdfController;
 use App\Http\Controllers\Admin\YearlyReportController;
+use App\Http\Controllers\Adviser\RefferController;
+use App\Http\Controllers\BackupController;
+use App\Http\Controllers\RestoreController;
 use App\Http\Controllers\Student\AuthController;
 use App\Http\Livewire\Admin\Classroom\Classroom;
 use App\Http\Livewire\Admin\Classroom\ClassroomUpdate;
@@ -119,11 +122,14 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('teachers/view/{employee}', [EditTeacher::class, 'view'])
                 ->name('teacher.view');
             //Classroom
-            Route::get('classrooms', \App\Http\Livewire\Admin\Classroom\Classroom::class);
+
+            Route::get('classrooms', Classroom::class);
             Route::get('classrooms/{classroom}/view', [Classroom::class, 'view'])->name('classroom.view');
 
-            Route::get('classrooms/{classroom}/edit', ClassroomUpdate::class)->name('classroom.edit');
-
+            Route::get('classrooms/{classroom}/edit', [ClassroomController::class, 'edit'])->name('classroom.edit');
+            Route::resource('classrooms', ClassroomController::class);
+            Route::put('classrooms/students/update/{classroom}', [ClassroomController::class, 'updateStudents'])
+            ->name('classrooms.students.update');
 
 
             // Report History
@@ -190,6 +196,11 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             Route::get('students/{student}/edit', ReferStudent::class)->name('adviser.students.edit');
             Route::get('students/{student}/view', [ReferStudent::class, 'view'])->name('adviser.students.view');
+
+            Route::get('students/reffer', [RefferController::class, 'index']);
+            Route::put('students/update', [RefferController::class, 'update'])->name('students.update');
+
+
             //HS Issue
 
 
@@ -250,7 +261,9 @@ Route::get('generate-pdf/{id}', [PdfController::class, 'generatePdf'])->name('ge
 Route::get('generate-pdf/{profile}', [PdfController::class, 'generatePdf'])->name('admin.generate-pdf');
 Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 
-//Rejected During Pre Def
+
+
+//Rejected functions During Pre Def//Uncomment if you want to use
 //*Student Area
 //Student Authentication
 //Route::get('student/lrn/{profileId}', [AuthController::class, 'login'])->name('student.login');
@@ -272,5 +285,15 @@ Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 //  [StudentDataController::class, 'view']);
 // //*student form update
 // Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
+
+
+Route::get('/backup', [BackupController::class, 'index']);
+Route::post('backup/execute', [BackupController::class, 'backup'])->name('manual.backup');
+
+// Route::get('/backup/db', [BackupController::class, 'backup'])->name('backup');
+Route::get('/download-backup', [BackupController::class, 'downloadDatabase'])->name('backup.download');
+
+Route::get('/restore', [RestoreController::class, 'index']);
+Route::get('/restore', [RestoreController::class, 'store']);
 
 
