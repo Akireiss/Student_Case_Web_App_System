@@ -36,27 +36,27 @@ function hideAlert(alertId) {
     $('#' + alertId).addClass('hidden-alert-weekly');
 }
 
-function updateWeeklyReportCount() {
-    $.ajax({
-        url: '/get-weekly-report-count',
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            $('#weekly-report-count').text(data.weeklyReportCount);
-            if (data.weeklyReportCount === 0) {
-                $('#weekly-alert').removeClass('bg-red-500').addClass('bg-green-500');
-            } else {
-                $('#weekly-alert').removeClass('bg-green-500').addClass('bg-red-400');
-            }
-        },
-        error: function() {
-            console.log('Failed to fetch weekly report count.');
-        }
-    });
-}
+// function updateWeeklyReportCount() {
+//     $.ajax({
+//         url: '/get-weekly-report-count',
+//         method: 'GET',
+//         dataType: 'json',
+//         success: function(data) {
+//             $('#weekly-report-count').text(data.weeklyReportCount);
+//             if (data.weeklyReportCount === 0) {
+//                 $('#weekly-alert').removeClass('bg-red-500').addClass('bg-green-500');
+//             } else {
+//                 $('#weekly-alert').removeClass('bg-green-500').addClass('bg-red-400');
+//             }
+//         },
+//         error: function() {
+//             console.log('Failed to fetch weekly report count.');
+//         }
+//     });
+// }
 
-// Update every 1 hour (3600000 milliseconds)
-setInterval(updateWeeklyReportCount, 1000);
+// // Update every 1 hour (3600000 milliseconds)
+// setInterval(updateWeeklyReportCount, 1000);
 
 
 

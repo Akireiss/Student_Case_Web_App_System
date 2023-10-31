@@ -23,11 +23,11 @@ class AnecdotalOutcome extends Model
         $value = $this->attributes['outcome']; // Retrieve the attribute value from the model
 
         switch ($value) {
-            case 0:
-                return 'Succesfull';
-            case 1:
-                return 'Follow-up';
             case 2:
+                return 'Succesfull';
+            case 3:
+                return 'Follow-up';
+            case 4:
                 return 'Refferal';
             default:
                 return 'Unknown';

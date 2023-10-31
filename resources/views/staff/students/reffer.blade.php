@@ -40,14 +40,16 @@
 
                 <div class="flex justify-end items-center">
                     @if (session('success'))
-                    <span class="text-green-500 mx-4">
-                        {{ session('success') }}
-                    </span>
-                @endif
-
+                        @foreach (session('success') as $message)
+                            <span class="text-green-500 mx-4">
+                                {{ $message }}
+                            </span>
+                        @endforeach
+                    @endif
 
                     <x-button type="submit">Update Students</x-button>
                 </div>
+
             </form>
         @else
             <div>

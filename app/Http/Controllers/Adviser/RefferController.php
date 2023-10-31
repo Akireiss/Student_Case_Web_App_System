@@ -22,30 +22,34 @@ class RefferController extends Controller
 
 
     public function update(Request $request, Classroom $classroom)
-    {
-        // Validate the request data as needed
-        $request->validate([
-            'students' => 'required|array',
-        ]);
+{
+    // Validate the request data as needed
+    $request->validate([
+        'students' => 'required|array',
+    ]);
 
-        // Get the array of students' data from the form
-        $studentsData = $request->input('students');
+    // Get the array of students' data from the form
+    $studentsData = $request->input('students');
+    $successMessages = [];
 
-        // Loop through the array of students' data
-        foreach ($studentsData as $studentId => $data) {
-            // Find the student by their ID
-            $student = Students::find($studentId);
+    // Loop through the array of students' data
+    foreach ($studentsData as $studentId => $data) {
+        // Find the student by their ID
+        $student = Students::find($studentId);
 
-            if ($student) {
-                // Update the student's classroom ID
-                $student->classroom_id = $data['classroom_id'];
-                $student->save();
-            }
+        if ($student) {
+            // Update the student's classroom ID
+            $student->classroom_id = $data['classroom_id'];
+            $student->save();
+
+            // Append success message for each student
+            $successMessages[] = 'Student ' . $student->first_name . ' has been referred to the new classroom.';
         }
-        // Redirect back with a success message
-        return redirect()->back()->with('success', 'Students have been referred to the new classroom');
-
     }
+
+    // Redirect back with success messages
+    return redirect()->back()->with('success', $successMessages);
+}
 
 
 }

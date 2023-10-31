@@ -54,7 +54,7 @@
         @endif
         @if (in_array('csv', data_get($setUp, 'exportable.type')))
             <div class="flex px-4 py-2 text-pg-primary-400 dark:text-pg-primary-300">
-                <span class="w-12">@lang('Csv')</span>
+                <span class="w-12">@lang('Excel')</span>
                 <a
                     wire:click.prevent="exportToCsv"
                     x-on:click="open = false"

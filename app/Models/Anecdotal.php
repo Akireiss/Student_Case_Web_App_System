@@ -87,6 +87,8 @@ class Anecdotal extends Model
             ['case_status' => 0, 'label' => 'Pending'],
             ['case_status' => 1, 'label' => 'Ongoing'],
             ['case_status' => 2, 'label' => 'Resolved'],
+            ['case_status' => 3, 'label' => 'Follow-up'],
+            ['case_status' => 4, 'label' => 'Refferral'],
         ]);
     }
 
@@ -114,6 +116,10 @@ class Anecdotal extends Model
                 return 'Ongoing';
             case 2:
                 return 'Resolved';
+            case 3:
+                return 'Follow-up';
+            case 4:
+                return 'Refferral';
             default:
                 return 'Unknown';
         }

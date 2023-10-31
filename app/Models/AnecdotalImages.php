@@ -20,4 +20,6 @@ class AnecdotalImages extends Model
     {
         return $this->belongsTo(Anecdotal::class);
     }
+
+
 }

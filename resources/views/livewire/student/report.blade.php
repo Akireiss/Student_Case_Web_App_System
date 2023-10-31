@@ -110,23 +110,8 @@
                             </div>
 
 
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Referred By
-                                    </x-label>
-                                    <x-input type="text" name="offenses" placeholder="{{ Auth()->user()->name }}"
-                                        wire:model="user_id" value="{{ Auth()->user()->id }}" disabled />
-                                </div>
-                            </div>
 
-                        </x-grid>
 
-                        <h6 class="text-sm my-1 px-4 font-bold uppercase ">
-                            Case Information
-                        </h6>
-
-                        <x-grid columns="2" gap="4" px="0" mt="4">
                             <div class="w-full px-4">
                                 <x-label>
                                     Classroom
@@ -138,6 +123,28 @@
 
 
 
+
+
+
+                        </x-grid>
+
+                        <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                            Case Information
+                        </h6>
+
+                        <x-grid columns="2" gap="4" px="0" mt="4">
+
+
+
+                            <div class="w-full px-4">
+                                <div class="relative mb-3">
+                                    <x-label>
+                                        Referred By
+                                    </x-label>
+                                    <x-input type="text" name="offenses" placeholder="{{ Auth()->user()->name }}"
+                                        wire:model="user_id" value="{{ Auth()->user()->id }}" disabled />
+                                </div>
+                            </div>
 
                             <div class="w-full px-4">
                                 <x-label>
@@ -232,33 +239,22 @@
                                 </div>
                             </div>
 
-                            <div class="w-full px-4">
-                                <x-label>Letter</x-label>
-                                <input type="file" name="letter[]" wire:model="letter" multiple
-                                    class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
-                                    file:bg-transparent file:border-0
-                                    file:bg-gray-100 file:mr-4
-                                    file:py-2.5 file:px-4">
-                                <x-error fieldName="letter" />
 
-                            </div>
-
-
-                            <div class="w-full px-4">
-
-                                <x-label>Story</x-label>
-                                <textarea id="message" rows="4" wire:model="story" required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
-rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Write the story behind the report here"></textarea>
-                                <x-error fieldName="story" />
-
-
-                            </div>
 
 
                         </x-grid>
 
+                        <div class="w-full px-4">
+
+                            <x-label>Story</x-label>
+                            <textarea id="message" rows="4" wire:model="story" required
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Write the story behind the report here"></textarea>
+                            <x-error fieldName="story" />
+
+
+                        </div>
 
 
                         <h6 class="text-sm my-6 px-4 font-bold uppercase ">
