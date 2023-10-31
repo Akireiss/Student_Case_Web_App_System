@@ -16,6 +16,7 @@ trait SelectNameTrait
     public function mount()
     {
         $this->showError = false;
+        $this->updatedOffenseId();
 
     }
 

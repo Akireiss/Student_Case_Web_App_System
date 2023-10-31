@@ -33,6 +33,7 @@ class Report extends Component
     public $outcome_remarks = null;
 
 
+
     use WithFileUploads;
     use SelectNameTrait;
     protected $rules = [
@@ -100,9 +101,6 @@ class Report extends Component
     public function store()
     {
         $this->validate();
-
-
-
         $anecdotal = Anecdotal::create([
             'student_id' => $this->studentId,
             'offense_id' => $this->offense_id,
@@ -154,7 +152,7 @@ class Report extends Component
 
     public function resetReport()
     {
-        $this->studentName = null;
+        $this->studentName = "";
         $this->studentId = null;
         $this->gravity = '';
         $this->short_description = '';

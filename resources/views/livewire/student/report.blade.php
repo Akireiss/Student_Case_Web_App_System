@@ -42,27 +42,32 @@
                                                     $totalPending = 0;
                                                     $totalProcess = 0;
                                                     $totalResolved = 0;
+                                                    $totalFollowUp = 0;
+                                                    $totalRefferral = 0;
                                                 @endphp
                                                 @foreach ($cases as $case)
                                                     @if ($case->offenses)
                                                         @php
                                                             $totalOffenses += 1;
-                                                            if ($case->case_status == '0') {
+                                                            if ($case->case_status == 0) {
                                                                 $totalPending += 1;
-                                                            } elseif ($case->case_status == '1') {
+                                                            } elseif ($case->case_status == 1) {
                                                                 $totalProcess += 1;
-                                                            } elseif ($case->case_status == '2') {
+                                                            } elseif ($case->case_status == 2) {
                                                                 $totalResolved += 1;
+                                                            } elseif ($case->case_status == 3) {
+                                                                $totalFollowUp += 1;
+                                                            } elseif ($case->case_status == 4) {
+                                                                $totalRefferral += 1;
                                                             }
                                                         @endphp
                                                     @endif
                                                 @endforeach
-                                                <span class="text-red-500 text-md  text-center">{{ $studentName }} has
-                                                    a total of {{ $totalOffenses }}
-                                                    offenses.
-                                                    {{ $totalPending }} Pending Cases | {{ $totalProcess }} Inprocess
-                                                    Cases | {{ $totalResolved }}
-                                                    Resolved Cases
+                                                <span class="text-red-500 text-md  text-center">Total offense:
+                                                    {{ $totalOffenses }}.
+                                                    Pending: {{ $totalPending }}, Ongoing: {{ $totalProcess }},
+                                                    Resolved: {{ $totalResolved }},
+                                                    FollowUp: {{ $totalFollowUp }}, Refferal: {{ $totalRefferral }}
                                                 </span>
                                             @else
                                                 <span class="text-green-500 text-md text-center">
@@ -71,8 +76,6 @@
                                             @endif
 
                                         @endif
-
-
 
                                         <span x-show="studentName !== ''" @click="studentName = ''; isOpen = false"
                                             class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold">
@@ -157,7 +160,9 @@
                                         @endforeach
                                     @endif
                                 </x-select>
+
                                 <x-error fieldName="offense_id" />
+
                             </div>
 
 
