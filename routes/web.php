@@ -126,10 +126,13 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('classrooms', Classroom::class);
             Route::get('classrooms/{classroom}/view', [Classroom::class, 'view'])->name('classroom.view');
 
+            //Classroom Student Update
             Route::get('classrooms/{classroom}/edit', [ClassroomController::class, 'edit'])->name('classroom.edit');
-            Route::resource('classrooms', ClassroomController::class);
+            // Route::resource('classrooms', ClassroomController::class);
             Route::put('classrooms/students/update/{classroom}', [ClassroomController::class, 'updateStudents'])
             ->name('classrooms.students.update');
+            //Classroom Update
+            Route::get('classrooms/{classroom}/update', [ClassroomController::class, 'update'])->name('classrooms.update');
 
 
             // Report History
@@ -223,9 +226,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     });
 });
 
-
-
-//*end-points
+//*End-points
 Route::get('/admin/get-case-counts', [DashboardController::class, 'getCaseCounts']);
 Route::get('/get-offense-counts', [DashboardController::class, 'getOffenseCounts']);
 Route::get('/get-dashboard-data', [DashboardController::class, 'getDashboardData']);
@@ -236,11 +237,8 @@ Route::get('/get-resolved-cases', [DashboardController::class, 'getResolvedCases
 //*Actions Taken (Successfull)
 Route::get('/get-successful-actions', [DashboardController::class, 'getSuccessfulActions']);
 //*Onoging Cases (Notification)
-Route::get(
-    '/get-ongoing-actions',
-    [DashboardController::class, 'getOngoingCases']
+Route::get('/get-ongoing-actions',[DashboardController::class, 'getOngoingCases']
 );
-
 //Delayed notif endpoints
 Route::post('/mark-notification-read/{notification}', [DashboardController::class, 'markAsRead'])->name('mark-notification-read');
 

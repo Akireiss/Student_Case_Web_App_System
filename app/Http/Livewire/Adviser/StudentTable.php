@@ -41,7 +41,7 @@ final class StudentTable extends PowerGridComponent
     public function relationSearch(): array
     {
         return [
- 
+
         ];
     }
 
@@ -118,12 +118,12 @@ final class StudentTable extends PowerGridComponent
     {
        return [
            Button::make('edit', 'Edit')
-             ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+             ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                ->route('adviser.students.edit', function(\App\Models\Students $model) {
                     return ['student' => $model->id];
                }),
             Button::make('view', 'View')
-             ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+             ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                ->route('adviser.students.view', function(\App\Models\Students $model) {
                     return ['student' => $model->id];
                }),

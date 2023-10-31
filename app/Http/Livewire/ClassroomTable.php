@@ -88,12 +88,12 @@ final class ClassroomTable extends PowerGridComponent
     {
         return [
             Button::make('edit', 'Edit')
-                  ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+                  ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                 ->route('classroom.edit', function (Classroom $model) {
                     return ['classroom' => $model->id];
                 }),
             Button::make('view', 'View')
-                  ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+                  ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                 ->route('classroom.view', function (Classroom $model) {
                     return ['classroom' => $model->id];
                 }),

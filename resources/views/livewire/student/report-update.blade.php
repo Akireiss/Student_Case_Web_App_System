@@ -393,7 +393,7 @@
                             <div wire:loading wire:target="update" class="mx-5">
                                 Loading...
                             </div>
-                            <x-button type="submit" wire:loading.attr="disabled" wire:click="saveLetters">Resolved</x-button>
+                            <x-button type="submit" wire:loading.attr="disabled" wire:click="saveLetters">Submit</x-button>
                         </div>
 
                     @elseif ($anecdotalData->case_status === 2)

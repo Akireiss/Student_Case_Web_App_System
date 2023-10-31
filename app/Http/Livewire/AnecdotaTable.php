@@ -132,13 +132,14 @@ final class AnecdotaTable extends PowerGridComponent
     public function actions(): array
     {
         return [
+
             Button::make('view', 'View')
-                ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm  ')
+                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                 ->route('anecdotal.view', function (\App\Models\Anecdotal $model) {
                     return ['anecdotal' => $model->id];
                 }),
             Button::make('edit', 'Edit')
-                ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm ')
+                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                 ->route('anecdotal.edit', function (\App\Models\Anecdotal $model) {
                     return ['anecdotal' => $model->id];
                 }),

@@ -3,11 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Profile;
+use App\Models\Municipal;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
-use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
 final class StudentProfileTable extends PowerGridComponent
@@ -100,6 +101,10 @@ final class StudentProfileTable extends PowerGridComponent
                 ->dataSource(Profile::select('sex')->distinct()->get())
                 ->optionValue('sex')
                 ->optionLabel('sex'),
+                Filter::select('municipal', 'municipality')
+                ->dataSource(Municipal::select('municipality')->distinct()->get())
+                ->optionValue('municipality')
+                ->optionLabel('municipality'),
             Filter::select('status', 'profile.status')
                 ->dataSource(Profile::codes())
                 ->optionValue('status')
@@ -111,18 +116,18 @@ final class StudentProfileTable extends PowerGridComponent
     {
         return [
             Button::make('edit', 'Edit')
-                 ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+                 ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                 ->route('admin.profile.edit', function(\App\Models\Profile $model) {
                     return ['profile' => $model->id];
                 }),
             Button::make('view', 'View')
-                 ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+                 ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                 ->route('admin.profile.show', function(\App\Models\Profile $model) {
                     return ['profile' => $model->id];
                 }),
 
             Button::make('pdf', 'Pdf')
-                ->class('bg-red-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+            ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                ->route('admin.generate-pdf', function(\App\Models\Profile $model) {
                    return ['profile' => $model->id];
                }),

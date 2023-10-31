@@ -86,7 +86,7 @@ final class ActivityTable extends PowerGridComponent
     {
         return [
             Button::make('view', 'View')
-            ->class('bg-gray-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+            ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                 ->route('activity.view', function (\App\Models\Activity $model) {
                     return ['activity' => $model->id];
                 }),

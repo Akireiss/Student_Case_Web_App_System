@@ -13,3 +13,20 @@ function checkPasswordsMatch() {
     }
 }
 
+//
+const actionTakenSelect = document.getElementById('action-taken');
+const reminderInput = document.getElementById('reminder-input');
+
+// Listen to changes in the select element
+actionTakenSelect.addEventListener('change', function() {
+    const selectedValue = actionTakenSelect.value;
+
+    if (selectedValue === 'Resolved') {
+        reminderInput.disabled = true; // Disable the input for 'Resolved'
+    } else {
+        reminderInput.disabled = false; // Enable the input for other values
+    }
+});
+
+// Trigger the change event once to initialize the state based on the initial value
+actionTakenSelect.dispatchEvent(new Event('change'));

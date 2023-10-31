@@ -164,7 +164,7 @@ final class YearlyReportTable extends PowerGridComponent
     {
        return [
            Button::make('view', 'View')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+           ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
                ->route('yearly-report.view', function(\App\Models\YearlyReport $model) {
                     return ['yearlyReport' => $model->id];
                }),

@@ -4,7 +4,7 @@
     <div>
         <x-form title="">
             <x-slot name="actions">
-                <x-link>
+                <x-link href="{{ url('admin/settings/classrooms') }}">
                     Back
                 </x-link>
             </x-slot>
