@@ -22,7 +22,7 @@ final class AnecdotaTable extends PowerGridComponent
     {
 
         return [
-          //  Responsive::make(),
+            Responsive::make(),
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),
@@ -64,8 +64,10 @@ final class AnecdotaTable extends PowerGridComponent
         return PowerGrid::columns()
             ->addColumn('students.first_name')
             ->addColumn('students.last_name')
+            ->addColumn('full_name', function (Anecdotal $model) {
+                return $model->students->first_name . ' ' . $model->students->last_name;
+            })
             ->addColumn('students.grade_level')
-          //  ->addColumn('full_name', fn (Students $model) => e($model->fullName()))
 
             ->addColumn('offenses')
 
@@ -84,9 +86,10 @@ final class AnecdotaTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('First Name', 'students.first_name'),
-            Column::make('Last Name', 'students.last_name'),
-            Column::make('Grade Level', 'grade_level','students.grade_level'),
+            // Column::make('First Name', 'students.first_name'),
+            // Column::make('Last Name', 'students.last_name'),
+            Column::make('Name', 'full_name')->searchable(),
+            Column::make('Grade Level', 'grade_level', 'grade_level')->sortable(),
             Column::make('Offenses', 'offenses'),
             Column::make('Seriousness', 'gravity')->sortable()->searchable(),
             Column::make('Submitted at', 'created_at_formatted', 'anecdotal.created_at')->sortable(),
@@ -99,8 +102,14 @@ final class AnecdotaTable extends PowerGridComponent
     {
 
         return [
+            Filter::inputText('full_name')
+                ->operators(['contains'])
+                ->builder(function (Builder $query, $value) {
+                    $searchValue = is_array($value) ? $value['value'] : $value;
+                    return $query->where(\DB::raw('CONCAT(first_name, " ", last_name)'), 'like', "%{$searchValue}%");
+                }),
             Filter::inputText('students.first_name')->operators(['contains']),
-             Filter::inputText('students.last_name')->operators(['contains']),
+            Filter::inputText('students.last_name')->operators(['contains']),
             Filter::datetimepicker('created_at_formatted', 'anecdotal.created_at')
                 ->params([
                     'only_future' => false,
@@ -115,17 +124,17 @@ final class AnecdotaTable extends PowerGridComponent
                 ->optionValue('gravity')
                 ->optionLabel('label'),
 
-                Filter::select('grade_level', 'grade_level')
+            Filter::select('grade_level', 'grade_level')
                 ->dataSource(Anecdotal::select('grade_level')->distinct()->get())
                 ->optionValue('grade_level')
                 ->optionLabel('grade_level'),
 
 
-        Filter::select('offenses', 'category')
-        ->dataSource(Offenses::categories())
-        ->optionValue('category')
-        ->optionLabel('label'),
-];
+            Filter::select('offenses', 'category')
+                ->dataSource(Offenses::categories())
+                ->optionValue('category')
+                ->optionLabel('label'),
+        ];
     }
 
 
@@ -140,10 +149,10 @@ final class AnecdotaTable extends PowerGridComponent
                 }),
 
             Button::make('view', 'View')
-            ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
-            ->route('anecdotal.view', function (\App\Models\Anecdotal $model) {
-                return ['anecdotal' => $model->id];
-            }),
+                ->class('bg-gray-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
+                ->route('anecdotal.view', function (\App\Models\Anecdotal $model) {
+                    return ['anecdotal' => $model->id];
+                }),
         ];
     }
 

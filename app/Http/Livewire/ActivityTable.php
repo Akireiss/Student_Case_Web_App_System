@@ -5,10 +5,12 @@ namespace App\Http\Livewire;
 use App\Models\Activity;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use PowerComponents\LivewirePowerGrid\Responsive;
+use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
-use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
+
 final class ActivityTable extends PowerGridComponent
 {
     use ActionButton;
@@ -17,6 +19,7 @@ final class ActivityTable extends PowerGridComponent
     public function setUp(): array
     {
         return [
+            Responsive::make(),
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),

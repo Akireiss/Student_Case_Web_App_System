@@ -6,6 +6,7 @@ use App\Models\Students;
 use App\Models\Classroom;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use PowerComponents\LivewirePowerGrid\Responsive;
 use PowerComponents\LivewirePowerGrid\Filters\Filter;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
@@ -20,6 +21,7 @@ final class StudentTable extends PowerGridComponent
     {
 
         return [
+            Responsive::make(),
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),

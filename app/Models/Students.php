@@ -146,6 +146,7 @@ class Students extends Model
     //Test
     protected $appends = ['full_name'];
 
+    //important function for the table -joshua
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
