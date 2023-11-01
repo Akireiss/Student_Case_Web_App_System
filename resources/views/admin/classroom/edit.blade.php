@@ -90,11 +90,21 @@
                     </h6>
                     @if ($classroom->students)
                         @foreach ($classroom->students as $student)
-                            <div class="grid grid-cols-2 lg:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                                 <div class="relative mb-3">
                                     <x-label>Student Name</x-label>
                                     <x-input value="{{ $student->first_name }} {{ $student->last_name }}" disabled />
                                 </div>
+
+
+                                <div class="relative mb-1">
+                                    <x-label>Total Cases </x-label>
+                                    <x-input
+                        value="Pending: {{ $student->anecdotal->where('case_status', 0)->count() }}, Ongoing: {{ $student->anecdotal->where('case_status', 1)->count() }}, Resolved: {{ $student->anecdotal->where('case_status', 2)->count()}}, Follow-Up {{ $student->anecdotal->where('case_status', 3)->count() }}, Reffer: {{ $student->anecdotal->where('case_status', 4)->count() }} " disabled />
+                                </div>
+
+
+
                                 <div class="relative mb-3">
                                     <x-label>Referred to Classroom</x-label>
                                     <x-select name="students[{{ $student->id }}][classroom_id]">
@@ -117,7 +127,7 @@
                             </span>
                         @endif
 
-                        <x-button type="submit">Update Students</x-button>
+                        <x-button type="submit">Submit</x-button>
                     </div>
                 </form>
 

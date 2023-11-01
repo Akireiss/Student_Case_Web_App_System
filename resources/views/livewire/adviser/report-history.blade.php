@@ -1,11 +1,10 @@
 <x-form title="Report Information">
     <x-slot name="actions">
-      @if (auth()->user()->role === 0)
-
+      @if (auth()->user()->role == 0)
       <x-link :href="url('report/history')">
         Back
     </x-link>
-@elseif(auth()->user()->role === 2)
+        @elseif(auth()->user()->role == 2)
     <x-link :href="url('adviser/report/history')">
         Back
     </x-link>
@@ -56,9 +55,9 @@
 
                 <div class="w-full px-4">
                     <x-label>
-                        Referred By
+                        Grade Level
                     </x-label>
-                    <x-input wire:model="user_id" disabled />
+            <x-input disabled wire:model="grade_level"/>
                 </div>
 
 
@@ -74,9 +73,9 @@
 
                 <div class="w-full px-4">
                     <x-label>
-                        Grade Level
+                        Referred By
                     </x-label>
-            <x-input disabled wire:model="grade_level"/>
+                    <x-input wire:model="user_id" disabled />
                 </div>
 
 
@@ -173,8 +172,8 @@
                 </div>
             </x-grid>
 
-            <x-grid columns="2" gap="4" px="0" mt="4">
-                <div class="w-full px-4">
+
+                {{-- <div class="w-full px-4">
                     <x-label>Letter</x-label>
                     <input type="file" name="images[]" wire:model="letter" multiple
                     class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
@@ -205,7 +204,7 @@
                                     style="background: none; border: none; padding: 0; cursor: pointer;"
                                     wire:click="deleteImage({{ $image->id }})">
                                 Delete
-                            </button> --}}
+                            </button> -
                             @endforeach
                         @else
                             <div>
@@ -213,7 +212,7 @@
                             </div>
                         @endif
                     </div>
-                </div>
+                </div> --}}
 
 
                 <div class="w-full px-4">
@@ -228,11 +227,6 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 
 
                 </div>
-
-
-
-            </x-grid>
-
 
             <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
                 Actions Taken <x-error fieldName="selectedActions" />
@@ -251,7 +245,7 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 
 
 
-            <div class="flex justify-end items-center">
+            <div class="flex justify-end items-center px-4">
                 <x-text-alert />
                 <div wire:loading wire:target="update" class="mx-4">
                     Loading

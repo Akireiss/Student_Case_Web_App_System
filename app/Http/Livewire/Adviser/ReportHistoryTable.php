@@ -92,14 +92,15 @@ final class ReportHistoryTable extends PowerGridComponent
     {
         return [
             Filter::datetimepicker('created_at_formatted', 'reports.created_at'),
+            Filter::select('anecdotal.case_status', 'anecdotal.case_status')
+            ->dataSource(Anecdotal::codes())
+            ->optionValue('case_status')
+            ->optionLabel('label'),
+
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Method
-    |--------------------------------------------------------------------------
-    */
+
 
     public function actions(): array
     {
@@ -151,7 +152,7 @@ final class ReportHistoryTable extends PowerGridComponent
     {
         return [
             Rule::button('edit')
-                ->when(fn($report) => $report->anecdotal->case_status === 1 || $report->anecdotal->case_status === 2)
+                ->when(fn($report) => $report->anecdotal->case_status === 1 || $report->anecdotal->case_status === 2 || $report->anecdotal->case_status === 3 || $report->anecdotal->case_status === 4)
                 ->hide(),
         ];
     }

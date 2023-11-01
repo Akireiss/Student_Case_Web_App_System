@@ -53,7 +53,7 @@
                         @endforeach
                     @endif
 
-                    <x-button type="submit">Update Students</x-button>
+                    <x-button type="submit">Submit</x-button>
                 </div>
 
             </form>

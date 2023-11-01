@@ -34,7 +34,10 @@ class Anecdotal extends Model
         'status'
 
     ];
-
+    public function students()
+    {
+        return $this->belongsTo(Students::class, 'student_id');
+    }
     public function outcomes() {
         return $this->hasOne(AnecdotalOutcome::class)->latest('updated_at');
     }
@@ -49,10 +52,7 @@ class Anecdotal extends Model
         return $this->hasMany(AnecdotalImages::class, 'anecdotal_id');
     }
 
-    public function students()
-    {
-        return $this->belongsTo(Students::class, 'student_id');
-    }
+
 
     public function actionsTaken()
     {

@@ -22,6 +22,18 @@ const barConfig = {
                 borderWidth: 1,
                 data: [],
             },
+            {
+                label: 'Follow Up',
+                backgroundColor: '#0A81E7',
+                borderWidth: 1,
+                data: [],
+            },
+            {
+                label: 'Refferal',
+                backgroundColor: '#FFC300',
+                borderWidth: 1,
+                data: [],
+            },
         ],
     },
     options: {
@@ -44,6 +56,8 @@ function updateChart(data) {
         barConfig.data.datasets[0].data[i] = data.pending[month] || 0;
         barConfig.data.datasets[1].data[i] = data.ongoing[month] || 0;
         barConfig.data.datasets[2].data[i] = data.resolved[month] || 0;
+        barConfig.data.datasets[3].data[i] = data.followup[month] || 0;
+        barConfig.data.datasets[4].data[i] = data.refferal[month] || 0;
     }
 
     myBar.update();

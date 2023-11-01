@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $currentDate = now()->startOfDay(); // Start of the current day
 
         $delayedNotif = ScheduledNotification::whereDate('created_at', '<=', $currentDate) // Equal or older notifications
-            ->where('read_at', null)//wher
+            ->where('read_at', null) //wher
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -28,6 +28,16 @@ class DashboardController extends Controller
         $delayedNotif->each(function ($notification) {
             $notification->data = json_decode($notification->data, true);
         });
+
+        //gagamitin pag hindi live
+        // $maleCases = Anecdotal::whereHas('students', function ($query) {
+        //     $query->where('gender', 0);
+        // })->count();
+
+        // $femaleCases = Anecdotal::whereHas('students', function ($query) {
+        //     $query->where('gender', 1);
+        // })->count();
+
 
         return view('admin.dashboard.dashboard', compact('delayedNotif'));
     }
@@ -46,15 +56,27 @@ class DashboardController extends Controller
         $totalFemale = Students::where('status', 0)->where('gender', 1)->count();
         $totalCases = Anecdotal::count();
         $pendingCases = Anecdotal::where('case_status', 0)->count();
+        $ongoingCases = Anecdotal::where('case_status', 1)->count();
         $resolvedCases = Anecdotal::where('case_status', 2)->count();
+
+        $maleCases = Anecdotal::whereHas('students', function ($query) {
+            $query->where('gender', 0);
+        })->count();
+
+        $femaleCases = Anecdotal::whereHas('students', function ($query) {
+            $query->where('gender', 1);
+        })->count();
 
         return response()->json([
             'totalStudents' => $totalStudents,
             'totalCases' => $totalCases,
             'pendingCases' => $pendingCases,
             'resolvedCases' => $resolvedCases,
+            'ongoingCases' => $ongoingCases,
             'totalMale' => $totalMale,
             'totalFemale' => $totalFemale,
+            'maleCases' => $maleCases,
+            'femaleCases' => $femaleCases,
         ]);
     }
 
@@ -82,6 +104,8 @@ class DashboardController extends Controller
             'pending' => [],
             'ongoing' => [],
             'resolved' => [],
+            'followup' => [],
+            'refferal' => [],
         ];
 
         foreach ($caseCounts as $count) {
@@ -89,11 +113,14 @@ class DashboardController extends Controller
 
             if ($count->case_status === 0) {
                 $data['pending'][$month] = $count->count;
-            }
-            else if ($count->case_status === 1) {
+            } else if ($count->case_status === 1) {
                 $data['ongoing'][$month] = $count->count;
             } else if ($count->case_status === 2) {
                 $data['resolved'][$month] = $count->count;
+            } else if ($count->case_status === 3) {
+                $data['followup'][$month] = $count->count;
+            } else if ($count->case_status === 4) {
+                $data['refferal'][$month] = $count->count;
             }
         }
 
@@ -130,54 +157,50 @@ class DashboardController extends Controller
         ]);
     }
 
-//*Resolved Cases
-public function getResolvedCases()
-{
-    $twoWeeksAgo = Carbon::now()->subWeeks(2);
-    $resolvedCount = Anecdotal::where('case_status', 2)
-        ->where('case_status', 2)
-        ->where('updated_at', '>', $twoWeeksAgo)
-        ->count();
-    return response()->json(['resolvedCount' => $resolvedCount]);
-}
+    //*Resolved Cases
+    public function getResolvedCases()
+    {
+        $twoWeeksAgo = Carbon::now()->subWeeks(2);
+        $resolvedCount = Anecdotal::where('case_status', 2)
+            ->where('case_status', 2)
+            ->where('updated_at', '>', $twoWeeksAgo)
+            ->count();
+        return response()->json(['resolvedCount' => $resolvedCount]);
+    }
 
-public function getSuccessfulActions()
-{
-    $successfulActions = DB::table('anecdotal_outcome')
-        ->select(DB::raw('count(*) as count, action as label'))
-        ->where('outcome', '=', 0)
-        ->groupBy('action') // Group by 'action' instead of 'outcome'
-        ->get();
+    public function getSuccessfulActions()
+    {
+        $successfulActions = DB::table('anecdotal_outcome')
+            ->select(DB::raw('count(*) as count, action as label'))
+            ->where('outcome', '=', 0)
+            ->groupBy('action') // Group by 'action' instead of 'outcome'
+            ->get();
 
-    return response()->json($successfulActions);
-}
-
-
+        return response()->json($successfulActions);
+    }
 
 
+    public function getOngoingCases()
+    {
+        $oneWeekAgo = Carbon::now()->subWeeks(1);
 
+        $ongoingCases = DB::table('anecdotal')
+            ->join('students', 'anecdotal.student_id', '=', 'students.id')
+            ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
+            ->where('anecdotal.case_status', 1)
+            ->where('anecdotal.updated_at', '>', $oneWeekAgo)
+            ->get();
 
-public function getOngoingCases()
-{
-    $oneWeekAgo = Carbon::now()->subWeeks(1);
+        $resolvedCases = DB::table('anecdotal')
+            ->join('students', 'anecdotal.student_id', '=', 'students.id')
+            ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
+            ->where('anecdotal.case_status', 2)
+            ->where('anecdotal.updated_at', '>', $oneWeekAgo)
+            ->orderBy('anecdotal.updated_at', 'desc')
+            ->get();
 
-    $ongoingCases = DB::table('anecdotal')
-        ->join('students', 'anecdotal.student_id', '=', 'students.id')
-        ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
-        ->where('anecdotal.case_status', 1)
-        ->where('anecdotal.updated_at', '>', $oneWeekAgo)
-        ->get();
-
-    $resolvedCases = DB::table('anecdotal')
-        ->join('students', 'anecdotal.student_id', '=', 'students.id')
-        ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
-        ->where('anecdotal.case_status', 2)
-        ->where('anecdotal.updated_at', '>', $oneWeekAgo)
-        ->orderBy('anecdotal.updated_at', 'desc')
-        ->get();
-
-    return response()->json(['ongoingCases' => $ongoingCases, 'resolvedCases' => $resolvedCases]);
-}
+        return response()->json(['ongoingCases' => $ongoingCases, 'resolvedCases' => $resolvedCases]);
+    }
 
 
 

@@ -124,7 +124,7 @@
         <script src="{{ asset('assets/js/qrcode.js') }}"></script>
         <script src="{{ asset('assets/js/dropdown.js') }}"></script>
         <script src="{{ asset('assets/js/validation.js') }}"></script>
-        <script src="{{ asset('assets/js/gradeChart.js') }}"></script>
+        {{-- <script src="{{ asset('assets/js/gradeChart.js') }}"></script> --}}
         {{-- <script src="{{ asset('assets/js/multibar.js') }}"></script> --}}
 
 

@@ -85,13 +85,13 @@ class ReportHistory extends Component
             'short_description' => $this->short_description,
         ]);
 
-        foreach ($this->images as $image) {
-            $path = $image->store('uploads', 'public');
+        // foreach ($this->images as $image) {
+        //     $path = $image->store('uploads', 'public');
 
-            $report->anecdotal->images()->create([
-                'images' => $path,
-            ]);
-        }
+        //     $report->anecdotal->images()->create([
+        //         'images' => $path,
+        //     ]);
+        // }
 
         $report->anecdotal->actionsTaken()->delete();
         foreach ($this->selectedActions as $selectedAction) {
