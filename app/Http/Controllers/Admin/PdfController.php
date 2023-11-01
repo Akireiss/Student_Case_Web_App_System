@@ -37,4 +37,8 @@ class PdfController extends Controller
         return $pdf->stream();
     }
 
+    public function generateReport() {
+    return view('admin.settings.report.index');
+    }
+
 }

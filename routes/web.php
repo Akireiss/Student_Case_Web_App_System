@@ -148,6 +148,10 @@ Route::middleware(['auth', 'role'])->group(function () {
             });
             Route::get('audit-trail/view/{activity}', [HelpController::class, 'show'])->name('activity.view');
 
+            //Generate Report
+            Route::get('generate-report', [PdfController::class, 'generateReport']);
+
+
 
             // Students Area
             Route::get('students', Student::class);
