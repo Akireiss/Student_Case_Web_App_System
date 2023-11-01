@@ -44,8 +44,8 @@ class EditStudent extends Component
 
     public function view($student)
     {
-        $students = Students::findOrFail($student);
-        return view('admin.settings.students.view', compact('students'));
+        $student = Students::findOrFail($student);
+        return view('admin.settings.students.view', compact('student'));
     }
 
     public function deleteStudent($studentId)

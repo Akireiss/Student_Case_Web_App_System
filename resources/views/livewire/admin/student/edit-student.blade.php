@@ -1,6 +1,6 @@
 <div>
 
-    <x-form title="Add Students">
+    <x-form title="">
         <x-slot name="actions">
             <x-link href="{{ url('admin/settings/students') }}">
 Back
