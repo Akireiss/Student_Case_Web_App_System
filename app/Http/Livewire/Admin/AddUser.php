@@ -56,4 +56,8 @@ class AddUser extends Component
         $this->status = "";
     }
 
+    public function createUser() {
+
+    }
+
 }

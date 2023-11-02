@@ -50,7 +50,7 @@
 
             <div class="w-full px-4">
                 <div class="relative mb-3">
-                    <x-label>Total Cases</x-label>
+                    <x-label>Total Cases: {{ $student->anecdotal->count() }}</x-label>
                     <x-input
                     value="Pending: {{ $student->anecdotal->where('case_status', 0)->count() }}, Ongoing: {{ $student->anecdotal->where('case_status', 1)->count() }}, Resolved: {{ $student->anecdotal->where('case_status', 2)->count()}}, Follow-Up {{ $student->anecdotal->where('case_status', 3)->count() }}, Reffer: {{ $student->anecdotal->where('case_status', 4)->count() }} " disabled />
                 </div>
@@ -74,6 +74,7 @@
     @foreach ($student->anecdotal as $anecdotal)
         <div class="w-full mx-auto mt-6">
             <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
+
 
                 <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
                     <h6 class="text-sm my-1 px-4 font-bold uppercase mb-2 ">
@@ -281,7 +282,7 @@
                                     </div>
 
                                     <div class="w-full px-4">
-                                        <x-label>Letter</x-label>
+                                        <x-label>Promissory Note</x-label>
                                         <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2">
                                             @if ($anecdotal->images->isNotEmpty())
                                                 @foreach ($anecdotal->images as $image)

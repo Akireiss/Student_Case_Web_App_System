@@ -60,6 +60,7 @@ final class ClassroomTable extends PowerGridComponent
             ->addColumn('section')
             ->addColumn('grade_level')
             ->addColumn('section_lower', fn(Classroom $model) => strtolower(e($model->section)))
+            ->addColumn('anecdotal_count', fn(Classroom $model) => $model?->countStudentsAnecdotal() ?? 'No Data')
             ->addColumn('status', fn(Classroom $model) => $model?->getStatusTextAttribute() ?? 'No Data');
     }
 
@@ -76,6 +77,7 @@ final class ClassroomTable extends PowerGridComponent
                 ->sortable()
                 ->searchable()
                 ->editOnClick(),
+            Column::make('Total Offense', 'anecdotal_count'),
             Column::make('Status', 'status')
                 ->sortable()
                 ->searchable(),

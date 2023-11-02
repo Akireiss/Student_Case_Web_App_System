@@ -332,7 +332,7 @@
 
                          @if($anecdotalData->case_status === 1)
                          <div class="w-full px-4">
-                            <x-label>Letter</x-label>
+                            <x-label>Promissory Note</x-label>
                             <input type="file" name="letter[]" wire:model="letter" multiple
                                 class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
                             file:bg-transparent file:border-0
@@ -364,7 +364,7 @@
                         </x-grid>
 
                         <div class="w-full px-4">
-                            <x-label>Images</x-label>
+                            <x-label>Promissory Note</x-label>
                             <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2 mt-2 ">
                                 @if ($anecdotalData->images->isNotEmpty())
                                     @foreach ($anecdotalData->images as $image)

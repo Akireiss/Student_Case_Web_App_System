@@ -234,7 +234,7 @@
 
 
                         <div class="w-full px-4">
-                            <x-label>Images</x-label>
+                            <x-label>Promissory note</x-label>
                             <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2 mt-2 ">
                                 @if ($anecdotal->images->isNotEmpty())
                                     @foreach ($anecdotal->images as $image)
@@ -250,7 +250,7 @@
                                     @endforeach
                                 @else
                                     <div>
-                                        <p class="font-medium text-sm text-gray-600 text-left">No Images Uploaded</p>
+                                        <p class="font-medium text-sm text-gray-600 text-left">No promissory note uploaded</p>
                                     </div>
                                 @endif
                             </div>

@@ -172,7 +172,7 @@ class DashboardController extends Controller
     {
         $successfulActions = DB::table('anecdotal_outcome')
             ->select(DB::raw('count(*) as count, action as label'))
-            ->where('outcome', '=', 0)
+            ->where('outcome', '=', 2)
             ->groupBy('action') // Group by 'action' instead of 'outcome'
             ->get();
 

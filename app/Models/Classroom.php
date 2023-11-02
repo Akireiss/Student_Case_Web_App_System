@@ -38,6 +38,12 @@ class Classroom extends Model
     }
 
 
+    public function countStudentsAnecdotal()
+    {
+        return $this->students()->withCount('anecdotal')->get()->sum('anecdotal_count');
+    }
+
+
 //adviser
     public function students() {
         return $this->hasMany(Students::class);

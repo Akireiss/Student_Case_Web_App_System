@@ -32,12 +32,26 @@
 
     @endforeach
 
+    <div x-data="{ currentGrid: 'totalStatusCases', buttonText: 'Total Case Status' }">
+        <!-- Dropdown Component -->
+        <x-dropdown>
+            <x-slot name="trigger">
+                <div class="flex justify-end my-2">
+                    <x-buttontype x-text="buttonText">Total Case Status</x-buttontype>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <ul>
+                    <li @click="currentGrid = 'totalStudents'; buttonText = 'Total Students'" class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Total Students</li>
+                    <li @click="currentGrid = 'totalFMstudents'; buttonText = 'Male And Female'" class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Male And Female</li>
+                    <li @click="currentGrid = 'totalStatusCases'; buttonText = 'Cases Status'" class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Cases Status</li>
+                </ul>
+            </x-slot>
+        </x-dropdown>
 
 
-        {{-- End Alert --}}
 
-
-        <div class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3">
+        <div x-show="currentGrid === 'totalStudents'" class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3" id="totalStudents">
             <!-- Card -->
 
             <a href="{{ url('admin/settings/students') }}"
@@ -107,9 +121,7 @@
 
         </div>
 
-
-
-        <div class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3">
+        <div x-show="currentGrid === 'totalFMstudents'" class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3" id="totalFMstudents">
 
 
             <!-- Card -->
@@ -178,7 +190,7 @@
 
         </div>
 
-        <div class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3">
+        <div x-show="currentGrid === 'totalStatusCases'" class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3" id="totalStatusCases">
 
 
             <!-- Card -->
@@ -254,7 +266,7 @@
 
 
         </div>
-
+    </div>
 
 
         {{--
@@ -355,9 +367,83 @@
             </div>
 
 
+            <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
+                <h4 class="mb-4 font-semibold text-gray-800 ">
+                    Grade Level Offenses
+                </h4>
+                <canvas id="myGroupedBarChart"></canvas>
+
+                <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600 ">
+                    <div class="flex items-center">
+                        <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
+
+                    </div>
+
+                </div>
+            </div>
+
+
 
         </div>
     </div>
+
+    @push('scripts')
+
+    <script>
+        var xValuesLabel = ["Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"];
+        var yValues1 = [55, 49, 44, 24, 15, 23];
+        var yValues2 = [45, 38, 30, 32, 20, 23];
+        var yValues3 = [30, 25, 20, 18, 12, 4];
+        var barColors = ["red", "green", "blue", "orange", "brown", "aqua"];
+
+        new Chart("myGroupedBarChart", {
+            type: "bar",
+            data: {
+                labels: xValuesLabel,
+                datasets: [{
+                    label: 'Wine Type 1',
+                    data: yValues1,
+                    backgroundColor: barColors,
+                    barThickness: 20, // Adjust the bar width
+                    maxBarThickness: 25, // Maximum bar width
+                    barPercentage: 0.5, // Space between bars
+                }, {
+                    label: 'Wine Type 2',
+                    data: yValues2,
+                    backgroundColor: barColors,
+                }, {
+                    label: 'Wine Type 3',
+                    data: yValues3,
+                    backgroundColor: barColors,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true, // Stack bars on the x-axis
+                    },
+                    y: {
+                        beginAtZero: true,
+                    }
+                },
+                legend: { display: true },
+            }
+        });
+        </script>
+    @endpush
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
     <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
 
