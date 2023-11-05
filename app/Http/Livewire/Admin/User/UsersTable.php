@@ -114,13 +114,10 @@ final class UsersTable extends PowerGridComponent
     {
         return [
             Column::make('Name', 'name')
-                ->sortable()
-                ->searchable(),
+                ->sortable(),
 
             Column::make('Email', 'email')
-                ->sortable()
-                ->searchable(),
-
+                ->sortable(),
             Column::make('Role', 'role'),
             Column::make('Status', 'status')->sortable()
 
@@ -135,8 +132,6 @@ final class UsersTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('name')->operators(['contains']),
-            Filter::inputText('email')->operators(['contains']),
             Filter::boolean('status')->label('Inactive', 'Active'),
                Filter::select('role', 'role')
                 ->dataSource(User::codes())
@@ -159,25 +154,25 @@ final class UsersTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
+
     public function actions(): array
     {
        return [
            Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('user.edit', function(\App\Models\User $model) {
-                    return $model->id;
+                    return ['userId' => $model->id];
                }),
 
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('user.destroy', function(\App\Models\User $model) {
-                    return $model->id;
-               })
-               ->method('delete')
+        //    Button::make('destroy', 'Delete')
+        //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+        //        ->route('user.destroy', function(\App\Models\User $model) {
+        //             return $model->id;
+        //        })
+        //        ->method('delete')
         ];
     }
-    */
+
 
     /*
     |--------------------------------------------------------------------------

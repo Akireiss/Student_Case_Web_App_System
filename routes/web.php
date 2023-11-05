@@ -12,6 +12,7 @@ use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
+use App\Http\Livewire\Admin\User\UserUpdate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Livewire\Student\Report;
 use Illuminate\Support\Facades\Route;
@@ -84,10 +85,13 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             //User Manage
             Route::get('update-acc', User::class);
-            Route::get('add-acc', AddUser::class);
+            Route::get('add-acc', AddUser::class)->name('users.add');
             Route::get('user/accounts', function () {
                 return view('admin.user.index');
             });
+            //User Accouts Update
+            Route::get('user/accounts/update/{userId}', UserUpdate::class)->name('user.edit');
+
 
             // Students Profile Area
             Route::get('student-profile', [StudentProfileController::class, 'index']);
@@ -231,6 +235,8 @@ Route::middleware(['auth', 'role'])->group(function () {
 });
 
 //*End-points
+Route::get('/get-chart-data', [HelpController::class, 'getChartData']);
+
 Route::get('/admin/get-case-counts', [DashboardController::class, 'getCaseCounts']);
 Route::get('/get-offense-counts', [DashboardController::class, 'getOffenseCounts']);
 Route::get('/get-dashboard-data', [DashboardController::class, 'getDashboardData']);

@@ -175,6 +175,10 @@ class Profile extends Model
     {
         return $this->belongsTo(Students::class, 'student_id');
     }
+    public function students()
+    {
+        return $this->belongsTo(Students::class, 'student_id');
+    }
 
 
 

@@ -1,95 +1,115 @@
+// Define your labels as you did in your code
+var labels = [7, 8, 9, 10, 11, 12];
 
-
-window.onload = function () {
-
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	title:{
-		text: "Olympic Medals of all Times (till 2016 Olympics)"
-	},
-	axisY: {
-		title: "Medals",
-		includeZero: true
-	},
-	legend: {
-		cursor:"pointer",
-		itemclick : toggleDataSeries
-	},
-	toolTip: {
-		shared: true,
-		content: toolTipFormatter
-	},
-	data: [{
-		type: "bar",
-		showInLegend: true,
-		name: "Gold",
-		color: "gold",
-		dataPoints: [
-			{ y: 243, label: "Italy" },
-			{ y: 236, label: "China" },
-			{ y: 243, label: "France" },
-			{ y: 273, label: "Great Britain" },
-			{ y: 269, label: "Germany" },
-			{ y: 196, label: "Russia" },
-			{ y: 1118, label: "USA" }
-		]
-	},
-	{
-		type: "bar",
-		showInLegend: true,
-		name: "Silver",
-		color: "silver",
-		dataPoints: [
-			{ y: 212, label: "Italy" },
-			{ y: 186, label: "China" },
-			{ y: 272, label: "France" },
-			{ y: 299, label: "Great Britain" },
-			{ y: 270, label: "Germany" },
-			{ y: 165, label: "Russia" },
-			{ y: 896, label: "USA" }
-		]
-	},
-	{
-		type: "bar",
-		showInLegend: true,
-		name: "Bronze",
-		color: "#A57164",
-		dataPoints: [
-			{ y: 236, label: "Italy" },
-			{ y: 172, label: "China" },
-			{ y: 309, label: "France" },
-			{ y: 302, label: "Great Britain" },
-			{ y: 285, label: "Germany" },
-			{ y: 188, label: "Russia" },
-			{ y: 788, label: "USA" }
-		]
-	}]
+// Create the Chart.js chart with initial empty data
+var myGroupedBar = new Chart("myGroupedBar", {
+    type: "bar",
+    data: {
+        labels: labels,
+        datasets: [
+            {
+                label: "Pending",
+                backgroundColor: "red",
+                data: [],
+            },
+            {
+                label: "Ongoing",
+                backgroundColor: "green",
+                data: [],
+            },
+            {
+                label: "Resolved",
+                backgroundColor: "blue",
+                data: [],
+            },
+            {
+                label: "FollowUp",
+                backgroundColor: "yellow",
+                data: [],
+            },
+            {
+                label: "Referral",
+                backgroundColor: "orange",
+                data: [],
+            },
+        ],
+    },
+    options: {
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true,
+            },
+        },
+        title: {
+            display: false,
+            text: "Grouped Bar Chart",
+        },
+    },
 });
-chart.render();
 
-function toolTipFormatter(e) {
-	var str = "";
-	var total = 0 ;
-	var str3;
-	var str2 ;
-	for (var i = 0; i < e.entries.length; i++){
-		var str1 = "<span style= \"color:"+e.entries[i].dataSeries.color + "\">" + e.entries[i].dataSeries.name + "</span>: <strong>"+  e.entries[i].dataPoint.y + "</strong> <br/>" ;
-		total = e.entries[i].dataPoint.y + total;
-		str = str.concat(str1);
-	}
-	str2 = "<strong>" + e.entries[0].dataPoint.label + "</strong> <br/>";
-	str3 = "<span style = \"color:Tomato\">Total: </span><strong>" + total + "</strong><br/>";
-	return (str2.concat(str)).concat(str3);
+// Function to fetch data and update the chart
+function fetchData() {
+    $.ajax({
+        url: '/get-chart-data', // Update with your endpoint
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            // Assuming your data is structured like { grade_level: { case_status: count, ... }, ... }
+            // You can modify this to match your data structure
+            // Example: { "Grade 7": { "Pending": 5, "Ongoing": 10, ... }, ... }
+
+            // Use your existing labels to map to the database grade_levels
+            const gradeLevelsMap = {
+                7: "Grade 7",
+                8: "Grade 8",
+                9: "Grade 9",
+                10: "Grade 10",
+                11: "Grade 11",
+                12: "Grade 12",
+            };
+
+            // Initialize arrays to store counts for each case_status
+            const pendingData = [];
+            const ongoingData = [];
+            const resolvedData = [];
+            const followUpData = [];
+            const referralData = [];
+
+            // Iterate over your labels and populate the arrays
+            labels.forEach((label) => {
+                const gradeLevel = gradeLevelsMap[label];
+                const gradeData = data[gradeLevel];
+                pendingData.push(gradeData["Pending"] || 0);
+                ongoingData.push(gradeData["Ongoing"] || 0);
+                resolvedData.push(gradeData["Resolved"] || 0);
+                followUpData.push(gradeData["FollowUp"] || 0);
+                referralData.push(gradeData["Referral"] || 0);
+            });
+
+            // Update the chart data
+            myGroupedBar.data.datasets[0].data = pendingData;
+            myGroupedBar.data.datasets[1].data = ongoingData;
+            myGroupedBar.data.datasets[2].data = resolvedData;
+            myGroupedBar.data.datasets[3].data = followUpData;
+            myGroupedBar.data.datasets[4].data = referralData;
+
+            myGroupedBar.update();
+
+            // Schedule the next data fetch
+            setTimeout(fetchData, 3000); // Fetch data every 3 seconds
+        },
+        error: function (error) {
+            console.error('Error fetching data:', error);
+            // Retry fetching data in case of an error
+            setTimeout(fetchData, 3000); // Retry fetching data every 3 seconds
+        }
+    });
 }
 
-function toggleDataSeries(e) {
-	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-		e.dataSeries.visible = false;
-	}
-	else {
-		e.dataSeries.visible = true;
-	}
-	chart.render();
-}
-
-}
+// Initialize the chart and start fetching data
+window.onload = function () {
+    fetchData();
+};

@@ -27,9 +27,9 @@ class Anecdotal extends Model
         'observation',
         'desired',
         'outcome',
+        'grade_level',
         'letter',
         'case_status',
-        'grade_level',
         'story',
         'status'
 

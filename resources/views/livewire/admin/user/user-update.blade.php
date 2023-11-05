@@ -6,10 +6,9 @@
 
         <div class="bg-white  rounded shadow-lg p-10  px-4 md:p-8 mb-6 ">
 
-            <form wire:submit.prevent="store"
+            <form wire:submit.prevent="updateUser"
             x-data="{ showPassword: false, passwordMismatch: false }"
-            x-on:submit="checkPasswordsMatch()"
-            >
+            x-on:submit="checkPasswordsMatch()">
                 <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 ">
                         <p class="font-medium text-lg  text-gray-600">Personal Details</p>
@@ -20,14 +19,14 @@
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5 ">
                             <div class="md:col-span-5">
                                 <x-label for="full_name">Name</x-label>
-                                <x-input type="text" wire:model="name" required/>
+                                <x-input type="text" wire:model="userName" required/>
                                 <x-error fieldName="name" />
 
                             </div>
 
                             <div class="md:col-span-5">
                                 <x-label for="email">Email Address</x-label>
-                                <x-input type="text" wire:model="email" type="email" required />
+                                <x-input type="text" wire:model="userEmail" type="email" required />
                                 <x-error fieldName="email" />
 
                             </div>
@@ -50,9 +49,9 @@
                                 <x-label>Password</x-label>
                                 <div class="relative">
 
-                                    <x-input type="password" id="password" wire:model="password"
+                                    <x-input type="password" id="password" wire:model="userPassword"
                                      name="password" x-bind:type="showPassword ? 'text' : 'password'"
-                                        required autocomplete="new-password"  minlength="8" />
+                                         autocomplete="new-password"  minlength="8" />
                                     <button type="button" @click="showPassword = !showPassword"
                                         class="absolute right-2 top-2.5 text-gray-600 focus:outline-none">
                                         <div x-show="!showPassword">
@@ -94,6 +93,8 @@
                                     <x-error fieldName="classroom_id" />
                                 </div>
                             </div>
+
+
                             <div class="md:col-span-5">
                                 <x-label for="user_type" value="{{ __('Status') }}" />
                                 <x-select required id="user_type" wire:model="status">
@@ -109,10 +110,10 @@
 
                         <div class="flex justify-end items-center mt-5">
                             <x-text-alert />
-                            <div wire:loading wire:target="store" class="mx-4">
-                                Adding User...
+                            <div wire:loading wire:target="updateUser" class="mx-4">
+                                Updating User...
                             </div>
-                            <x-button type="submit" wire:loading.attr="disabled">Add User</x-button>
+                            <x-button type="submit" wire:loading.attr="disabled">Update User</x-button>
                         </div>
 
                     </div>

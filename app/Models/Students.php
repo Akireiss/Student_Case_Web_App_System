@@ -27,8 +27,11 @@ class Students extends Model
         'status',
         'department'
     ];
-
     public function classroom()
+{
+    return $this->belongsTo(Classroom::class, 'classroom_id');
+}
+public function grade_level()
 {
     return $this->belongsTo(Classroom::class, 'classroom_id');
 }
@@ -37,6 +40,8 @@ class Students extends Model
     {
         return $this->hasMany(Anecdotal::class, 'student_id');
     }
+
+
 
     public function student()
     {

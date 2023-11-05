@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use DB;
 use App\Models\Profile;
+use App\Models\Classroom;
 use App\Models\Municipal;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,14 +38,14 @@ final class StudentProfileTable extends PowerGridComponent
     {
         return Profile::query()
             ->join('students', 'profile.student_id', '=', 'students.id')
+            ->join('classrooms', 'students.classroom_id', '=', 'classrooms.id')
             ->join('barangay', 'profile.barangay_id', '=', 'barangay.id')
             ->join('municipal', 'profile.municipal_id', '=', 'municipal.id')
             ->select(
                 'profile.*',
-                'students.first_name',
-                'students.last_name',
                 'barangay.barangay as barangay',
-                'municipal.municipality as municipal'
+                'municipal.municipality as municipal',
+                \DB::raw("CONCAT(classrooms.grade_level, ' ', classrooms.section) as classroom")
             );
     }
 
@@ -59,27 +61,30 @@ final class StudentProfileTable extends PowerGridComponent
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
-            ->addColumn('first_name')
-            ->addColumn('last_name')
+        ->addColumn('students.first_name')
+        ->addColumn('students.last_name')
+        ->addColumn('full_name', function (Profile $model) {
+            return $model->students->first_name . ' ' . $model->students->last_name;
+        })
+        // ->addColumn('classroom', function (Profile $model) {
+        //     return "Grade: " . $model->students->classroom->grade_level . ' ' . $model->students->classroom->section;
+        // })
+
+        ->addColumn('classroom')
             ->addColumn('sex')
             ->addColumn('sex_lower', fn (Profile $model) => strtolower(e($model->sex)))
             ->addColumn('contact')
             ->addColumn('barangay')
-            ->addColumn('municipal')
-            ->addColumn('status')
-            ->addColumn('status', fn (Profile $model) => $model?->getStatusTextAttribute());
+            ->addColumn('municipal');
+          //  ->addColumn('status')
+            //->addColumn('status', fn (Profile $model) => $model?->getStatusTextAttribute());
     }
 
     public function columns(): array
     {
         return [
-            Column::make('First Name', 'first_name')
-                ->searchable()
-                ->withCount('Total Students Profile', true, false)
-                ->sortable(),
-            Column::make('Last Name', 'last_name')
-                ->sortable()
-                ->searchable(),
+            Column::make('Name', 'full_name')->searchable(),
+             Column::make('Classroom', 'classroom'),
             Column::make('Sex', 'sex')
                 ->sortable()
                 ->searchable(),
@@ -88,17 +93,32 @@ final class StudentProfileTable extends PowerGridComponent
                 ->searchable(),
             Column::make('Barangay', 'barangay'),
             Column::make('Municipal', 'municipal'),
-            Column::make('Status', 'status')
-                ->sortable()
-                ->searchable(),
         ];
     }
 
     public function filters(): array
     {
         return [
-            Filter::inputText('first_name')->operators(['contains']),
-            Filter::inputText('last_name')->operators(['contains']),
+            Filter::inputText('full_name')
+            ->operators(['contains'])
+            ->builder(function (Builder $query, $value) {
+                $searchValue = is_array($value) ? $value['value'] : $value;
+                return $query->where(DB::raw('CONCAT(first_name, " ", last_name)'), 'like', "%{$searchValue}%");
+            }),
+
+            Filter::inputText('classroom')
+            ->operators(['contains'])
+            ->builder(function (Builder $query, $value) {
+                $searchValue = is_array($value) ? $value['value'] : $value;
+                return $query->where(DB::raw('CONCAT(section, " ", grade_level)'), 'like', "%{$searchValue}%");
+            }),
+            // Filter::select('classroom', 'classroom')
+            // ->dataSource(Classroom::select('section')->distinct()->get())
+            // ->optionValue('section')
+            // ->optionLabel('section'),
+
+
+
             Filter::select('sex', 'sex')
                 ->dataSource(Profile::select('sex')->distinct()->get())
                 ->optionValue('sex')
@@ -107,10 +127,10 @@ final class StudentProfileTable extends PowerGridComponent
                 ->dataSource(Municipal::select('municipality')->distinct()->get())
                 ->optionValue('municipality')
                 ->optionLabel('municipality'),
-            Filter::select('status', 'profile.status')
-                ->dataSource(Profile::codes())
-                ->optionValue('status')
-                ->optionLabel('label'),
+            // Filter::select('status', 'profile.status')
+            //     ->dataSource(Profile::codes())
+            //     ->optionValue('status')
+            //     ->optionLabel('label'),
         ];
     }
 

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\ScheduledNotification;
 use Carbon\Carbon;
 use App\Models\Students;
 use App\Models\Anecdotal;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
 use App\Models\AnecdotalOutcome;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\ScheduledNotification;
 
 class DashboardController extends Controller
 {
@@ -201,6 +202,30 @@ class DashboardController extends Controller
 
         return response()->json(['ongoingCases' => $ongoingCases, 'resolvedCases' => $resolvedCases]);
     }
+
+
+
+
+private function getStatusLabel($case_status)
+{
+    switch ($case_status) {
+        case 0:
+            return 'pending';
+        case 1:
+            return 'ongoing';
+        case 2:
+            return 'resolved';
+        case 3:
+            return 'followup';
+        case 4:
+            return 'referral';
+        default:
+            return 'unknown';
+    }
+}
+
+
+
 
 
 

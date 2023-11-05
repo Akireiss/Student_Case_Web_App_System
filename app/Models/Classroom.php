@@ -27,14 +27,23 @@ class Classroom extends Model
         'grade_level',
         'status'
     ];
+    public function getClassroomAttribute()
+    {
+        return "{$this->section} {$this->grade_level}";
+    }
+
+    public function student()
+     {
+         return $this->hasMany(Students::class, 'classroom_id', 'id');
+     }
+     public function countStudentsAnecdotals()
+     {
+         return $this->students()->withCount('anecdotal')->get()->sum('anecdotal_count');
+     }
 
     public function employee()
     {
     return $this->belongsTo(Employee::class);
-    }
-   public function student()
-    {
-        return $this->hasMany(Students::class, 'classroom_id', 'id');
     }
 
 
