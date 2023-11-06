@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('grade_level');
             $table->tinyInteger('case_status')->default('0')->comment('0:pending | 1: accept | 2: inprogress | 3: closed');
 
-            $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('offense_id')->references('id')->on('offenses')->onDelete('cascade');
 

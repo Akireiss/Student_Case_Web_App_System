@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('anecdotal_outcome', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('anecdotal_id');
-            $table->unsignedBigInteger('action')->nullable();
             $table->integer('outcome')->nullable();
+            $table->mediumText('action')->nullable();
             $table->mediumText('outcome_remarks')->nullable();
 
             $table->foreign('anecdotal_id')->references('id')->on('anecdotal')
