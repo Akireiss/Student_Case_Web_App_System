@@ -4,7 +4,7 @@
 
  <div class="card-body">
             <h2 class="card-title">Manual Backup</h2>
-            <form method="POST" action="{{ route('manual.backup') }}">
+            <form action="{{ route('manual.backup') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-primary">Perform System Backup</button>
             </form>

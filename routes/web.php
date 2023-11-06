@@ -297,7 +297,7 @@ Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 
 
 Route::get('/backup', [BackupController::class, 'index']);
-Route::post('backup/execute', [BackupController::class, 'backup'])->name('manual.backup');
+Route::post('backup', [BackupController::class, 'backup'])->name('manual.backup');
 
 // Route::get('/backup/db', [BackupController::class, 'backup'])->name('backup');
 Route::get('/download-backup', [BackupController::class, 'downloadDatabase'])->name('backup.download');
