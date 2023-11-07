@@ -16,7 +16,7 @@
         <!-- Restore Database Form -->
         <div class="flex-1">
             <div class="bg-white p-4 shadow rounded-lg">
-                <h2 class="text-lg font-semibold">Restore Database</h2>
+                <h2 class="text-lg font-semibold">Upload A New Database</h2>
                 @if (session('success'))
                     <div class="bg-green-200 p-2 rounded text-green-700 mb-2">
                         {{ session('success') }}
@@ -30,7 +30,7 @@
                 <form action="{{ route('restore.restore') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-4">
-                        <label for="new_database_name" class="block">New Database Name:</label>
+                        <label for="new_database_name" class="block">Database Name:</label>
                         <input type="text" name="new_database_name" id="new_database_name"
                             class="border rounded p-2 w-full">
                     </div>
@@ -57,17 +57,17 @@
 
     <div class="bg-white p-4 shadow rounded-lg">
         @if (session('success'))
-            <div class="bg-green-200 p-2 rounded text-green-700 mb-2">
-                {{ session('success') }}
-            </div>
-        @endif
+        <div class="bg-green-200 p-2 rounded text-green-700 mb-2">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        <h2 class="text-lg font-semibold">Restore Database</h2>
+        <h2 class="text-lg font-semibold">Restore Your Database</h2>
         <form action="{{ route('change.database.name') }}" method="POST">
             @csrf
             <div class="mb-4">
-                <label for="new_database_name">New Database Name:</label>
-                <input type="text" name="new_database_name" id="new_database_name" class="border rounded p-2 w-full">
+                <label for="new_database_name">Your Database Name:</label>
+                <input type="text" name="new_database_name" id="new_database_name" class="border rounded p-2 w-full" required>
             </div>
 
             @error('new_database_name')

@@ -301,7 +301,7 @@ Route::post('backup', [BackupController::class, 'backup'])->name('manual.backup'
 //Restore
 Route::post('/restore', [BackupController::class, 'restore'])->name('restore.restore');
 //Change DB
-Route::post('/change-database-name', [BackupController::class, 'changeDatabaseName'])->name('change.database.name');;
+Route::post('restore/database', [BackupController::class, 'changeDatabaseName'])->name('change.database.name');;
 
 
 

@@ -88,6 +88,6 @@ class BackupController extends Controller
         File::put($envFilePath, $newEnvContent);
 
         // Redirect with a success message
-        return redirect()->back()->with('success', 'Database name changed in .env file.');
+        return redirect()->back()->with('success', 'Database have been changed');
     }
 }
