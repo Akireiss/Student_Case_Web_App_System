@@ -295,9 +295,15 @@ Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 // //*student form update
 // Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
 
-
+//backup
 Route::get('/backup', [BackupController::class, 'index']);
 Route::post('backup', [BackupController::class, 'backup'])->name('manual.backup');
+//Restore
+Route::post('/restore', [BackupController::class, 'restore'])->name('restore.restore');
+//Change DB
+Route::post('/change-database-name', [BackupController::class, 'changeDatabaseName'])->name('change.database.name');;
+
+
 
 // Route::get('/backup/db', [BackupController::class, 'backup'])->name('backup');
 Route::get('/download-backup', [BackupController::class, 'downloadDatabase'])->name('backup.download');
