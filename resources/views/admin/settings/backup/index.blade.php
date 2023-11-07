@@ -62,7 +62,7 @@
             </div>
         @endif
 
-        <h2 class="text-lg font-semibold">Change Database Name</h2>
+        <h2 class="text-lg font-semibold">Restore Database</h2>
         <form action="{{ route('change.database.name') }}" method="POST">
             @csrf
             <div class="mb-4">
