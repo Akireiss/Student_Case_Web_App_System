@@ -37,14 +37,25 @@
 
                         </div>
                         <ul class="flex items-center flex-shrink-0 space-x-2">
+                            @guest
+                            @else
                             <livewire:components.notification :userId="auth()->user()->id" />
+                                @endguest
                                 {{-- @include('includes.notification') --}}
                             <li>
+
+                                @guest
+                                <div class="text-sm font-semibold text-gray-700
+                                hover:text-gray-700">
+                                Guest
+                                </div>
+                                @else
 
                                 <li class="relative">
                                     <!-- Button with dropdown trigger -->
                                     <button id="dropdown" data-dropdown-toggle="dropdownInformation"
                                      class="inline-flex items-center focus:ring-0" type="button">
+
                                         {{ auth()->user()->name }}
                                         <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
@@ -85,6 +96,7 @@
                                     </div>
                                   </li>
 
+                                  @endguest
 
 
                             </li>

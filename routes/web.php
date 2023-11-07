@@ -296,7 +296,7 @@ Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 // Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
 
 //backup
-Route::get('/backup', [BackupController::class, 'index']);
+Route::get('backup', [BackupController::class, 'index']);
 Route::post('backup', [BackupController::class, 'backup'])->name('manual.backup');
 //Restore
 Route::post('/restore', [BackupController::class, 'restore'])->name('restore.restore');

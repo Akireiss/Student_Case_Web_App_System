@@ -286,7 +286,8 @@
 
                 {{-- Adviser, User And Admin  Access --}}
 
-                @if (auth()->user()->role === 2)
+                @can('adviser-access')
+
                 <li class="relative px-6 py-3">
                     <span class="{{ request()->is('adviser/report/history') ||  request()->is('adviser/report/history/*') ? 'absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}"
                           aria-hidden="true"></span>
@@ -302,7 +303,11 @@
 
                     <span class="ml-4">Report History</span>
                     </a>
-                @elseif (auth()->user()->role === 0)
+
+                @endcan
+
+                @can('user-access')
+
                 <li class="relative px-6 py-3">
                 <span class="{{ request()->is('report/history') || request()->is('report/history/*') ? 'absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}"
                     aria-hidden="true"></span>
@@ -323,7 +328,8 @@
                     <span class="ml-4">Report History</span>
                     </a>
                 </li>
-                @endif
+                @endcan
+
 
                 {{-- End Access --}}
 
