@@ -18,6 +18,9 @@
             Total: {{ $anecdotals->count() }}
 
             Case Status:
+            @if ($status == "All")
+            All
+            @endif
             @if ($status == 0)
             Pending
             @endif
@@ -38,11 +41,16 @@
            </p>
 
 
-
-
             @if ($classroom->students)
                 @foreach ($classroom->students as $student)
-                    <li>{{ $student->first_name }} </li>
+                    <li>{{ $student->first_name }}
+                        @if ($status == "All")
+                        {{ $student->anecdotal->count() }}
+                    @else
+                        {{ $student->anecdotal->where('case_status', $status)->count() }}
+                    @endif
+
+                    </li>
                 @endforeach
             @endif
 

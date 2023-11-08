@@ -16,8 +16,7 @@
             {{-- End of sidebar --}}
             <div class="flex flex-col flex-1 w-full">
                 <header class="z-10 py-4 bg-white shadow-md ">
-                    <div
-                        class="container flex items-center justify-between h-full px-6 mx-auto text-green-600 ">
+                    <div class="container flex items-center justify-between h-full px-6 mx-auto text-green-600 ">
                         <!-- Mobile hamburger -->
 
 
@@ -32,71 +31,94 @@
                         </button>
 
 
-                        <div >
+                        <div>
 
 
                         </div>
                         <ul class="flex items-center flex-shrink-0 space-x-2">
                             @guest
                             @else
-                            <livewire:components.notification :userId="auth()->user()->id" />
-                                @endguest
-                                {{-- @include('includes.notification') --}}
+                                <livewire:components.notification :userId="auth()->user()->id" />
+                            @endguest
+                            {{-- @include('includes.notification') --}}
                             <li>
 
                                 @guest
-                                <div class="text-sm font-semibold text-gray-700
+                                    <div
+                                        class="text-sm font-semibold text-gray-700
                                 hover:text-gray-700">
-                                Guest
-                                </div>
+                                        Guest
+                                    </div>
                                 @else
-
                                 <li class="relative">
                                     <!-- Button with dropdown trigger -->
-                                    <button id="dropdown" data-dropdown-toggle="dropdownInformation"
-                                     class="inline-flex items-center focus:ring-0" type="button">
+                                    <x-dropdown>
+                                        <x-slot name="trigger">
+                                            <div class="flex justify-end my-2">
+                                                <button type="button" class="flex items-center space-x-3">
+                                                    {{ auth()->user()->name }}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                      </svg>
 
-                                        {{ auth()->user()->name }}
-                                        <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                                        </svg>
-                                      </button>
+                                                </button>
+                                            </div>
+
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <div class="px-4 py-3 text-sm font-semibold text-gray-700
+                                            hover:text-gray-700">
+                                              <div> {{ auth()->user()->getRoleTextAttribute() }}</div>
+                                              <div class="text-sm font-semibold text-gray-700
+                                              hover:text-gray-700">
+                                                  {{ auth()->user()->email }}
+                                              </div>
+                                            </div>
+<hr>
+
+                                            <ul class="text-sm font-semibold text-gray-700
+                                                hover:text-gray-700">
+                                                <li>
+                                                    <a href="{{ url('admin/dashboard') }}" class="block px-4 py-2 text-sm font-semibold
+                                                     text-gray-700 hover:text-green-500">
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="{{ url('admin/update-acc') }}"
+                                                        class="block px-4 py-2  text-sm font-semibold text-gray-700
+                                                    hover:text-green-500">Account</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ url('admin/settings/report/history') }}"
+                                                        class="block px-4 py-2
+                                                text-sm font-semibold text-gray-700
+                                            hover:text-green-500">Report
+                                                        History</a>
+                                                </li>
+                                            </ul>
+                                            <hr>
+                                            <div class="py-2">
+
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                    class="block  py-2  text-sm font-semibold text-gray-700
+                                                    hover:text-green-500" >
+
+                                                    <span class="ml-4">Log Out</span>
+                                                </button>
+                                                </form>
 
 
-                                    <div id="dropdownArea" class="hidden absolute top-11 left-0 z-10 bg-white divide-y divide-gray-100
-                                     rounded-lg shadow w-44  dark:divide-gray-600">
-                                      <div class="px-4 py-3 text-sm font-semibold text-gray-700
-                                      hover:text-gray-700">
-                                        <div> {{ auth()->user()->getRoleTextAttribute() }}</div>
-                                        <div class="text-sm font-semibold text-gray-700
-                                        hover:text-gray-700">
-                                            {{ auth()->user()->email }}
-                                        </div>
-                                      </div>
-                                      <ul class="text-sm font-semibold text-gray-700
-                                      hover:text-gray-700" aria-labelledby="dropdownInformationButton">
-                                        <li>
-                                          <a href="{{ url('admin/dashboard') }}" class="block px-4 py-2  text-sm font-semibold text-gray-700
-                                      hover:text-gray-700">Dashboard</a>
-                                        </li>
-                                        <li>
-                                          <a href="{{ url('admin/update-acc') }}" class="block px-4 py-2  text-sm font-semibold text-gray-700
-                                      hover:text-gray-700">Account</a>
-                                        </li>
-                                        <li>
-                                          <a href="{{ url('admin/settings/report/history') }}" class="block px-4 py-2
-                                           text-sm font-semibold text-gray-700
-                                      hover:text-gray-700">Report History</a>
-                                        </li>
-                                      </ul>
-                                      <div class="py-2">
-                                        <a href="#" class="block px-4 py-2  text-sm font-semibold text-gray-700
-                                      hover:text-gray-700">Sign out</a>
-                                      </div>
-                                    </div>
-                                  </li>
 
-                                  @endguest
+                                            </div>
+                                        </x-slot>
+                                    </x-dropdown>
+                                </li>
+
+                            @endguest
 
 
                             </li>
@@ -143,25 +165,25 @@
 
 
         @livewireScripts
-<script>
+        <script>
             const dropdownButton = document.getElementById('dropdown');
             const dropdownMenu = document.getElementById('dropdownArea');
 
-            dropdownButton.addEventListener('click', function (event) {
-              event.stopPropagation(); // Prevent the click event from propagating to the document
-              if (dropdownMenu.classList.contains('hidden')) {
-                dropdownMenu.classList.remove('hidden');
-              } else {
-                dropdownMenu.classList.add('hidden');
-              }
+            dropdownButton.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent the click event from propagating to the document
+                if (dropdownMenu.classList.contains('hidden')) {
+                    dropdownMenu.classList.remove('hidden');
+                } else {
+                    dropdownMenu.classList.add('hidden');
+                }
             });
 
-            document.addEventListener('click', function (event) {
-              if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.add('hidden');
-              }
+            document.addEventListener('click', function(event) {
+                if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
             });
-          </script>
+        </script>
 
 </body>
 

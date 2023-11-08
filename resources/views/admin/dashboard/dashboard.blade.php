@@ -7,6 +7,10 @@
             Dashboard
         </h2>
 
+
+
+
+
         {{-- Alerts --}}
         @foreach ($delayedNotif as $notification)
             <div class="bg-green-100 border border-green-400 text-black px-4 py-2 rounded relative my-3" role="alert">
@@ -57,7 +61,7 @@
                 id="totalStudents">
                 <!-- Card -->
 
-                <a href="{{ url('admin/settings/students') }}" class="flex items-center p-4 bg-white  shadow-md  ">
+                <a href="{{ url('admin/settings/students') }}" class="flex items-center p-4 bg-white  shadow-md " >
                     <div
                         class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -79,7 +83,7 @@
 
 
                 <a href="{{ url('admin/settings/students') }}"
-                    class="flex items-center p-4 bg-white  shadow-md   border-l-4 border-blue-500">
+                    class="flex items-center p-4 bg-white  shadow-md   border-l-4 border-blue-500" >
                     <div
                         class=" p-3 mr-4 text-white bg-blue-500 rounded-full dark:text-orange-100
                  dark:bg-orange-500">
@@ -104,7 +108,7 @@
 
 
                 <a href="{{ url('admin/settings/students') }}"
-                    class="flex items-center p-4 bg-white  shadow-md   border-l-4 border-pink-500">
+                    class="flex items-center p-4 bg-white  shadow-md   border-l-4 border-pink-500" >
                     <div class=" p-3 mr-4 text-white bg-pink-500 rounded-full">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path
@@ -124,7 +128,7 @@
 
             </div>
 
-            <div x-show="currentGrid === 'totalFMstudents'" class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3"
+            <div  x-show="currentGrid === 'totalFMstudents'" class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3" x-cloak
                 id="totalFMstudents">
 
 
@@ -198,7 +202,7 @@
 
             </div>
 
-            <div x-show="currentGrid === 'totalStatusCases'" class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3"
+            <div x-cloak x-show="currentGrid === 'totalStatusCases'" class="grid gap-6 mb-3 md:grid-cols-3 xl:grid-cols-3"
                 id="totalStatusCases">
 
 
