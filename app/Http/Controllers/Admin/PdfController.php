@@ -62,6 +62,13 @@ class PdfController extends Controller
 
     public function generateReportPDF(Request $request)
     {
+        $request->validate([
+            'selectedClassroom' => 'required',
+            'selectedCategory' => 'required',
+            'year' => 'required',
+            'status' => 'required',
+        ]);
+
         // Retrieve selected classroom, offense category, and year from the form
         $classroomId = $request->input('selectedClassroom', 'All');
         $category = $request->input('selectedCategory', 'All');
@@ -75,6 +82,7 @@ class PdfController extends Controller
         $classroom = Classroom::where('id', $classroomId)->first();
         // Build the query based on the selected options
         $anecdotals = Anecdotal::query();
+
         if ($classroomId !== 'All') {
             $anecdotals->whereHas('students', function ($query) use ($classroomId) {
                 $query->where('classroom_id', $classroomId);
