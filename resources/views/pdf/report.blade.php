@@ -14,14 +14,39 @@
                 Grade: {{ $classroom->grade_level }} {{ $classroom->section }}
            </p>
            <p>
-            Total Anecdotal: {{ $anecdotals->count() }}
+
+            Total: {{ $anecdotals->count() }}
+
+            Case Status:
+            @if ($status == 0)
+            Pending
+            @endif
+
+            @if ($status == 1)
+            Ongoing
+            @endif
+
+            @if ($status == 2)
+            Resvold
+            @endif
+
+
+            @if ($status == 3)
+            Fllo Up
+            @endif
+
            </p>
+
+
+
 
             @if ($classroom->students)
                 @foreach ($classroom->students as $student)
                     <li>{{ $student->first_name }} </li>
                 @endforeach
             @endif
+
+
 
 
 

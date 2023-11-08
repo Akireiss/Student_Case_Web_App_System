@@ -77,7 +77,6 @@ class PdfController extends Controller
         $status = $request->input('status', 'All');
 
         // Retrieve a single classroom instance
-        $anecdotalStatus = Anecdotal::where('case_status', $status)->first();
 
         $classroom = Classroom::where('id', $classroomId)->first();
         // Build the query based on the selected options
@@ -105,10 +104,16 @@ class PdfController extends Controller
         }
 
         if ($status !== 'All') {
-            $anecdotals->whereHas('offenses', function ($query) use ($status) {
-                $query->where('case_status', $status);
-            });
+            $anecdotals->where('case_status', $status);
+
         }
+
+        // if ($status !== 'All') {
+        //     $anecdotals->whereHas('offenses', function ($query) use ($status) {
+        //         $query->where('status', 0);
+        //     })->where('case_status', $status);
+
+        // }
 
 
         // Get the data based on the query
@@ -118,7 +123,6 @@ class PdfController extends Controller
         $pdf = PDF::loadView('pdf.report', [
             'anecdotals' => $anecdotals,
             'classroom' => $classroom,
-            'anecdotalStatus' => $anecdotalStatus,
             'status' => $status
         ]);
 
