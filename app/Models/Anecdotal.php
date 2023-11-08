@@ -34,6 +34,18 @@ class Anecdotal extends Model
         'status'
 
     ];
+    public function getAcademicYearAttribute()
+{
+    // Calculate the academic year based on a June-to-May cycle
+    $year = $this->created_at->format('Y');
+    $month = $this->created_at->format('m');
+
+    if ($month < 6) {
+        $year--;
+    }
+
+    return $year . '-' . ($year + 1);
+}
     public function students()
     {
         return $this->belongsTo(Students::class, 'student_id');

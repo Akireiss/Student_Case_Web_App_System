@@ -13,6 +13,7 @@ use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Student;
 use App\Http\Livewire\Admin\Teacher;
 use App\Http\Livewire\Admin\User\UserUpdate;
+use App\Http\Livewire\PDFReport;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Livewire\Student\Report;
 use Illuminate\Support\Facades\Route;
@@ -153,7 +154,12 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('audit-trail/view/{activity}', [HelpController::class, 'show'])->name('activity.view');
 
             //Generate Report
-            Route::get('generate-report', [PdfController::class, 'generateReport']);
+            Route::get('generate-report', [PDFController::class,'generateReport']);
+            //View PDF Report
+            Route::get('/generate-pdf', [PDFController::class, 'generateReportPDF'])->name('generate.report.pdf');
+
+
+
 
 
 
@@ -311,4 +317,5 @@ Route::get('/download-backup', [BackupController::class, 'downloadDatabase'])->n
 Route::get('/restore', [RestoreController::class, 'index']);
 Route::get('/restore', [RestoreController::class, 'store']);
 
-
+//Test Pdf
+// Route::get('/download-pdf', [PDFReport::class, 'streamPDF'])->name('download-pdf');
