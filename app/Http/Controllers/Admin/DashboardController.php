@@ -40,7 +40,32 @@ class DashboardController extends Controller
         // })->count();
 
 
-        return view('admin.dashboard.dashboard', compact('delayedNotif'));
+        $gradeLevels = ["7", "8", "9", "10", "11", "12"];
+
+        $data = [];
+
+        foreach ($gradeLevels as $gradeLevel) {
+            $classrooms = Classroom::where('grade_level', $gradeLevel)->pluck('id');
+            $offenses = Anecdotal::whereHas('students', function ($query) use ($classrooms) {
+                $query->whereIn('classroom_id', $classrooms);
+            })
+                ->select('case_status', DB::raw('COUNT(*) as count'))
+                ->groupBy('case_status')
+                ->pluck('count', 'case_status')
+                ->toArray();
+
+            $data[] = [
+                'grade_level' => $gradeLevel,
+                'pending' => $offenses[0] ?? 0,
+                'ongoing' => $offenses[1] ?? 0,
+                'resolved' => $offenses[2] ?? 0,
+                'follow_up' => $offenses[3] ?? 0,
+                'referral' => $offenses[4] ?? 0,
+            ];
+        }
+
+
+        return view('admin.dashboard.dashboard', compact('delayedNotif', 'data'));
     }
 
     public function markAsRead(Request $request, ScheduledNotification $notification)
@@ -189,7 +214,7 @@ class DashboardController extends Controller
             ->join('students', 'anecdotal.student_id', '=', 'students.id')
             ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
             ->where('anecdotal.case_status', 1)
-            ->where('anecdotal.updated_at', '>', $oneWeekAgo)
+        ->where('anecdotal.updated_at', '>', $oneWeekAgo)
             ->get();
 
         $resolvedCases = DB::table('anecdotal')
@@ -202,32 +227,4 @@ class DashboardController extends Controller
 
         return response()->json(['ongoingCases' => $ongoingCases, 'resolvedCases' => $resolvedCases]);
     }
-
-
-
-
-private function getStatusLabel($case_status)
-{
-    switch ($case_status) {
-        case 0:
-            return 'pending';
-        case 1:
-            return 'ongoing';
-        case 2:
-            return 'resolved';
-        case 3:
-            return 'followup';
-        case 4:
-            return 'referral';
-        default:
-            return 'unknown';
-    }
 }
-
-
-
-
-
-
-}
-

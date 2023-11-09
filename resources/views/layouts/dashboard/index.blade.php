@@ -148,18 +148,25 @@
         <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
         <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
         <script src="{{ asset('assets/js/actionspiechart.js ') }}" defer></script>
-        {{-- <script src="{{ asset('assets/js/charts-bars.js') }}" defer></script> --}}
+        <script src="{{ asset('assets/js/charts-bars.js') }}" defer></script>
         <script src="{{ asset('assets/js/chartPie.js') }}" defer></script>
         <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
         <script src="{{ asset('assets/js/cards.js') }}" defer></script>
         <script src="{{ asset('assets/js/notification.js') }}" defer></script>
         <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
-        <script src="{{ asset('assets/js/chart.min.js') }}"></script>
+        {{-- <script src="{{ asset('assets/js/chart.min.js') }}"></script> --}}
         <script src="{{ asset('assets/js/qrcode.js') }}"></script>
         <script src="{{ asset('assets/js/dropdown.js') }}"></script>
         <script src="{{ asset('assets/js/validation.js') }}"></script>
-        {{-- <script src="{{ asset('assets/js/gradeBar.js') }}"></script> --}}
-        {{-- <script src="{{ asset('assets/js/gradeChart.js') }}"></script> --}}
+        {{-- Delayed Notification --}}
+        <script src="{{ asset('assets/js/delayedNotif.js') }}"></script>
+
+        {{-- Js --}}
+        {{-- <script src="{{ asset('assets/js/barchart.min.js') }}"></script> --}}
+        {{-- Temporary Script --}}
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>--}}
+
+
         <script src="{{ asset('assets/js/multibar.js') }}"></script>
 
 

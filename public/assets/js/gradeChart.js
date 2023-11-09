@@ -44,34 +44,6 @@ const groupedBarConfig = {
 };
 
 // Create or update the chart
-const groupedBarCtx = document.getElementById('myGroupedBarChart');
+const groupedBarCtx = document.getElementById('TestBar');
 const myGroupedBar = new Chart(groupedBarCtx, groupedBarConfig);
 
-function fetchChartData() {
-    // Fetch the data from your Laravel backend endpoint
-    $.ajax({
-        url: '/get-chart-data', // Replace with your actual route
-        method: 'GET',
-        success: function (data) {
-            // Update the chart data with the fetched data
-            for (let i = 0; i < groupedBarConfig.data.labels.length; i++) {
-                const gradeLevel = groupedBarConfig.data.labels[i];
-                groupedBarConfig.data.datasets[0].data[i] = data.pending[gradeLevel] || 0;
-                groupedBarConfig.data.datasets[1].data[i] = data.ongoing[gradeLevel] || 0;
-                groupedBarConfig.data.datasets[2].data[i] = data.resolved[gradeLevel] || 0;
-                groupedBarConfig.data.datasets[3].data[i] = data.followup[gradeLevel] || 0;
-                groupedBarConfig.data.datasets[4].data[i] = data.refferal[gradeLevel] || 0;
-            }
-
-            [gradeLevel]
-
-            myGroupedBar.update();
-        },
-        error: function (error) {
-            console.error('Error fetching chart data:', error);
-        }
-    });
-}
-
-// Call the fetchChartData function to load the initial data
-fetchChartData();

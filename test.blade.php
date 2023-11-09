@@ -39,3 +39,67 @@
         </div>
     </div>
 </div>
+
+
+
+{{-- Test --}}
+
+<div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
+    <h4 class="mb-4 font-semibold text-gray-800 ">
+        Grade Level Offenses
+    </h4>
+    <canvas id="bar-chart"></canvas>
+    <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600 ">
+        <div class="flex items-center">
+            <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
+
+        </div>
+
+    </div>
+</div>
+@push('scripts')
+    <script>
+        new Chart(document.getElementById("bar-chart"), {
+            type: 'bar',
+            data: {
+                labels: @json(array_column($data, 'grade_level')),
+                datasets: [{
+                        label: "Pending",
+                        backgroundColor: "#3e95cd",
+                        data: @json(array_column($data, 'pending')),
+                    },
+                    {
+                        label: "Ongoing",
+                        backgroundColor: "#8e5ea2",
+                        data: @json(array_column($data, 'ongoing')),
+                    },
+                    {
+                        label: "Resolved",
+                        backgroundColor: "#3cba9f",
+                        data: @json(array_column($data, 'resolved')),
+                    },
+                    {
+                        label: "FollowUp",
+                        backgroundColor: "#3e95cd",
+                        data: @json(array_column($data, 'follow_up')),
+                    },
+                    {
+                        label: "Referral",
+                        backgroundColor: "#8e5ea2",
+                        data: @json(array_column($data, 'referral')),
+                    },
+                ],
+            },
+            options: {
+                legend: {
+                    display: true
+                },
+                title: {
+                    display: true,
+                    text: 'Grade Level Offenses'
+                }
+            },
+        });
+    </script>
+@endpush
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>

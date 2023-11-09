@@ -241,7 +241,8 @@ Route::middleware(['auth', 'role'])->group(function () {
 });
 
 //*End-points
-Route::get('/get-chart-data', [HelpController::class, 'getChartData']);
+// Route::get('/get-chart-data', [HelpController::class, 'getChartData']);
+
 
 Route::get('/admin/get-case-counts', [DashboardController::class, 'getCaseCounts']);
 Route::get('/get-offense-counts', [DashboardController::class, 'getOffenseCounts']);
