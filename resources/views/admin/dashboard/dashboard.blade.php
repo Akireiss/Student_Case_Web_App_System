@@ -400,8 +400,17 @@
     </div>
 
 
-    <script src="{{ asset('assets/js/chart.min.js') }}"></script>
+
+
+
+
+
+</div>
+
+
     @push('scripts')
+    <script src="{{ asset('assets/js/chart.min.js') }}"></script>
+
         <script>
             var myGroupedBar = new Chart("myGroupedBar", {
                 type: "bar",

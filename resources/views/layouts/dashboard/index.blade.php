@@ -161,6 +161,9 @@
         {{-- Delayed Notification --}}
         <script src="{{ asset('assets/js/delayedNotif.js') }}"></script>
 
+        {{-- For new charts --}}
+        <script src="{{ asset('assets/js/charts-pie.js') }}"></script>
+
         {{-- Js --}}
         {{-- <script src="{{ asset('assets/js/barchart.min.js') }}"></script> --}}
         {{-- Temporary Script --}}
@@ -168,7 +171,6 @@
 
 
         <script src="{{ asset('assets/js/multibar.js') }}"></script>
-
 
 
         @livewireScripts

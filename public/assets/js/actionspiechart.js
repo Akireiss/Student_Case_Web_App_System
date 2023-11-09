@@ -29,7 +29,7 @@ function updateChart() {
                 },
                 options: {
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Successful Actions',
                     },
                     tooltips: {

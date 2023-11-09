@@ -69,6 +69,7 @@ function updatePieChart() {
             plugins: {
                 legend: {
                     labels: {
+
                         // Adjust the alignment and rotation of the labels
                         align: 'start', // 'start', 'end', 'center'
                         // Rotate labels by 45 degrees (adjust the angle as needed)
