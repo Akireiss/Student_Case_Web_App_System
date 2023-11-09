@@ -18,6 +18,8 @@ final class AnecdotaTable extends PowerGridComponent
     use ActionButton;
     use WithExport;
     public bool $multiSort = true;
+    // public bool $withSortStringNumber = true;
+    // public string $sortField = 'anecdotal.id';
     public function setUp(): array
     {
 

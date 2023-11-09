@@ -320,3 +320,5 @@ Route::get('/restore', [RestoreController::class, 'store']);
 
 //Test Pdf
 // Route::get('/download-pdf', [PDFReport::class, 'streamPDF'])->name('download-pdf');
+//Test
+Route::get('/get-offense-counts-new', [HelpController::class, 'getOffenseCountsNew']);

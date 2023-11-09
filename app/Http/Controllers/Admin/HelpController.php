@@ -117,4 +117,15 @@ public function index()
     return view('admin.help.index', compact('data'));
 }
 
+public function getOffenseCountsNew()
+{
+    $offenseCounts = DB::table('anecdotal')
+        ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
+        ->select('offenses.offenses as offense', DB::raw('count(*) as count'))
+        ->groupBy('offense')
+        ->get();
+
+    return response()->json($offenseCounts);
+}
+
 }
