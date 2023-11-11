@@ -22,12 +22,12 @@ class Anecdotal extends Model
     protected $fillable = [
         'student_id',
         'offense_id',
+        'grade_level',
         'gravity',
         'short_description',
         'observation',
         'desired',
         'outcome',
-        'grade_level',
         'letter',
         'case_status',
         'story',

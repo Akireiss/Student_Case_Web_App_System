@@ -88,18 +88,79 @@ private function formatProperties($properties)
 
 //     return response()->json($data);
 // }
-
-public function index()
+public function getBarChartData(Request $request)
 {
+    $selectedYear = $request->input('year');
     $gradeLevels = ["7", "8", "9", "10", "11", "12"];
+    $data = [];
 
+    if ($selectedYear === 'All') {
+        // Handle the "All" option here
+        // You may want to adjust this logic depending on your specific requirements
+        foreach ($gradeLevels as $gradeLevel) {
+            $offenses = Anecdotal::where('grade_level', 'LIKE', $gradeLevel . '%')
+                ->select('case_status', DB::raw('COUNT(*) as count'))
+                ->groupBy('case_status')
+                ->pluck('count', 'case_status')
+                ->toArray();
+
+            $data[] = [
+                'grade_level' => $gradeLevel,
+                'pending' => $offenses[0] ?? 0,
+                'ongoing' => $offenses[1] ?? 0,
+                'resolved' => $offenses[2] ?? 0,
+                'follow_up' => $offenses[3] ?? 0,
+                'referral' => $offenses[4] ?? 0,
+            ];
+        }
+    } else {
+        // Validate the selected year (you may want to add more checks)
+        if (!preg_match('/^\d{4}-\d{4}$/', $selectedYear)) {
+            return response()->json(['error' => 'Invalid year format.']);
+        }
+
+        list($startYear, $endYear) = explode('-', $selectedYear);
+
+        $academicYearStart = '06-01'; // June 1st
+        $academicYearEnd = '05-31';   // May 31st
+
+        foreach ($gradeLevels as $gradeLevel) {
+            $offenses = Anecdotal::where('grade_level', 'LIKE', $gradeLevel . '%')
+                ->where(function ($query) use ($startYear, $endYear, $academicYearStart, $academicYearEnd) {
+                    $query->whereRaw("YEAR(created_at) = $startYear AND created_at >= '$startYear-$academicYearStart'")
+                        ->orWhereRaw("YEAR(created_at) = $endYear AND created_at <= '$endYear-$academicYearEnd'");
+                })
+                ->select('case_status', DB::raw('COUNT(*) as count'))
+                ->groupBy('case_status')
+                ->pluck('count', 'case_status')
+                ->toArray();
+
+            $data[] = [
+                'grade_level' => $gradeLevel,
+                'pending' => $offenses[0] ?? 0,
+                'ongoing' => $offenses[1] ?? 0,
+                'resolved' => $offenses[2] ?? 0,
+                'follow_up' => $offenses[3] ?? 0,
+                'referral' => $offenses[4] ?? 0,
+            ];
+        }
+    }
+
+    return response()->json($data);
+}
+
+
+
+
+public function index(Request $request)
+{
+    $selectedYear = $request->input('selectedYear');
+    $gradeLevels = ["7", "8", "9", "10", "11", "12"];
     $data = [];
 
     foreach ($gradeLevels as $gradeLevel) {
-        $classrooms = Classroom::where('grade_level', $gradeLevel)->pluck('id');
-        $offenses = Anecdotal::whereHas('students', function ($query) use ($classrooms) {
-                $query->whereIn('classroom_id', $classrooms);
-            })
+        $offenses = Anecdotal::where('grade_level', 'LIKE', $gradeLevel . '%')
+            ->whereBetween('created_at', [$selectedYear . '-06-01', ($selectedYear + 1) . '-05-31']) // Corrected date range
             ->select('case_status', DB::raw('COUNT(*) as count'))
             ->groupBy('case_status')
             ->pluck('count', 'case_status')
@@ -115,8 +176,10 @@ public function index()
         ];
     }
 
+
     return view('admin.help.index', compact('data'));
 }
+
 
 public function getOffenseCountsNew(Request $request)
 {

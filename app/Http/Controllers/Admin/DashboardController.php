@@ -117,8 +117,8 @@ class DashboardController extends Controller
                 $years = explode('-', $selectedYear);
                 $startYear = $years[0];
                 $endYear = $years[1];
-                $academicYearStart = '06-01'; // June 1st, you can adjust the day as needed
-                $academicYearEnd = '05-31';   // May 31st, you can adjust the day as needed
+                $academicYearStart = '06-01';
+                $academicYearEnd = '05-31';
                 $query->where(function ($q) use ($startYear, $endYear, $academicYearStart, $academicYearEnd) {
                     $q->whereRaw("YEAR(created_at) = $startYear AND created_at >= '$startYear-$academicYearStart'")
                         ->orWhereRaw("YEAR(created_at) = $endYear AND created_at <= '$endYear-$academicYearEnd'");
