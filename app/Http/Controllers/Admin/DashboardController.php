@@ -30,16 +30,6 @@ class DashboardController extends Controller
             $notification->data = json_decode($notification->data, true);
         });
 
-        //gagamitin pag hindi live
-        // $maleCases = Anecdotal::whereHas('students', function ($query) {
-        //     $query->where('gender', 0);
-        // })->count();
-
-        // $femaleCases = Anecdotal::whereHas('students', function ($query) {
-        //     $query->where('gender', 1);
-        // })->count();
-
-
         $gradeLevels = ["7", "8", "9", "10", "11", "12"];
 
         $data = [];
@@ -117,12 +107,23 @@ class DashboardController extends Controller
         return response()->json($offenseCounts);
     }
 
-
-
-
-    public function getCaseCounts()
+    public function getCaseCounts(Request $request)
     {
+        $selectedYear = $request->input('year');
+
         $caseCounts = Anecdotal::selectRaw("DATE_FORMAT(created_at, '%M') as month, case_status, count(*) as count")
+            ->when($selectedYear !== 'All', function ($query) use ($selectedYear) {
+                // Filter data by selected academic year
+                $years = explode('-', $selectedYear);
+                $startYear = $years[0];
+                $endYear = $years[1];
+                $academicYearStart = '06-01'; // June 1st, you can adjust the day as needed
+                $academicYearEnd = '05-31';   // May 31st, you can adjust the day as needed
+                $query->where(function ($q) use ($startYear, $endYear, $academicYearStart, $academicYearEnd) {
+                    $q->whereRaw("YEAR(created_at) = $startYear AND created_at >= '$startYear-$academicYearStart'")
+                        ->orWhereRaw("YEAR(created_at) = $endYear AND created_at <= '$endYear-$academicYearEnd'");
+                });
+            })
             ->groupBy('month', 'case_status')
             ->get();
 
@@ -139,13 +140,13 @@ class DashboardController extends Controller
 
             if ($count->case_status === 0) {
                 $data['pending'][$month] = $count->count;
-            } else if ($count->case_status === 1) {
+            } elseif ($count->case_status === 1) {
                 $data['ongoing'][$month] = $count->count;
-            } else if ($count->case_status === 2) {
+            } elseif ($count->case_status === 2) {
                 $data['resolved'][$month] = $count->count;
-            } else if ($count->case_status === 3) {
+            } elseif ($count->case_status === 3) {
                 $data['followup'][$month] = $count->count;
-            } else if ($count->case_status === 4) {
+            } elseif ($count->case_status === 4) {
                 $data['refferal'][$month] = $count->count;
             }
         }
@@ -214,7 +215,7 @@ class DashboardController extends Controller
             ->join('students', 'anecdotal.student_id', '=', 'students.id')
             ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
             ->where('anecdotal.case_status', 1)
-        ->where('anecdotal.updated_at', '>', $oneWeekAgo)
+            ->where('anecdotal.updated_at', '>', $oneWeekAgo)
             ->get();
 
         $resolvedCases = DB::table('anecdotal')

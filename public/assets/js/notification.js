@@ -31,7 +31,7 @@ function createCaseElement(caseData) {
             <p class="mt-1 text-sm text-gray-500">
                <span class="text-red-500">${caseData.first_name} ${caseData.last_name}</span>
                ${statusText === 'Ongoing' ? 'case has not been updated for the past week'
-               : 'case was resolved, you can check this student'}
+            : 'case was resolved, you can check this student'}
             </p>
             <p class="mt-1 text-sm text-gray-500">${timeString}</p>
         </div>

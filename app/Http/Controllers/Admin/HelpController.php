@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Activity;
 use App\Models\Anecdotal;
 use App\Models\Classroom;
@@ -117,15 +118,29 @@ public function index()
     return view('admin.help.index', compact('data'));
 }
 
-public function getOffenseCountsNew()
+public function getOffenseCountsNew(Request $request)
 {
-    $offenseCounts = DB::table('anecdotal')
+    $year = $request->input('year', 'All');
+
+    $query = DB::table('anecdotal')
         ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
         ->select('offenses.offenses as offense', DB::raw('count(*) as count'))
-        ->groupBy('offense')
-        ->get();
+        ->groupBy('offense');
+
+    if ($year !== 'All') {
+        // Calculate the start and end dates for the selected year
+        $yearParts = explode('-', $year);
+        $startDate = Carbon::create($yearParts[0], 6, 1);
+        $endDate = Carbon::create($yearParts[1], 5, 31);
+
+        // Assuming you have a date field named 'created_at'
+        $query->whereBetween('anecdotal.created_at', [$startDate, $endDate]);
+    }
+
+    $offenseCounts = $query->get();
 
     return response()->json($offenseCounts);
 }
+
 
 }

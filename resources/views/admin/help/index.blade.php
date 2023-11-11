@@ -27,10 +27,13 @@
                     </x-slot>
                     <x-slot name="content">
                         <ul>
-                            <li class="py-2 px-2 hover:text-green-400">2021-2022</li>
-                            <li class="py-2 px-2 hover:text-green-400">2022-2023</li>
-                            <li class="py-2 px-2 hover:text-green-400">2023-2024</li>
+                            <li class="py-2 px-2 hover:text-green-400" data-year="All">All</li>
+                            <li class="py-2 px-2 hover:text-green-400" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</li>
+                            <li class="py-2 px-2 hover:text-green-400" data-year="2021-2022">2021-2022</li>
+                            <li class="py-2 px-2 hover:text-green-400" data-year="2022-2023">2022-2023</li>
+                            <li class="py-2 px-2 hover:text-green-400" data-year="2023-2024">2023-2024</li>
                         </ul>
+
                     </x-slot>
                 </x-dropdown>
             </div>
