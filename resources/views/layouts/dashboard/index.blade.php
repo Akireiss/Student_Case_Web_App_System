@@ -171,6 +171,8 @@
 
 
         <script src="{{ asset('assets/js/multibar.js') }}"></script>
+        {{-- New Bar Chart --}}
+        <script src="{{ asset('assets/js/barChartGrade.js') }}"></script>
 
 
         @livewireScripts

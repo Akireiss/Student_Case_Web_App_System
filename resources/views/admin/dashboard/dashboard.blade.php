@@ -36,7 +36,8 @@
         @endforeach
 
         <div class="flex justify-end ">
-            <div x-data="{ selectedYear: 'Current Year <svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-2&quot;> <path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>' }">
+            {{-- Still in developemt --}}
+            {{-- <div x-data="{ selectedYear: 'Current Year <svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-2&quot;> <path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>' }">
                     <x-dropdown>
                         <x-slot name="trigger">
                             <div class="flex items-center">
@@ -53,7 +54,29 @@
                             </ul>
                         </x-slot>
                     </x-dropdown>
-            </div>
+            </div> --}}
+
+            <x-dropdown>
+                <x-slot name="trigger">
+                    <div class="flex items-center">
+                        <button type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </x-slot>
+                <x-slot name="content">
+                    <ul>
+                        <li class="py-2 px-2 hover:text-green-400" data-year="All">All</li>
+                        <li class="py-2 px-2 hover:text-green-400" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</li>
+                        <li class="py-2 px-2 hover:text-green-400" data-year="2021-2022">2021-2022</li>
+                        <li class="py-2 px-2 hover:text-green-400" data-year="2022-2023">2022-2023</li>
+                        <li class="py-2 px-2 hover:text-green-400" data-year="2023-2024">2023-2024</li>
+                    </ul>
+
+                </x-slot>
+            </x-dropdown>
 
 
         </div>
@@ -375,8 +398,9 @@
                 <h4 class="mb-4 font-semibold text-gray-800 ">
                     Grade Level Offenses
                 </h4>
-                <canvas id="myGroupedBar"></canvas>
-
+                {{-- <canvas id="myGroupedBar"></canvas> --not the update one--}}
+                    {{-- The updated one --}}
+                    <canvas id="barGradeLevel"></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600 ">
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
