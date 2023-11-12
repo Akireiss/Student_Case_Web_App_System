@@ -103,3 +103,112 @@
     </script>
 @endpush
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- Pdf --}}
+
+@if ($classroom !== "All")
+<div class="my-2">
+    <p class="text-left text-xl">
+        Grade: {{ $classroom->grade_level }} {{ $classroom->section }}
+    </p>
+    <p>
+
+        Total: {{ $anecdotals->count() }}
+
+        Case Status:
+        @if ($status == 'All')
+            All
+        @endif
+        @if ($status == 0)
+            Pending
+        @endif
+
+        @if ($status == 1)
+            Ongoing
+        @endif
+
+        @if ($status == 2)
+            Resvold
+        @endif
+
+
+        @if ($status == 3)
+            Fllo Up
+        @endif
+
+    </p>
+
+
+    @if ($classroom->students)
+        @foreach ($classroom->students as $student)
+            <li>{{ $student->first_name }}
+                @if ($status == 'All')
+                    {{ $student->anecdotal->count() }}
+                @else
+                    {{ $student->anecdotal->where('case_status', $status)->count() }}
+                @endif
+
+            </li>
+        @endforeach
+    @endif
+
+
+
+
+@else
+
+
+    <div>
+        All Reports From All Classroom
+    </div>
+
+    <table style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <td>Pending</td>
+                <td>Ongoing</td>
+                <td>Resolved</td>
+                <td>Follow Up</td>
+                <td>Referral</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {{ $anecdotals->where('case_status', 0)->count() }}
+                </td>
+                <td>
+                    {{ $anecdotals->where('case_status', 1)->count() }}</td>
+                <td>
+                    {{ $anecdotals->where('case_status', 2)->count() }}</td>
+                <td>
+                    {{ $anecdotals->where('case_status', 3)->count() }}</td>
+                <td>
+                    {{ $anecdotals->where('case_status', 4)->count() }}</td>
+            </tr>
+            <tr>
+                @foreach ($classroom as $class)
+                <tr>
+                    <td>{{ $class->grade_level }}</td>
+                    <td>{{ $class->section }}</td>
+                    <td>{{ $class->students->anecdotal->count() }}</td>
+                </tr>
+            @endforeach
+
+            </tr>
+        </tbody>
+    </table>
+@endif
+
+</div>

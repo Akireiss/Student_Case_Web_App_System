@@ -36,7 +36,7 @@
         @endforeach
 
         <div class="flex justify-end ">
-            {{-- Still in developemt --}}
+            {{-- Still in developemtw --}}
             {{-- <div x-data="{ selectedYear: 'Current Year <svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-2&quot;> <path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>' }">
                     <x-dropdown>
                         <x-slot name="trigger">
@@ -444,6 +444,7 @@
 
                 </div>
             </div>
+
 
 
         </div>

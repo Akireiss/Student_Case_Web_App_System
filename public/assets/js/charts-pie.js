@@ -134,3 +134,23 @@ $(".py-2").click(function () {
             console.error("Error fetching offense counts:", error)
         );
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

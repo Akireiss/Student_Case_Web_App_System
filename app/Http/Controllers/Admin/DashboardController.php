@@ -195,16 +195,41 @@ class DashboardController extends Controller
         return response()->json(['resolvedCount' => $resolvedCount]);
     }
 
-    public function getSuccessfulActions()
-    {
-        $successfulActions = DB::table('anecdotal_outcome')
-            ->select(DB::raw('count(*) as count, action as label'))
-            ->where('outcome', '=', 2)
-            ->groupBy('action') // Group by 'action' instead of 'outcome'
-            ->get();
+    public function getSuccessfulActions(Request $request)
+{
+    $year = $request->input('year', 'All');
 
-        return response()->json($successfulActions);
+    $query = DB::table('anecdotal_outcome')
+    ->select(DB::raw('count(*) as count, action as label'))
+    ->where('outcome', '=', 2)
+    ->groupBy('action');
+
+    if ($year !== 'All') {
+        // Calculate the start and end dates for the selected year
+        $yearParts = explode('-', $year);
+        $startDate = Carbon::create($yearParts[0], 6, 1);
+        $endDate = Carbon::create($yearParts[1], 5, 31);
+
+        // Assuming you have a date field named 'created_at'
+        $query->whereBetween('created_at', [$startDate, $endDate]);
     }
+
+    $successfulActions = $query->get();
+
+    return response()->json($successfulActions);
+}
+
+
+    // public function getSuccessfulActions()
+    // {
+    //     $successfulActions = DB::table('anecdotal_outcome')
+    //         ->select(DB::raw('count(*) as count, action as label'))
+    //         ->where('outcome', '=', 2)
+    //         ->groupBy('action') // Group by 'action' instead of 'outcome'
+    //         ->get();
+
+    //     return response()->json($successfulActions);
+    // }
 
 
     public function getOngoingCases()

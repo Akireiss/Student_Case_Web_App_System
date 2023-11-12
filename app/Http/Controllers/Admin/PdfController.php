@@ -116,14 +116,21 @@ class PdfController extends Controller
         // }
 
 
+
         // Get the data based on the query
         $anecdotals = $anecdotals->get();
 
+        $allClassroom = Classroom::where('status', 0)->get();
+
         // Generate and stream the PDF
         $pdf = PDF::loadView('pdf.report', [
+            'classroomId' => $classroomId,
+            'category' => $category,
             'anecdotals' => $anecdotals,
             'classroom' => $classroom,
-            'status' => $status
+            'status' => $status,
+            'year' => $year,
+            'allClassroom' => $allClassroom
         ]);
 
         return $pdf->stream('report.pdf');
