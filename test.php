@@ -1,48 +1,5 @@
-<?php
 
-namespace App\Http\Controllers\Admin;
-
-use Carbon\Carbon;
-use App\Models\Profile;
-use App\Models\Anecdotal;
-use App\Models\Classroom;
-use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\App;
-use App\Http\Controllers\Controller;
-
-class PdfController extends Controller
-{
-    public function generatePdf($id)
-    {
-        $profile = Profile::with('family')->find($id);
-
-        if (!$profile) {
-            abort(403);
-        }
-
-        $pdf = Pdf::loadView('pdf.pdf', ['profile' => $profile]);
-
-        return $pdf->download();
-    }
-
-
-    public function testPdf($id)
-    {
-
-        $profile = Profile::with('family')->find($id);
-
-        if (!$profile) {
-            abort(403);
-        }
-        $pdf = Pdf::loadView('testPdf', ['profile' => $profile]);
-
-        return $pdf->stream();
-    }
-
-
-
-    public function generateReport()
+public function generateReport()
     {
         $highSchools = Classroom::where('status', 0)
         ->whereIn('grade_level', [7, 8, 9, 10 ])->get();
@@ -102,7 +59,7 @@ class PdfController extends Controller
 
         if ($highSchool !== 'All') {
             $anecdotals->whereHas('students', function ($query) use ($highSchoolIds) {
-                $query->where('classroom_id', $highSchoolIds);
+                $query->whereIn('classroom_id', $highSchoolIds);
             });
         } else {
             $anecdotals->whereHas('students', function ($query) {
@@ -113,7 +70,7 @@ class PdfController extends Controller
 
         if ($SeniorHigh !== 'All') {
             $anecdotals->whereHas('students', function ($query) use ($seniorHighSchool) {
-                $query->where('classroom_id', $seniorHighSchool);
+                $query->whereIn('classroom_id', $seniorHighSchool);
             });
         } else {
             $anecdotals->whereHas('students', function ($query) {
@@ -141,6 +98,13 @@ class PdfController extends Controller
 
         }
 
+        // if ($status !== 'All') {
+        //     $anecdotals->whereHas('offenses', function ($query) use ($status) {
+        //         $query->where('status', 0);
+        //     })->where('case_status', $status);
+
+        // }
+        // Get the data based on the query
         $anecdotals = $anecdotals->get();
 
         $allClassroom = Classroom::where('status', 0)->get();
@@ -160,5 +124,3 @@ class PdfController extends Controller
 
         return $pdf->stream('report.pdf');
     }
-
-}

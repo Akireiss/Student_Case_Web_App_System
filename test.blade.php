@@ -212,3 +212,191 @@
 @endif
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+///
+
+@foreach ($classroom->students as $student)
+                        <tr>
+                            <td>{{ $student->first_name }}</td>
+                            @if ($status == 'All')
+                                <td>Total Case: {{ $student->anecdotal->count() }}</td>
+                            @endif
+
+                            @if ($status == 0)
+                                <td>Total Pending Case:
+                                    {{ $student->anecdotal->filter(function ($anecdotal) use ($category) {
+                                            return $anecdotal->offenses->where('category', $category)->count() > 0;
+                                        })->where('case_status', $status)->count() }}
+                                </td>
+                            @endif
+
+                            @if ($status == 1)
+                                <td>Total Ongoing Case:
+                                    {{ $student->anecdotal->filter(function ($anecdotal) use ($category) {
+                                            return $anecdotal->offenses->where('category', $category)->count() > 0;
+                                        })->where('case_status', $status)->count() }}
+                                </td>
+                            @endif
+
+                            @if ($status == 2)
+                                <td>Total Resolved Case:
+                                    {{ $student->anecdotal->filter(function ($anecdotal) use ($category) {
+                                            return $anecdotal->offenses->where('category', $category)->count() > 0;
+                                        })->where('case_status', $status)->count() }}
+                                </td>
+                            @endif
+
+                            @if ($status == 3)
+                                <td>Total Followup Case:
+                                    {{ $student->anecdotal->filter(function ($anecdotal) use ($category) {
+                                            return $anecdotal->offenses->where('category', $category)->count() > 0;
+                                        })->where('case_status', $status)->count() }}
+                                </td>
+                            @endif
+
+
+                            @if ($status == 4)
+                                <td>Total Refferal Case:
+                                    {{ $student->anecdotal->filter(function ($anecdotal) use ($category) {
+                                            return $anecdotal->offenses->where('category', $category)->count() > 0;
+                                        })->where('case_status', $status)->count() }}
+                                </td>
+                            @endif
+
+                        </tr>
+                    @endforeach
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    public function generateReportPDF(Request $request)
+    {
+        $request->validate([
+            'selectedClassroom' => 'required',
+            'selectedCategory' => 'required',
+            'year' => 'required',
+            'status' => 'required',
+        ]);
+
+        $department = $request->input('department', 'All');
+
+        $highSchool = $request->input('highSchool', 'All');
+
+        $SeniorHigh = $request->input('SeniorHigh', 'All');
+
+        $category = $request->input('selectedCategory', 'All');
+
+        $year = $request->input('year', 'All');
+
+        $status = $request->input('status', 'All');
+
+
+
+        $SeniorId = $request->input('SeniorHigh');
+
+        $highSchoolId = $request->input('highSchool');
+
+        // Retrieve a single classroom instance
+        $highSchoolIds = Classroom::where('id', $highSchoolId)->first();
+        $seniorHighSchool = Classroom::where('id', $SeniorId)->first();
+
+        $anecdotals = Anecdotal::query();
+
+        // if ($classroomId !== 'All') {
+        //     $anecdotals->whereHas('students', function ($query) use ($classroomId) {
+        //         $query->where('classroom_id', $classroomId);
+        //     });
+        // }
+
+        if ($department === 'All') {
+            $anecdotals->where('case_status', $status);
+        }
+
+        if ($highSchool !== 'All') {
+            $anecdotals->whereHas('students', function ($query) use ($highSchoolIds) {
+                $query->whereIn('classroom_id', $highSchoolIds);
+            });
+        } else {
+            $anecdotals->whereHas('students', function ($query) {
+                $query->where('department', 0);
+            });
+        }
+
+
+        if ($SeniorHigh !== 'All') {
+            $anecdotals->whereHas('students', function ($query) use ($seniorHighSchool) {
+                $query->whereIn('classroom_id', $seniorHighSchool);
+            });
+        } else {
+            $anecdotals->whereHas('students', function ($query) {
+                $query->where('department', 1);
+            });
+        }
+
+        if ($category !== 'All') {
+            $anecdotals->whereHas('offenses', function ($query) use ($category) {
+                $query->where('category', $category);
+            });
+        }
+
+        if ($year !== 'All') {
+            // Calculate the start and end dates for the selected year
+            $yearParts = explode('-', $year);
+            $startYear = Carbon::create($yearParts[0], 6, 1);
+            $endYear = Carbon::create($yearParts[1], 5, 31)->endOfDay();
+
+            $anecdotals->whereBetween('created_at', [$startYear, $endYear]);
+        }
+
+        if ($status !== 'All') {
+            $anecdotals->where('case_status', $status);
+
+        }
+
+        // if ($status !== 'All') {
+        //     $anecdotals->whereHas('offenses', function ($query) use ($status) {
+        //         $query->where('status', 0);
+        //     })->where('case_status', $status);
+
+        // }
+        // Get the data based on the query
+        $anecdotals = $anecdotals->get();
+
+        $allClassroom = Classroom::where('status', 0)->get();
+
+        // Generate and stream the PDF
+        $pdf = PDF::loadView('pdf.report', [
+            'seniorHighSchool' => $seniorHighSchool,
+            'highSchoolIds' =>  $highSchoolIds,
+            'category' => $category,
+            'anecdotals' => $anecdotals,
+            'status' => $status,
+            'year' => $year,
+            'allClassroom' => $allClassroom
+        ]);
+
+
+
+        return $pdf->stream('report.pdf');
+    }

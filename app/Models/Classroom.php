@@ -21,12 +21,12 @@ class Classroom extends Model
 
 protected $table = 'classrooms';
 
-protected $fillable = [
-    'employee_id',
-    'section',
-    'grade_level',
-    'status'
-];
+    protected $fillable = [
+        'employee_id',
+        'section',
+        'grade_level',
+        'status'
+    ];
     public function getClassroomAttribute()
     {
         return "{$this->section} {$this->grade_level}";

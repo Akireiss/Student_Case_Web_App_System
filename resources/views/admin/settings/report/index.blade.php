@@ -19,46 +19,71 @@
                 <form action="{{ route('generate.report.pdf') }}" method="get" target="_blank">
                     <!-- Your form fields for selecting classroom and offense category -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <!-- Classroom selection -->
-                        <div class="w-full px-4">
-                            <div class="relative mb-3">
-                                <x-label>Classroom</x-label>
-                                <x-select name="selectedClassroom" required>
-                                    <!-- Options for classrooms -->
-                                    <option value="All">All Classroom</option>
-                                    @foreach ($classrooms as $class)
-                                        <option value="{{ $class->id }}">Grade: {{ $class->grade_level }} {{ $class->section }}</option>
-                                    @endforeach
 
-                                </x-select>
-                                <span class="text-red-500">
-                                    @error('selectedClassroom')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Offense category selection -->
                         <div class="w-full px-4">
                             <div class="relative mb-3">
-                                <x-label for="section">Offense</x-label>
-                                <x-select name="selectedCategory" required>
+                                <x-label for="section">Department</x-label>
+                                <x-select name="department" id="departmentSelect">
                                     <!-- Options for offense categories -->
                                     <option value="All">All</option>
-                                    <option value="0">Minor</option>
-                                    <option value="1">Grave</option>
+                                    <option value="0">High School</option>
+                                    <option value="1">Senior High School</option>
                                 </x-select>
-                                <span class="text-red-500">
-                                    @error('selectedCategory')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
                             </div>
                         </div>
 
+                        <div class="w-full px-4" id="highSchoolSelect" style="display: none;">
+                            <div class="relative mb-3">
+                                <x-label>High Schools</x-label>
+                                <x-select name="highSchool">
+                                    <!-- Options for classrooms -->
+                                    <option value="All">All Classroom</option>
+                                    @foreach ($highSchools as $class)
+                                        <option value="{{ $class->id }}">Grade: {{ $class->grade_level }}
+                                            {{ $class->section }}</option>
+                                    @endforeach
+                                </x-select>
+                            </div>
+                        </div>
+
+                        <div class="w-full px-4" id="seniorHighSelect" style="display: none;">
+                            <div class="relative mb-3">
+                                <x-label>Senior High</x-label>
+                                <x-select name="SeniorHigh" >
+                                    <!-- Options for classrooms -->
+                                    <option value="All">All Classroom</option>
+                                    @foreach ($seniorHigh as $classHigh)
+                                        <option value="{{ $classHigh->id }}">Grade: {{ $classHigh->grade_level }}
+                                            {{ $class->section }}</option>
+                                    @endforeach
+                                </x-select>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- Offense category selection -->
+                        <div class="w-full px-4 hidden">
+                            <div class="relative mb-3">
+                                <x-label for="section">Offense</x-label>
+                                <x-select name="selectedCategory">
+                                    <!-- Options for offense categories -->
+                                    <option value="All" selected>All</option>
+                                </x-select>
+
+                            </div>
+                        </div>
+
+
+
+
+
                         <div class="w-full px-4">
                             <div class="relative mb-3">
-                                <x-label for="section">School Year: <span class="text-green-500 text-sm">June(this year)-May(next-year)</span></x-label>
+                                <x-label for="section">School Year: <span class="text-green-500 text-sm">June(this
+                                        year)-May(next-year)</span></x-label>
                                 <x-select name="year" required>
                                     <option value="All">All Year</option>
                                     <option value="2021-2022">2021-2022</option>
@@ -70,7 +95,7 @@
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
-                                <x-label for="section" >Status</x-label>
+                                <x-label for="section">Status</x-label>
                                 <x-select name="status" required>
                                     <option value="All">All</option>
                                     <option value="0">Pending</option>
@@ -97,4 +122,25 @@
             </x-slot>
         </x-form>
     </div>
+
+
+
+    <script>
+        const departmentSelect = document.getElementById('departmentSelect');
+        const highSchoolSelect = document.getElementById('highSchoolSelect');
+        const seniorHighSelect = document.getElementById('seniorHighSelect');
+
+        departmentSelect.addEventListener('change', function() {
+            if (departmentSelect.value === '0') {
+                highSchoolSelect.style.display = 'block';
+                seniorHighSelect.style.display = 'none';
+            } else if (departmentSelect.value === '1') {
+                highSchoolSelect.style.display = 'none';
+                seniorHighSelect.style.display = 'block';
+            } else {
+                highSchoolSelect.style.display = 'none';
+                seniorHighSelect.style.display = 'none';
+            }
+        });
+    </script>
 @endsection
