@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Activity;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Anecdotal;
 use App\Models\Classroom;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -190,43 +190,90 @@ class HelpController extends Controller
             $anecdotals->whereIn('case_status', [0, 1, 2, 3, 4]);
         }
 
+
+
         if ($highSchool === 'All') {
-            // Fetch all classrooms with grade levels 7, 8, 9, and 10
-            $classrooms = Classroom::whereIn('grade_level', [7, 8, 9, 10])->get();
+            $classroomsHS = Anecdotal::whereIn(
+                DB::raw('SUBSTRING(grade_level, 1, 2)'),
+                ['7', '8', '9', '10']
+            )->selectRaw('SUBSTRING(grade_level, 1, 2) as first_letter')
+            ->distinct()
+            ->get();
 
-            $totalMaleCasesForClassroom = [];
-            $totalFemaleCasesForClassroom = [];
 
-            foreach ($classrooms as $classroom) {
-                $totalMaleCases = $classroom->students()
-                    ->where('gender', 0)
-                    ->whereHas('anecdotal', function ($query) use ($status) {
-                        $query->where('case_status', $status);
+            $yearParts = explode('-', $year);
+            $startYear = Carbon::create($yearParts[0], 6, 1);
+            $endYear = Carbon::create($yearParts[1], 5, 31)->endOfDay();
+
+            $totalMaleCasesHS = [];
+            $totalFemaleCasesHS = [];
+
+            foreach ($classroomsHS as $classroom) {
+                $totalMaleCases = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
+                    ->where('grade_level', 'like', $classroom->first_letter.'%')
+                    ->whereHas('students', function ($query) use ($classroom) {
+                        $query->where('gender', 0);
                     })
                     ->count();
 
-                $totalFemaleCases = $classroom->students()
-                    ->where('gender', 1)
-                    ->whereHas('anecdotal', function ($query) use ($status) {
-                        $query->where('case_status', $status);
+                $totalFemaleCases = Anecdotal::where('case_status', $status)
+                    ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+                    ->whereHas('students', function ($query) use ($classroom) {
+                        $query->where('gender', 1);
                     })
                     ->count();
 
-                // Use classroom ID as the key in the arrays
-                $totalMaleCasesForClassroom[$classroom->id] = $totalMaleCases;
-                $totalFemaleCasesForClassroom[$classroom->id] = $totalFemaleCases;
+                $totalMaleCasesHS[$classroom->first_letter] = $totalMaleCases;
+                $totalFemaleCasesHS[$classroom->first_letter] = $totalFemaleCases;
             }
-
         }
-
-        // Now you have the cases for each grade and can pass them to your PDF view
 
 
         if ($SeniorHigh === 'All') {
-            $anecdotals->whereHas('students', function ($query) use ($department) {
-                $query->where('department', $department);
-            });
+            $classroomsSenior = Anecdotal::whereIn(
+                DB::raw('SUBSTRING(grade_level, 1, 2)'),
+                ['11', '12']
+            )->selectRaw('SUBSTRING(grade_level, 1, 2) as first_letter')
+            ->distinct()
+            ->get();
+
+
+            $yearParts = explode('-', $year);
+            $startYear = Carbon::create($yearParts[0], 6, 1);
+            $endYear = Carbon::create($yearParts[1], 5, 31)->endOfDay();
+
+            $totalMaleCasesSenior = [];
+            $totalFemaleCasesSenior = [];
+
+            foreach ($classroomsSenior as $classroom) {
+                $totalMaleCasesSenior = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
+                    ->where('grade_level', 'like', $classroom->first_letter.'%')
+                    ->whereHas('students', function ($query) use ($classroom) {
+                        $query->where('gender', 0);
+                    })
+                    ->count();
+
+                $totalFemaleCasesSenior = Anecdotal::where('case_status', $status)
+                    ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+                    ->whereHas('students', function ($query) use ($classroom) {
+                        $query->where('gender', 1);
+                    })
+                    ->count();
+
+                $totalMaleCasesSenior[$classroom->first_letter] = $totalMaleCasesSenior;
+                $totalFemaleCasesSenior[$classroom->first_letter] = $totalFemaleCasesSenior;
+            }
         }
+
+
+
+
+
+
+
+
+
+
 
         if ($year === 'All') {
             // Handle 'All' case by not applying date filtering
@@ -251,9 +298,12 @@ class HelpController extends Controller
         // Load a view and generate the PDF
         $pdf = PDF::loadView('pdf.test', [
             'anecdotals' => $anecdotals,
-            'totalMaleCasesForClassroom' => $totalMaleCasesForClassroom,
-            'totalFemaleCasesForClassroom' => $totalFemaleCasesForClassroom,
-            'classrooms' => $classrooms
+            'totalMaleCasesHS' => $totalMaleCasesHS,
+            'totalFemaleCasesHS' => $totalFemaleCasesHS,
+            'classroomsHS' => $classroomsHS,
+            'totalMaleCasesSenior' => $totalMaleCasesSenior,
+            'totalFemaleCasesHS' => $totalFemaleCasesHS
+
         ]);
 
         return $pdf->stream('report.pdf');

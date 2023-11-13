@@ -5,11 +5,11 @@
         <th width="28.5%">Total Male Cases:</th>
         <th width="25%">Total Female Cases:</th>
     </tr>
-    @foreach ($classrooms as $classroom)
-    <tr>
-        <td>{{ $classroom->grade_level }}</td>
-        <td>{{ $totalMaleCasesForClassroom[$classroom->id] }}</td>
-        <td>{{ $totalFemaleCasesForClassroom[$classroom->id] }}</td>
-    </tr>
+    @foreach ($classroomsHS as $classroom)
+        <tr>
+            <td>{{ $classroom->first_letter }}</td>
+            <td>{{ $totalMaleCasesHS[$classroom->first_letter] }}</td>
+            <td>{{ $totalFemaleCasesHS[$classroom->first_letter] }}</td>
+        </tr>
     @endforeach
 </table>

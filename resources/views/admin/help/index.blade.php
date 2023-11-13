@@ -92,7 +92,7 @@
                                     <!-- Options for classrooms -->
                                     <option value="All">All Classroom</option>
                                     @foreach ($highSchools as $class)
-                                        <option value="{{ $class->id }}">Grade: {{ $class->grade_level }}
+                                        <option value="{{ $class->grade_level }}">Grade: {{ $class->grade_level }}
                                             {{ $class->section }}</option>
                                     @endforeach
                                 </x-select>
@@ -106,7 +106,7 @@
                                     <!-- Options for classrooms -->
                                     <option value="All">All Classroom</option>
                                     @foreach ($seniorHigh as $classHigh)
-                                        <option value="{{ $classHigh->id }}">Grade: {{ $classHigh->grade_level }}
+                                        <option value="{{ $classHigh->grade_level }}">Grade: {{ $classHigh->grade_level }}
                                             {{ $class->section }}</option>
                                     @endforeach
                                 </x-select>
