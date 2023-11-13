@@ -124,3 +124,44 @@ public function generateReport()
 
         return $pdf->stream('report.pdf');
     }
+
+
+
+    // 'pendingSH' => $pendingSH,
+            // 'ongoingSH' => $ongoingSH,
+            // 'ResolveSH' => $ResolveSH,
+            // 'FollowSH' => $FollowSH,
+            // 'RefferSh' => $RefferSh
+
+
+            //Case Staus's
+
+
+// foreach ($classroomsSenior as $classroom) {
+//     $totalPendingSH = Anecdotal::where('case_status', 0)->whereBetween('created_at',  [$startYear, $endYear])
+//         ->where('grade_level', 'like', $classroom->first_letter.'%')
+//         ->count();
+
+//     $totalOGSH = Anecdotal::where('case_status', 1)
+//         ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+//         ->count();
+
+//     $totalResSH = Anecdotal::where('case_status', 2)
+//         ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+//         ->count();
+
+//     $totalFollowSH = Anecdotal::where('case_status', 3)
+//     ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+//     ->count();
+
+//     $totalRefferSH = Anecdotal::where('case_status', 4)
+//         ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+//         ->count();
+
+
+//     $pendingSH[$classroom->first_letter] =  $totalPendingSH;
+//     $ongoingSH[$classroom->first_letter] = $totalOGSH;
+//     $ResolveSH[$classroom->first_letter] = $totalResSH;
+//     $FollowSH[$classroom->first_letter] = $totalFollowSH;
+//     $RefferSh[$classroom->first_letter] = $totalRefferSH;
+// }

@@ -188,12 +188,23 @@ class HelpController extends Controller
         $totalMaleCasesHS = [];
         $totalFemaleCasesHS = [];
         $classroomsHS = null;
+        $totalAllMaleCasesHS = 0; // Initialize a variable for total male cases
+        $totalAllFemaleCasesHS = 0; // Initialize a variable for total female cases
 
 
         $totalMaleCasesSH = [];
         $totalFemaleCasesSH = [];
         $classroomsSenior = null;
+        $totalAllMaleCasesSH = 0; // Initialize a variable for total male cases
+        $totalAllFemaleCasesSH = 0; // Initialize a variable for total female cases
 
+
+        //Cases Status
+        $pendingSH = [];
+        $ongoingSH  = [];
+        $ResolveSH  = [];
+        $FollowSH  = [];
+        $RefferSh = [];
 
         $anecdotals = Anecdotal::query();
 
@@ -214,11 +225,6 @@ class HelpController extends Controller
             $startYear = Carbon::create($yearParts[0], 6, 1);
             $endYear = Carbon::create($yearParts[1], 5, 31)->endOfDay();
 
-            $totalMaleCasesHS = [];
-            $totalFemaleCasesHS = [];
-
-            $totalAllMaleCasesHS = 0; // Initialize a variable for total male cases
-            $totalAllFemaleCasesHS = 0; // Initialize a variable for total female cases
 
             foreach ($classroomsHS as $classroom) {
                 $totalMaleCases = Anecdotal::where('case_status', $status)
@@ -278,6 +284,42 @@ class HelpController extends Controller
 
                 $totalMaleCasesSH[$classroom->first_letter] = $totalMaleCasesSenior;
                 $totalFemaleCasesSH[$classroom->first_letter] = $totalFemaleCasesSenior;
+
+                $totalAllMaleCasesSH += $totalMaleCasesSenior; // Add to the total male cases
+                $totalAllFemaleCasesSH += $totalFemaleCasesSenior; // Add to the total female cases
+
+
+                if ($status === 'All') {
+                foreach ($classroomsSenior as $classroom) {
+                    $totalPendingSH = Anecdotal::where('case_status', 0)->whereBetween('created_at',  [$startYear, $endYear])
+                        ->where('grade_level', 'like', $classroom->first_letter.'%')
+                        ->count();
+
+                    $totalOGSH = Anecdotal::where('case_status', 1)
+                        ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+                        ->count();
+
+                    $totalResSH = Anecdotal::where('case_status', 2)
+                        ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+                        ->count();
+
+                    $totalFollowSH = Anecdotal::where('case_status', 3)
+                    ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+                    ->count();
+
+                    $totalRefferSH = Anecdotal::where('case_status', 4)
+                        ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+                        ->count();
+
+
+                    $pendingSH[$classroom->first_letter] =  $totalPendingSH;
+                    $ongoingSH[$classroom->first_letter] = $totalOGSH;
+                    $ResolveSH[$classroom->first_letter] = $totalResSH;
+                    $FollowSH[$classroom->first_letter] = $totalFollowSH;
+                    $RefferSh[$classroom->first_letter] = $totalRefferSH;
+                }
+            }
+
             }
         }
 
@@ -320,9 +362,19 @@ class HelpController extends Controller
 
             'SeniorHigh' => $SeniorHigh,
             'highSchool' => $highSchool,
+            //total count
+            'totalAllMaleCasesSH' => $totalAllMaleCasesSH,
+            'totalAllFemaleCasesSH' => $totalAllFemaleCasesSH,
             //other components
             'department' => $department,
-            'year' => $year
+            'year' => $year,
+            'status' => $status,
+
+            'pendingSH' => $pendingSH,
+            'ongoingSH' => $ongoingSH,
+            'ResolveSH' => $ResolveSH,
+            'FollowSH' => $FollowSH,
+            'RefferSh' => $RefferSh
         ]);
 
         return $pdf->stream('report.pdf');
