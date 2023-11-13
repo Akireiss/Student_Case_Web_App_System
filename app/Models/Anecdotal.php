@@ -31,7 +31,6 @@ class Anecdotal extends Model
         'letter',
         'case_status',
         'story',
-        'status'
 
     ];
     public function getAcademicYearAttribute()

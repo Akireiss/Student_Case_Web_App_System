@@ -15,4 +15,6 @@ class YearlyReportController extends Controller
 
         return view('admin.settings.yearly-report.index', compact('yearlyReport', 'decodedData'));
     }
+
+
 }

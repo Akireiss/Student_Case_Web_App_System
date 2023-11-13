@@ -11,10 +11,296 @@
     <table width="100%">
         <tbody>
             <tr>
-                <th class="bold">CZCMNHS Case Report </th>
+
+                <th class="bold center">CASTOR Z. CONCEPCION MEMORIAL NATIONAL HIGH SCHOOL</th>
 
             </tr>
-            @if ($year !== 'All')
+
+
+        </tbody>
+    </table>
+
+    <table width="100%">
+        <tbody>
+            <tr>
+                @if ($department == 0)
+                    <th class="bold center letter">High School Department</th>
+                @endif
+
+                @if ($department == 1)
+                    <th class="bold center letter">Senior High School Department</th>
+                @endif
+            </tr>
+
+
+        </tbody>
+    </table>
+    <br>
+    <table width="100%">
+        <tbody>
+            <tr>
+                @if ($year != 'All')
+                    <td class="center">Total Case SY {{ $year }}</td>
+                @else
+                    <td class="center">Total Case for All School Year</td>
+                @endif
+
+
+            </tr>
+            <tr>
+
+                <td>
+                    Case Status:
+                    @if ($status == 'All')
+                        All
+                    @endif
+                    @if ($status == 0)
+                        Pending
+                    @endif
+
+                    @if ($status == 1)
+                        Ongoing
+                    @endif
+
+                    @if ($status == 2)
+                        Resvold
+                    @endif
+
+                    @if ($status == 3)
+                        Fllo Up
+                    @endif
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td width="30%">Grade Levels:</td>
+                <td width="28.5%">Total Male Cases:</td>
+                <td width="25%">Total Female Cases:</td>
+            </tr>
+
+            @if ($SeniorHigh === 'All')
+                @php
+                    $maleTotal = 0;
+                    $femaleTotal = 0;
+                @endphp
+
+                @foreach ($seniorHighSchools as $senior)
+                    @php
+
+                        $totalMaleCases = $senior->students->where('gender', 0)->sum(function ($student) {
+                            return $student->anecdotal->count();
+                        });
+
+                        $totalFemaleCases = $senior->students->where('gender', 1)->sum(function ($student) {
+                            return $student->anecdotal->count();
+                        });
+
+                        $maleTotal += $totalMaleCases;
+                        $femaleTotal += $totalFemaleCases;
+                    @endphp
+
+                    <tr>
+                        <td width="30%">Grade {{ $senior->grade_level }}:</td>
+                        <td width="28.5%">{{ $totalMaleCases }}</td>
+                        <td width="25%">{{ $totalFemaleCases }}</td>
+                    </tr>
+                @endforeach
+
+                <tr>
+                    <td>Total:</td>
+                    <td>{{ $maleTotal }}</td>
+                    <td>{{ $femaleTotal }}</td>
+                </tr>
+            @else
+                @foreach ($SeniorClassroom as $senior)
+                    <tr>
+                        <td>Grade: {{ $senior->grade_level }} {{ $senior->section }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endforeach
+
+            @endif
+
+
+
+            @if ($highSchool === 'All')
+                @php
+                    $maleTotal = 0;
+                    $femaleTotal = 0;
+                @endphp
+
+                @foreach ($HighSchoolClass as $high)
+                    @php
+                    // Parse the selected year into a start and end date
+                    $yearParts = explode('-', $year);
+                    $startYear = new DateTime($yearParts[0] . '-06-01');
+                    $endYear = new DateTime($yearParts[1] . '-05-31 23:59:59');
+                        $totalMaleCases = $high->students
+                            ->where('gender', 0)
+                            ->whereHas('anecdotal', function ($query) use ($startYear, $endYear) {
+                                $query->whereBetween('created_at', [$startYear, $endYear]);
+                            })
+                            ->sum(function ($student) {
+                                return $student->anecdotal->count();
+                            });
+
+                        $totalFemaleCases = $high->students
+                            ->where('gender', 1)
+                            ->whereHas('anecdotal', function ($query) use ($startYear, $endYear) {
+                                $query->whereBetween('created_at', [$startYear, $endYear]);
+                            })
+                            ->sum(function ($student) {
+                                return $student->anecdotal->count();
+                            });
+
+                        $maleTotal += $totalMaleCases;
+                        $femaleTotal += $totalFemaleCases;
+                    @endphp
+
+                    <tr>
+                        <td width="30%">Grade {{ $high->grade_level }}:</td>
+                        <td width="28.5%">
+                            {{ $totalMaleCases }}
+                        </td>
+                        <td width="25%">
+                            {{ $totalFemaleCases }}
+                        </td>
+                    </tr>
+                @endforeach
+
+
+
+
+                <tr>
+                    <td>Total:</td>
+                    <td>{{ $maleTotal }}</td>
+                    <td>{{ $femaleTotal }}</td>
+                </tr>
+            @else
+                @foreach ($HighClassroom as $classroom)
+                    <tr>
+                        <td>Grade: {{ $classroom->grade_level }} {{ $classroom->section }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endforeach
+            @endif
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+
+
+    <br>
+    <br>
+
+    {{--
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td width="30%"></td>
+                <td width="28.5%">Male:</td>
+                <td width="25%">Female:</td>
+            </tr>
+            <tr>
+                <td width="30%">Grade 11:</td>
+                <td width="28.5%">23:</td>
+                <td width="25%">23:</td>
+            </tr>
+            <tr>
+                <td width="30%">Grade 12:</td>
+                <td width="28.5%">Birthdate:</td>
+                {{-- Need some adjustment here
+                <td width="25%">Birthplace:</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+
+    <br>
+    <br>
+
+
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td width="30%"></td>
+                <td width="28.5%">Male:</td>
+                <td width="25%">Female:</td>
+            </tr>
+            <tr>
+                <td width="30%">Grade 11:</td>
+                <td width="28.5%">23:</td>
+                <td width="25%">23:</td>
+            </tr>
+            <tr>
+                <td width="30%">Grade 12:</td>
+                <td width="28.5%">Birthdate:</td>
+                {{-- Need some adjustment here
+                <td width="25%">Birthplace:</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+
+    <br>
+    <br>
+
+
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td width="30%"></td>
+                <td width="28.5%">Male:</td>
+                <td width="25%">Female:</td>
+            </tr>
+            <tr>
+                <td width="30%">Grade 11:</td>
+                <td width="28.5%">23:</td>
+                <td width="25%">23:</td>
+            </tr>
+            <tr>
+                <td width="30%">Grade 12:</td>
+                <td width="28.5%">Birthdate:</td>
+                {{-- Need some adjustment here
+                <td width="25%">Birthplace:</td>
+            </tr>
+
+        </tbody>
+
+    </table> --}}
+    <br>
+    <br>
+
+    <p class="letter bottom bold" style="font-size: 12px">Prepared By</p>
+    <p class="letter bold bottom" style="font-size: 12px">Rey Angelo D. Ordinario</p>
+
+    <p class="letter bottom bold" style="font-size: 12px">Noted:</p>
+    <p class="letter bold" style="font-size: 12px">Joel B. Nava</p>
+    <p class="letter bold" style="font-size: 12px">School Principal IV</p>
+
+    {{-- {{ $category }} --}}
+
+    <p>
+        {{-- Grade:{{ $classroom->grade_level }} {{ $classroom->section }} --}}
+    </p>
+    {{-- @if ($year !== 'All')
                 <tr>
                     <th>School Year {{ $year }}</th>
                 </tr>
@@ -22,16 +308,13 @@
                 <tr>
                     <th>All Years</th>
                 </tr>
-            @endif
+            @endif --}}
 
-        </tbody>
-    </table>
 
-    {{ $category }}
 
-    <p>
-        {{-- Grade:{{ $classroom->grade_level }} {{ $classroom->section }} --}}
-    </p>
+
+
+
     Case Status:
     @if ($status == 'All')
         All
@@ -55,47 +338,46 @@
 
     @if ($highSchoolIds)
 
-    @if ($highSchoolIds != 'All')
-        <p>
-            Grade:{{ $highSchoolIds->grade_level }} {{ $highSchoolIds->section }} Report
-        </p>
-        @if ($year !== 'All')
+        @if ($highSchoolIds != 'All')
             <p>
-                School Year {{ $year }}</th>
+                Grade:{{ $highSchoolIds->grade_level }} {{ $highSchoolIds->section }} Report
             </p>
-        @else
-            <p>
-                All Years
+            @if ($year !== 'All')
+                <p>
+                    School Year {{ $year }}</th>
+                </p>
+            @else
+                <p>
+                    All Years
+                </p>
+            @endif
             </p>
+
         @endif
-        </p>
-
-    @endif
-
     @else
-    <p>All High School</p>
+        <p>All High School</p>
     @endif
 
 
 
     @if ($seniorHighSchool)
 
-    @if ($seniorHighSchool != 'All')
-        <p>
-            Grade:{{ $seniorHighSchool->grade_level }} {{ $seniorHighSchool->section }} Report
-        </p>
-        @if ($year !== 'All')
+        @if ($seniorHighSchool != 'All')
             <p>
-                School Year {{ $year }}</th>
+                Grade:{{ $seniorHighSchool->grade_level }} {{ $seniorHighSchool->section }} Report
             </p>
-        @else
-            <p>
-                All Years
+            @if ($year !== 'All')
+                <p>
+                    School Year {{ $year }}</th>
+                </p>
+            @else
+                <p>
+                    All Years
+                </p>
+            @endif
             </p>
         @endif
-        </p>
-        @endif
-        @else
+    @else
         <p>All Senior High School</p>
 
     @endif
@@ -103,7 +385,7 @@
 
 
 
-{{--
+    {{--
     @if ($classroom != 'All')
         <table width="100%">
             <tbody>
@@ -153,6 +435,10 @@
 
 </html>
 <style type="text/css">
+    .bottom {
+        margin-bottom: 25px;
+    }
+
     * {
         font-family: Verdana, Arial, sans-serif;
     }
@@ -167,7 +453,7 @@
 
     }
 
-    table td {
+    td {
         border: 1px solid black;
         padding: 5px;
         font-family: "Times New Roman", serif;
@@ -186,7 +472,6 @@
 
     .bold {
         font-weight: bold;
-        padding: 8px;
     }
 
     .checkbox {
@@ -218,5 +503,9 @@
     .center {
         text-align: center;
         /* Center align the content within all <td> elements */
+    }
+
+    .letter {
+        text-transform: uppercase;
     }
 </style>

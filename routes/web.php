@@ -325,3 +325,7 @@ Route::get('/get-offense-counts-new', [HelpController::class, 'getOffenseCountsN
 
 //Test
 Route::get('/get-barchart-data', [DashboardController::class, 'getBarChartData']);
+
+
+//
+Route::get('/generate-pdf', [HelpController::class, 'reportGenerate'])->name('report.pdf.test');

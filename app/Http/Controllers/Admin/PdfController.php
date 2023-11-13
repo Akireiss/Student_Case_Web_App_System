@@ -61,16 +61,18 @@ class PdfController extends Controller
 
         $minorAndGrave = Anecdotal::count();
 
-        return view('admin.settings.report.index', compact('highSchools', 'seniorHigh', 'grave', 'minor', 'minorAndGrave'));
+        return view('admin.settings.report.index',
+        compact('highSchools', 'seniorHigh', 'grave', 'minor',
+        'minorAndGrave'));
     }
 
     public function generateReportPDF(Request $request)
     {
-        $department = $request->input('department', 'All');
+        $department = $request->input('department');
 
-        $highSchool = $request->input('highSchool', 'All');
+        $highSchool = $request->input('highSchool');
 
-        $SeniorHigh = $request->input('SeniorHigh', 'All');
+        $SeniorHigh = $request->input('SeniorHigh');
 
         $category = $request->input('selectedCategory', 'All');
 
@@ -83,6 +85,11 @@ class PdfController extends Controller
         $SeniorId = $request->input('SeniorHigh');
 
         $highSchoolId = $request->input('highSchool');
+
+
+        $seniorHighSchools = [];
+
+
 
         // Retrieve a single classroom instance
         $highSchoolIds = Classroom::where('id', $highSchoolId)->first();
@@ -97,14 +104,16 @@ class PdfController extends Controller
         // }
 
         if ($department === 'All') {
-            $anecdotals->where('case_status', $status);
+            $anecdotals->whereIn('case_status', [0, 1, 2, 3, 4]);
         }
 
         if ($highSchool !== 'All') {
+            $HighSchoolClass = Classroom::where('id', $highSchoolIds)->get();
             $anecdotals->whereHas('students', function ($query) use ($highSchoolIds) {
                 $query->where('classroom_id', $highSchoolIds);
             });
         } else {
+            $HighSchoolClass = Classroom::whereIn('grade_level', [7, 8, 9, 10])->get();
             $anecdotals->whereHas('students', function ($query) {
                 $query->where('department', 0);
             });
@@ -112,13 +121,16 @@ class PdfController extends Controller
 
 
         if ($SeniorHigh !== 'All') {
+            $seniorHighSchools = Classroom::where('id', $SeniorId)->get();
             $anecdotals->whereHas('students', function ($query) use ($seniorHighSchool) {
                 $query->where('classroom_id', $seniorHighSchool);
             });
         } else {
+            $seniorHighSchools = Classroom::whereIn('grade_level', [11, 12])->get();
             $anecdotals->whereHas('students', function ($query) {
                 $query->where('department', 1);
             });
+
         }
 
         if ($category !== 'All') {
@@ -143,7 +155,11 @@ class PdfController extends Controller
 
         $anecdotals = $anecdotals->get();
 
-        $allClassroom = Classroom::where('status', 0)->get();
+        $HighClassroom = Classroom::where('status', 0)->where('id',  $highSchool)->get();
+        $SeniorClassroom = Classroom::where('status', 0)->where('id',  $SeniorId)->get();
+
+        $HighSchoolClass = Classroom::whereIn('grade_level', [6, 7, 8, 9 ,10])->get();
+      //  $seniorClass = Classroom::whereIn('grade_level', [11, 12])->get();
 
         // Generate and stream the PDF
         $pdf = PDF::loadView('pdf.report', [
@@ -153,7 +169,14 @@ class PdfController extends Controller
             'anecdotals' => $anecdotals,
             'status' => $status,
             'year' => $year,
-            'allClassroom' => $allClassroom,
+            'department' => $department,
+            'highSchool' => $highSchool,
+            'SeniorHigh' => $SeniorHigh,
+            'seniorHighSchools' => $seniorHighSchools,
+            'HighSchoolClass' => $HighSchoolClass,
+            //For the model in fethching classroom
+            'HighClassroom' =>  $HighClassroom,
+            'SeniorClassroom' => $SeniorClassroom
         ]);
 
 
