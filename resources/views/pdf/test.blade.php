@@ -36,7 +36,6 @@
     </table>
 
     <br>
-
     <table width="100%">
         <tbody>
             <tr>
@@ -88,10 +87,9 @@
 
         </tbody>
 </table>
-
+<br>
 
 @if ($status == 'All')
-
 <table width="100%">
     <tbody>
         <tr>
@@ -113,11 +111,60 @@
         <td width="25%">{{ $FollowSH[$classroom->first_letter] }}</td>
         <td width="25%">{{ $RefferSh[$classroom->first_letter] }}</td>
     </tr>
+
 @endforeach
+<tr>
+    <td width="30%">Totals: </td>
+    <td width="28.5%">{{ $totalPendingCasesSenior }}</td>
+    <td width="25%">{{  $totalOngoingSH }}</td>
+    <td width="25%">{{ $totalResolveSH }}</td>
+    <td width="25%">{{ $totalFollowUpSH }}</td>
+    <td width="25%">{{ $totalRefferalSh }}</td>
+</tr>
 @endif
 
 
+
 </tbody>
+
+@else
+<table width="100%">
+    <tbody>
+        <tr>
+            <td width="30%">Grade Level:</td>
+            <td width="30%">
+                @if ($status == 0)
+                    Pending
+                @endif
+
+                @if ($status == 1)
+                    Ongoing
+                @endif
+
+                @if ($status == 2)
+                    Resvold
+                @endif
+
+                @if ($status == 3)
+                    Fllo Up
+                @endif Cases
+            </td>
+</tr>
+
+    @foreach ($classroomsSenior as $classroom)
+    <tr>
+        <td width="30%">{{ $classroom->first_letter }}</td>
+        <td width="28.5%">{{ $caseStatusSH[$classroom->first_letter] }}</td>
+    </tr>
+@endforeach
+<tr>
+    <td width="30%">Total: </td>
+    <td width="30%">{{ $totalcaseStatusSH }}</td>
+</tr>
+
+</tbody>
+
+
 @endif
 
 </table>

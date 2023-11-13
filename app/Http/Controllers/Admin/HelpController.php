@@ -206,6 +206,16 @@ class HelpController extends Controller
         $FollowSH  = [];
         $RefferSh = [];
 
+        $totalPendingCasesSenior = 0;
+        $totalOngoingSH  = 0;
+        $totalResolveSH  = 0;
+        $totalFollowUpSH  = 0;
+        $totalRefferalSh = 0;
+
+        //Single Case Status
+        $caseStatusSH = [];
+        $totalcaseStatusSH = 0;
+
         $anecdotals = Anecdotal::query();
 
         if ($department === 'All') {
@@ -288,12 +298,10 @@ class HelpController extends Controller
                 $totalAllMaleCasesSH += $totalMaleCasesSenior; // Add to the total male cases
                 $totalAllFemaleCasesSH += $totalFemaleCasesSenior; // Add to the total female cases
 
-
                 if ($status === 'All') {
-                foreach ($classroomsSenior as $classroom) {
-                    $totalPendingSH = Anecdotal::where('case_status', 0)->whereBetween('created_at',  [$startYear, $endYear])
-                        ->where('grade_level', 'like', $classroom->first_letter.'%')
-                        ->count();
+                    $totalPendingSH = Anecdotal::where('case_status', 0)
+                    ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+                    ->count();
 
                     $totalOGSH = Anecdotal::where('case_status', 1)
                         ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
@@ -317,12 +325,30 @@ class HelpController extends Controller
                     $ResolveSH[$classroom->first_letter] = $totalResSH;
                     $FollowSH[$classroom->first_letter] = $totalFollowSH;
                     $RefferSh[$classroom->first_letter] = $totalRefferSH;
-                }
-            }
+                    //Total Count
+
+                    $totalPendingCasesSenior += $totalPendingSH;
+                    $totalOngoingSH  += $totalOGSH;
+                    $totalResolveSH  += $totalResSH;
+                    $totalFollowUpSH  += $totalFollowSH;
+                    $totalRefferalSh += $totalRefferSH;
+
+            } else {
+                $totalCasesStatus = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
+                ->where('grade_level', 'like', $classroom->first_letter.'%')
+                ->count();
+
+                $caseStatusSH[$classroom->first_letter] = $totalCasesStatus;
+                //Total Count
+                $totalcaseStatusSH += $totalCasesStatus;
+
 
             }
+
+
+            }
+
         }
-
 
 
         if ($year === 'All') {
@@ -344,6 +370,7 @@ class HelpController extends Controller
 
         // Fetch the filtered data
         $anecdotals = $anecdotals->get();
+
 
         // Load a view and generate the PDF
         $pdf = PDF::loadView('pdf.test', [
@@ -374,7 +401,16 @@ class HelpController extends Controller
             'ongoingSH' => $ongoingSH,
             'ResolveSH' => $ResolveSH,
             'FollowSH' => $FollowSH,
-            'RefferSh' => $RefferSh
+            'RefferSh' => $RefferSh,
+            //Total Cases
+           'totalPendingCasesSenior' => $totalPendingCasesSenior,
+            'totalOngoingSH' => $totalOngoingSH,
+            'totalResolveSH' => $totalResolveSH,
+            'totalFollowUpSH' => $totalFollowUpSH,
+            'totalRefferalSh' => $totalRefferalSh,
+            //IF not all case status
+            'caseStatusSH' => $caseStatusSH,
+            'totalcaseStatusSH' => $totalcaseStatusSH
         ]);
 
         return $pdf->stream('report.pdf');
