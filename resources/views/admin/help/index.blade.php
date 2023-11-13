@@ -120,7 +120,7 @@
                                 <x-label for="section">School Year: <span class="text-green-500 text-sm">June(this
                                         year)-May(next-year)</span></x-label>
                                 <x-select name="year" required>
-                                    <option value="All">All Year</option>
+                                    {{-- <option value="All">All Year</option> --}}
                                     <option value="2021-2022">2021-2022</option>
                                     <option value="2022-2023">2022-2023</option>
                                     <option value="2023-2024">2023-2024</option>

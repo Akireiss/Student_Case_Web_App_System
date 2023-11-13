@@ -184,12 +184,22 @@ class HelpController extends Controller
         $year = $request->input('year');
         $status = $request->input('status');
 
+
+        $totalMaleCasesHS = [];
+        $totalFemaleCasesHS = [];
+        $classroomsHS = null;
+
+
+        $totalMaleCasesSH = [];
+        $totalFemaleCasesSH = [];
+        $classroomsSenior = null;
+
+
         $anecdotals = Anecdotal::query();
 
         if ($department === 'All') {
             $anecdotals->whereIn('case_status', [0, 1, 2, 3, 4]);
         }
-
 
 
         if ($highSchool === 'All') {
@@ -200,7 +210,6 @@ class HelpController extends Controller
             ->distinct()
             ->get();
 
-
             $yearParts = explode('-', $year);
             $startYear = Carbon::create($yearParts[0], 6, 1);
             $endYear = Carbon::create($yearParts[1], 5, 31)->endOfDay();
@@ -208,8 +217,12 @@ class HelpController extends Controller
             $totalMaleCasesHS = [];
             $totalFemaleCasesHS = [];
 
+            $totalAllMaleCasesHS = 0; // Initialize a variable for total male cases
+            $totalAllFemaleCasesHS = 0; // Initialize a variable for total female cases
+
             foreach ($classroomsHS as $classroom) {
-                $totalMaleCases = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
+                $totalMaleCases = Anecdotal::where('case_status', $status)
+                    ->whereBetween('created_at',  [$startYear, $endYear])
                     ->where('grade_level', 'like', $classroom->first_letter.'%')
                     ->whereHas('students', function ($query) use ($classroom) {
                         $query->where('gender', 0);
@@ -217,7 +230,8 @@ class HelpController extends Controller
                     ->count();
 
                 $totalFemaleCases = Anecdotal::where('case_status', $status)
-                    ->where('grade_level', 'like', $classroom->first_letter.'%')->whereBetween('created_at',  [$startYear, $endYear])
+                    ->where('grade_level', 'like', $classroom->first_letter.'%')
+                    ->whereBetween('created_at',  [$startYear, $endYear])
                     ->whereHas('students', function ($query) use ($classroom) {
                         $query->where('gender', 1);
                     })
@@ -225,8 +239,12 @@ class HelpController extends Controller
 
                 $totalMaleCasesHS[$classroom->first_letter] = $totalMaleCases;
                 $totalFemaleCasesHS[$classroom->first_letter] = $totalFemaleCases;
+
+                $totalAllMaleCasesHS += $totalMaleCases; // Add to the total male cases
+                $totalAllFemaleCasesHS += $totalFemaleCases; // Add to the total female cases
             }
         }
+
 
 
         if ($SeniorHigh === 'All') {
@@ -242,8 +260,6 @@ class HelpController extends Controller
             $startYear = Carbon::create($yearParts[0], 6, 1);
             $endYear = Carbon::create($yearParts[1], 5, 31)->endOfDay();
 
-            $totalMaleCasesSenior = [];
-            $totalFemaleCasesSenior = [];
 
             foreach ($classroomsSenior as $classroom) {
                 $totalMaleCasesSenior = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
@@ -260,18 +276,10 @@ class HelpController extends Controller
                     })
                     ->count();
 
-                $totalMaleCasesSenior[$classroom->first_letter] = $totalMaleCasesSenior;
-                $totalFemaleCasesSenior[$classroom->first_letter] = $totalFemaleCasesSenior;
+                $totalMaleCasesSH[$classroom->first_letter] = $totalMaleCasesSenior;
+                $totalFemaleCasesSH[$classroom->first_letter] = $totalFemaleCasesSenior;
             }
         }
-
-
-
-
-
-
-
-
 
 
 
@@ -301,9 +309,20 @@ class HelpController extends Controller
             'totalMaleCasesHS' => $totalMaleCasesHS,
             'totalFemaleCasesHS' => $totalFemaleCasesHS,
             'classroomsHS' => $classroomsHS,
-            'totalMaleCasesSenior' => $totalMaleCasesSenior,
-            'totalFemaleCasesHS' => $totalFemaleCasesHS
 
+            'totalMaleCasesSH' => $totalMaleCasesSH,
+            'totalFemaleCasesSH' => $totalFemaleCasesSH,
+            'classroomsSenior' => $classroomsSenior,
+            //totalCount
+            'totalAllMaleCasesHS' => $totalAllMaleCasesHS,
+            'totalAllFemaleCasesHS' => $totalAllFemaleCasesHS,
+
+
+            'SeniorHigh' => $SeniorHigh,
+            'highSchool' => $highSchool,
+            //other components
+            'department' => $department,
+            'year' => $year
         ]);
 
         return $pdf->stream('report.pdf');
