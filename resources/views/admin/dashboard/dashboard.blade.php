@@ -501,7 +501,7 @@
 });
 
 </script>
-    @push('scripts')
+    {{-- @push('scripts')
 
         <script>
             var myGroupedBar = new Chart("myGroupedBar", {
@@ -552,7 +552,7 @@
             });
         </script>
 
-    @endpush
+    @endpush --}}
 
     {{-- Delayed Notification Here --}}
 @endsection

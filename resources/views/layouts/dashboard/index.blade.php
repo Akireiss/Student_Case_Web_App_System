@@ -149,7 +149,7 @@
         <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
         <script src="{{ asset('assets/js/actionspiechart.js ') }}" defer></script>
         <script src="{{ asset('assets/js/charts-bars.js') }}" defer></script>
-        <script src="{{ asset('assets/js/chartPie.js') }}" defer></script>
+
         <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
         <script src="{{ asset('assets/js/cards.js') }}" defer></script>
         <script src="{{ asset('assets/js/notification.js') }}" defer></script>
@@ -162,8 +162,8 @@
         <script src="{{ asset('assets/js/delayedNotif.js') }}"></script>
 
         {{-- For new charts --}}
-        <script src="{{ asset('assets/js/charts-pie.js') }}"></script>
-
+        {{-- <script src="{{ asset('assets/js/charts-pie.js') }}"></script> --}}
+        <script src="{{ asset('assets/js/chartPie.js') }}" defer></script>
         {{-- Js --}}
         {{-- <script src="{{ asset('assets/js/barchart.min.js') }}"></script> --}}
         {{-- Temporary Script --}}

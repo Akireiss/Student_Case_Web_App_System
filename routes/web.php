@@ -245,7 +245,9 @@ Route::middleware(['auth', 'role'])->group(function () {
 
 
 Route::get('/admin/get-case-counts', [DashboardController::class, 'getCaseCounts']);
-Route::get('/get-offense-counts', [DashboardController::class, 'getOffenseCounts']);
+
+// Route::get('/get-offense-counts', [DashboardController::class, 'getOffenseCounts']);
+
 Route::get('/get-dashboard-data', [DashboardController::class, 'getDashboardData']);
 Route::get('/get-weekly-report-count', [DashboardController::class, 'getWeeklyReportCount']);
 Route::get('/get-monthly-report-count', [DashboardController::class, 'getMonthlyReportCount']);
