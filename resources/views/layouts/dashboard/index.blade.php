@@ -130,7 +130,7 @@
                     </div>
 
                 </header>
-                <main class="h-full overflow-y-auto px-8 ">
+                <main class="h-full overflow-y-auto px-4 ">
                     <div class="mx-auto my-6">
                         @yield('content')
                         @include('components.footer')
