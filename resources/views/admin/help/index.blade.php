@@ -85,37 +85,38 @@
                             </div>
                         </div>
 
+
                         <div class="w-full px-4" id="highSchoolSelect" style="display: none;">
                             <div class="relative mb-3">
                                 <x-label>High Schools</x-label>
-                                <x-input name="highSchool" value="All"/>
-
+                                {{-- <x-select name="highSchool"> --}}
+                                    <!-- Options for classrooms -->
+                                    <x-input name="highSchool" value="All" readonly>All Classroom</x-input>
+                                    {{-- @foreach ($highSchools as $class)
+                                        <option value="{{ $class->grade_level }}">Grade: {{ $class->grade_level }}
+                                            {{ $class->section }}</option>
+                                    @endforeach --}}
+                                {{-- </x-select> --}}
                             </div>
                         </div>
-                        {{-- <x-select name="highSchool">
-                            <!-- Options for classrooms -->
-                            <option value="All">All Classroom</option>
-                            @foreach ($highSchools as $class)
-                                <option value="{{ $class->grade_level }}">Grade: {{ $class->grade_level }}
-                                    {{ $class->section }}</option>
-                            @endforeach
-                        </x-select> --}}
+
                         <div class="w-full px-4" id="seniorHighSelect" style="display: none;">
                             <div class="relative mb-3">
                                 <x-label>Senior High</x-label>
-                                <x-input name="SeniorHigh" value="All"/>
+                                {{-- <x-select name="SeniorHigh" > --}}
+                                    <!-- Options for classrooms -->
+                                    <x-input name="SeniorHigh" value="All" readonly>All Classroom</x-input>
+
+                                    {{-- @foreach ($seniorHigh as $classHigh)
+                                        <option value="{{ $classHigh->grade_level }}">Grade: {{ $classHigh->grade_level }}
+                                            {{ $class->section }}</option>
+                                    @endforeach --}}
+                                {{-- </x-select> --}}
 
                             </div>
                         </div>
 
-                        {{-- <x-select name="SeniorHigh" >
-                            <!-- Options for classrooms -->
-                            <option value="All">All Classroom</option>
-                            @foreach ($seniorHigh as $classHigh)
-                                <option value="{{ $classHigh->grade_level }}">Grade: {{ $classHigh->grade_level }}
-                                    {{ $class->section }}</option>
-                            @endforeach
-                        </x-select> --}}
+
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label for="section">School Year: <span class="text-green-500 text-sm">June(this
