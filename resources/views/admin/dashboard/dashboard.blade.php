@@ -35,28 +35,7 @@
             </div>
         @endforeach
 
-        <div class="flex justify-end ">
-            {{-- Still in developemtw --}}
-            {{-- <div x-data="{ selectedYear: 'Current Year <svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-2&quot;> <path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>' }">
-                    <x-dropdown>
-                        <x-slot name="trigger">
-                            <div class="flex items-center">
-                                <x-buttontype x-html="selectedYear">Current Year </x-buttontype>
-                            </div>
-                        </x-slot>
-                        <x-slot name="content">
-                            <ul>
-                                <li class="py-2 px-2 hover:text-green-400" data-year="All" x-on:click="selectedYear = 'All'">All</li>
-                                <li class="py-2 px-2 hover:text-green-400" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}" x-on:click="selectedYear = '{{ date('Y') }}-{{ date('Y') + 1 }}'">Current Year </li>
-                                <li class="py-2 px-2 hover:text-green-400" data-year="2021-2022" x-on:click="selectedYear = '2021-2022'">2021-2022</li>
-                                <li class="py-2 px-2 hover:text-green-400" data-year="2022-2023" x-on:click="selectedYear = '2022-2023'">2022-2023</li>
-                                <li class="py-2 px-2 hover:text-green-400" data-year="2023-2024" x-on:click="selectedYear = '2023-2024'">2023-2024</li>
-                            </ul>
-                        </x-slot>
-                    </x-dropdown>
-            </div> --}}
-
-            <x-dropdown>
+            {{-- <x-dropdown>
                 <x-slot name="trigger">
                     <div class="flex items-center">
                         <button type="button">
@@ -76,33 +55,66 @@
                     </ul>
 
                 </x-slot>
-            </x-dropdown>
+            </x-dropdown> --}}
 
 
-        </div>
 
 
 
         <div x-data="{ currentGrid: 'totalStatusCases', buttonText: 'Total Case Status' }">
             <!-- Dropdown Component -->
 
-            <x-dropdown>
-                <x-slot name="trigger">
-                    <div class="flex justify-end my-2">
-                        <x-buttontype x-text="buttonText">Total Case Status</x-buttontype>
-                    </div>
-                </x-slot>
-                <x-slot name="content">
-                    <ul>
-                        <li @click="currentGrid = 'totalStudents'; buttonText = 'Total Students'"
-                            class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Total Students</li>
-                        <li @click="currentGrid = 'totalFMstudents'; buttonText = 'Male And Female'"
-                            class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Male And Female Cases</li>
-                        <li @click="currentGrid = 'totalStatusCases'; buttonText = 'Cases Status'"
-                            class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Cases Status</li>
-                    </ul>
-                </x-slot>
-            </x-dropdown>
+            <div class="flex justify-end items-center space-x-2">
+                <div id="dropdown">
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <div class="flex items-center cursor-pointer space-x-2">
+                                <x-buttontype>
+                                    <span id="selectedYear" class="flex items-center">
+                                        {{ date('Y') }}-{{ date('Y') + 1 }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1"> <!-- Adjust ml-1 (margin-left) to control the space between text and icon -->
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </span>
+                                </x-buttontype>
+                            </div>
+
+                        </x-slot>
+                        <x-slot name="content">
+                            <ul>
+                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="All">All</li>
+                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</li>
+                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="2021-2022">2021-2022</li>
+                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="2022-2023">2022-2023</li>
+                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="2023-2024">2023-2024</li>
+                            </ul>
+
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+
+
+                <x-dropdown>
+                    <x-slot name="trigger">
+                        <div class="flex justify-end my-2">
+                            <x-buttontype x-html="buttonText + '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-1&quot;><path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>'">Total Case Status</x-buttontype>
+                        </div>
+                    </x-slot>
+                    <x-slot name="content">
+                        <ul>
+                            <li @click="currentGrid = 'totalStudents'; buttonText = 'Total Students'"
+                                class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Total Students</li>
+                            <li @click="currentGrid = 'totalFMstudents'; buttonText = 'Male And Female'"
+                                class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Male And Female Cases</li>
+                            <li @click="currentGrid = 'totalStatusCases'; buttonText = 'Cases Status'"
+                                class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Cases Status</li>
+                        </ul>
+                    </x-slot>
+                </x-dropdown>
+
+        </div>
+
+
 
 
 
@@ -555,4 +567,18 @@
     @endpush --}}
 
     {{-- Delayed Notification Here --}}
+    <script>
+        const dropdown = document.getElementById('dropdown');
+        const selectedYearSpan = document.getElementById('selectedYear');
+        const listItems = dropdown.querySelectorAll('li');
+
+        dropdown.addEventListener('click', function (event) {
+            const target = event.target;
+
+            if (target.tagName === 'LI') {
+                selectedYearSpan.textContent = target.dataset.year;
+
+            }
+        });
+    </script>
 @endsection
