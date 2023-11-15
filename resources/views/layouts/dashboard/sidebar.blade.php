@@ -624,6 +624,29 @@
                 </li>
             @endcan
 
+            @can('user-access')
+
+            <li class="relative px-6 py-3">
+                <span class="{{ request()->is('report/history') || request()->is('report/history/*') ? 'absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}"
+                    aria-hidden="true"></span>
+
+
+
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
+                       href="{{ url('report/history') }}">
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                        <path
+                            d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+                    </svg>
+
+
+                    <span class="ml-4">Report History</span>
+                    </a>
+                </li>
+@endcan
 
                 @can('adviser-access')
                     <li class="relative px-6 py-3">
