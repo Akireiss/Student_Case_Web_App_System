@@ -14,6 +14,7 @@ class UserUpdate extends Component
     public $role;
     public $userName;
     public $status;
+    public $classroom_id;
 
     public function mount($userId)
     {
@@ -44,6 +45,7 @@ class UserUpdate extends Component
             'role' => $this->role,
             'name' => $this->userName,
             'status' => $this->status,
+            'classroom_id' => $this->classroom_id
         ];
 
         if (!empty($this->userPassword)) {
