@@ -74,8 +74,6 @@ final class EmployeeTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('employees')->operators(['contains']),
-            Filter::inputText('refference_number')->operators(['contains']),
             Filter::boolean('status')->label('Inactive', 'Active'),
         ];
     }

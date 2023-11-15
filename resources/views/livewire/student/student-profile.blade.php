@@ -476,11 +476,14 @@
                     <div>
 
 
-                        <div class="flex justify-between items-center mb-4">
+                        <div class="flex justify-between items-center  mb-4">
                             <h6 class=" px-4 text-sm font-bold uppercase">
                                 Siblings' Information
                             </h6>
-                            <x-buttontype type="button" wire:click="addSibling">Add</x-buttontype>
+                            <div class="px-4">
+
+                                <x-buttontype type="button" wire:click="addSibling" >Add</x-buttontype>
+                            </div>
                         </div>
 
 
@@ -525,7 +528,7 @@
 
     </div>
 
-    <div class="px-4">
+    <div class="px-9">
 
         <div x-data="{ selected: @entangle('living_with') }">
             <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
@@ -646,12 +649,15 @@
         </x-grid>
 
 
-        <div class="mb-4">
+        <div class="mb-4 ">
             <div class="flex justify-between items-center">
                 <h6 class="text-sm font-bold uppercase px-4">
                     Name some of you award
                 </h6>
-                <x-buttontype wire:click="addAward">Add Award</x-buttontype>
+                <div class="px-4">
+
+                    <x-buttontype wire:click="addAward">Add Award</x-buttontype>
+                </div>
             </div>
         </div>
 
@@ -927,7 +933,7 @@
 
     </div>
 
-    <div class="flex justify-end items-center px-6 space-x-2">
+    <div class="flex justify-end items-center  space-x-2 px-12 mt-5">
         <x-text-alert />
         <div wire:loading wire:target="save" class="mx-4">
             Loading..

@@ -12,7 +12,7 @@
                 @csrf
                 @method('POST')
 
-                <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
                 Add New Offense
                 </h6>
                 <!-- Personal information form fields -->
@@ -68,7 +68,9 @@
                     <div id="messageContainer">
                     <x-alert/>
                     </div>
-                    <x-button type="submit">Add </x-button>
+                    <div class="px-4 mt-3">
+                    <x-button type="submit">Add Offense</x-button>
+                </div>
                 </div>
             </form>
 

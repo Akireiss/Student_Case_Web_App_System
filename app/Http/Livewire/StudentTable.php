@@ -94,8 +94,7 @@ final class StudentTable extends PowerGridComponent
 
             Column::make('Gender', 'gender', 'students.gender'),
 
-            Column::make('Grade Level', 'grade_level', 'students.grade_level')
-                ->sortable(),
+            Column::make('Grade Level', 'grade_level', 'students.grade_level'),
 
 
             Column::make('Section', 'section')

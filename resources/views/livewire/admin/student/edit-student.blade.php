@@ -9,8 +9,8 @@ Back
         </x-slot>
 
         <form wire:submit="update">
-            <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                Add New Student
+            <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
+                Edit Student
             </h6>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -76,14 +76,14 @@ Back
                 </div>
             </div>
 
-            <div class="flex justify-end items-center space-x-2">
+            <div class="flex justify-end items-center space-x-2 px-4 mt-4">
                 <x-text-alert />
                 <div wire:loading wire:target="update" class="mx-4">
                     Loading...
                 </div>
                 <x-button type="submit" wire:loading.attr="disabled">Update </x-button>
-                 <x-button wire:click="deleteStudent({{ $student }})"
-                 class="bg-red-500 hover:bg-red-700">Delete</x-button>
+                 {{-- <x-button wire:click="deleteStudent({{ $student }})"
+                 class="bg-red-500 hover:bg-red-700">Delete</x-button> --}}
             </form>
         </div>
     </x-form>

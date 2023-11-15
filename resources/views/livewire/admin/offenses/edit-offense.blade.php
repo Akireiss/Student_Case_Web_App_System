@@ -9,7 +9,7 @@
         <x-slot name="slot">
             <form wire:submit.prevent="update" >
 
-                <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
                 Update Offense
                 </h6>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -66,7 +66,10 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" wir
                     <div wire:loading wire:target="update" class="mx-4">
                         Loading...
                     </div>
-                    <x-button type="submit" wire:loading.attr="disabled">Update </x-button>
+                    <div class="px-4 mt-3">
+
+                        <x-button type="submit" wire:loading.attr="disabled">Update </x-button>
+                    </div>
                 </div>
             </form>
 

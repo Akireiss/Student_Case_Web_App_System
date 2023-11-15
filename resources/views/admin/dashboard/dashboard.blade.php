@@ -194,7 +194,7 @@
 
 
                 <!-- Card -->
-                <a href="{{ url('admin/reports') }}" class="flex items-center p-4 bg-white  shadow-md  ">
+                <a href="{{ url('admin/reports') }}" class="flex items-center p-4 bg-white  shadow-md border-l-4 border-green-500 ">
                     <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -220,8 +220,8 @@
                 </a>
                 <!-- Card -->
                 <div class="flex items-center p-4 bg-white shadow-md border-l-4 border-blue-500">
-                    <div class="p-3 mr-4 text-white bg-red-500 rounded-full ">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" height="1em"
+                    <div class="p-3 mr-4 text-white bg-blue-500 rounded-full ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-500" height="1em"
                             viewBox="0 0 320 512" fill="white">
                             <path
                                 d="M96 64a64 64 0 1 1 128 0A64 64 0 1 1 96 64zm48 320v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V287.8L59.1 321c-9.4 15-29.2 19.4-44.1 10S-4.5 301.9 4.9 287l39.9-63.3C69.7 184 113.2 160 160 160s90.3 24 115.2 63.6L315.1 287c9.4 15 4.9 34.7-10 44.1s-34.7 4.9-44.1-10L240 287.8V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V384H144z" />
@@ -239,8 +239,8 @@
 
                 <!-- Card -->
                 <div class="flex items-center p-4 bg-white border-pink-500 border-l-4 shadow-md">
-                    <div class="p-3 mr-4 text-white bg-green-500 rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" height="1em"
+                    <div class="p-3 mr-4 text-white bg-pink-500 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-pink-500" height="1em"
                             viewBox="0 0 320 512" fill="white">
                             <path
                                 d="M160 0a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM88 384H70.2c-10.9 0-18.6-10.7-15.2-21.1L93.3 248.1 59.4 304.5c-9.1
@@ -270,7 +270,7 @@
                 <!-- Card -->
 
                 <!-- Card -->
-                <div class="flex items-center p-4 bg-white  shadow-md
+                <div class="flex items-center p-4 bg-white  shadow-md border-l-4 border-red-500
             ">
                     <div class="p-3 mr-4 text-white bg-red-500 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -291,11 +291,11 @@
                 </div>
 
                 <a href="{{ url('admin/reports') }}"
-                    class="flex items-center p-4 bg-white  shadow-md  border-l-4 border-green-500">
+                    class="flex items-center p-4 bg-white  shadow-md  border-l-4 border-yellow-500">
                     <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5">
+                            stroke="currentColor" class="w-5 h-5 text-yellow-500">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25
                                         0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664

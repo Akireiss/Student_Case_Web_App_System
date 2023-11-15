@@ -20,9 +20,11 @@ class ReportController extends Controller
         $pendingCases = $cases->where('case_status', 0)->count();
         $ongoingCases = $cases->where('case_status', 1)->count();
         $resolvedCases = $cases->where('case_status', 2)->count();
+        $followCases = $cases->where('case_status', 3)->count();
+        $refferalCases = $cases->where('case_status', 4)->count();
 
         return view('admin.reports.view',
-            compact('anecdotal', 'cases', 'totalCases', 'pendingCases', 'ongoingCases', 'resolvedCases')
+            compact('anecdotal', 'cases', 'totalCases', 'pendingCases', 'ongoingCases', 'resolvedCases', 'followCases', 'refferalCases')
         );
     }
 

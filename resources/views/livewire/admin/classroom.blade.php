@@ -30,7 +30,7 @@
 
 
 
-                    <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                    <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
                     Add New Classroom
                     </h6>
                     <!-- Personal information form fields -->
@@ -89,7 +89,7 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-end items-center">
+                    <div class="flex justify-end items-center px-4 mt-4">
                         <x-text-alert />
                         <div wire:loading wire:target="saveClassroom" class="mx-4">
                             Loading...

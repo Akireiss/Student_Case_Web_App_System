@@ -49,11 +49,11 @@
 
                     </x-grid>
 
-                    <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                    <h6 class="text-sm px-4 font-bold uppercase ">
                         Case Information
                     </h6>
 
-                    <x-grid columns="2" gap="4" px="0" mt="4">
+                    <x-grid columns="2" gap="4" px="0" mt="2">
 
 
 
@@ -122,7 +122,7 @@
                         Additional Information
                     </h6>
 
-                    <x-grid columns="2" gap="4" px="0" mt="4">
+                    <x-grid columns="2" gap="4" px="0" mt="2">
 
 
                         <div class="w-full px-4">
@@ -171,11 +171,11 @@
 
                 <div class="mx-8">
 
-                    <h6 class="text-sm my-6 px-4 font-bold uppercase">
+                    <h6 class="text-sm my-3 px-5 font-bold uppercase ">
                         Actions Taken
                     </h6>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 px-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 px-6">
                         @if ($anecdotalData->actionsTaken->isNotEmpty())
                             @foreach ($anecdotalData->actionsTaken as $actions)
                                 <div class="relative mb-3">
@@ -199,9 +199,9 @@
 
                 <div class="flex justify-end px-8">
                     @if (!$anecdotalData->case_status == 1)
-                        <div class="flex items-center">
+                        <div class="flex items-center px-5">
                             <span class="text-red-500 text-sm mr-2">
-                                Accepting it will update the status to ongoing
+                               Case Status: Pending
                             </span>
                             <div wire:loading wire:target="acceptAnecdotal" class="mx-4">
                                 Loading...
@@ -363,8 +363,7 @@
 
                         </x-grid>
 
-                        <div class="w-full px-4">
-                            <x-label>Promissory Note</x-label>
+                        <div class="w-full px-4 mt-3">
                             <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2 mt-2 ">
                                 @if ($anecdotalData->images->isNotEmpty())
                                     @foreach ($anecdotalData->images as $image)
@@ -380,15 +379,20 @@
                                     @endforeach
                                 @else
                                     <div>
-                                        <p class="font-medium text-sm text-gray-600 text-left">No Images Uploaded</p>
+                                        <p class="text-md text-red-500">No Images Uploaded</p>
                                     </div>
                                 @endif
                             </div>
                         </div>
 
+
+
                     @if ($anecdotalData->case_status === 1 )
 
-                        <div class="flex justify-end items-center">
+                        <div class="flex justify-end items-center px-4">
+                            <span class="text-red-500 text-sm mr-2">
+                                Case Status: Ongoing
+                             </span>
                             <x-text-alert />
                             <div wire:loading wire:target="update" class="mx-5">
                                 Loading...
@@ -398,19 +402,19 @@
 
                     @elseif ($anecdotalData->case_status === 2)
                         <div class="flex justify-end items-center mx-4">
-                            <p class="font-medium text-md text-green-500">
+                            <p class=" text-md text-green-500">
                                 The case was resolved on {{ $anecdotalData->updated_at->format('F j, Y') }}
                             </p>
                         </div>
                     @elseif ($anecdotalData->case_status === 3)
                         <div class="flex justify-end items-center mx-4">
-                            <p class="font-medium text-md text-green-500">
+                            <p class="text-md text-green-500">
                                 The case is still under follow-up, and the meeting occurred on {{ $anecdotalData->updated_at->format('F j, Y') }}
                             </p>
                         </div>
                     @elseif ($anecdotalData->case_status === 4)
                         <div class="flex justify-end items-center mx-4">
-                            <p class="font-medium text-md text-green-500">
+                            <p class=" text-md text-green-500">
                                 The case requires referral to another party.
                             </p>
                         </div>

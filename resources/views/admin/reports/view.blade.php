@@ -14,14 +14,14 @@
 
 
         <div class="w-full mx-auto mt-6">
-            <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
+            <div class="relative flex flex-col min-w-0 py-2 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
 
                 <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
-                    <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+                    <h6 class="text-sm mt-2 px-4 font-bold uppercase ">
                         Report Information
                     </h6>
 
-                    <x-grid columns="2" gap="4" px="0" mt="0">
+                    <x-grid columns="2" gap="4" px="0" mt="2">
 
                         <div class="w-full px-4">
 
@@ -35,15 +35,14 @@
 
 
                                 @if ($cases->isNotEmpty())
-                                    <p class="mb-2  text-md text-red-500">
+                                    <p class="mb-2 text-sm text-red-500">
                                         {{ $anecdotal->student->first_name }} {{ $anecdotal->student->last_name }} has a
                                         total of {{ $totalCases }}
-                                        cases |
-                                        {{ $pendingCases }} are pending | {{ $ongoingCases }} are ongoing |
-                                        {{ $resolvedCases }} are resolved.
+                                        cases,{{ $pendingCases }} pending {{ $ongoingCases }} ongoing,
+                                        {{ $resolvedCases }} resolved, {{ $followCases }} follow-up and {{ $refferalCases }} refferal.
                                     </p>
                                 @else
-                                    <p class="mb-2 text-center text-md text-green-500">
+                                    <p class="mb-2 text-center text-sm text-green-500">
                                         No Cases For This Student
                                     </p>
                                 @endif
@@ -60,15 +59,13 @@
 
 
 
-
-
                     </x-grid>
 
                     <h6 class="text-sm my-1 px-4 font-bold uppercase ">
                         Case Information
                     </h6>
 
-                    <x-grid columns="2" gap="4" px="0" mt="4">
+                    <x-grid columns="2" gap="4" px="0" mt="2">
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
@@ -86,12 +83,13 @@
                                 Grave Offenses
                             </x-label>
                             <x-input value="{{ $anecdotal->offenses?->offenses ?? 'No Offenses Found' }}" disabled />
+                                <span class="text-red-500 text-sm"> Offense type: {{ $anecdotal->offenses->category === 0 ? 'Minor' : 'Grave' }}</span>
                         </div>
                     </x-grid>
 
 
 
-                    <x-grid columns="3" gap="4" px="0" mt="4">
+                    <x-grid columns="3" gap="4" px="0" mt="2">
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>
@@ -128,7 +126,7 @@
                         Additional Information
                     </h6>
 
-                    <x-grid columns="2" gap="4" px="0" mt="4">
+                    <x-grid columns="3" gap="4" px="0" mt="2">
 
 
                         <div class="w-full px-4">
@@ -152,6 +150,18 @@
                             </div>
                         </div>
 
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Date
+                                </x-label>
+                                <x-input disabled type="text"
+                                    value="{{ $anecdotal?->created_at->format('F j, Y') ?? 'No Data' }}" />
+
+                            </div>
+                        </div>
+
                     </x-grid>
 
 
@@ -159,7 +169,7 @@
 
                         <div class="w-full px-4">
 
-                            <x-label>Story</x-label>
+                            <x-label>Story (Story behind the report)</x-label>
                             <textarea id="message" rows="4" wire:model="story"
                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
                                     rounded-lg border border-gray-300 "
@@ -201,11 +211,11 @@
         @if ($anecdotal->case_status == 2 || $anecdotal->case_status == 3 || $anecdotal->case_status == 4)
             <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
                 <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
-                    <h6 class="text-sm my-1 px-4 font-bold uppercase ">
-                        Meeting Outcome Updates
+                    <h6 class="text-sm my-1 px-4 font-bold uppercase mt-2 ">
+                        Meeting Outcome Update
                     </h6>
 
-                    <x-grid columns="3" gap="4" px="0" mt="4">
+                    <x-grid columns="3" gap="4" px="0" mt="2">
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>
@@ -250,7 +260,8 @@
                                     @endforeach
                                 @else
                                     <div>
-                                        <p class="font-medium text-sm text-gray-600 text-left">No promissory note uploaded</p>
+                                        <p class="text-sm text-red-500 text-left">
+                                            No promissory note uploaded</p>
                                     </div>
                                 @endif
                             </div>
@@ -263,19 +274,19 @@
 
                 @if ($anecdotal->case_status === 2 )
                     <div class="flex justify-end items-center mx-4">
-                        <p class="font-medium text-md text-green-500">
-                            The case was resolved on {{ $anecdotal->updated_at->format('F j, Y') }}
+                        <p class="text-md text-green-500">
+                            The case was resolved on {{ $anecdotal->updated_at->format('F j, Y') }}.
                         </p>
                     </div>
                 @elseif ($anecdotal->case_status === 3)
                     <div class="flex justify-end items-center mx-4">
-                        <p class="font-medium text-md text-green-500">
-                            The case is still under follow-up, and the meeting occurred on {{ $anecdotal->updated_at->format('F j, Y') }}
+                        <p class="text-md text-green-500">
+                            The case is still under follow-up, and the meeting occurred on {{ $anecdotal->updated_at->format('F j, Y') }}.
                         </p>
                     </div>
                 @elseif ($anecdotal->case_status === 4)
                     <div class="flex justify-end items-center mx-4">
-                        <p class="font-medium text-md text-green-500">
+                        <p class="text-md text-red-500">
                             The case requires referral to another party.
                         </p>
                     </div>

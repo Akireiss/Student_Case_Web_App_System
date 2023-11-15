@@ -42,6 +42,9 @@ function updateChart() {
                             }
                         }
                     },
+                    legend: {
+                        position: "bottom", // Align legend to the bottom
+                    },
                 },
             });
         },

@@ -6,6 +6,9 @@
         <h6 class="text-left text-2xl text-black ">
             Guide Area
         </h6>
+        <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+            Ongoing...
+        </h6>
 
 
 
@@ -53,8 +56,8 @@
     </x-grid> --}}
 
 
-    <div>
-        {{-- Form --}}
+    {{-- <div>
+        {{-- Form
         <x-form title="Grade: ">
             <x-slot name="actions">
 
@@ -89,14 +92,14 @@
                         <div class="w-full px-4" id="highSchoolSelect" style="display: none;">
                             <div class="relative mb-3">
                                 <x-label>High Schools</x-label>
-                                {{-- <x-select name="highSchool"> --}}
+                              <x-select name="highSchool">
                                     <!-- Options for classrooms -->
                                     <x-input name="highSchool" value="All" readonly>All Classroom</x-input>
                                     {{-- @foreach ($highSchools as $class)
                                         <option value="{{ $class->grade_level }}">Grade: {{ $class->grade_level }}
                                             {{ $class->section }}</option>
                                     @endforeach --}}
-                                {{-- </x-select> --}}
+                                {{-- </x-select>
                             </div>
                         </div>
 
@@ -104,14 +107,14 @@
                             <div class="relative mb-3">
                                 <x-label>Senior High</x-label>
                                 {{-- <x-select name="SeniorHigh" > --}}
-                                    <!-- Options for classrooms -->
+                                    <!-- Options for classrooms
                                     <x-input name="SeniorHigh" value="All" readonly>All Classroom</x-input>
 
                                     {{-- @foreach ($seniorHigh as $classHigh)
                                         <option value="{{ $classHigh->grade_level }}">Grade: {{ $classHigh->grade_level }}
                                             {{ $class->section }}</option>
                                     @endforeach --}}
-                                {{-- </x-select> --}}
+                                {{-- </x-select>
 
                             </div>
                         </div>
@@ -122,7 +125,7 @@
                                 <x-label for="section">School Year: <span class="text-green-500 text-sm">June(this
                                         year)-May(next-year)</span></x-label>
                                 <x-select name="year" required>
-                                    {{-- <option value="All">All Year</option> --}}
+                                    {{-- <option value="All">All Year</option>
                                     <option value="2021-2022">2021-2022</option>
                                     <option value="2022-2023">2022-2023</option>
                                     <option value="2023-2024">2023-2024</option>
@@ -160,7 +163,7 @@
         </x-form>
     </div>
 
-    </div>
+    </div> --}}
 
     <script>
         const departmentSelect = document.getElementById('departmentSelect');

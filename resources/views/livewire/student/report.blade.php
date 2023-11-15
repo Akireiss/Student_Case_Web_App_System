@@ -9,16 +9,16 @@
         </div>
 
         <div class="w-full mx-auto mt-6">
-            <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
+            <div class="relative flex flex-col min-w-0 py-2 break-words w-full mb-2 shadow-md rounded-lg border-0 ">
 
                 <div class="flex-auto px-6 lg:px-10 py-10 pt-0">
 
                     <form wire:submit.prevent="store" enctype="multipart/form-data">
                         @csrf
-                        <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
+                        <h6 class="text-sm mt-4 px-4 font-bold uppercase">
                             Reffer Student
                         </h6>
-                        <x-grid columns="2" gap="4" px="0" mt="0">
+                        <x-grid columns="2" gap="4" px="0" mt="2">
 
 
                             <div class="w-full px-4">
@@ -63,7 +63,8 @@
                                                         @endphp
                                                     @endif
                                                 @endforeach
-                                                <span class="text-red-500 text-md  text-center">Total offense:
+                                                {{-- Default: text-md --}}
+                                                <span class="text-red-500 text-sm text-center mt-3">Total offense:
                                                     {{ $totalOffenses }}.
                                                     Pending: {{ $totalPending }}, Ongoing: {{ $totalProcess }},
                                                     Resolved: {{ $totalResolved }},
@@ -125,17 +126,15 @@
                             </div>
 
 
-
-
-
-
                         </x-grid>
 
-                        <h6 class="text-sm my-1 px-4 font-bold uppercase ">
+
+
+                        <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
                             Case Information
                         </h6>
 
-                        <x-grid columns="2" gap="4" px="0" mt="4">
+                        <x-grid columns="2" gap="4" px="0" mt="2">
 
 
 
@@ -211,7 +210,7 @@
                             Additional Information
                         </h6>
 
-                        <x-grid columns="2" gap="4" px="0" mt="4">
+                        <x-grid columns="2" gap="4" px="0" mt="2">
 
 
                             <div class="w-full px-4">
@@ -280,7 +279,7 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 
                         </x-grid>
 
-                        <div class="flex justify-end items-center space-x-2">
+                        <div class="flex justify-end items-center space-x-2 px-4 mt-10">
                             <x-text-alert />
                             <div wire:loading wire:target="store" class="mx-4">
                                 Loading...

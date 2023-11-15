@@ -1,15 +1,25 @@
 @extends('layouts.dashboard.index')
 
 @section('content')
-<div class="flex flex-col lg:flex-row space-y-4 lg:space-x-4">
+<div class="flex flex-col lg:flex-row space-y-4 lg:space-x-2">
     <!-- Manual Backup Form -->
     <div class="flex-1">
         <div class="bg-white p-4 shadow rounded-lg mt-4">
-            <h2 class="text-lg font-semibold">Backup Current Database</h2>
+              <h6 class="text-sm my-1  font-bold uppercase mt-3">Backup Current Database</h2>
             <form action="{{ route('manual.backup') }}" method="POST">
                 @csrf
-                <div class="flex justify-center ">
-                <x-button type="submit">Perform System Backup</x-button>
+                <p>
+                    Creating regular backups of your database is crucial for data integrity and system recovery.
+                    In case of unexpected events or data loss, having a recent backup ensures that you can
+                    restore your system to a known, stable state. Please follow the steps below to perform a
+                    system backup:
+                </p>
+                    <li>Click the "Perform System Backup" button below.</li>
+                    <li>Wait for the backup process to complete.</li>
+                    <li>Download and store the backup file in a secure location.</li>
+
+                <div class="flex justify-end mt-3 ">
+                <x-button type="submit">Create Backup</x-button>
                 </div>
             </form>
         </div>
@@ -18,7 +28,7 @@
     <!-- Restore Database Form -->
     <div class="flex-1">
         <div class="bg-white p-4 shadow rounded-lg">
-            <h2 class="text-lg font-semibold">Upload A New Database</h2>
+              <h6 class="text-sm my-1  font-bold uppercase mt-3">Upload A New Database</h2>
 
             @if (session('success'))
             <div class="bg-green-200 p-2 rounded text-green-700 mb-2">
@@ -73,12 +83,11 @@
         {{ session('error') }}
     </div>
 @endif
-    <h2 class="text-lg font-semibold">Change Database </h2>
-    <h2>Current Database Name: {{ $currentDatabaseName }}</h2>
+      <h6 class="text-sm my-1  font-bold uppercase mt-3">Change Database </h2>
     <form action="{{ route('change.database.name') }}" method="POST">
         @csrf
         <div class="mb-4">
-            <x-label for="new_database_name">Your Database Name:</x-label>
+            <x-label for="new_database_name">Your Database Name: {{ $currentDatabaseName }}</x-label>
             <x-select name="new_database_name">
             @foreach ($databaseNames as $key => $dbName)
 
@@ -91,7 +100,7 @@
             <p class="text-red-500">{{ $message }}</p>
         @enderror
         <div class="flex justify-end">
-        <x-button type="submit">Change Database Name</x-button>
+        <x-button type="submit">Change Database</x-button>
         </div>
     </form>
 </div>
