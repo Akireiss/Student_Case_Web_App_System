@@ -122,7 +122,7 @@
                 id="totalStudents">
                 <!-- Card -->
 
-                <a href="{{ url('admin/settings/students') }}" class="flex items-center p-4 bg-white  shadow-md ">
+                <a href="{{ url('admin/settings/students') }}" class="flex items-center p-4 bg-white  shadow-md border-l-4 border-orange-500 ">
                     <div
                         class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

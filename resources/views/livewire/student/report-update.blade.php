@@ -122,7 +122,7 @@
                         Additional Information
                     </h6>
 
-                    <x-grid columns="2" gap="4" px="0" mt="2">
+                    <x-grid columns="3" gap="4" px="0" mt="2">
 
 
                         <div class="w-full px-4">
@@ -142,6 +142,18 @@
                                 </x-label>
                                 <x-input disabled type="text"
                                     value="{{ $anecdotalData?->short_description ?? 'No Data' }}" />
+
+                            </div>
+                        </div>
+
+
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>
+                                    Date
+                                </x-label>
+                                <x-input disabled type="text"
+                                    value="{{ $anecdotalData?->created_at->format('F j, Y') ?? 'No Data' }}" />
 
                             </div>
                         </div>
