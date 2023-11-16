@@ -88,12 +88,12 @@
         @csrf
         <div class="mb-4">
             <x-label for="new_database_name">Your Database Name: {{ $currentDatabaseName }}</x-label>
-            <x-select name="new_database_name">
-            @foreach ($databaseNames as $key => $dbName)
+<x-select name="new_database_name">
+    @foreach ($filteredDatabases as $key => $dbName)
+        <option value="{{ $dbName }}">{{ $dbName }}</option>
+    @endforeach
+</x-select>
 
-                <option value="{{ $dbName }}">{{ $dbName }}</option>
-                @endforeach
-            </x-select>
 
         </div>
         @error('new_database_name')

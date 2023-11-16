@@ -284,8 +284,9 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                             <div wire:loading wire:target="store" class="mx-4">
                                 Loading...
                             </div>
-                            <x-buttontype wire:loading.attr="disabled" wire:click="resetReport"
-                                class="bg-red-500 text-white hover:bg-red-600">Clear</x-buttontype>
+                    {{-- functoin secetc --}}
+                            {{-- <x-buttontype wire:loading.attr="disabled" wire:click="resetReport"
+                                class="bg-red-500 text-white hover:bg-red-600">Clear</x-buttontype> --}}
                             <x-button type="submit" wire:loading.attr="disabled">Submit</x-button>
                         </div>
                     </form>

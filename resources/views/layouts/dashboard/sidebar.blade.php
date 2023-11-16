@@ -168,7 +168,7 @@
 
                     <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                    <a class="w-full" href="{{ url('backup') }}">Back Up</a>
+                    <a class="w-full" href="{{ url('admin/settings/backup') }}">Back Up</a>
                 </li>
 
                 <li
@@ -808,7 +808,7 @@
 
                             <li
                             class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                            <a class="w-full" href="{{ url('backup') }}">Back Up</a>
+                            <a class="w-full" href="{{ url('admin/settings/backup') }}">Back Up</a>
                         </li>
 
 

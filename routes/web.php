@@ -8,6 +8,7 @@ use App\Http\Controllers\RestoreController;
 use App\Http\Controllers\Student\AuthController;
 use App\Http\Livewire\Admin\Classroom\Classroom;
 use App\Http\Livewire\Admin\Classroom\ClassroomUpdate;
+use App\Http\Livewire\Admin\Offenses\AddOffenses;
 use App\Http\Livewire\Admin\User;
 use App\Http\Livewire\Admin\AddUser;
 use App\Http\Livewire\Admin\Student;
@@ -111,7 +112,9 @@ Route::middleware(['auth', 'role'])->group(function () {
         Route::prefix('admin/settings')->group(function () {
             // Settings Area - Offenses
             Route::get('offenses', [OffensesController::class, 'index']);
-            Route::get('offenses/create', [OffensesController::class, 'create']);
+            // Route::get('offenses/create', [OffensesController::class, 'create']);
+            // Route::get('offenses/create', AddOffenses::class);
+
 
             Route::post('offenses/store', [OffensesController::class, 'store']);
             Route::get('offenses/store/{offense}/view', [OffensesController::class, 'view'])
@@ -179,6 +182,9 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             //Yearly Report
             Route::get('yearly-report', YearlyReport::class);
+            //backup
+            Route::get('backup', [BackupController::class, 'index']);
+
         });
     });
 
@@ -305,7 +311,6 @@ Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 // Route::get('student-profile/data/{profile}/edit', StudentProfileUpdate::class);
 
 //backup
-Route::get('backup', [BackupController::class, 'index']);
 Route::post('backup', [BackupController::class, 'backup'])->name('manual.backup');
 //Restore
 Route::post('/restore', [BackupController::class, 'restore'])->name('restore.restore');

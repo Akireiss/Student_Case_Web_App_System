@@ -230,10 +230,116 @@ class HelpController extends Controller
         $caseStatusSH = [];
         $totalcaseStatusSH = 0;
 
+
+        //All From School
+        $Allclassrooms = null;
+
+        $AllMaletotalCases = [];
+        $AllFemaletotalCases = [];
+        //the total or equal
+        $totalAllMaleCases = 0;
+        $totalAllFemaleCases = 0;
+        //Total Cases from statuses
+        $totalPendingAllCases = 0;
+        $totalOngoingAllCases = 0;
+        $totalResolveAllCases = 0;
+        $totalFollowUpAllCases = 0;
+        $totalRefferalAllCases = 0;
+        //Case Statusis
+        $pendingAll= [];
+        $ongoingAll = [];
+        $ResolveAll = [];
+        $FollowAll = [];
+        $RefferAll= [];
+
+
         $anecdotals = Anecdotal::query();
 
         if ($department === 'All') {
-            $anecdotals->whereIn('case_status', [0, 1, 2, 3, 4]);
+
+
+            $Allclassrooms = Anecdotal::whereIn(
+                DB::raw('SUBSTRING(grade_level, 1, 2)'),
+                ['7', '8','9', '10', '11', '12']
+            )
+            ->selectRaw('SUBSTRING(grade_level, 1, 2) as first_letter')
+            ->distinct()
+            ->orderBy(DB::raw('CAST(first_letter AS SIGNED)'), 'asc');
+
+
+
+            $yearParts = explode('-', $year);
+            $startYear = Carbon::create($yearParts[0], 6, 1);
+            $endYear = Carbon::create($yearParts[1], 5, 31)->endOfDay();
+
+
+            foreach ($Allclassrooms as $classroom) {
+                $allMaleStudentCases = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
+                    ->where('grade_level', 'like', $classroom->first_letter . '%')
+                    ->whereHas('students', function ($query) use ($classroom) {
+                        $query->where('gender', 0);
+                    })
+                    ->count();
+
+                $totalFemaleCasesSenior = Anecdotal::where('case_status', $status)
+                    ->where('grade_level', 'like', $classroom->first_letter . '%')->whereBetween('created_at',  [$startYear, $endYear])
+                    ->whereHas('students', function ($query) use ($classroom) {
+                        $query->where('gender', 1);
+                    })
+                    ->count();
+
+                $AllMaletotalCases[$classroom->first_letter] = $allMaleStudentCases;
+                $AllFemaletotalCases[$classroom->first_letter] = $totalFemaleCasesSenior;
+
+                $totalAllMaleCases += $allMaleStudentCases; // Add to the total male cases
+                $totalAllFemaleCases += $totalFemaleCasesSenior; // Add to the total female cases
+
+
+
+                if ($status === 'All') {
+                    $totalPendingAll = Anecdotal::where('case_status', 0)
+                        ->where('grade_level', 'like', $classroom->first_letter . '%')->whereBetween('created_at',  [$startYear, $endYear])
+                        ->count();
+
+                    $totalOngoingAll = Anecdotal::where('case_status', 1)
+                        ->where('grade_level', 'like', $classroom->first_letter . '%')->whereBetween('created_at',  [$startYear, $endYear])
+                        ->count();
+
+                    $totalResolveAll = Anecdotal::where('case_status', 2)
+                        ->where('grade_level', 'like', $classroom->first_letter . '%')->whereBetween('created_at',  [$startYear, $endYear])
+                        ->count();
+
+                    $totalFollowUpAll = Anecdotal::where('case_status', 3)
+                        ->where('grade_level', 'like', $classroom->first_letter . '%')->whereBetween('created_at',  [$startYear, $endYear])
+                        ->count();
+
+                    $totalRefferalAll = Anecdotal::where('case_status', 4)
+                        ->where('grade_level', 'like', $classroom->first_letter . '%')->whereBetween('created_at',  [$startYear, $endYear])
+                        ->count();
+
+
+                    $pendingAll[$classroom->first_letter] =  $totalPendingAll;
+                    $ongoingAll[$classroom->first_letter] = $totalOngoingAll;
+                    $ResolveAll[$classroom->first_letter] = $totalResolveAll;
+                    $FollowAll[$classroom->first_letter] = $totalFollowUpAll;
+                    $RefferAll[$classroom->first_letter] = $totalRefferalAll;
+                    //Total Count
+
+                    $totalPendingAllCases += $totalPendingAll;
+                    $totalOngoingAllCases  += $totalOngoingAll;
+                    $totalResolveAllCases  += $totalResolveAll;
+                    $totalFollowUpAllCases  += $totalFollowUpAll;
+                    $totalRefferalAllCases += $totalRefferalAll;
+                } else {
+                    $totalCasesStatus = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
+                        ->where('grade_level', 'like', $classroom->first_letter . '%')
+                        ->count();
+
+                    $caseStatusSH[$classroom->first_letter] = $totalCasesStatus;
+                    //Total Count
+                    $totalcaseStatusSH += $totalCasesStatus;
+                }
+            }
         }
 
 

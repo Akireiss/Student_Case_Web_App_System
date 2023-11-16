@@ -1,6 +1,6 @@
 <div id="messageContainer">
     @if (session()->has('message'))
-        <span class="text-green-500 mx-4">
+        <span class="text-green-500 ">
             {{ session('message') }}
         </span>
     @endif

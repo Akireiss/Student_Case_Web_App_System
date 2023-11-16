@@ -18,20 +18,35 @@ class BackupController extends Controller
     public function index()
     {
         try {
+            // Get databases excluding system databases
             $databaseNames = DB::select("SHOW DATABASES WHERE `Database` NOT IN ('information_schema', 'mysql', 'performance_schema', 'phpmyadmin')");
 
             // Extract the database names from the result
             $databaseNames = array_column($databaseNames, 'Database');
 
+            // Get the current database name
             $currentDatabaseName = config('database.connections.mysql.database');
 
-            return view('admin.settings.backup.index', compact('currentDatabaseName', 'databaseNames'));
+            // Filter databases based on the presence of specific tables
+            $filteredDatabases = [];
+            foreach ($databaseNames as $dbName) {
+                $tables = DB::select("SHOW TABLES FROM `$dbName`");
+                $tableNames = array_column($tables, 'Tables_in_' . $dbName);
+
+                // Check if the required tables are present
+                $requiredTables = ['users', 'profile', 'anecdotal'];
+                if (count(array_intersect($requiredTables, $tableNames)) === count($requiredTables)) {
+                    $filteredDatabases[] = $dbName;
+                }
+            }
+
+            return view('admin.settings.backup.index', compact('currentDatabaseName', 'filteredDatabases'));
         } catch (\Exception $e) {
             // Handle any exceptions, e.g., log an error or return an empty array
             return view('admin.settings.backup.index', compact('currentDatabaseName'))->withErrors('Failed to fetch database names');
         }
-
     }
+
     public function backup()
     {
         $databaseName = config('database.connections.mysql.database');

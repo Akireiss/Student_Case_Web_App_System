@@ -14,27 +14,6 @@ class OffensesController extends Controller
         return view('admin.settings.offenses.index');
     }
 
-    public function create()
-    {
-        return view('admin.settings.offenses.create');
-    }
-
-    public function store(OffenseRequest $request)
-    {
-        $validatedData = $request->validated();
-
-        $offenses = new Offenses;
-        $offenses->offenses = $validatedData['offenses'];
-        $offenses->description = $validatedData['description'];
-        $offenses->status = $request->status == true ? '1' : '0';
-        $offenses->category = $request->category == true ? '1' : '0';
-
-        $offenses->save();
-
-        return redirect()->back()->with('success', 'Added Successfully');
-
-    }
-
     public function view($offense) {
         $offense = Offenses::findOrFail($offense);
         return view('admin.settings.offenses.view',compact('offense'));

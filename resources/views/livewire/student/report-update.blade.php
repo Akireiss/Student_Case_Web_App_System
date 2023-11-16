@@ -213,7 +213,7 @@
                     @if (!$anecdotalData->case_status == 1)
                         <div class="flex items-center px-5">
                             <span class="text-red-500 text-sm mr-2">
-                               Case Status: Pending
+                                Case Status: Pending
                             </span>
                             <div wire:loading wire:target="acceptAnecdotal" class="mx-4">
                                 Loading...
@@ -245,52 +245,52 @@
 
 
                             @if ($anecdotalData->case_status === 1)
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Meeting Outcome
-                                    </x-label>
-                                    <x-select wire:model="outcome" required >
-                                        <option value="2">Resolved</option>
-                                        <option value="3">Follow-up</option>
-                                        <option value="4">Refferral</option>
-                                    </x-select>
-                                    <x-error fieldName="outcome" />
-
+                                <div class="w-full px-4">
+                                    <div class="relative mb-3">
+                                        <x-label>
+                                            Meeting Outcome
+                                        </x-label>
+                                        <x-select wire:model="outcome" required id="meetingOutcome">
+                                            <option value="2">Resolved</option>
+                                            <option value="3">Follow-up</option>
+                                            <option value="4">Referral</option>
+                                        </x-select>
+                                        <x-error fieldName="outcome" />
+                                    </div>
                                 </div>
-                            </div>
                             @else
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Meeting Outcome
-                                    </x-label>
-                                    <x-input value="{{ $anecdotalData->outcomes->getActionTextAttribute() }}" disabled/>
+                                <div class="w-full px-4">
+                                    <div class="relative mb-3">
+                                        <x-label>
+                                            Meeting Outcome
+                                        </x-label>
+                                        <x-input value="{{ $anecdotalData->outcomes->getActionTextAttribute() }}"
+                                            disabled />
+                                    </div>
                                 </div>
-                            </div>
                             @endif
 
 
                             @if ($anecdotalData->case_status === 1)
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Remarks (Short Description)
-                                    </x-label>
-                                    <x-input wire:model="outcome_remarks" required />
-                                    <x-error fieldName="outcome_remarks" />
+                                <div class="w-full px-4">
+                                    <div class="relative mb-3">
+                                        <x-label>
+                                            Remarks (Short Description)
+                                        </x-label>
+                                        <x-input wire:model="outcome_remarks" required />
+                                        <x-error fieldName="outcome_remarks" />
+                                    </div>
                                 </div>
-                            </div>
                             @else
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Remarks (Short Description)
-                                    </x-label>
-                                    <x-input value="{{ $anecdotalData->outcomes->outcome_remarks }}" disabled/>
+                                <div class="w-full px-4">
+                                    <div class="relative mb-3">
+                                        <x-label>
+                                            Remarks (Short Description)
+                                        </x-label>
+                                        <x-input value="{{ $anecdotalData->outcomes->outcome_remarks }}" disabled />
 
+                                    </div>
                                 </div>
-                            </div>
                             @endif
 
 
@@ -300,77 +300,88 @@
 
                         <x-grid columns="2" gap="4" px="0" mt="4">
 
-                            @if($anecdotalData->case_status === 1)
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Action Taken
-                                    </x-label>
-                                    <x-select name="action_id" wire:model="action" required>
-                                        <option value="Parent Guidance Meeting">Parent Guidance Meeting</option>
-                                        <option value="Anecdotal Collect">Anecdotal Collect</option>
-                                        <option value="Reinforce expectations">Reinforce expectations</option>
-                                        <option value="Notify Parents">Notify Parents</option>
-                                    </x-select>
-                                    <x-error fieldName="action" />
-
-                                </div>
-                            </div>
-                            @else
-                            <div class="w-full px-4">
-                                <div class="relative mb-3">
-                                    <x-label>
-                                        Action Taken
-                                    </x-label>
-                                    <x-input value="{{ $anecdotalData->outcomes->action }}" disabled/>
-
-                                </div>
-                            </div>
-                            @endif
-
-
                             @if ($anecdotalData->case_status === 1)
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
                                         <x-label>
-                                            Reminder to this case
+                                            Action Taken
                                         </x-label>
-                                        <x-input type="date" wire:model.defer="reminderDays"
-                                            min="{{ now()->toDateString() }}" />
+                                        <x-select name="action_id" wire:model="action" required>
+                                            <option value="Parent Guidance Meeting">Parent Guidance Meeting</option>
+                                            <option value="Anecdotal Collect">Anecdotal Collect</option>
+                                            <option value="Reinforce expectations">Reinforce expectations</option>
+                                            <option value="Notify Parents">Notify Parents</option>
+                                        </x-select>
+                                        <x-error fieldName="action" />
+
+                                    </div>
+                                </div>
+                            @else
+                                <div class="w-full px-4">
+                                    <div class="relative mb-3">
+                                        <x-label>
+                                            Action Taken
+                                        </x-label>
+                                        <x-input value="{{ $anecdotalData->outcomes->action }}" disabled />
+
                                     </div>
                                 </div>
                             @endif
 
 
-                         @if($anecdotalData->case_status === 1)
-                         <div class="w-full px-4">
-                            <x-label>Promissory Note</x-label>
-                            <input type="file" name="letter[]" wire:model="letter" multiple
-                                class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
+                            @if ($anecdotalData->case_status === 1)
+                                @if ($outcome != '2')
+                                    <div class="w-full px-4">
+                                        <div class="relative mb-3">
+                                            <x-label>
+                                                Reminder to this case
+                                            </x-label>
+                                            <x-input type="date" wire:model.defer="reminderDays"
+                                                min="{{ now()->toDateString() }}" id="reminderDate" />
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="w-full px-4">
+                                        <div class="relative mb-3">
+                                            <x-label>
+                                                Reminder to this case <span class="text-red-500">(disabled)</span>
+                                            </x-label>
+                                            <x-input type="date" disabled id="reminderDateDisabled" />
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
+
+
+
+                            @if ($anecdotalData->case_status === 1)
+                                <div class="w-full px-4">
+                                    <x-label>Promissory Note</x-label>
+                                    <input type="file" name="letter[]" wire:model="letter" multiple
+                                        class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
                             file:bg-transparent file:border-0
                             file:bg-gray-100 file:mr-4
                             file:py-2.5 file:px-4">
 
-                            <span class="text-red-500 text-sm">
-                                Accepted file types: Images (JPEG, PNG)
-                            </span>
-                            <x-error fieldName="letter" />
-                        </div>
-
+                                    <span class="text-red-500 text-sm">
+                                        Accepted file types: Images (JPEG, PNG)
+                                    </span>
+                                    <x-error fieldName="letter" />
+                                </div>
                             @else
-                            <div class="w-full px-4">
-                                <x-label>Letter</x-label>
-                                <input type="file" disabled
-                                    class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
+                                <div class="w-full px-4">
+                                    <x-label>Letter</x-label>
+                                    <input type="file" disabled
+                                        class="block w-full border border-gray-200 shadow-sm rounded-md text-sm
                                 file:bg-transparent file:border-0
                                 file:bg-gray-100 file:mr-4
                                 file:py-2.5 file:px-4">
 
-                                <span class="text-red-500 text-sm">
-                                    Accepted file types: Images (JPEG, PNG)
-                                </span>
+                                    <span class="text-red-500 text-sm">
+                                        Accepted file types: Images (JPEG, PNG)
+                                    </span>
 
-                            </div>
+                                </div>
                             @endif
 
                         </x-grid>
@@ -399,38 +410,38 @@
 
 
 
-                    @if ($anecdotalData->case_status === 1 )
-
-                        <div class="flex justify-end items-center px-4">
-                            <span class="text-red-500 text-sm mr-2">
-                                Case Status: Ongoing
-                             </span>
-                            <x-text-alert />
-                            <div wire:loading wire:target="update" class="mx-5">
-                                Loading...
+                        @if ($anecdotalData->case_status === 1)
+                            <div class="flex justify-end items-center px-4">
+                                <span class="text-red-500 text-sm mr-2">
+                                    Case Status: Ongoing
+                                </span>
+                                <x-text-alert />
+                                <div wire:loading wire:target="update" class="mx-5">
+                                    Loading...
+                                </div>
+                                <x-button type="submit" wire:loading.attr="disabled"
+                                    wire:click="saveLetters">Submit</x-button>
                             </div>
-                            <x-button type="submit" wire:loading.attr="disabled" wire:click="saveLetters">Submit</x-button>
-                        </div>
-
-                    @elseif ($anecdotalData->case_status === 2)
-                        <div class="flex justify-end items-center mx-4">
-                            <p class=" text-md text-green-500">
-                                The case was resolved on {{ $anecdotalData->updated_at->format('F j, Y') }}
-                            </p>
-                        </div>
-                    @elseif ($anecdotalData->case_status === 3)
-                        <div class="flex justify-end items-center mx-4">
-                            <p class="text-md text-green-500">
-                                The case is still under follow-up, and the meeting occurred on {{ $anecdotalData->updated_at->format('F j, Y') }}
-                            </p>
-                        </div>
-                    @elseif ($anecdotalData->case_status === 4)
-                        <div class="flex justify-end items-center mx-4">
-                            <p class=" text-md text-green-500">
-                                The case requires referral to another party.
-                            </p>
-                        </div>
-                    @endif
+                        @elseif ($anecdotalData->case_status === 2)
+                            <div class="flex justify-end items-center mx-4">
+                                <p class=" text-md text-green-500">
+                                    The case was resolved on {{ $anecdotalData->updated_at->format('F j, Y') }}
+                                </p>
+                            </div>
+                        @elseif ($anecdotalData->case_status === 3)
+                            <div class="flex justify-end items-center mx-4">
+                                <p class="text-md text-green-500">
+                                    The case is still under follow-up, and the meeting occurred on
+                                    {{ $anecdotalData->updated_at->format('F j, Y') }}
+                                </p>
+                            </div>
+                        @elseif ($anecdotalData->case_status === 4)
+                            <div class="flex justify-end items-center mx-4">
+                                <p class=" text-md text-green-500">
+                                    The case requires referral to another party.
+                                </p>
+                            </div>
+                        @endif
 
                     </form>
 
@@ -443,6 +454,13 @@
 @endif
 
 
+
+    <script>
+        document.getElementById('meetingOutcome').addEventListener('change', function () {
+            var reminderDateInput = document.getElementById('reminderDate');
+            reminderDateInput.disabled = this.value !== '2'; // Disable if the outcome is not 'Resolved'
+        });
+    </script>
 
 
 </div>
