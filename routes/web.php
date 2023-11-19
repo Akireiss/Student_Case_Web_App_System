@@ -336,3 +336,6 @@ Route::get('/get-barchart-data', [DashboardController::class, 'getBarChartData']
 
 //
 Route::get('/generate-pdf', [HelpController::class, 'reportGenerate'])->name('report.pdf.test');
+//Testing Endpoint
+// Route::get('/successfull-action', [HelpController::class, 'successfullAction']);
+Route::get('/successfull-action', [DashboardController::class, 'successfullAction']);

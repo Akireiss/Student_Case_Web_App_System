@@ -194,30 +194,32 @@ class DashboardController extends Controller
             ->count();
         return response()->json(['resolvedCount' => $resolvedCount]);
     }
+    // public function getSuccessfulActions(Request $request)
+    // {
+    //     $year = $request->input('year', 'All');
 
-    public function getSuccessfulActions(Request $request)
-{
-    $year = $request->input('year', 'All');
+    //     $query = DB::table('anecdotal_outcome')
+    //         ->select(DB::raw('count(*) as count, action as label'))
+    //         ->where('outcome', '=', 2)
+    //         ->groupBy('action');
 
-    $query = DB::table('anecdotal_outcome')
-    ->select(DB::raw('count(*) as count, action as label'))
-    ->where('outcome', '=', 2)
-    ->groupBy('action');
+    //     if ($year !== 'All') {
+    //         // Calculate the start and end dates for the selected school year
+    //         $yearParts = explode('-', $year);
+    //         $startMonth = 6; // June
+    //         $endMonth = 5;   // May
 
-    if ($year !== 'All') {
-        // Calculate the start and end dates for the selected year
-        $yearParts = explode('-', $year);
-        $startDate = Carbon::create($yearParts[0], 6, 1);
-        $endDate = Carbon::create($yearParts[1], 5, 31);
+    //         $startDate = Carbon::create($yearParts[0], $startMonth, 1);
+    //         $endDate = Carbon::create($yearParts[1], $endMonth, 31);
 
-        // Assuming you have a date field named 'created_at'
-        $query->whereBetween('created_at', [$startDate, $endDate]);
-    }
+    //         // Assuming you have a date field named 'created_at'
+    //         $query->whereBetween('created_at', [$startDate, $endDate]);
+    //     }
 
-    $successfulActions = $query->get();
+    //     $successfulActions = $query->get();
 
-    return response()->json($successfulActions);
-}
+    //     return response()->json($successfulActions);
+    // }
 
 
     // public function getSuccessfulActions()
@@ -320,5 +322,31 @@ public function getBarChartData(Request $request)
     return response()->json($data);
 }
 
+//Succcesfull Actions
 
+public function successfullAction(Request $request) {
+    $year = $request->input('year', 'All');
+
+    $query = DB::table('anecdotal_outcome')
+        ->select(DB::raw('count(*) as count, action as label'))
+        ->where('outcome', '=', 2)
+        ->groupBy('action');
+
+    if ($year !== 'All') {
+        // Calculate the start and end dates for the selected school year
+        $yearParts = explode('-', $year);
+        $startMonth = 6; // June
+        $endMonth = 5;   // May
+
+        $startDate = Carbon::create($yearParts[0], $startMonth, 1);
+        $endDate = Carbon::create($yearParts[1], $endMonth, 31);
+
+        // Assuming you have a date field named 'created_at'
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
+
+    $successfulActions = $query->get();
+
+    return response()->json($successfulActions);
+}
 }

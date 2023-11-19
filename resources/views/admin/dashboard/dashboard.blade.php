@@ -81,7 +81,7 @@
 
                         </x-slot>
                         <x-slot name="content">
-                            <ul>
+                             <ul id="yearFilter">
                                 <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="All">All</li>
                                 <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</li>
                                 <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="2021-2022">2021-2022</li>
@@ -446,8 +446,8 @@
                 <h4 class="mb-4 font-semibold text-gray-800 ">
                     Total Number Of Successfull Actions
                 </h4>
-                <canvas id="myChart"></canvas>
-
+                {{-- <canvas id="myChart"></canvas> --}}
+                <canvas id="myPieChart"></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600 ">
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
@@ -463,16 +463,11 @@
     </div>
 
 
-
-
-
-
-
 </div>
-
 
 <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
 <script src="{{ asset('assets/js/chart.min.js') }}"></script>
+
 
 <script>
     $(document).ready(function() {

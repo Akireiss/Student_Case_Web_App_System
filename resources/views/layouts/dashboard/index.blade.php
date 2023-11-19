@@ -174,6 +174,8 @@
         {{-- New Bar Chart --}}
         <script src="{{ asset('assets/js/barChartGrade.js') }}"></script>
 
+        <script src="{{ asset('assets/js/PieUpdated.js') }}"></script>
+
 
         @livewireScripts
         <script>

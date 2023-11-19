@@ -597,4 +597,6 @@ class HelpController extends Controller
 
         return $pdf->stream('report.pdf');
     }
-}
+
+        }
+
