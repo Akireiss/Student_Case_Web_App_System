@@ -38,14 +38,10 @@
                     </svg>
                 </div>
                 <div>
-                    <p
-                        class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-                    >
+                    <p class="mb-2 text-lg font-medium text-gray-600 ">
                         Total students
                     </p>
-                    <p
-                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-                    >
+                           <p class="text-xl font-semibold text-gray-700 ">
                         {{ $totalStudents }}
                     </p>
                 </div>
@@ -70,14 +66,10 @@
 
                 </div>
                 <div>
-                    <p
-                        class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-                    >
+                    <p class="mb-2 text-lg font-medium text-gray-600 ">
                         Total Cases
                     </p>
-                    <p
-                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-                    >
+                           <p class="text-xl font-semibold text-gray-700 ">
                         {{ $totalCases }}
 
                     </p>
@@ -96,14 +88,10 @@
 
                 </div>
                 <div>
-                    <p
-                        class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-                    >
+                    <p class="mb-2 text-lg font-medium text-gray-600 ">
                       Pending Cases
                     </p>
-                    <p
-                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-                    >
+                           <p class="text-xl font-semibold text-gray-700 ">
                         {{ $pendingCases }}
                     </p>
                 </div>
@@ -121,14 +109,10 @@
 
                 </div>
                 <div>
-                    <p
-                        class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-                    >
+                    <p class="mb-2 text-lg font-medium text-gray-600 ">
                         Resolved Cases
                     </p>
-                    <p
-                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-                    >
+                           <p class="text-xl font-semibold text-gray-700 ">
                         {{ $resolvedCases }}
                     </p>
                 </div>
