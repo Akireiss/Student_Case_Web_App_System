@@ -42,29 +42,25 @@ class ClassroomController extends Controller
 
 
     public function updateStudents(Request $request, Classroom $classroom)
-    {
-        // Validate the request data as needed
-        $request->validate([
-            'students' => 'required|array',
-        ]);
+{
+    $request->validate([
+        'students' => 'required|array',
+    ]);
 
-        // Get the array of students' data from the form
-        $studentsData = $request->input('students');
+    $studentsData = $request->input('students');
 
-        // Loop through the array of students' data
-        foreach ($studentsData as $studentId => $data) {
-            // Find the student by their ID
-            $student = Students::find($studentId);
+    foreach ($studentsData as $studentId => $data) {
+        $student = Students::find($studentId);
 
-            if ($student) {
-                // Update the student's classroom ID
-                $student->classroom_id = $data['classroom_id'];
-                $student->save();
-            }
+        if ($student) {
+            $student->classroom_id = $data['classroom_id'];
+            $student->save();
         }
-
-        // Redirect back with a success message
-        return redirect()->back()->with('message', 'Students have been referred to new classroom');
     }
+
+    return response()->json(['message' => 'Students have been referred to the new classroom']);
+}
+
+
 
 }

@@ -11,7 +11,7 @@
     </h6>
     <x-slot name="slot">
         @if ($classroom->students)
-            <form action="{{ route('studentsClassroom.update', ['classroom' => $classroom]) }}" method="POST">
+        <form id="updateStudentsForm"  action="{{ route('studentsClassroom.update', ['classroom' => $classroom]) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -45,15 +45,12 @@
                 @endforeach
 
                 <div class="flex justify-end items-center">
-                    @if (session('success'))
-                        @foreach (session('success') as $message)
-                            <span class="text-green-500 mx-4">
-                                {{ $message }}
-                            </span>
-                        @endforeach
-                    @endif
+                    <span class="text-red-500">Please review the reffered student before reloading the page</span>
 
-                    <x-button type="submit">Submit</x-button>
+                    <span id="alertMessage" class="text-green-500 mx-4"></span>
+
+
+                    <x-buttontype id="updateStudentsButton">Submit</x-buttontype>
                 </div>
 
             </form>
@@ -68,5 +65,36 @@
 
 
 </x-form>
+<script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#updateStudentsButton').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: $('#updateStudentsForm').attr('action'),
+                data: $('#updateStudentsForm').serialize(),
+                success: function (response) {
+                    $('#successMessage').empty(); // Clear previous success messages
+
+                    if (response.success && response.success.length > 0) {
+                        response.success.forEach(function (message) {
+                            $('#successMessage').append('<span class="text-green-500 mx-4">' + message + '</span>');
+                        });
+
+                        // Display success message in the #alert span
+                        $('#alertMessage').text('Students have been referred successfully.');
+                        setTimeout(function () {
+                            $('#alertMessage').text('');
+                        }, 2000);
+                    }
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                    alert('An error occurred while updating students');
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

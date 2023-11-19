@@ -35,84 +35,59 @@
             </div>
         @endforeach
 
-            {{-- <x-dropdown>
-                <x-slot name="trigger">
-                    <div class="flex items-center">
-                        <button type="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                            </svg>
-                        </button>
-                    </div>
-                </x-slot>
-                <x-slot name="content">
-                    <ul>
-                        <li class="py-2 px-2 hover:text-green-400" data-year="All">All</li>
-                        <li class="py-2 px-2 hover:text-green-400" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</li>
-                        <li class="py-2 px-2 hover:text-green-400" data-year="2021-2022">2021-2022</li>
-                        <li class="py-2 px-2 hover:text-green-400" data-year="2022-2023">2022-2023</li>
-                        <li class="py-2 px-2 hover:text-green-400" data-year="2023-2024">2023-2024</li>
-                    </ul>
-
-                </x-slot>
-            </x-dropdown> --}}
 
 
-
-
-
-        <div x-data="{ currentGrid: 'totalStatusCases', buttonText: 'Total Case Status' }">
-            <!-- Dropdown Component -->
+        <div x-data="{ currentGrid: 'totalStatusCases', yearButtonText: '{{ date('Y') }}-{{ date('Y') + 1 }}', statusButtonText: 'Case Status' }">
 
             <div class="flex justify-end items-center space-x-2">
-                <div id="dropdown">
+                <div id="yearDropdown">
                     <x-dropdown>
                         <x-slot name="trigger">
                             <div class="flex items-center cursor-pointer space-x-2">
-                                <x-buttontype>
+                                <x-buttontype x-html="yearButtonText + '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-1&quot;><path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>'">
                                     <span id="selectedYear" class="flex items-center">
-                                        {{ date('Y') }}-{{ date('Y') + 1 }}
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1"> <!-- Adjust ml-1 (margin-left) to control the space between text and icon -->
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        <span x-text="yearButtonText"></span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                         </svg>
                                     </span>
                                 </x-buttontype>
                             </div>
-
                         </x-slot>
                         <x-slot name="content">
-                             <ul id="yearFilter">
-                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="All">All</li>
-                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</li>
-                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="2021-2022">2021-2022</li>
-                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="2022-2023">2022-2023</li>
-                                <li class="py-2 px-2 cursor-pointer hover:text-green-500" data-year="2023-2024">2023-2024</li>
+                            <ul id="yearFilter">
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="All" @click="yearButtonText = 'All'; buttonText = 'All'">All</li>
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</li>
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}" @click="yearButtonText = '{{ date('Y') }}-{{ date('Y') + 1 }}'; buttonText = 'Current Year'">{{ date('Y') }}-{{ date('Y') + 1 }}</li>
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="2021-2022" @click="yearButtonText = '2021-2022'; buttonText = '2021-2022'">2021-2022</li>
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="2022-2023" @click="yearButtonText = '2022-2023'; buttonText = '2022-2023'">2022-2023</li>
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="2023-2024" @click="yearButtonText = '2023-2024'; buttonText = '2023-2024'">2023-2024</li>
                             </ul>
-
                         </x-slot>
                     </x-dropdown>
                 </div>
 
+                <div id="statusDropdown">
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <div class="flex justify-end my-2">
+                                <x-buttontype x-html="statusButtonText + '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-1&quot;><path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>'">Case
+                                    Status</x-buttontype>
+                            </div>
+                        </x-slot>
+                        <x-slot name="content">
+                            <ul>
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalStudents'; statusButtonText = 'Students'">Students</li>
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalFMstudents'; statusButtonText = 'Cases'">Cases</li>
+                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalStatusCases'; statusButtonText = 'Cases Status'">Cases Status</li>
+                            </ul>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+            </div>
 
-                <x-dropdown>
-                    <x-slot name="trigger">
-                        <div class="flex justify-end my-2">
-                            <x-buttontype x-html="buttonText + '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-1&quot;><path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>'">Total Case Status</x-buttontype>
-                        </div>
-                    </x-slot>
-                    <x-slot name="content">
-                        <ul>
-                            <li @click="currentGrid = 'totalStudents'; buttonText = 'Total Students'"
-                                class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Total Students</li>
-                            <li @click="currentGrid = 'totalFMstudents'; buttonText = 'Male And Female'"
-                                class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Male And Female Cases</li>
-                            <li @click="currentGrid = 'totalStatusCases'; buttonText = 'Cases Status'"
-                                class="py-2 px-4 hover:bg-gray-200 cursor-pointer">Cases Status</li>
-                        </ul>
-                    </x-slot>
-                </x-dropdown>
-
-        </div>
 
 
 
@@ -122,7 +97,8 @@
                 id="totalStudents">
                 <!-- Card -->
 
-                <a href="{{ url('admin/settings/students') }}" class="flex items-center p-4 bg-white  shadow-md border-l-4 border-orange-500 ">
+                <a href="{{ url('admin/settings/students') }}"
+                    class="flex items-center p-4 bg-white  shadow-md border-l-4 border-orange-500 ">
                     <div
                         class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -194,17 +170,18 @@
 
 
                 <!-- Card -->
-                <a href="{{ url('admin/reports') }}" class="flex items-center p-4 bg-white  shadow-md border-l-4 border-green-500 ">
+                <a href="{{ url('admin/reports') }}"
+                    class="flex items-center p-4 bg-white  shadow-md border-l-4 border-green-500 ">
                     <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25
-                                        0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
-                                         0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
-                                          1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
-                                           0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                                            0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
+                                             0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
+                                              1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
+                                               0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
                         </svg>
 
 
@@ -244,8 +221,8 @@
                             viewBox="0 0 320 512" fill="white">
                             <path
                                 d="M160 0a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM88 384H70.2c-10.9 0-18.6-10.7-15.2-21.1L93.3 248.1 59.4 304.5c-9.1
-                                        15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l53.6-89.2c20.3-33.7 56.7-54.3 96-54.3h11.6c-39.3 0 75.7 20.6 96 54.3l53.6 89.2c9.1
-                                        15.1 4.2 34.8-10.9 43.9s-34.8 4.2-43.9-10.9l-33.9-56.3L265 362.9c3.5 10.4-4.3 21.1-15.2 21.1H232v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V384H152v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V384z" />
+                                            15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l53.6-89.2c20.3-33.7 56.7-54.3 96-54.3h11.6c-39.3 0 75.7 20.6 96 54.3l53.6 89.2c9.1
+                                            15.1 4.2 34.8-10.9 43.9s-34.8 4.2-43.9-10.9l-33.9-56.3L265 362.9c3.5 10.4-4.3 21.1-15.2 21.1H232v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V384H152v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V384z" />
                         </svg>
                     </div>
 
@@ -298,10 +275,10 @@
                             stroke="currentColor" class="w-5 h-5 text-yellow-500">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25
-                                        0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
-                                         0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
-                                          1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
-                                           0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                                            0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
+                                             0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
+                                              1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
+                                               0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
                         </svg>
 
 
@@ -389,8 +366,6 @@
         </div> --}}
 
 
-
-
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2 mt-3">
 
             <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
@@ -410,9 +385,9 @@
                 <h4 class="mb-4 font-semibold text-gray-800 ">
                     Grade Level Offenses
                 </h4>
-                {{-- <canvas id="myGroupedBar"></canvas> --not the update one--}}
-                    {{-- The updated one --}}
-                    <canvas id="barGradeLevel"></canvas>
+                {{-- <canvas id="myGroupedBar"></canvas> --not the update one --}}
+                {{-- The updated one --}}
+                <canvas id="barGradeLevel"></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600 ">
                     <div class="flex items-center">
                         <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
@@ -463,111 +438,56 @@
     </div>
 
 
-</div>
+    </div>
 
-<script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
-<script src="{{ asset('assets/js/chart.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
+    <script src="{{ asset('assets/js/chart.min.js') }}"></script>
 
 
-<script>
-    $(document).ready(function() {
-    function fetchNewNotifications() {
-        $.ajax({
-            type: 'GET',
-            url: '/fetch-new-notifications',
-            success: function(data) {
+    <script>
+        $(document).ready(function() {
+            function fetchNewNotifications() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/fetch-new-notifications',
+                    success: function(data) {}
+                });
             }
-        });
-    }
 
-    fetchNewNotifications();
+            fetchNewNotifications();
 
-    var refreshInterval = 30000; // 30 seconds
-    setInterval(fetchNewNotifications, refreshInterval);
+            var refreshInterval = 30000; // 30 seconds
+            setInterval(fetchNewNotifications, refreshInterval);
 
-    $('.mark-as-read').click(function() {
-        var notificationId = $(this).data('notification-id');
-        var notificationElement = $(this).closest('.bg-green-100');
+            $('.mark-as-read').click(function() {
+                var notificationId = $(this).data('notification-id');
+                var notificationElement = $(this).closest('.bg-green-100');
 
-        $.ajax({
-            type: 'POST',
-            url: '/mark-notification-read/' + notificationId,
-            data: {
-                '_token': '{{ csrf_token() }}'
-            },
-            success: function(data) {
-                notificationElement.fadeOut(); // Remove the notification from view
-            }
-        });
-    });
-
-    $('.close-notification').click(function() {
-        var notificationElement = $(this).closest('.bg-green-100');
-        notificationElement.fadeOut(); // Remove the notification from view
-    });
-});
-
-</script>
-    {{-- @push('scripts')
-
-        <script>
-            var myGroupedBar = new Chart("myGroupedBar", {
-                type: "bar",
-                data: {
-                    labels: @json(array_column($data, 'grade_level')),
-                    datasets: [{
-                            label: "Pending",
-                            backgroundColor: "#3e95cd",
-                            data: @json(array_column($data, 'pending')),
-                        },
-                        {
-                            label: "Ongoing",
-                            backgroundColor: "#8e5ea2",
-                            data: @json(array_column($data, 'ongoing')),
-                        },
-                        {
-                            label: "Resolved",
-                            backgroundColor: "#3cba9f",
-                            data: @json(array_column($data, 'resolved')),
-                        },
-                        {
-                            label: "FollowUp",
-                            backgroundColor: "#3e95cd",
-                            data: @json(array_column($data, 'follow_up')),
-                        },
-                        {
-                            label: "Referral",
-                            backgroundColor: "#8e5ea2",
-                            data: @json(array_column($data, 'referral')),
-                        },
-                    ],
-                },
-                options: {
-                    scales: {
-                        x: {
-                            stacked: true,
-                        },
-                        y: {
-                            stacked: true,
-                        },
+                $.ajax({
+                    type: 'POST',
+                    url: '/mark-notification-read/' + notificationId,
+                    data: {
+                        '_token': '{{ csrf_token() }}'
                     },
-                    title: {
-                        display: false,
-                        text: "Grouped Bar Chart",
-                    },
-                },
+                    success: function(data) {
+                        notificationElement.fadeOut(); // Remove the notification from view
+                    }
+                });
             });
-        </script>
 
-    @endpush --}}
+            $('.close-notification').click(function() {
+                var notificationElement = $(this).closest('.bg-green-100');
+                notificationElement.fadeOut(); // Remove the notification from view
+            });
+        });
+    </script>
 
-    {{-- Delayed Notification Here --}}
     <script>
         const dropdown = document.getElementById('dropdown');
         const selectedYearSpan = document.getElementById('selectedYear');
         const listItems = dropdown.querySelectorAll('li');
 
-        dropdown.addEventListener('click', function (event) {
+        dropdown.addEventListener('click', function(event) {
             const target = event.target;
 
             if (target.tagName === 'LI') {

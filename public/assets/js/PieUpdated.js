@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                         options: {
                             title: {
-                                display: true,
+                                display: false,
                                 text: "Successful Offense"
                             },
                             legend: {

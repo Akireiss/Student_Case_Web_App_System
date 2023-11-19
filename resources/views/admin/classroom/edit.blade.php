@@ -81,7 +81,7 @@
             </x-slot>
 
             <x-slot name="slot">
-                <form action="{{ route('classrooms.students.update', ['classroom' => $classroom]) }}" method="POST">
+                <form id="updateStudentsForm" action="{{ route('classrooms.students.update', ['classroom' => $classroom]) }}" method="POST">
                     @csrf
                     @method('put')
 
@@ -121,14 +121,11 @@
                     @endif
 
                     <div class="flex justify-end items-center">
-                        @if (session('message'))
-                            <span class="text-green-500 mx-4">
-                                {{ session('message') }}
-                            </span>
-                        @endif
-
-                        <x-button type="submit">Submit</x-button>
+                        <span class="text-red-500">Please review the reffered student before reloading the page</span>
+                        <span id="successMessage" class="text-green-500 mx-4"></span>
+                        <x-button id="updateStudentsButton" type="submit">Submit</x-button>
                     </div>
+
                 </form>
 
 
@@ -139,5 +136,33 @@
 
 
     </div>
+    <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#updateStudentsForm').submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        // Handle success, update the success message
+                        $('#successMessage').text(response.message);
+
+                        // Clear success message after 2 seconds
+                        setTimeout(function () {
+                            $('#successMessage').text('');
+                        }, 2000);
+                    },
+                    error: function (error) {
+                        // Handle errors, e.g., display an error message
+                        console.log('Error:', error);
+                        alert('An error occurred while updating students');
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection
