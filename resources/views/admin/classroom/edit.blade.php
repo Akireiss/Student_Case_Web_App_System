@@ -10,10 +10,9 @@
             </x-slot>
 
             <x-slot name="slot">
-                <form action="{{ route('classrooms.update', ['classroom' => $classroom]) }}" method="POST">
+                <form id="classForm" action="{{ route('classrooms.update.single', ['classroom' => $classroom]) }}" method="POST">
                     @csrf
-                    @method('put')
-
+                    @method('PUT')
                     <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
                         Update Classroom
                     </h6>
@@ -63,8 +62,8 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-end items-center">
-                        <x-alert />
+                    <div class="flex justify-end items-center ">
+                        <span id="classAlert" class="text-green-500 mx-2"></span>
                         <x-button type="submit">Update Classroom</x-button>
                     </div>
                 </form>
@@ -83,7 +82,7 @@
             <x-slot name="slot">
                 <form id="updateStudentsForm" action="{{ route('classrooms.students.update', ['classroom' => $classroom]) }}" method="POST">
                     @csrf
-                    @method('put')
+                    @method('PUT')
 
                     <h6 class="text-sm mt-3 mb-6  font-bold uppercase">
                         Referr Students
@@ -147,19 +146,35 @@
                     url: $(this).attr('action'),
                     data: $(this).serialize(),
                     success: function (response) {
-                        // Handle success, update the success message
                         $('#successMessage').text(response.message);
-
-                        // Clear success message after 2 seconds
                         setTimeout(function () {
                             $('#successMessage').text('');
-                        }, 2000);
+                        }, 5000);
                     },
                     error: function (error) {
-                        // Handle errors, e.g., display an error message
                         console.log('Error:', error);
                         alert('An error occurred while updating students');
                     }
+                });
+            });
+        });
+    </script>
+    {{-- Classroom Update --}}
+    <script>
+        $(document).ready(function () {
+            $('#classForm').submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'PUT',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $('#classAlert').text(response.success);
+                        setTimeout(function () {
+                            $('#classAlert').text('');
+                        }, 5000);
+                    },
                 });
             });
         });

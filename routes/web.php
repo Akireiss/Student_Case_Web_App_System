@@ -140,7 +140,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::put('classrooms/students/update/{classroom}', [ClassroomController::class, 'updateStudents'])
             ->name('classrooms.students.update');
             //Classroom Update
-            Route::get('classrooms/{classroom}/update', [ClassroomController::class, 'update'])->name('classrooms.update');
+            Route::put('classrooms/{classroom}/update', [ClassroomController::class, 'update'])->name('classrooms.update.single');
 
 
             // Report History

@@ -107,28 +107,6 @@
     </div>
     </div>
 
-    <script>
-        // Add the following script to handle the automatic switch back to the table view
-        document.addEventListener('livewire:load', function () {
-            Livewire.hook('message.processed', (message, component) => {
-                // Inspect the structure of the message
-                console.log('Livewire Message:', message);
-
-                // Check if the message contains the success message
-                if (
-                    message.updateQueue[0] &&
-                    message.updateQueue[0].payload.name === 'message' &&
-                    message.updateQueue[0].payload.data.message === 'Classroom saved successfully.'
-                ) {
-                    // Wait for 3 seconds and then switch back to the table view
-                    setTimeout(() => {
-                        window.Alpine.store('showTable', true);
-                        window.Alpine.store('showForm', false);
-                    }, 3000);
-                }
-            });
-        });
-    </script>
 
 </div>
 

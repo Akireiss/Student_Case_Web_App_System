@@ -36,8 +36,7 @@ class ClassroomController extends Controller
 
         $classroom->update($data);
 
-        return redirect()->back()
-            ->with('success', 'Classroom updated successfully');
+        return response()->json(['success' => 'Classroom updated successfully']);
     }
 
 

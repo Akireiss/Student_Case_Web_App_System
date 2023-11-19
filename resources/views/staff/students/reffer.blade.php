@@ -81,11 +81,10 @@
                             $('#successMessage').append('<span class="text-green-500 mx-4">' + message + '</span>');
                         });
 
-                        // Display success message in the #alert span
                         $('#alertMessage').text('Students have been referred successfully.');
                         setTimeout(function () {
                             $('#alertMessage').text('');
-                        }, 2000);
+                        }, 5000);
                     }
                 },
                 error: function (error) {

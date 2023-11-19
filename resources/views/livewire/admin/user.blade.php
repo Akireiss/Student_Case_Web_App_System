@@ -1,7 +1,7 @@
 <div>
     <div class="mx-auto py-8">
 
-        <div class="bg-white  rounded shadow-lg p-10 px-4 md:p-8 mb-6">
+        <div class="bg-white  rounded shadow-md p-10 px-4 md:p-8 mb-6">
             <div class="grid gap-4 gap-y-4 text-sm grid-cols-1 lg:grid-cols-3">
 
 
