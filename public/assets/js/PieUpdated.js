@@ -9,30 +9,25 @@ document.addEventListener('DOMContentLoaded', function () {
         "#1e7145"
     ];
 
-    // Create a reference to the chart instance
     let myPieChart;
-
 
     function updatePieChart(selectedYear) {
         fetch(`/successfull-action?year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
-                xValuesPie.length = 0; // Clear the array
-                yValuesPie.length = 0; // Clear the array
+                xValuesPie.length = 0;
+                yValuesPie.length = 0;
 
                 data.forEach(item => {
                     xValuesPie.push(item.label);
                     yValuesPie.push(item.count);
                 });
 
-                // Check if the chart is already initialized
                 if (myPieChart) {
-                    // Update the pie chart
                     myPieChart.data.labels = xValuesPie;
                     myPieChart.data.datasets[0].data = yValuesPie;
                     myPieChart.update();
                 } else {
-                    // Initialize the pie chart
                     const ctx = document.getElementById('myPieChart').getContext('2d');
                     myPieChart = new Chart(ctx, {
                         type: "pie",
@@ -49,8 +44,21 @@ document.addEventListener('DOMContentLoaded', function () {
                                 text: "Successful Offense"
                             },
                             legend: {
-                                position: "bottom", // Align legend to the bottom
+                                position: "bottom",
                             },
+                            tooltips: {
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        const dataset = data.datasets[tooltipItem.datasetIndex];
+                                        const total = dataset.data.reduce((previousValue, currentValue, currentIndex, array) => {
+                                            return previousValue + currentValue;
+                                        });
+                                        const currentValue = dataset.data[tooltipItem.index];
+                                        const percentage = Math.round((currentValue / total) * 100);
+                                        return `${data.labels[tooltipItem.index]}: ${currentValue} (${percentage}%)`;
+                                    }
+                                }
+                            }
                         },
                     });
                 }
