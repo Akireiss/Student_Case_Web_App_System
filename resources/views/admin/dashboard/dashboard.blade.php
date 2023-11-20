@@ -111,7 +111,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600 ">
                             Total students
                         </p>
-                        <p class="text-xl font-semibold text-gray-700 " id="total-students">
+                        <p class="text-3xl font-semibold text-gray-700 " id="total-students">
 
                         </p>
                     </div>
@@ -134,7 +134,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600 ">
                             Total Male
                         </p>
-                        <p class="text-xl font-semibold text-gray-700 " id="total-male">
+                        <p class="text-3xl font-semibold text-gray-700 " id="total-male">
 
                         </p>
                     </div>
@@ -157,7 +157,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600">
                             Total Female
                         </p>
-                        <p class="text-xl font-semibold text-gray-700 " id="total-female">
+                        <p class="text-3xl font-semibold text-gray-700 " id="total-female">
 
                         </p>
                     </div>
@@ -191,7 +191,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600 ">
                             Total Cases
                         </p>
-                        <p class="text-xl font-semibold text-gray-700 " id="total-cases">
+                        <p class="text-3xl font-semibold text-gray-700 " id="total-cases">
                         </p>
                     </div>
                 </a>
@@ -208,7 +208,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600">
                             Male Cases
                         </p>
-                        <p class="text-xl font-semibold text-gray-700" id="maleCases">
+                        <p class="text-3xl font-semibold text-gray-700" id="maleCases">
 
                         </p>
                     </div>
@@ -230,7 +230,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600">
                             Female Cases
                         </p>
-                        <p id="femaleCases" class="text-xl font-semibold text-gray-700">
+                        <p id="femaleCases" class="text-3xl font-semibold text-gray-700">
 
                         </p>
                     </div>
@@ -261,7 +261,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600 ">
                             Pending Cases
                         </p>
-                        <p id="pending-cases" class="text-xl font-semibold text-gray-700 ">
+                        <p id="pending-cases" class="text-3xl font-semibold text-gray-700 ">
 
                         </p>
                     </div>
@@ -288,7 +288,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600 ">
                             Ongoing
                         </p>
-                        <p class="text-xl font-semibold text-gray-700 " id="ongoingCases">
+                        <p class="text-3xl font-semibold text-gray-700 " id="ongoingCases">
                         </p>
                     </div>
                 </a>
@@ -309,7 +309,7 @@
                         <p class="mb-2 text-lg font-medium text-gray-600 ">
                             Resolved Cases
                         </p>
-                        <p id="resolved-cases" class="text-xl font-semibold text-gray-700 ">
+                        <p id="resolved-cases" class="text-3xl font-semibold text-gray-700 ">
 
                         </p>
                     </div>
