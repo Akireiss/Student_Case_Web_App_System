@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Throwable;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -29,7 +30,6 @@ class Handler extends ExceptionHandler
         });
     }
 
-
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof NotFoundHttpException) {
@@ -37,6 +37,17 @@ class Handler extends ExceptionHandler
             return response()->view('components.404', [], 404);
         }
 
+        if ($exception instanceof QueryException && $this->isUnknownDatabaseException($exception)) {
+            // Redirect to a common error page for database connection issues
+            return redirect()->route('database.restore')->with('error', 'Database have been corrupt');
+        }
+
         return parent::render($request, $exception);
+    }
+
+    protected function isUnknownDatabaseException(QueryException $exception)
+    {
+        // The error code for an unknown database in MySQL is 1049
+        return $exception->getCode() == 1049;
     }
 }

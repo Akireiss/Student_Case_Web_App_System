@@ -339,3 +339,5 @@ Route::get('/generate-pdf', [HelpController::class, 'reportGenerate'])->name('re
 //Testing Endpoint
 // Route::get('/successfull-action', [HelpController::class, 'successfullAction']);
 Route::get('/successfull-action', [DashboardController::class, 'successfullAction']);
+Route::get('restore/database/corrupt', [RestoreController::class, 'index'])->name('database.restore');
+Route::post('restore/database/corrupt/database', [RestoreController::class, 'restore'])->name('restore.database');
