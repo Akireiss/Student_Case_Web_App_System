@@ -32,7 +32,7 @@ final class OFfensesTable extends PowerGridComponent
     {
 
         return [
-            Responsive::make(),
+          //  Responsive::make(),
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
@@ -78,10 +78,8 @@ final class OFfensesTable extends PowerGridComponent
         $isToggleable = true;
         return [
             Column::make('Offenses', 'offenses')
-                ->sortable()
-                ->editOnClick(),
+                ->sortable(),
             Column::make('Description', 'description')
-                ->editOnClick()
                 ->sortable(),
 
             Column::make('Status', 'status'),

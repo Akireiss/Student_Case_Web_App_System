@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.index')
 @section('content')
-    <x-form title="Offenses Information">
+    <x-form title="">
         <x-slot name="actions">
             <x-link href="{{ url('admin/settings/offenses') }}">
                 Back
@@ -10,7 +10,7 @@
         <x-slot name="slot">
 
             <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                Offense
+                Offense Information
             </h6>
             <!-- Personal information form fields -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -22,6 +22,15 @@
                         <x-input type="text" disabled value="{{ $offense->offenses }}" name="offenses" />
                     </div>
                 </div>
+                <div class="w-full px-4">
+                    <div class="relative mb-3">
+                        <x-label>
+                            Category
+                            </x-label>
+                        <x-input type="text" disabled value="{{ $offense->getCategoryTextAttribute() }}" />
+                    </div>
+                </div>
+
 
                 <div class="w-full px-4">
                     <div class="relative mb-3">
@@ -39,7 +48,7 @@
                             Description
                         </x-label>
                         <x-textarea disabled name="description">
-                            {{ $offense->description }}
+                        {{ $offense->description }}
                         </x-textarea>
                     </div>
                 </div>

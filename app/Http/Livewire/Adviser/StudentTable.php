@@ -127,6 +127,11 @@ final class StudentTable extends PowerGridComponent
                ->route('adviser.students.view', function(\App\Models\Students $model) {
                     return ['student' => $model->id];
                }),
+            Button::make('pdf', 'Pdf')
+             ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm inline-flex')
+               ->route('adviser.student.pdf', function(\App\Models\Students $model) {
+                    return ['student' => $model->id];
+               }),
         ];
     }
 

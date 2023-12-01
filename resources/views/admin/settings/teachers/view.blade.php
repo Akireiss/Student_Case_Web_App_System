@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.index')
 @section('content')
 <div>
-    <x-form title="Teacher Information">
+    <x-form title="">
         <x-slot name="actions">
             <x-link href="{{ url('admin/settings/teachers') }}">
                 Back

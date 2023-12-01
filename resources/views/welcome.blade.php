@@ -12,7 +12,6 @@
 <body>
 
 @include('components.nav')
-<!-- Content Section -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-5 mt-20">
 
     <div class="flex flex-col justify-center items-center space-y-4 md:text-left text-center md:px-44 ">

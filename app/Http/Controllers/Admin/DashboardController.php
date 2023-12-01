@@ -70,17 +70,21 @@ class DashboardController extends Controller
         $totalStudents = Students::where('status', 0)->count();
         $totalMale = Students::where('status', 0)->where('gender', 0)->count();
         $totalFemale = Students::where('status', 0)->where('gender', 1)->count();
-        $totalCases = Anecdotal::count();
+
         $pendingCases = Anecdotal::where('case_status', 0)->count();
         $ongoingCases = Anecdotal::where('case_status', 1)->count();
         $resolvedCases = Anecdotal::where('case_status', 2)->count();
 
+        $totalCases =  Anecdotal::whereHas('students', function ($query) {
+            $query->where('gender', [0, 1])->where('status', 0);
+        })->count();
+
         $maleCases = Anecdotal::whereHas('students', function ($query) {
-            $query->where('gender', 0);
+            $query->where('gender', 0)->where('status', 0);
         })->count();
 
         $femaleCases = Anecdotal::whereHas('students', function ($query) {
-            $query->where('gender', 1);
+            $query->where('gender', 1)->where('status', 0);
         })->count();
 
         return response()->json([

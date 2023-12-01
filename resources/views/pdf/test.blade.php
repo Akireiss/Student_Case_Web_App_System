@@ -31,6 +31,9 @@
                 @if ($department == 1)
                     <th class="bold center letter">Senior High School Department</th>
                 @endif
+                @if ($department == 'All')
+                <th class="bold center letter">High School And Senior High School Department</th>
+            @endif
             </tr>
 
 
@@ -44,12 +47,8 @@
                 @if ($year != 'All')
                     <td class="center">Total Case SY {{ $year }}</td>
                 @endif
-
-
             </tr>
-
         </tbody>
-
     </table>
     <table width="100%">
         <tbody>
@@ -58,6 +57,23 @@
                 <td width="28.5%">Total Male Cases:</td>
                 <td width="25%">Total Female Cases:</td>
             </tr>
+            {{-- All Department --}}
+            @if ($department == 'All')
+                @foreach ($Allclassrooms as $classroom)
+                    <tr>
+                        <td width="30%">{{ $classroom->first_letter }}</td>
+                        <td width="28.5%">{{ $AllMaletotalCases[$classroom->first_letter] }}</td>
+                        <td width="25%">{{ $AllFemaletotalCases[$classroom->first_letter] }}</td>
+                    </tr>
+                @endforeach
+                <td>Total: </td>
+                <td>{{ $totalAllMaleCases }}</td>
+                <td> {{ $totalAllFemaleCases }} </td>
+            @endif
+
+
+
+
 
             @if ($department == 0)
                 @foreach ($classroomsHS as $classroom)
@@ -102,6 +118,27 @@
                     <td width="25%">Follow Up</td>
                     <td width="25%">Refferal</td>
                 </tr>
+                @if ($department == 'All')
+                @foreach ($Allclassrooms as $classroom)
+                    <tr>
+                        <td width="30%">{{ $classroom->first_letter }}</td>
+                        <td width="28.5%">{{ $pendingAll[$classroom->first_letter] }}</td>
+                        <td width="25%">{{ $ongoingAll[$classroom->first_letter] }}</td>
+                        <td width="25%">{{ $ResolveAll[$classroom->first_letter] }}</td>
+                        <td width="25%">{{ $FollowAll[$classroom->first_letter] }}</td>
+                        <td width="25%">{{ $RefferAll[$classroom->first_letter] }}</td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td width="30%">Totals: </td>
+                    <td width="28.5%">{{ $totalPendingAllCases }}</td>
+                    <td width="25%">{{ $totalOngoingAllCases }}</td>
+                    <td width="25%">{{ $totalResolveAllCases }}</td>
+                    <td width="25%">{{ $totalFollowUpAllCases }}</td>
+                    <td width="25%">{{ $totalRefferalAllCases }}</td>
+                </tr>
+            @endif
+
 
                 @if ($department == 1)
                     @foreach ($classroomsSenior as $classroom)
@@ -234,6 +271,7 @@
 </body>
 
 </html>
+
 <style type="text/css">
     .bottom {
         margin-bottom: 15px;

@@ -1,6 +1,6 @@
 <div>
 
-    <div class="p-4 ">
+    <div class="p-1 md:p-4 ">
 
         <x-form title="">
 
@@ -21,7 +21,7 @@
 
             @if (auth()->guest())
                 <x-slot name="actions">
-                    <x-link a href="{{ url('student/form') }}">Back</x-link>
+                    {{-- <x-link a href="{{ url('student/form') }}">Back</x-link> --}}
                 </x-slot>
             @endif
 
@@ -72,9 +72,11 @@
                                                 </li>
                                             @endforeach
                                         @elseif ($studentName)
-                                            <span class="text-red-500 text-sm">
-                                                No Student Found
-                                            </span>
+                                        <div
+                                        class="px-4 py-2 cursor-pointer hover:bg-gray-200 bg-white border border-gray-300 mt-2 rounded-md w-full">
+                                        No Student Found
+
+                                    </div>
                                         </ul>
                                     @endif
                                 </div>
@@ -528,7 +530,7 @@
 
     </div>
 
-    <div class="px-9">
+    <div class="px-1 md:px-9">
 
         <div x-data="{ selected: @entangle('living_with') }">
             <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
@@ -656,7 +658,7 @@
                 </h6>
                 <div class="px-4">
 
-                    <x-buttontype wire:click="addAward">Add Award</x-buttontype>
+                    <x-buttontype wire:click="addAward">Add</x-buttontype>
                 </div>
             </div>
         </div>
@@ -933,7 +935,7 @@
 
     </div>
 
-    <div class="flex justify-end items-center  space-x-2 px-12 mt-5">
+    <div class="flex justify-end items-center space-x-2 px-4 md:px-12 mt-5">
         <x-text-alert />
         <div wire:loading wire:target="save" class="mx-4">
             Loading..

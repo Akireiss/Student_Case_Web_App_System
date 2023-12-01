@@ -146,7 +146,7 @@ class Report extends Component
         }
 
         $this->resetReport();
-        session()->flash('message', 'Successfully Added');
+        session()->flash('message', 'Successfully Reported');
     }
 
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('employees');
-            $table->integer('refference_number')->nullable();
+            $table->string('refference_number')->nullable();
             $table->tinyInteger('status')->default('0')->comment('0:active | 1:inactive');
             $table->timestamps();
         });

@@ -44,7 +44,7 @@
                     </div>
                 @endforeach
 
-                <div class="flex justify-end items-center">
+                <div class="flex justify-end items-center mt-6  ">
                     <span class="text-red-500">Please review the reffered student before reloading the page</span>
 
                     <span id="alertMessage" class="text-green-500 mx-4"></span>

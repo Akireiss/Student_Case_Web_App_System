@@ -47,7 +47,9 @@
 
         @if ($activity->event === 'updated')
         <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
-            Changes
+            Changes  <span class="text-green-500 text-sm text-center mt-3">
+                0: Active | 1: Inactive
+                </span>
         </h6>
 
         <div class="w-full px-4">

@@ -1,5 +1,5 @@
 <div>
-    <x-form title="Add Students">
+    <x-form title="">
         <x-slot name="actions">
             <x-link href="{{ url('admin/settings/teachers') }}">
                 Back
@@ -41,17 +41,17 @@
                                     <option value="0">Active</option>
                                     <option value="1">Inactive</option>
                                 </x-select>
-                                <x-error fieldName="refference_number" />
+                                <x-error fieldName="status" />
 
                             </div>
                         </div>
                     </div>
 
 
-                    <div class="flex justify-end items-center">
+                    <div class="flex justify-end items-center px-4 space-x-2">
                         <x-text-alert />
                         <div wire:loading wire:target="update" class="mx-4">
-                            Loading
+                            Loading...
                         </div>
                         <x-button type="submit" wire:loading.attr="disabled">Update</x-button>
                     </div>

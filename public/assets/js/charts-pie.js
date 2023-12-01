@@ -24,6 +24,7 @@ let chart; // Initialize the chart variable
 // Function to create or update the chart
 function createOrUpdateChart(xValuesOffense, yValuesOffense) {
     if (chart) {
+
         chart.data.labels = xValuesOffense;
         chart.data.datasets[0].data = yValuesOffense;
         chart.update(); // Update the existing chart
@@ -70,6 +71,10 @@ function createOrUpdateChart(xValuesOffense, yValuesOffense) {
         });
     }
 }
+
+
+
+
 
 function calculateDefaultAcademicYear() {
     const currentDate = new Date();
@@ -139,6 +144,63 @@ $(".py-2").click(function () {
 
 
 
+// Other fybctuib stll eneed some adjustment
+ // Gruop funcitons
+    // / Fetch the data from the API
+    // fetch('/get-offense-counts-new')
+    // .then(response => response.json())
+    // .then(data => {
+    //     // Sort the data by count in descending order
+    //     const sortedData = data.sort((a, b) => b.count - a.count);
+
+    //     // Take the top 5 entries and calculate the sum of the rest
+    //     const top5Data = sortedData.slice(0, 5);
+    //     const restSum = sortedData.slice(5).reduce((acc, item) => acc + item.count, 0);
+
+    //     // Create an "Others" entry for the rest
+    //     const othersData = [{ offense: 'Others', count: restSum }];
+
+    //     // Combine top 5 and "Others" data
+    //     const combinedData = top5Data.concat(othersData);
+
+    //     // Extract xValuesOffense and yValuesOffense from the combined data
+    //     const xValuesOffense = combinedData.map(item => item.offense);
+    //     const yValuesOffense = combinedData.map(item => item.count);
+
+    //     // Calculate percentages
+    //     const total = yValuesOffense.reduce((acc, count) => acc + count, 0);
+    //     const percentages = yValuesOffense.map(count => ((count / total) * 100).toFixed(2) + '%');
+
+    //     // Create a new Chart using the combined data and percentages
+    //     new Chart("OffenseChart", {
+    //         type: "pie",
+    //         data: {
+    //             labels: xValuesOffense,
+    //             datasets: [{
+    //                 backgroundColor: barColors.slice(0, xValuesOffense.length),
+    //                 data: yValuesOffense
+    //             }]
+    //         },
+    //         options: {
+    //             title: {
+    //                 display: false,
+    //                 text: " "
+    //             },
+    //             tooltips: {
+    //                 callbacks: {
+    //                     label: (tooltipItem, data) => {
+    //                         const dataset = data.datasets[tooltipItem.datasetIndex];
+    //                         const total = dataset.data.reduce((acc, value) => acc + value, 0);
+    //                         const currentValue = dataset.data[tooltipItem.index];
+    //                         const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
+    //                         return `${data.labels[tooltipItem.index]}: ${currentValue} (${percentage})`;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     });
+    // })
+    // .catch(error => console.error('Error fetching offense counts:', error));
 
 
 

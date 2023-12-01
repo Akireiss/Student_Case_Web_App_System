@@ -19,7 +19,7 @@ final class ActivityTable extends PowerGridComponent
     public function setUp(): array
     {
         return [
-            Responsive::make(),
+            // Responsive::make(),
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),

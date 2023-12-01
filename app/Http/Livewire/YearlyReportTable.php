@@ -26,7 +26,7 @@ final class YearlyReportTable extends PowerGridComponent
     public function setUp(): array
     {
         return [
-            Responsive::make(),
+          //  Responsive::make(),
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),

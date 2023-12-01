@@ -15,8 +15,9 @@
         }
 
         table {
-            font-size: x-small;
+            font-size: 12px;
             border-collapse: collapse;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
         }
 

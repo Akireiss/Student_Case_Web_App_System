@@ -165,3 +165,63 @@ public function generateReport()
 //     $FollowSH[$classroom->first_letter] = $totalFollowSH;
 //     $RefferSh[$classroom->first_letter] = $totalRefferSH;
 // }
+public function datasource(): Builder
+    {
+        if (Route::is('admin.reports')){
+        return Anecdotal::query()
+            ->join('students', 'anecdotal.student_id', '=', 'students.id')
+            ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
+            ->select(
+                'anecdotal.*',
+                'anecdotal.id as AnecdotalID',
+                'anecdotal.created_at',
+                'students.created_at as created',
+                'offenses.created_at as created_offense',
+                'offenses.offenses',
+                'offenses.id as OffenseID',
+                'students.id as StudentID'
+            );
+        }elseif (Route::is('admin.reports.pending')){
+            return Anecdotal::query()
+            ->join('students', 'anecdotal.student_id', '=', 'students.id')
+            ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
+            ->select(
+                'anecdotal.*',
+                'anecdotal.id as AnecdotalID',
+                'anecdotal.created_at',
+                'students.created_at as created',
+                'offenses.created_at as created_offense',
+                'offenses.offenses',
+                'offenses.id as OffenseID',
+                'students.id as StudentID'
+            )->where('case_status', 0);
+        }elseif (Route::is('admin.reports.ongoing')){
+            return Anecdotal::query()
+            ->join('students', 'anecdotal.student_id', '=', 'students.id')
+            ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
+            ->select(
+                'anecdotal.*',
+                'anecdotal.id as AnecdotalID',
+                'anecdotal.created_at',
+                'students.created_at as created',
+                'offenses.created_at as created_offense',
+                'offenses.offenses',
+                'offenses.id as OffenseID',
+                'students.id as StudentID'
+            )->where('case_status', 1);
+        }elseif (Route::is('admin.reports.resolved')){
+            return Anecdotal::query()
+            ->join('students', 'anecdotal.student_id', '=', 'students.id')
+            ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')
+            ->select(
+                'anecdotal.*',
+                'anecdotal.id as AnecdotalID',
+                'anecdotal.created_at',
+                'students.created_at as created',
+                'offenses.created_at as created_offense',
+                'offenses.offenses',
+                'offenses.id as OffenseID',
+                'students.id as StudentID'
+            )->where('case_status', 2);
+        }
+    }

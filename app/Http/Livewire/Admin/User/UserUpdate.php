@@ -24,6 +24,7 @@ class UserUpdate extends Component
         $this->userName = $this->user->name;
         $this->role = $this->user->role;
         $this->userPassword = $this->user->password = "";
+        $this->classroom_id = $this->user->classroom_id;
     }
     public function render()
     {

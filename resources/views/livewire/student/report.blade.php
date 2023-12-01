@@ -15,13 +15,13 @@
 
                     <form wire:submit.prevent="store" enctype="multipart/form-data">
                         @csrf
-                        <h6 class="text-sm mt-4 px-4 font-bold uppercase">
+                        <h6 class="text-sm mt-4 px-1 md:px-4 font-bold uppercase">
                             Reffer Student
                         </h6>
                         <x-grid columns="2" gap="4" px="0" mt="2">
 
 
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <div x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
                                     <x-label for="studentName">
                                         Student Name
@@ -116,7 +116,7 @@
 
 
 
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <x-label>
                                     Classroom
                                 </x-label>
@@ -130,7 +130,8 @@
 
 
 
-                        <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
+                        <h6 class="text-sm mt-4 px-1 md:px-4 font-bold uppercase">
+
                             Case Information
                         </h6>
 
@@ -138,7 +139,7 @@
 
 
 
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
                                         Referred By
@@ -148,11 +149,11 @@
                                 </div>
                             </div>
 
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <x-label>
                                     Offense
                                 </x-label>
-                                <x-select name="offense_id" wire:model="offense_id">
+                                <x-select name="offense_id" wire:model="offense_id" required>
                                     @if ($offenses)
                                         @foreach ($offenses as $id => $offense)
                                             <option value="{{ $id }}">{{ $offense }}</option>
@@ -170,7 +171,7 @@
 
 
                         <x-grid columns="3" gap="4" px="0" mt="4">
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
                                         Observation
@@ -181,7 +182,7 @@
                                 </div>
                             </div>
 
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
                                         Desired
@@ -192,7 +193,7 @@
                                 </div>
                             </div>
 
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
                                         Outcome
@@ -206,14 +207,14 @@
 
 
 
-                        <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
+                        <h6 class="text-sm my-1 px-1 md:px-4 font-bold uppercase mt-3 ">
                             Additional Information
                         </h6>
 
                         <x-grid columns="2" gap="4" px="0" mt="2">
 
 
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
                                         Gravity of offense
@@ -231,7 +232,7 @@
                                 </div>
                             </div>
 
-                            <div class="w-full px-4">
+                            <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
                                         Remarks (Short Description)
@@ -248,7 +249,7 @@
 
                         </x-grid>
 
-                        <div class="w-full px-4">
+                        <div class="w-full px-1 md:px-4">
 
                             <x-label>Story</x-label>
                             <textarea id="message" rows="4" wire:model="story" required
@@ -261,14 +262,15 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         </div>
 
 
-                        <h6 class="text-sm my-6 px-4 font-bold uppercase ">
+                        <h6 class="text-sm mt-4 px-1 md:px-4 font-bold uppercase">
+
 
                             Actions Taken <x-error fieldName="selectedActions" />
                         </h6>
 
                         <x-grid columns="3" gap="4" px="0" mt="4">
                             @forelse ($actions as $action)
-                                <div class="w-full px-4 inline-flex space-x-3">
+                                <div class="w-full px-1 md:px-4 inline-flex space-x-3">
                                     <x-checkbox wire:model="selectedActions" value="{{ $action->action_taken }}" />
                                     <x-label>{{ $action->action_taken }}</x-label>
 

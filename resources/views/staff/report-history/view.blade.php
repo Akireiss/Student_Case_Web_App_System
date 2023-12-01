@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.index')
 @section('content')
-    <x-form title="Report Information">
+    <x-form title="">
         <x-slot name="actions">
             <x-slot name="actions">
                 @if (auth()->user()->role === 0)
@@ -15,10 +15,10 @@
             </x-slot>
 
             <x-slot name="slot">
-                <h6 class="text-sm my-3 px-4 font-bold uppercase ">
+                <h6 class="text-sm mt-4 px-4 font-bold uppercase">
                     Student Information
                 </h6>
-                <x-grid columns="2" gap="4" px="0" mt="0">
+                <x-grid columns="2" gap="4" px="0" mt="2">
 
                     <div class="w-full px-4">
 
@@ -31,12 +31,6 @@
                     </div>
 
 
-                    <div class="w-full px-4">
-                        <x-label>
-                            Referred By
-                        </x-label>
-                        <x-input value="{{ $report->users?->name ?? 'No Reporter Found' }}" disabled />
-                    </div>
 
 
                     <div class="w-full px-4">
@@ -46,41 +40,36 @@
                             Grade Level
                         </x-label>
                         <x-input type="text" name="offenses"
-                            value="{{ $report->anecdotal->student->classroom->grade_level }} {{ $report->anecdotal->student->classroom->section }}"
+                            value="Grade: {{ $report->anecdotal->student->classroom->grade_level }} {{ $report->anecdotal->student->classroom->section }}"
                             disabled />
-                    </div>
-
-
-                    <div class="w-full px-4">
-                        <x-label>
-                            Date Reffered
-                        </x-label>
-                        <x-input value="{{ $report ? $report->created_at->format('F j, Y') : 'No Data Found' }}" disabled />
-
                     </div>
 
 
                 </x-grid>
 
-                <h6 class="text-sm px-4 font-bold uppercase my-3">
+                <h6 class="text-sm mt-4 px-4 font-bold uppercase">
                     Case Information
                 </h6>
 
-                <x-grid columns="2" gap="4" px="0" mt="4">
-                    <div class="w-full px-4">
-                        <x-label>
-                            Minor Offenses
-                        </x-label>
-                        <x-input value="{{ $report->anecdotal?->Minoroffenses?->offenses ?? 'No Offenses Found' }}"
-                            disabled />
-                    </div>
+                <x-grid columns="2" gap="4" px="0" mt="3">
 
                     <div class="w-full px-4">
                         <x-label>
-                            Grave Offenses
+                            Referred By
                         </x-label>
-                        <x-input value="{{ $report->anecdotal?->Graveoffenses?->offenses ?? 'No Offenses Found' }}"
+                        <x-input value="{{ $report->users?->name ?? 'No Reporter Found' }}" disabled />
+                    </div>
+
+
+
+                    <div class="w-full px-4">
+                        <x-label>
+                             Offenses
+                        </x-label>
+                        <x-input value="{{ $report->anecdotal?->offenses->offenses ?? 'No Offenses Found' }}"
                             disabled />
+                            <span class="text-red-500 text-sm"> Offense type: {{ $report->anecdotal->offenses->category === 0 ? 'Minor' : 'Grave' }}</span>
+
                     </div>
                 </x-grid>
 
@@ -119,11 +108,11 @@
                 </x-grid>
 
 
-                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
+                <h6 class="text-sm mt-4 px-4 font-bold uppercase">
                     Additional Information
                 </h6>
 
-                <x-grid columns="2" gap="4" px="0" mt="4">
+                <x-grid columns="3" gap="4" px="0" mt="2">
 
 
                     <div class="w-full px-4">
@@ -145,6 +134,14 @@
                                 value="{{ $report->anecdotal?->short_description ?? 'No Data' }}" />
 
                         </div>
+                    </div>
+
+                    <div class="w-full px-4">
+                        <x-label>
+                            Date Reffered
+                        </x-label>
+                        <x-input value="{{ $report ? $report->created_at->format('F j, Y') : 'No Data Found' }}" disabled />
+
                     </div>
 
                 </x-grid>
@@ -194,19 +191,22 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                     Actions Taken
                 </h6>
 
-                <x-grid columns="3" gap="4" px="0" mt="4">
-                    <div class="relative mb-3">
-                        <div class="flex items-center space-x-2 mx-4">
+                <x-grid columns="4" gap="2" px="0" mt="4">
+
+
                             @if ($report->anecdotal && $report->anecdotal->actionsTaken->isNotEmpty())
                                 @foreach ($report->anecdotal->actionsTaken as $action)
+                                <div class="relative mb-3 px-4">
+                                    <div class="flex items-center space-x-2">
                                     <x-checkbox checked disabled />
                                     <x-label>{{ $action->actions }}</x-label>
+                                </div>
+                            </div>
                                 @endforeach
                             @else
                                 No Action Taken Found
                             @endif
-                        </div>
-                    </div>
+
                 </x-grid>
             </x-slot>
 
@@ -226,7 +226,7 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
                 <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
                     <h6 class="text-sm my-1 px-4 font-bold uppercase ">
-                        Meeting Outcome Updates
+                        Meeting Outcome Update
                     </h6>
 
                     <x-grid columns="3" gap="4" px="0" mt="4">
@@ -273,9 +273,10 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                         </div>
                                     @endforeach
                                 @else
-                                    <div>
-                                        <p class="font-medium text-sm text-gray-600 text-left">No Images Uploaded</p>
-                                    </div>
+                                <div>
+                                    <p class="text-sm text-red-500 text-left">
+                                        No promissory note uploaded</p>
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -285,20 +286,20 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 
                     @if ($report->anecdotal->case_status === 2)
                         <div class="flex justify-end items-center mx-4">
-                            <p class="font-medium text-md text-green-500">
+                            <p class="text-md text-green-500">
                                 The case was resolved on {{ $report->anecdotal->updated_at->format('F j, Y') }}
                             </p>
                         </div>
                     @elseif ($report->anecdotal->case_status === 3)
                         <div class="flex justify-end items-center mx-4">
-                            <p class="font-medium text-md text-green-500">
+                                 <p class="text-md text-green-500">
                                 The case is still under follow-up, and the meeting occurred on
                                 {{ $report->anecdotal->updated_at->format('F j, Y') }}
                             </p>
                         </div>
                     @elseif ($report->anecdotal->case_status === 4)
                         <div class="flex justify-end items-center mx-4">
-                            <p class="font-medium text-md text-green-500">
+                            <p class="text-md text-red-500">
                                 The case requires referral to another party.
                             </p>
                         </div>

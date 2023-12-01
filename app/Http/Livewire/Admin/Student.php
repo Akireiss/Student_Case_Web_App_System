@@ -16,7 +16,7 @@ class Student extends Component
 
     public function render()
     {
-        $classrooms = Classroom::all();
+        $classrooms = Classroom::where('status', 0)->orderBy('grade_level', 'desc')->get();
         return view('livewire.admin.student', compact('classrooms'))
             ->extends('layouts.dashboard.index')
             ->section('content');
@@ -57,6 +57,10 @@ class Student extends Component
         $this->lrn = '';
         $this->classroom_id = null;
         $this->status = null;
+    }
+
+    public function studentFiltered() {
+        return view('admin.settings.students.studentFiltered');
     }
 
 

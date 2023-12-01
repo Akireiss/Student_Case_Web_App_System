@@ -49,7 +49,12 @@
                             </div>
                         </div>
 
-
+                        <div class="w-full px-4">
+                            <div class="relative mb-3">
+                                <x-label>Total Cases</x-label>
+                                <x-input value="{{ $classroom->countStudentsAnecdotal() }}" disabled/>
+                            </div>
+                        </div>
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Status</x-label>
@@ -73,6 +78,7 @@
         </x-form>
 
 
+        @if ($classroom->students)
 
         <x-form title="">
             <x-slot name="actions">
@@ -87,8 +93,9 @@
                     <h6 class="text-sm mt-3 mb-6  font-bold uppercase">
                         Referr Students
                     </h6>
-                    @if ($classroom->students)
-                        @foreach ($classroom->students as $student)
+
+
+                    @forelse ($classroom->students as $student)
                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                                 <div class="relative mb-3">
                                     <x-label>Student Name</x-label>
@@ -116,8 +123,11 @@
                                     </x-select>
                                 </div>
                             </div>
-                        @endforeach
-                    @endif
+                            @empty
+                            <div class="flex justify-center mx-auto ">
+                                <p>No student found for this classroom</p>
+                            </div>
+                            @endforelse
 
                     <div class="flex justify-end items-center">
                         <span class="text-red-500">Please review the reffered student before reloading the page</span>
@@ -133,6 +143,8 @@
         </x-form>
 
 
+
+        @endif
 
     </div>
     <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>

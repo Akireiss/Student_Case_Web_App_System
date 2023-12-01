@@ -1,4 +1,4 @@
-<x-form title="Report Information">
+<x-form title="">
     <x-slot name="actions">
       @if (auth()->user()->role == 0)
       <x-link :href="url('report/history')">
@@ -14,10 +14,10 @@
     <x-slot name="slot">
         <form wire:submit.prevent="update" enctype="multipart/form-data">
             @csrf
-            <h6 class="text-sm my-3 px-4 font-bold uppercase ">
+            <h6 class="text-sm mt-2 px-4 font-bold uppercase ">
                 Student Information
             </h6>
-            <x-grid columns="2" gap="4" px="0" mt="0">
+            <x-grid columns="2" gap="4" px="0" mt="2">
 
                 <div class="w-full px-4 inline">
                     <div x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
@@ -65,11 +65,10 @@
             </x-grid>
 
 
-
-            <h6 class="text-sm px-4 font-bold uppercase my-3">
+            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-5">
                 Case Information
             </h6>
-            <x-grid columns="2" gap="4" px="0" mt="4">
+            <x-grid columns="2" gap="4" px="0" mt="2">
 
                 <div class="w-full px-4">
                     <x-label>
@@ -142,7 +141,7 @@
                 Additional Information
             </h6>
 
-            <x-grid columns="2" gap="4" px="0" mt="4">
+            <x-grid columns="2" gap="4" px="0" mt="2">
 
 
                 <div class="w-full px-4">
@@ -228,13 +227,13 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 
                 </div>
 
-            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3 ">
+            <h6 class="text-sm my-1 px-4 font-bold uppercase mt-5 ">
                 Actions Taken <x-error fieldName="selectedActions" />
             </h6>
 
             <x-grid columns="4" gap="4" px="0" mt="4">
                 @foreach ($actions as $action)
-                    <div class="relative mb-3 px-4">
+                    <div class="relative mb-1 px-4">
                         <div class="flex items-center space-x-2">
                             <x-checkbox wire:model="selectedActions" value="{{ $action->action_taken }}" />
                             <x-label>{{ $action->action_taken }}</x-label>

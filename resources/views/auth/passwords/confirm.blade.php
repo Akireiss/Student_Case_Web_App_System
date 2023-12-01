@@ -1,6 +1,8 @@
 @include('layouts.header')
 
-<x-authentication-card class="mt-36">
+<div class="flex justify-center items-center mt-24">
+    <div class="max-w-lg mx-3 p-8 md:p-12 my-10 rounded-lg shadow-md w-full ">
+
 
     <section>
 
@@ -44,7 +46,8 @@
                             </div>
                         </div>
                     </form>
-</x-authentication-card>
+    </div>
+</div>
 
 @include('components.footer')
 

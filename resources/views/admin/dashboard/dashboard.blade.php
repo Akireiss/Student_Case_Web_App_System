@@ -97,8 +97,8 @@
                 id="totalStudents">
                 <!-- Card -->
 
-                <a href="{{ url('admin/settings/students') }}"
-                    class="flex items-center p-4 bg-white  shadow-md border-l-4 border-orange-500 ">
+                <a href="{{ url('admin/settings/students/filtered/active') }}"
+                    class="flex items-center p-4 bg-white  shadow-md rounded-lg border-l-4  ">
                     <div
                         class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -108,8 +108,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="mb-2 text-lg font-medium text-gray-600 ">
-                            Total students
+                        <p class="mb-2 text-xl font-medium text-gray-600 ">
+                            Total active students
                         </p>
                         <p class="text-3xl font-semibold text-gray-700 " id="total-students">
 
@@ -119,8 +119,8 @@
 
 
 
-                <a href="{{ url('admin/settings/students') }}"
-                    class="flex items-center p-4 bg-white  shadow-md   border-l-4 border-blue-500">
+                <a href="{{ url('admin/settings/students/filtered/male') }}"
+                    class="flex items-center p-4 bg-white  shadow-md rounded-lg   border-l-4 ">
                     <div
                         class=" p-3 mr-4 text-white bg-blue-500 rounded-full dark:text-orange-100
                  dark:bg-orange-500">
@@ -131,8 +131,8 @@
                         </svg>
                     </div>
                     <div role="alert" id="weekly-alert">
-                        <p class="mb-2 text-lg font-medium text-gray-600 ">
-                            Total Male
+                        <p class="mb-2 text-xl font-medium text-gray-600 ">
+                            Total active male
                         </p>
                         <p class="text-3xl font-semibold text-gray-700 " id="total-male">
 
@@ -144,8 +144,8 @@
 
 
 
-                <a href="{{ url('admin/settings/students') }}"
-                    class="flex items-center p-4 bg-white  shadow-md   border-l-4 border-pink-500">
+                <a href="{{ url('admin/settings/students/filtered/female') }}"
+                    class="flex items-center p-4 bg-white  shadow-md rounded-lg   border-l-4 ">
                     <div class=" p-3 mr-4 text-white bg-pink-500 rounded-full">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path
@@ -155,7 +155,7 @@
                     </div>
                     <div role="alert" id="weekly-alert">
                         <p class="mb-2 text-lg font-medium text-gray-600">
-                            Total Female
+                            Total active female
                         </p>
                         <p class="text-3xl font-semibold text-gray-700 " id="total-female">
 
@@ -171,7 +171,7 @@
 
                 <!-- Card -->
                 <a href="{{ url('admin/reports') }}"
-                    class="flex items-center p-4 bg-white  shadow-md border-l-4 border-green-500 ">
+                    class="flex items-center p-4 bg-white  shadow-md rounded-lg border-l-4">
                     <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -188,7 +188,7 @@
 
                     </div>
                     <div>
-                        <p class="mb-2 text-lg font-medium text-gray-600 ">
+                        <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Total Cases
                         </p>
                         <p class="text-3xl font-semibold text-gray-700 " id="total-cases">
@@ -196,7 +196,7 @@
                     </div>
                 </a>
                 <!-- Card -->
-                <div class="flex items-center p-4 bg-white shadow-md border-l-4 border-blue-500">
+                <a href="{{ url('admin/reports/male') }}" class="flex items-center p-4 bg-white shadow-md border-l-4 ">
                     <div class="p-3 mr-4 text-white bg-blue-500 rounded-full ">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-500" height="1em"
                             viewBox="0 0 320 512" fill="white">
@@ -212,10 +212,10 @@
 
                         </p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Card -->
-                <div class="flex items-center p-4 bg-white border-pink-500 border-l-4 shadow-md">
+                <a href="{{ url('admin/reports/female') }}" class="flex items-center p-4 bg-white  border-l-4 shadow-md rounded-lg">
                     <div class="p-3 mr-4 text-white bg-pink-500 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-pink-500" height="1em"
                             viewBox="0 0 320 512" fill="white">
@@ -234,7 +234,7 @@
 
                         </p>
                     </div>
-                </div>
+                </a>
 
 
 
@@ -247,7 +247,7 @@
                 <!-- Card -->
 
                 <!-- Card -->
-                <div class="flex items-center p-4 bg-white  shadow-md border-l-4 border-red-500
+                <a href="{{ url('admin/reports/pending') }}" class="flex items-center p-4 bg-white  shadow-md rounded-lg border-l-4
             ">
                     <div class="p-3 mr-4 text-white bg-red-500 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -258,17 +258,17 @@
 
                     </div>
                     <div>
-                        <p class="mb-2 text-lg font-medium text-gray-600 ">
+                        <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Pending Cases
                         </p>
                         <p id="pending-cases" class="text-3xl font-semibold text-gray-700 ">
 
                         </p>
                     </div>
-                </div>
+                </a>
 
-                <a href="{{ url('admin/reports') }}"
-                    class="flex items-center p-4 bg-white  shadow-md  border-l-4 border-yellow-500">
+                <a href="{{ url('admin/reports/ongoing') }}"
+                    class="flex items-center p-4 bg-white  shadow-md rounded-lg  border-l-4 ">
                     <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -285,7 +285,7 @@
 
                     </div>
                     <div>
-                        <p class="mb-2 text-lg font-medium text-gray-600 ">
+                        <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Ongoing
                         </p>
                         <p class="text-3xl font-semibold text-gray-700 " id="ongoingCases">
@@ -294,7 +294,7 @@
                 </a>
 
                 <!-- Card -->
-                <div class="flex items-center p-4 bg-white border-green-500 border-l-4
+                <a href="{{ url('admin/reports/resolved') }}" class="flex items-center p-4 bg-white  border-l-4 rounded-lg
               shadow-md  ">
                     <div class="p-3 mr-4 text-white bg-green-500 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -306,14 +306,14 @@
                     </div>
 
                     <div>
-                        <p class="mb-2 text-lg font-medium text-gray-600 ">
+                        <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Resolved Cases
                         </p>
                         <p id="resolved-cases" class="text-3xl font-semibold text-gray-700 ">
 
                         </p>
                     </div>
-                </div>
+                </a>
 
 
             </div>

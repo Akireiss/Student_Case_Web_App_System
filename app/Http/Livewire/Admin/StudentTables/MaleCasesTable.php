@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin\StudentTables;
 
 use App\Models\Offenses;
 use App\Models\Students;
@@ -13,7 +13,7 @@ use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
-final class AnecdotaTable extends PowerGridComponent
+final class MaleCasesTable extends PowerGridComponent
 {
     use ActionButton;
     use WithExport;
@@ -49,7 +49,7 @@ final class AnecdotaTable extends PowerGridComponent
                 'offenses.offenses',
                 'offenses.id as OffenseID',
                 'students.id as StudentID'
-            );
+            )->where('students.gender', '=', 0)->where('students.status', '=', 0);
     }
 
 

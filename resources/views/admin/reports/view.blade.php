@@ -18,7 +18,7 @@
 
                 <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
                     <h6 class="text-sm mt-2 px-4 font-bold uppercase ">
-                        Report Information
+                        Student Information
                     </h6>
 
                     <x-grid columns="2" gap="4" px="0" mt="2">
@@ -80,7 +80,7 @@
 
                         <div class="w-full px-4">
                             <x-label>
-                                Grave Offenses
+                            Offenses
                             </x-label>
                             <x-input value="{{ $anecdotal->offenses?->offenses ?? 'No Offenses Found' }}" disabled />
                                 <span class="text-red-500 text-sm"> Offense type: {{ $anecdotal->offenses->category === 0 ? 'Minor' : 'Grave' }}</span>
@@ -184,19 +184,28 @@
 
                     <div>
 
-                        <h6 class="text-sm my-6 px-4 font-bold uppercase">
-                            Actions Taken
-                        </h6>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+                <h6 class="text-sm my-1 px-4 font-bold uppercase mt-5 ">
+                    Actions Taken
+                </h6>
 
-                            <div class="relative mb-3">
-                                <div class="flex items-center space-x-2">
-                                    <x-checkbox wire:model="actions" checked disabled value="Parent Teacher Meeting" />
-                                    <x-label>Parent Teacher Meeting</x-label>
+                <x-grid columns="4" gap="2" px="0" mt="4">
+
+
+                            @if ($anecdotal->actionsTaken->isNotEmpty())
+                                @foreach ($anecdotal->actionsTaken as $action)
+                                <div class="relative mb-3 px-4">
+                                    <div class="flex items-center space-x-2">
+                                    <x-checkbox checked disabled />
+                                    <x-label>{{ $action->actions }}</x-label>
                                 </div>
                             </div>
-                        </div>
+                                @endforeach
+                            @else
+                                No Action Taken Found
+                            @endif
+
+                </x-grid>
 
                     </div>
                 </div>

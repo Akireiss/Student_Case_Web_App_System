@@ -395,11 +395,11 @@
                         </li>
                     @endcan
 
-                    @can('admin-access')
+                    {{-- @can('admin-access')
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                             <a class="w-full" href="{{ url('admin/add-acc') }}">Add Account</a>
                         </li>
-                    @endcan
+                    @endcan --}}
                     @can('admin-access')
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                             <a class="w-full" href="{{ url('admin/user/accounts') }}">User Accounts</a>

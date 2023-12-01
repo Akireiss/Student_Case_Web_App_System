@@ -245,26 +245,30 @@ class HelpController extends Controller
         $totalResolveAllCases = 0;
         $totalFollowUpAllCases = 0;
         $totalRefferalAllCases = 0;
-        //Case Statusis
+
+        //Case Status ALl
         $pendingAll= [];
         $ongoingAll = [];
         $ResolveAll = [];
         $FollowAll = [];
         $RefferAll= [];
+        //Single Status
+        $caseStatusAll = [];
+        $totalcaseStatusAll = 0;
 
 
         $anecdotals = Anecdotal::query();
 
         if ($department === 'All') {
-
-
-            $Allclassrooms = Anecdotal::whereIn(
+            $Allclassrooms = Classroom::whereIn(
                 DB::raw('SUBSTRING(grade_level, 1, 2)'),
-                ['7', '8','9', '10', '11', '12']
+                ['7', '8', '9', '10', '11', '12']
             )
             ->selectRaw('SUBSTRING(grade_level, 1, 2) as first_letter')
             ->distinct()
-            ->orderBy(DB::raw('CAST(first_letter AS SIGNED)'), 'asc');
+            ->orderBy(DB::raw('CAST(first_letter AS SIGNED)'), 'asc') // Order by first_letter as an integer in ascending order
+            ->get();
+
 
 
 
@@ -331,20 +335,20 @@ class HelpController extends Controller
                     $totalFollowUpAllCases  += $totalFollowUpAll;
                     $totalRefferalAllCases += $totalRefferalAll;
                 } else {
-                    $totalCasesStatus = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
+                    $totalCasesStatusAll = Anecdotal::where('case_status', $status)->whereBetween('created_at',  [$startYear, $endYear])
                         ->where('grade_level', 'like', $classroom->first_letter . '%')
                         ->count();
 
-                    $caseStatusSH[$classroom->first_letter] = $totalCasesStatus;
+                    $caseStatusAll[$classroom->first_letter] = $totalCasesStatusAll;
                     //Total Count
-                    $totalcaseStatusSH += $totalCasesStatus;
+                    $totalcaseStatusAll += $totalCasesStatusAll;
                 }
             }
         }
 
 
         if ($highSchool === 'All') {
-            $classroomsHS = Anecdotal::whereIn(
+            $classroomsHS =  Classroom::whereIn(
                 DB::raw('SUBSTRING(grade_level, 1, 2)'),
                 ['7', '8', '9', '10']
             )
@@ -432,7 +436,7 @@ class HelpController extends Controller
 
 
         if ($SeniorHigh === 'All') {
-            $classroomsSenior = Anecdotal::whereIn(
+            $classroomsSenior =  Classroom::whereIn(
                 DB::raw('SUBSTRING(grade_level, 1, 2)'),
                 ['11', '12']
             )
@@ -517,14 +521,13 @@ class HelpController extends Controller
 
 
         if ($year === 'All') {
-            // Handle 'All' case by not applying date filtering
+
         } else {
-            // Parse the selected year into a start and end date
+
             $yearParts = explode('-', $year);
             $startYear = Carbon::create($yearParts[0], 6, 1);
             $endYear = Carbon::create($yearParts[1], 5, 31)->endOfDay();
-
-            // Apply the date filter
+            //Date
             $anecdotals->whereBetween('created_at', [$startYear, $endYear]);
         }
 
@@ -533,7 +536,7 @@ class HelpController extends Controller
             $anecdotals->where('case_status', $status);
         }
 
-        // Fetch the filtered data
+        //Filtered data
         $anecdotals = $anecdotals->get();
 
 
@@ -592,7 +595,30 @@ class HelpController extends Controller
             'totalRefferalSh' => $totalRefferalSh,
             //IF not all case status
             'caseStatusSH' => $caseStatusSH,
-            'totalcaseStatusSH' => $totalcaseStatusSH
+            'totalcaseStatusSH' => $totalcaseStatusSH,
+
+            //If department is All
+            'pendingAll' => $pendingAll,
+            'ongoingAll' => $ongoingAll,
+            'ResolveAll' => $ResolveAll,
+            'FollowAll' => $FollowAll,
+            'RefferAll' => $RefferAll,
+            //All Status Cases
+           'totalPendingAllCases' => $totalPendingAllCases,
+           'totalOngoingAllCases' => $totalOngoingAllCases,
+           'totalResolveAllCases' => $totalResolveAllCases,
+           'totalFollowUpAllCases' => $totalFollowUpAllCases,
+           'totalRefferalAllCases' => $totalRefferalAllCases,
+           //All Classroom
+           'Allclassrooms' => $Allclassrooms,
+           //Another
+            'totalAllMaleCases' => $totalAllMaleCases,
+            'totalAllFemaleCases' => $totalAllFemaleCases,
+            //Total Case From the first row
+            'AllMaletotalCases' => $AllMaletotalCases,
+            'AllFemaletotalCases'  => $AllFemaletotalCases,
+
+
         ]);
 
         return $pdf->stream('report.pdf');

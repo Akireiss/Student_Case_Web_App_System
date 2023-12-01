@@ -16,7 +16,7 @@
                 <x-slot name="slot">
 
                     <h6 class="text-sm mt-3 mb-6 px-4 font-bold uppercase">
-                        Cases Reports
+                        Generate Report
                     </h6>
 
                     <form action="{{ route('report.pdf.test') }}" method="get" target="_blank">
@@ -28,7 +28,7 @@
                                     <x-label for="section">Department</x-label>
                                     <x-select name="department" id="departmentSelect">
                                         <!-- Options for offense categories -->
-                                        {{-- <option value="All">All</option> --}}
+                                        <option value="All">All</option>
                                         <option value="0">High School</option>
                                         <option value="1">Senior High School</option>
                                     </x-select>

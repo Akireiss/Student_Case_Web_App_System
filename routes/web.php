@@ -70,7 +70,21 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('dashboard', [DashboardController::class, 'index']);
             //Reports
 
-            Route::get('reports', [ReportController::class, 'index']);
+            Route::get('reports', [ReportController::class, 'index'])->name('admin.reports');
+
+
+            Route::get('reports/pending', [ReportController::class, 'index'])
+            ->name('admin.reports.pending');
+            Route::get('reports/ongoing', [ReportController::class, 'index'])
+            ->name('admin.reports.ongoing');
+            Route::get('reports/resolved', [ReportController::class, 'index'])
+            ->name('admin.reports.resolved');
+            //Male and Female Cases
+            Route::get('reports/male', [ReportController::class, 'index'])
+            ->name('admin.reports.male');
+            Route::get('reports/female', [ReportController::class, 'index'])
+            ->name('admin.reports.female');
+
             Route::get('reports/create', Report::class);
 
             //Recent cases from the scheduled resolved cases
@@ -87,7 +101,7 @@ Route::middleware(['auth', 'role'])->group(function () {
 
             //User Manage
             Route::get('update-acc', User::class);
-            Route::get('add-acc', AddUser::class)->name('users.add');
+           // Route::get('add-acc', AddUser::class)->name('users.add');
             Route::get('user/accounts', function () {
                 return view('admin.user.index');
             });
@@ -115,12 +129,11 @@ Route::middleware(['auth', 'role'])->group(function () {
             // Route::get('offenses/create', [OffensesController::class, 'create']);
             // Route::get('offenses/create', AddOffenses::class);
 
-
             Route::post('offenses/store', [OffensesController::class, 'store']);
             Route::get('offenses/store/{offense}/view', [OffensesController::class, 'view'])
                 ->name('admin.offense.view');
             //*Update
-            Route::get('student-profile/{offense}/update', EditOffense::class)
+            Route::get('offenses/{offense}/update', EditOffense::class)
                 ->name('admin.offense.edit');
 
             // Employees
@@ -164,13 +177,20 @@ Route::middleware(['auth', 'role'])->group(function () {
 
 
 
-
-
             // Students Area
-            Route::get('students', Student::class);
+            Route::get('students', Student::class)->name('admin.settings.students');
+
+            Route::get('students/filtered/male', [Student::class, 'studentFiltered'])->name('admin.settings.students.filtered.male');
+            Route::get('students/filtered/female', [Student::class, 'studentFiltered'])->name('admin.settings.students.filtered.female');
+            Route::get('students/filtered/active', [Student::class, 'studentFiltered'])->name('admin.settings.students.filtered.active');
+
+
             Route::get('student/update/{student}', EditStudent::class)->name('student.edit');
             Route::get('student/view/{student}', [EditStudent::class, 'view'])
                 ->name('student.view');
+                //pdf
+            Route::get('student/pdf/{student}', [PdfController::class, 'generateStudentPdf'])
+                ->name('student.pdf');
 
             //Generate Report
             Route::get(
@@ -199,6 +219,9 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('students-profile', StudentProfile::class);
             //*Add
             Route::get('student-profile/add', \App\Http\Livewire\Student\StudentProfile::class);
+            //Pdf for student
+            Route::get('student/pdf/{student}', [PdfController::class, 'generateStudentPdf'])
+            ->name('adviser.student.pdf');
             //*Edit
             Route::get('student-profile/{profile}/edit', StudentProfileUpdate::class)
                 ->name('adviser.profile.edit');
@@ -298,9 +321,9 @@ Route::get('test/pdf/{id}', [PdfController::class, 'testPdf']);
 //Route::get('student/view/cases/{studentID}', [StudentDataController::class, 'viewCases']);
 
 //*Student Profile Data
-// Route::get('student/form', StudentForm::class);
+//Route::get('student/form', StudentForm::class);
 //Route::get('student/form/{id}/edit', StudentFormUpdate::class)->name('profile.show');
-// Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
+Route::get('student/profile/create', \App\Http\Livewire\Student\StudentProfile::class);
 
 // Route::get('student/profile/data/{form_id}', [StudentDataController::class, 'index'])
 // ->name('student.profile.data')->middleware('profileAuth');
@@ -339,5 +362,8 @@ Route::get('/generate-pdf', [HelpController::class, 'reportGenerate'])->name('re
 //Testing Endpoint
 // Route::get('/successfull-action', [HelpController::class, 'successfullAction']);
 Route::get('/successfull-action', [DashboardController::class, 'successfullAction']);
+
+
+//Database
 Route::get('restore/database/corrupt', [RestoreController::class, 'index'])->name('database.restore');
 Route::post('restore/database/corrupt/database', [RestoreController::class, 'restore'])->name('restore.database');

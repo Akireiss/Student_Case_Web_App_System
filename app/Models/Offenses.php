@@ -56,4 +56,16 @@ class Offenses extends Model
         return "An offense has been {$eventName}";
     }
 
+    public function getCategoryTextAttribute()
+    {
+        $value = $this->attributes['category'];
+        switch ($value) {
+            case 0:
+                return 'Minor';
+            case 1:
+                return 'Grave';
+            default:
+                return 'Unknown';
+        }
+    }
 }

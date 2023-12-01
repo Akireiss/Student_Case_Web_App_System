@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin\Student\FilteredStudentTable;
 
 use App\Models\Students;
 use App\Models\Classroom;
@@ -14,7 +14,7 @@ use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\{ActionButton, WithExport};
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridColumns};
 
-final class StudentTable extends PowerGridComponent
+final class MaleStudentsTable extends PowerGridComponent
 {
     use ActionButton;
     use WithExport;
@@ -45,7 +45,7 @@ final class StudentTable extends PowerGridComponent
                 'students.status',
                 'classrooms.grade_level as grade_level',
                 'classrooms.section as section'
-            );
+            )->where('gender', '=', 0)->where('students.status', '=', 0);
     }
 
     public function relationSearch(): array

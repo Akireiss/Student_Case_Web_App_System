@@ -23,7 +23,7 @@ final class StudentProfileTable extends PowerGridComponent
     {
 
         return [
-            Responsive::make(),
+         //   Responsive::make(),
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),

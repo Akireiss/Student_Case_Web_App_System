@@ -10,9 +10,15 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use App\Models\Students;
 
 class PdfController extends Controller
 {
+    public function generateStudentPdf(Students $student) {
+        $pdf = Pdf::loadView('pdf.studentPdf', ['student' => $student]);
+        return $pdf->stream();
+    }
+
     public function generatePdf($id)
     {
         $profile = Profile::with('family')->find($id);
@@ -23,7 +29,7 @@ class PdfController extends Controller
 
         $pdf = Pdf::loadView('pdf.pdf', ['profile' => $profile]);
 
-        return $pdf->download();
+        return $pdf->stream();
     }
 
 

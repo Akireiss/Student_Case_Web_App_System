@@ -20,7 +20,7 @@ final class EmployeeTable extends PowerGridComponent
     {
 
         return [
-            Responsive::make(),
+          //  Responsive::make(),
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),

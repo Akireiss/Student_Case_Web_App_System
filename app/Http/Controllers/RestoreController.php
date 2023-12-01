@@ -69,7 +69,7 @@ class RestoreController extends Controller
         }
 
         // Redirect with a success message
-        return back()->with('success', 'Database name has been changed.');
+        return back()->with('success', 'Database has been repaired.');
     }
 private function databaseExists($databaseName)
 {
