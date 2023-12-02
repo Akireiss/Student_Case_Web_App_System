@@ -175,6 +175,8 @@
         <script src="{{ asset('assets/js/barChartGrade.js') }}"></script>
 
         <script src="{{ asset('assets/js/PieUpdated.js') }}"></script>
+        {{-- Classroom  Bar Chart --}}
+        <script src="{{ asset('assets/js/classroom.js') }}"></script>
 
 
         @livewireScripts
