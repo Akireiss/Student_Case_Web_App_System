@@ -80,10 +80,24 @@ function updateChart(data, startMonth, endMonth) {
 
     myBar.update();
 }
+// Define the function to get the current academic year
+function getCurrentAcademicYear() {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const academicYearStartMonth = 5; // June (0-indexed)
 
-// Function to handle dropdown click event
-$('.py-2').click(function () {
-    const selectedYear = $(this).data('year');
+    if (currentDate.getMonth() >= academicYearStartMonth) {
+        // If the current month is in or after June, set the academic year as the current year to the next year
+        return `${currentYear}-${currentYear + 1}`;
+    } else {
+        // Otherwise, set the academic year as the previous year to the current year
+        return `${currentYear - 1}-${currentYear}`;
+    }
+}
+
+// Function to handle dropdown change event
+$('#case_year').change(function () {
+    const selectedYear = $(this).val();
     let startMonth = 'June';
     let endMonth = 'May';
 
@@ -121,10 +135,9 @@ $('.py-2').click(function () {
     fetchData(selectedYear, startMonth, endMonth);
 });
 
-
 // Function to fetch data
 function fetchData(selectedYear, startMonth, endMonth) {
-    const url = '/admin/get-case-counts?year=' + selectedYear;
+    const url = '/admin/get-case-counts?case_year=' + selectedYear;
 
     $.ajax({
         url: url,
@@ -139,25 +152,12 @@ function fetchData(selectedYear, startMonth, endMonth) {
     });
 }
 
-
-function getCurrentAcademicYear() {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const academicYearStartMonth = 5; // June (0-indexed)
-
-    if (currentDate.getMonth() >= academicYearStartMonth) {
-        // If the current month is in or after June, set the academic year as the current year to the next year
-        return `${currentYear}-${currentYear + 1}`;
-    } else {
-        // Otherwise, set the academic year as the previous year to the current year
-        return `${currentYear - 1}-${currentYear}`;
-    }
-}
-
 // ...
 
 // Set the default value in the dropdown
-$('.py-2[data-year="' + getCurrentAcademicYear() + '"]').addClass('text-green-400');
+$(document).ready(function () {
+    $('#case_year').val(getCurrentAcademicYear());
 
-// Fetch data for the default year (current academic year) with June to May range
-fetchData(getCurrentAcademicYear(), 'June', 'May');
+    // Fetch data for the default year (current academic year) with June to May range
+    fetchData(getCurrentAcademicYear(), 'June', 'May');
+});

@@ -40,48 +40,26 @@
         <div x-data="{ currentGrid: 'totalStatusCases', yearButtonText: '{{ date('Y') }}-{{ date('Y') + 1 }}', statusButtonText: 'Case Status' }">
 
             <div class="flex justify-end items-center space-x-2">
-                <div id="yearDropdown">
-                    <x-dropdown>
-                        <x-slot name="trigger">
-                            <div class="flex items-center cursor-pointer space-x-2">
-                                <x-buttontype x-html="yearButtonText + '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-1&quot;><path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>'">
-                                    <span id="selectedYear" class="flex items-center">
-                                        <span x-text="yearButtonText"></span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                        </svg>
-                                    </span>
-                                </x-buttontype>
-                            </div>
-                        </x-slot>
-                        <x-slot name="content">
-                            <ul id="yearFilter">
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="All" @click="yearButtonText = 'All'; buttonText = 'All'">All</li>
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</li>
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="{{ date('Y') }}-{{ date('Y') + 1 }}" @click="yearButtonText = '{{ date('Y') }}-{{ date('Y') + 1 }}'; buttonText = 'Current Year'">{{ date('Y') }}-{{ date('Y') + 1 }}</li>
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="2021-2022" @click="yearButtonText = '2021-2022'; buttonText = '2021-2022'">2021-2022</li>
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="2022-2023" @click="yearButtonText = '2022-2023'; buttonText = '2022-2023'">2022-2023</li>
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" data-year="2023-2024" @click="yearButtonText = '2023-2024'; buttonText = '2023-2024'">2023-2024</li>
-                            </ul>
-                        </x-slot>
-                    </x-dropdown>
-                </div>
+
 
                 <div id="statusDropdown">
                     <x-dropdown>
                         <x-slot name="trigger">
-                            <div class="flex justify-end my-2">
-                                <x-buttontype x-html="statusButtonText + '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-4 h-4 ml-1&quot;><path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19.5 8.25l-7.5 7.5-7.5-7.5&quot; /></svg>'">Case
-                                    Status</x-buttontype>
+                            <div class="flex items-center">
+                                <button type="button" class="border border-gray-300 p-2 bg-gray-50 block rounded-md shadow-sm text-gray-800 flex items-center">
+                                    <span x-html="statusButtonText"></span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </button>
                             </div>
+
                         </x-slot>
                         <x-slot name="content">
                             <ul>
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalStudents'; statusButtonText = 'Students'">Students</li>
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalFMstudents'; statusButtonText = 'Cases'">Cases</li>
-                                <li class="py-2 px-4 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalStatusCases'; statusButtonText = 'Cases Status'">Cases Status</li>
+                                <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalStudents'; statusButtonText = 'Students'">Students</li>
+                                <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalFMstudents'; statusButtonText = 'Cases'">Cases</li>
+                                <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer" @click="currentGrid = 'totalStatusCases'; statusButtonText = 'Cases Status'">Cases Status</li>
                             </ul>
                         </x-slot>
                     </x-dropdown>
@@ -373,7 +351,18 @@
                     <h4 class="font-semibold text-gray-800">
                         Total Number Of Case Status
                     </h4>
+                    <div>
+                        <select name="case_year" id="case_year" class="border border-gray-300 p-2 bg-gray-50
+                        rounded-md shadow-sm w-full text-gray-800">
+                            <option value="All">All</option>
+                            <option selected value="{{ date('Y') }}-{{ date('Y') + 1 }}">{{ date('Y') }}-{{ date('Y') + 1 }}</option>
+                            <option value="2021-2022">2021-2022</option>
 
+                            <option value="2022-2023">2022-2023</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2024-2025">2024-2025</option>
+                        </select>
+                    </div>
                 </div>
 
 
@@ -381,19 +370,55 @@
 
             </div>
 
-            <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
-                <h4 class="mb-4 font-semibold text-gray-800 ">
-                    Grade Level Offenses
-                </h4>
-                {{-- <canvas id="myGroupedBar"></canvas> --not the update one --}}
-                {{-- The updated one --}}
-                <canvas id="barGradeLevel"></canvas>
-                <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600 ">
-                    <div class="flex items-center">
-                        <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
+            <div class="min-w-0 p-4 shadow-md bg-white ring-1 ring-black ring-opacity-5">
+                <div class="flex justify-between ">
+                    <h4 class="font-semibold text-gray-800">
+                        Grade Level Offenses
+                    </h4>
+                    <div class="flex space-x-2">
 
+                    <div>
+                        <select name="level_offense_year" id="level_offense_year" class="border border-gray-300 p-2 bg-gray-50
+                        rounded-md shadow-sm w-full text-gray-800">
+                            <option value="All">All</option>
+                            <option selected value="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</option>
+                            <option value="2021-2022">2021-2022</option>
+
+                            <option value="2022-2023">2022-2023</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2024-2025">2024-2025</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select class="border border-gray-300 p-2 bg-gray-50 rounded-md shadow-sm text-gray-800" id="classroom_chart_year">
+                            <option selected>Select Classroom</option>
+                            @foreach ($classrooms as $class)
+                                <option value="{{ $class->id }}">{{ $class->grade_level }} {{ $class->section }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
+                </div>
+
+                </div>
+
+                <div>
+                    {{-- The default chart --}}
+                    <canvas id="barGradeLevel"></canvas>
+
+                    {{-- The classroom chart --}}
+                    <div id="barClassroom" class="hidden">
+                        Test
+                    </div>
+                </div>
+
+
+                <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600">
+                    <div class="flex items-center">
+                        <span class="inline-block w-3 h-3 mr-1 rounded-full"></span>
+                        <!-- You can add text or other content here -->
+                    </div>
+                    <!-- Add more elements as needed -->
                 </div>
             </div>
 
@@ -401,9 +426,23 @@
 
 
             <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
-                <h4 class="mb-2 font-semibold text-gray-800 ">
-                    Total Number Of Offenses
-                </h4>
+                <div class="flex justify-between ">
+                    <h4 class="font-semibold text-gray-800">
+                        Total Number Of Offense
+                    </h4>
+                    <div>
+                        <select name="number_offense_year" id="number_offense_year" class="border border-gray-300 p-2 bg-gray-50
+                        rounded-md shadow-sm w-full text-gray-800">
+                            <option value="All">All</option>
+                            <option selected value="{{ date('Y') }}-{{ date('Y') + 1 }}">{{ date('Y') }}-{{ date('Y') + 1 }}</option>
+                            <option value="2021-2022">2021-2022</option>
+
+                            <option value="2022-2023">2022-2023</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2024-2025">2024-2025</option>
+                        </select>
+                    </div>
+                </div>
                 {{-- <canvas id="myChartPie"></canvas>//Temporary --joshua --}}
                 <canvas id="OffenseChart"></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600 ">
@@ -418,9 +457,23 @@
 
 
             <div class="min-w-0 p-4 shadow-md bg-white  ring-1 ring-black ring-opacity-5 ">
-                <h4 class="mb-4 font-semibold text-gray-800 ">
-                    Total Number Of Successfull Actions
-                </h4>
+                <div class="flex justify-between ">
+                    <h4 class="font-semibold text-gray-800">
+                        Total Number Of Succesfull Actions
+                    </h4>
+                    <div>
+                        <select name="number_actions_year" id="number_actions_year" class="border border-gray-300 p-2 bg-gray-50
+                        rounded-md shadow-sm w-full text-gray-800">
+                            <option value="All">All</option>
+                            <option selected value="{{ date('Y') }}-{{ date('Y') + 1 }}">{{ date('Y') }}-{{ date('Y') + 1 }}</option>
+                            <option value="2021-2022">2021-2022</option>
+
+                            <option value="2022-2023">2022-2023</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2024-2025">2024-2025</option>
+                        </select>
+                    </div>
+                </div>
                 {{-- <canvas id="myChart"></canvas> --}}
                 <canvas id="myPieChart"></canvas>
                 <div class="flex justify-center mt-4 space-x-3 text-lg text-gray-600 ">
@@ -442,6 +495,37 @@
 
     <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
     <script src="{{ asset('assets/js/chart.min.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the select element
+            var select = document.getElementById("classroom_chart_year");
+
+            // Get the chart elements
+            var barGradeLevel = document.getElementById("barGradeLevel");
+            var barClassroom = document.getElementById("barClassroom");
+
+            // Store the initial display property of the default chart
+            var initialDisplay = barGradeLevel.style.display;
+
+            // Add change event listener to the select element
+            select.addEventListener("change", function() {
+                // Get the selected option index
+                var selectedIndex = select.selectedIndex;
+
+                // Toggle visibility based on the selected index
+                if (selectedIndex === 0) {
+                    // Show default chart and hide classroom chart
+                    barGradeLevel.style.display = initialDisplay;
+                    barClassroom.style.display = "none";
+                } else {
+                    // Hide default chart and show classroom chart
+                    barGradeLevel.style.display = "none";
+                    barClassroom.style.display = "block";
+                }
+            });
+        });
+    </script>
+
 
 
     <script>

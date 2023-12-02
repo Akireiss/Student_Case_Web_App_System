@@ -150,7 +150,8 @@ class HelpController extends Controller
 
     public function getOffenseCountsNew(Request $request)
     {
-        $year = $request->input('year', 'All');
+        $year = $request->input('number_offense_year', 'All');
+
 
         $query = DB::table('anecdotal')
             ->join('offenses', 'anecdotal.offense_id', '=', 'offenses.id')

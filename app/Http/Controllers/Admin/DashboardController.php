@@ -30,32 +30,35 @@ class DashboardController extends Controller
             $notification->data = json_decode($notification->data, true);
         });
 
-        $gradeLevels = ["7", "8", "9", "10", "11", "12"];
+        // $gradeLevels = ["7", "8", "9", "10", "11", "12"];
 
-        $data = [];
+        // $data = [];
 
-        foreach ($gradeLevels as $gradeLevel) {
-            $classrooms = Classroom::where('grade_level', $gradeLevel)->pluck('id');
-            $offenses = Anecdotal::whereHas('students', function ($query) use ($classrooms) {
-                $query->whereIn('classroom_id', $classrooms);
-            })
-                ->select('case_status', DB::raw('COUNT(*) as count'))
-                ->groupBy('case_status')
-                ->pluck('count', 'case_status')
-                ->toArray();
+        // foreach ($gradeLevels as $gradeLevel) {
+        //     $classrooms = Classroom::where('grade_level', $gradeLevel)->pluck('id');
+        //     $offenses = Anecdotal::whereHas('students', function ($query) use ($classrooms) {
+        //         $query->whereIn('classroom_id', $classrooms);
+        //     })
+        //         ->select('case_status', DB::raw('COUNT(*) as count'))
+        //         ->groupBy('case_status')
+        //         ->pluck('count', 'case_status')
+        //         ->toArray();
 
-            $data[] = [
-                'grade_level' => $gradeLevel,
-                'pending' => $offenses[0] ?? 0,
-                'ongoing' => $offenses[1] ?? 0,
-                'resolved' => $offenses[2] ?? 0,
-                'follow_up' => $offenses[3] ?? 0,
-                'referral' => $offenses[4] ?? 0,
-            ];
-        }
+        //     $data[] = [
+        //         'grade_level' => $gradeLevel,
+        //         'pending' => $offenses[0] ?? 0,
+        //         'ongoing' => $offenses[1] ?? 0,
+        //         'resolved' => $offenses[2] ?? 0,
+        //         'follow_up' => $offenses[3] ?? 0,
+        //         'referral' => $offenses[4] ?? 0,
+        //     ];
+        // }
 
+        //
 
-        return view('admin.dashboard.dashboard', compact('delayedNotif', 'data'));
+        $classrooms = Classroom::where('status', 0)->get();
+
+        return view('admin.dashboard.dashboard', compact('delayedNotif', 'classrooms'));
     }
 
     public function markAsRead(Request $request, ScheduledNotification $notification)
@@ -113,7 +116,7 @@ class DashboardController extends Controller
 
     public function getCaseCounts(Request $request)
     {
-        $selectedYear = $request->input('year');
+        $selectedYear = $request->input('case_year');
 
         $caseCounts = Anecdotal::selectRaw("DATE_FORMAT(created_at, '%M') as month, case_status, count(*) as count")
             ->when($selectedYear !== 'All', function ($query) use ($selectedYear) {
@@ -267,7 +270,7 @@ class DashboardController extends Controller
 
 public function getBarChartData(Request $request)
 {
-    $selectedYear = $request->input('year');
+    $selectedYear = $request->input('level_offense_year');
     $gradeLevels = ["7", "8", "9", "10", "11", "12"];
     $data = [];
 
@@ -329,7 +332,7 @@ public function getBarChartData(Request $request)
 //Succcesfull Actions
 
 public function successfullAction(Request $request) {
-    $year = $request->input('year', 'All');
+    $year = $request->input('number_actions_year', 'All');
 
     $query = DB::table('anecdotal_outcome')
         ->select(DB::raw('count(*) as count, action as label'))

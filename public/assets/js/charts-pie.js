@@ -23,20 +23,37 @@ let chart; // Initialize the chart variable
 
 // Function to create or update the chart
 function createOrUpdateChart(xValuesOffense, yValuesOffense) {
-    if (chart) {
+    const maxEntriesToShow = 5;
 
-        chart.data.labels = xValuesOffense;
-        chart.data.datasets[0].data = yValuesOffense;
+    // Take the top 5 entries
+    const topXValues = xValuesOffense.slice(0, maxEntriesToShow);
+    const topYValues = yValuesOffense.slice(0, maxEntriesToShow);
+
+    // Calculate the sum of the rest
+    const restXValues = ["Others"];
+    const restYValues = [
+        yValuesOffense
+            .slice(maxEntriesToShow)
+            .reduce((acc, val) => acc + val, 0),
+    ];
+
+    // Combine top 5 and "Others" data
+    const combinedXValues = [...topXValues, ...restXValues];
+    const combinedYValues = [...topYValues, ...restYValues];
+
+    if (chart) {
+        chart.data.labels = combinedXValues;
+        chart.data.datasets[0].data = combinedYValues;
         chart.update(); // Update the existing chart
     } else {
         chart = new Chart(ctx, {
             type: "pie",
             data: {
-                labels: xValuesOffense,
+                labels: combinedXValues,
                 datasets: [
                     {
                         backgroundColor: barColors,
-                        data: yValuesOffense,
+                        data: combinedYValues,
                     },
                 ],
             },
@@ -65,53 +82,42 @@ function createOrUpdateChart(xValuesOffense, yValuesOffense) {
                     },
                 },
                 legend: {
-                    position: "bottom", // Align legend to the bottom
+                    position: "bottom",
                 },
             },
         });
     }
 }
 
-
-
-
-
-function calculateDefaultAcademicYear() {
+function calculateDefaultAcademicYearOffense() {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const academicYearStartMonth = 5; // June (0-indexed)
 
     if (currentDate.getMonth() < academicYearStartMonth) {
-        // If the current month is before June, set the academic year as the previous year to the current year
         return `${currentYear - 1}-${currentYear}`;
     } else {
-        // Otherwise, set the academic year as the current year to the next year
         return `${currentYear}-${currentYear + 1}`;
     }
 }
+const defaultAcademicYear = calculateDefaultAcademicYearOffense();
+$("#number_offense_year").val(defaultAcademicYear).addClass("text-green-400");
 
-// Set the default value in the dropdown based on the current date
-const defaultAcademicYear = calculateDefaultAcademicYear();
-$('.py-2[data-year="' + defaultAcademicYear + '"]').addClass("text-green-400");
+fetchDataOffense(defaultAcademicYear);
 
-// Fetch data based on the default value
-fetchData(defaultAcademicYear);
-
-// Handle dropdown click event to fetch data
-$(".py-2").click(function () {
-    const selectedYear = $(this).data("year");
-    $(".py-2").removeClass("text-green-400");
+$("#number_offense_year").change(function () {
+    const selectedYear = $(this).val();
+    $("#number_offense_year").removeClass("text-green-400");
     $(this).addClass("text-green-400");
-    fetchData(selectedYear);
+    fetchDataOffense(selectedYear);
 });
 
-function fetchData(selectedYear) {
-    const url = `/get-offense-counts-new?year=${selectedYear}`;
+function fetchDataOffense(selectedYear) {
+    const url = `/get-offense-counts-new?number_offense_year=${selectedYear}`;
 
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            // Extract xValuesOffense and yValuesOffense from the fetched data
             const xValuesOffense = data.map((item) => item.offense);
             const yValuesOffense = data.map((item) => item.count);
 
@@ -121,98 +127,3 @@ function fetchData(selectedYear) {
             console.error("Error fetching offense counts:", error)
         );
 }
-// Fetch data and update the chart
-$(".py-2").click(function () {
-    const selectedYear = $(this).data("year");
-    const url = `/get-offense-counts-new?year=${selectedYear}`;
-
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            // Extract xValuesOffense and yValuesOffense from the fetched data
-            const xValuesOffense = data.map((item) => item.offense);
-            const yValuesOffense = data.map((item) => item.count);
-
-            createOrUpdateChart(xValuesOffense, yValuesOffense);
-        })
-        .catch((error) =>
-            console.error("Error fetching offense counts:", error)
-        );
-});
-
-
-
-
-
-// Other fybctuib stll eneed some adjustment
- // Gruop funcitons
-    // / Fetch the data from the API
-    // fetch('/get-offense-counts-new')
-    // .then(response => response.json())
-    // .then(data => {
-    //     // Sort the data by count in descending order
-    //     const sortedData = data.sort((a, b) => b.count - a.count);
-
-    //     // Take the top 5 entries and calculate the sum of the rest
-    //     const top5Data = sortedData.slice(0, 5);
-    //     const restSum = sortedData.slice(5).reduce((acc, item) => acc + item.count, 0);
-
-    //     // Create an "Others" entry for the rest
-    //     const othersData = [{ offense: 'Others', count: restSum }];
-
-    //     // Combine top 5 and "Others" data
-    //     const combinedData = top5Data.concat(othersData);
-
-    //     // Extract xValuesOffense and yValuesOffense from the combined data
-    //     const xValuesOffense = combinedData.map(item => item.offense);
-    //     const yValuesOffense = combinedData.map(item => item.count);
-
-    //     // Calculate percentages
-    //     const total = yValuesOffense.reduce((acc, count) => acc + count, 0);
-    //     const percentages = yValuesOffense.map(count => ((count / total) * 100).toFixed(2) + '%');
-
-    //     // Create a new Chart using the combined data and percentages
-    //     new Chart("OffenseChart", {
-    //         type: "pie",
-    //         data: {
-    //             labels: xValuesOffense,
-    //             datasets: [{
-    //                 backgroundColor: barColors.slice(0, xValuesOffense.length),
-    //                 data: yValuesOffense
-    //             }]
-    //         },
-    //         options: {
-    //             title: {
-    //                 display: false,
-    //                 text: " "
-    //             },
-    //             tooltips: {
-    //                 callbacks: {
-    //                     label: (tooltipItem, data) => {
-    //                         const dataset = data.datasets[tooltipItem.datasetIndex];
-    //                         const total = dataset.data.reduce((acc, value) => acc + value, 0);
-    //                         const currentValue = dataset.data[tooltipItem.index];
-    //                         const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
-    //                         return `${data.labels[tooltipItem.index]}: ${currentValue} (${percentage})`;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     });
-    // })
-    // .catch(error => console.error('Error fetching offense counts:', error));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

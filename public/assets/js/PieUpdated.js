@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let myPieChart;
 
     function updatePieChart(selectedYear) {
-        fetch(`/successfull-action?year=${selectedYear}`)
+        fetch(`/successfull-action?number_actions_year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
                 xValuesPie.length = 0;
@@ -66,9 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching data:', error));
     }
 
-    const yearFilter = document.getElementById('yearFilter');
-    yearFilter.addEventListener('click', function (event) {
-        const selectedYear = event.target.dataset.year;
+
+    const yearFilter = document.getElementById('number_actions_year');
+    yearFilter.addEventListener('change', function () {
+        const selectedYear = yearFilter.value;
         updatePieChart(selectedYear);
     });
 
