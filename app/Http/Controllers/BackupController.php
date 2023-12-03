@@ -47,24 +47,45 @@ class BackupController extends Controller
         }
     }
 
-    public function backup()
-    {
-        $databaseName = config('database.connections.mysql.database');
-        $backupFileName = $databaseName . '_' . date('Y-m-d_His') . '.sql';
-        $backupPath = storage_path('app/backups/' . $backupFileName);
 
-        $command = "mysqldump --user=" . env('DB_USERNAME') . " --password=" . env('DB_PASSWORD') . " " . $databaseName . " > " . $backupPath;
+
+public function backup()
+{
+    try {
+        $databaseName = config('database.connections.mysql.database');
+        $databaseUser = config('database.connections.mysql.username');
+        $databasePassword = config('database.connections.mysql.password');
+        $backupFileName = $databaseName .'_backup_' . date('Y_m_d_His') . '.sql';
+
+        // Use the mysqldump command to create a backup
+        $command = "mysqldump --user=$databaseUser --password=$databasePassword --host=" . config('database.connections.mysql.host') . " $databaseName > " . storage_path("app/backups/$backupFileName");
         exec($command);
 
-        if (file_exists($backupPath)) {
-            return response()->download($backupPath, $backupFileName, [
-                'Content-Type' => 'application/sql',
-                'Content-Disposition' => 'attachment; filename="' . $backupFileName . '"',
-            ]);
-        } else {
-            return redirect()->back()->with('error', 'Backup failed.');
-        }
+        // Get the content of the SQL file
+        $content = file_get_contents(storage_path("app/backups/$backupFileName"));
+
+        // Generate a download response
+        return $this->downloadBackup($backupFileName, $content);
+
+    } catch (\Exception $e) {
+        // If an error occurs during the backup process, set an error message
+        return redirect()->back()->with('error', "Database failed.");
     }
+}
+
+protected function downloadBackup($filename, $content)
+{
+    return response()->stream(
+        function () use ($content) {
+            echo $content;
+        },
+        200,
+        [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]
+    );
+}
 
     public function restore(Request $request)
     {
