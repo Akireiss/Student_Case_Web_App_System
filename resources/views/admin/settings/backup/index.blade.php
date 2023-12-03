@@ -53,7 +53,8 @@
                 </div>
             @endif
 
-            <form action="{{ route('restore.database') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('restore.database') }}"
+            method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <x-label for="new_database_name">Database Name: <span class="text-red-500">(e.g., MyDatabase_01-2023)</span></x-label>
