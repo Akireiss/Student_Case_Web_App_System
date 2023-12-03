@@ -78,7 +78,7 @@ class Report extends Component
         $students = [];
 
         if (strlen($this->studentName) >= 3) {
-            $students = Students::whereIn('status', [0, 2])->where(function ($query) {
+            $students = Students::where('status', 0)->where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('middle_name', 'like', '%' . $this->studentName . '%')
                     ->orWhere('last_name', 'like', '%' . $this->studentName . '%')

@@ -3,27 +3,50 @@
 <div>
 
 
-            <div class="flex items-center justify-between my-2">
-                <h6 class="text-lg font-semibold
-                  text-gray-600 dark:text-gray-300 flex-shrink-0">
-                    {{-- List Of Reports --}}
-                </h6>
-                @if (request()->routeIs('admin.reports'))
-                <div class="flex justify-end">
-                    <x-link href="{{ url('admin/reports/create') }}">
-                        Add
-                    </x-link>
-                </div>
-                @endif
-                @if (!request()->routeIs('admin.reports'))
 
-                <div class="flex justify-end">
-                    <x-link href="{{ url('admin/reports') }}">
-                        Back to default
-                    </x-link>
-                </div>
-                @endif
+
+    <div>
+        <h6 class="text-lg font-semibold text-gray-600 dark:text-gray-300 flex-shrink-0">
+            {{-- List Of Reports --}}
+        </h6>
+        <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+            Reports
+        </h2>
+        <x-bread :breadcrumbs="[
+            ['url' => url('admin/dashboard'), 'label' => 'Admin'],
+            ['url' => url('admin/reports'), 'label' => 'Reports'],
+        ]"/>
+        @if (request()->routeIs('admin.reports'))
+
+        <div class="flex mb-2 items-center">
+            <div>
+
             </div>
+
+            <h6 class="text-lg font-semibold text-gray-600 dark:text-gray-300 flex-shrink-0">
+                {{-- List Of Reports --}}
+            </h6>
+
+            <div class="ml-auto">
+                <x-link href="{{ url('admin/reports/create') }}">
+                    Add
+                </x-link>
+            </div>
+        </div>
+
+
+        @endif
+
+        @if (!request()->routeIs('admin.reports'))
+            <div class="flex justify-end">
+                <x-link href="{{ url('admin/reports') }}">
+                    Back to default
+                </x-link>
+            </div>
+        @endif
+    </div>
+
+
             <div>
                 {{-- AllCases --}}
                 @if (request()->routeIs('admin.reports'))

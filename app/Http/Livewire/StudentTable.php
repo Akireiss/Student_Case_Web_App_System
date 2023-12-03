@@ -27,7 +27,7 @@ final class StudentTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),
-            Header::make()->includeViewOnTop('components.datatable'),
+            Header::make(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(mode: 'full')

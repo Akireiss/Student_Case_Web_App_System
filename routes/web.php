@@ -159,7 +159,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             // Report History
             Route::get('report/history', function () {
                 return view('staff.report-history.index');
-            });
+            })->name('admin.history');
             Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('admin.report.view');
             Route::get('report/history/{report}/edit', ReportHistory::class)->name('admin.report.edit');
 
@@ -230,7 +230,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             //*History
             Route::get('report/history', function () {
                 return view('staff.report-history.index');
-            });
+            })->name('adviser.history');
             Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('report.view');
             Route::get('report/history/{report}/edit', ReportHistory::class)->name('report.edit');
             //*Students

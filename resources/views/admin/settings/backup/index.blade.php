@@ -1,6 +1,17 @@
 @extends('layouts.dashboard.index')
 
 @section('content')
+
+<h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+    Back Up
+</h2>
+   <x-bread :breadcrumbs="[
+       ['url' => url('admin/dashboard'), 'label' => 'Admin'],
+       ['url' => url('admin/settings/backup'), 'label' => 'Settings'],
+       ['url' => url('admin/settings/backup'), 'label' => 'Back Up'],
+   ]"/>
+
+
 <div class="flex flex-col lg:flex-row space-y-4 lg:space-x-2">
     <!-- Manual Backup Form -->
     <div class="flex-1">

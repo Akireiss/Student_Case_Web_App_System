@@ -123,4 +123,9 @@ protected $table = 'classrooms';
         return "A classroom has been {$eventName}";
     }
 
+
+    public function getFullClassAttribute()
+    {
+        return $this->grade_level . ' ' . $this->section;
+    }
 }

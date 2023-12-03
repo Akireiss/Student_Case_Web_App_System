@@ -2,11 +2,19 @@
 
     <div x-data="{ showTable: true, showForm: false }">
     <div x-show="showTable">
-        <div class="flex items-center justify-between my-2">
+        <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+            Classrooms
+        </h2>
+        <x-bread :breadcrumbs="[
+            ['url' => url('admin/dashboard'), 'label' => 'Admin'],
+            ['url' => url('admin/dashboard/settings/classrooms'), 'label' => 'Settings'],
+            ['url' => url('admin/settings/classrooms'), 'label' => 'Classrooms'],
+        ]"/>
+        <div class="flex items-center justify-between mb-2">
             <h6 class="text-lg font-semibold text-gray-600 dark:text-gray-300 flex-shrink-0">
                 {{-- List Of Students --}}
             </h6>
-            <div class="flex justify-end  mt-4">
+            <div class="flex justify-end ">
                 <x-button x-on:click="showTable = false; showForm = true">
                     Add
                 </x-button>

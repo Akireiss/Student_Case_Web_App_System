@@ -52,7 +52,7 @@ function populateClassroomDropdown(data) {
 
 var xValuesClassroom = ["Pending", "Ongoing", "Resolved", "Follow Up", "Referral"];
 var yValuesClassroom = [];
-var barColorsClassroom = ["red", "green", "blue", "orange", "brown"];
+var barColorsClassroom = ["red", "green", "blue", "orange", "black"];
 
 var myChartClassroom = new Chart("myChartClassroom", {
     type: "bar",

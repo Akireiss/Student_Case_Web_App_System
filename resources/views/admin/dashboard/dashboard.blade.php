@@ -6,10 +6,14 @@
         <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
             Dashboard
         </h2> --}}
+        <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+            Dashboard
+        </h2>
+        <x-bread :breadcrumbs="[
+            ['url' => url('admin/dashboard'), 'label' => 'Admin'],
+            ['url' => url('admin/dashboard'), 'label' => 'Dashboard'],
+        ]"/>
 
-        <x-bread>
-            Custom Home Textss
-        </x-bread>
 
 
 
@@ -18,6 +22,16 @@
         @foreach ($delayedNotif as $notification)
             <div class="bg-green-100 border border-green-400 text-black px-4 py-2 rounded relative my-3" role="alert">
                 <div class="flex space-x-4">
+                    <div>
+                        <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+                            Repors
+                        </h2>
+                        <x-bread :breadcrumbs="[
+                            ['url' => url('admin/dashboard'), 'label' => 'Admin'],
+                            ['url' => url('admin/reports'), 'label' => 'Reports'],
+                        ]"/>
+                    </div>
+
                     <span class="block sm:inline">{{ $notification->data['message'] }}</span>
                     <span class="block sm:inline">
                         <a class="underline" href="{{ url('admin/student/recent-cases/' . $notification->data['link']) }}">
@@ -42,7 +56,7 @@
 
         <div x-data="{ currentGrid: 'totalStatusCases', yearButtonText: '{{ date('Y') }}-{{ date('Y') + 1 }}', statusButtonText: 'Case Status' }">
 
-            <div class="flex justify-end items-center space-x-2">
+            <div class="flex justify-end items-center space-x-2 mb-2">
 
 
                 <div id="statusDropdown">
@@ -397,7 +411,7 @@
                                 class="border border-gray-300 p-2 bg-gray-50
                                 rounded-md shadow-sm w-full text-gray-800 hover:bg-gray-100">
                                 <option value="All">All</option>
-                                <option selected value="{{ date('Y') }}-{{ date('Y') + 1 }}">Current Year</option>
+                                <option selected value="{{ date('Y') }}-{{ date('Y') + 1 }}">{{ date('Y') }}-{{ date('Y') + 1 }}</option>
                                 <option value="2021-2022">2021-2022</option>
 
                                 <option value="2022-2023">2022-2023</option>

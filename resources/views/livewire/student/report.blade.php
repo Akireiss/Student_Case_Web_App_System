@@ -1,7 +1,7 @@
 <div>
     <div class="mx-auto">
         <div class="flex justify-end  items-center">
-            @if (auth()->user()->role == '1')
+            @if (auth()->user()->role == 1)
                 <x-link href="{{ url('admin/reports') }}">
                     Back
                 </x-link>

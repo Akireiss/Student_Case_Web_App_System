@@ -378,7 +378,7 @@
 
 
 
-    <div class="my-2 px-4">
+    <div class="my-2 md:px-8">
         <h6 class="text-sm my-1 px-4 font-bold uppercase">
             You are currently living with:
         </h6>

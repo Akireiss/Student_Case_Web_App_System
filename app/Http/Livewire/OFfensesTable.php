@@ -36,7 +36,7 @@ final class OFfensesTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->includeViewOnTop('components.datatable')->showSearchInput(),
+            Header::make()->showSearchInput(),
             Footer::make()
                 ->showRecordCount(mode: 'full')
                 ->showPerPage()

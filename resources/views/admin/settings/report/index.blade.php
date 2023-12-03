@@ -1,16 +1,25 @@
 @extends('layouts.dashboard.index')
 @section('content')
     <div>
-        {{-- Form --}}
+
 
         <div>
-            {{-- Form --}}
+            <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+                Generate Report
+            </h2>
+               <x-bread :breadcrumbs="[
+                   ['url' => url('admin/dashboard'), 'label' => 'Admin'],
+                   ['url' => url('admin/settings/generate-report'), 'label' => 'Settings'],
+                   ['url' => url('admin/settings/generate-report'), 'label' => 'Generate Report'],
+               ]"/>
+
+
             <x-form title="">
                 <x-slot name="actions">
 
-                    <x-link href="{{ url('admin/settings/classrooms') }}">
+                    {{-- <x-link href="{{ url('admin/settings/classrooms') }}">
                         Back
-                    </x-link>
+                    </x-link> --}}
                 </x-slot>
 
                 <x-slot name="slot">

@@ -29,7 +29,7 @@ final class UsersTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),
-            Header::make()->showSearchInput()->includeViewOnTop('components.datatable'),
+            Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),

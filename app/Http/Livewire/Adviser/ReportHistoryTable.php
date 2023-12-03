@@ -27,7 +27,7 @@ final class ReportHistoryTable extends PowerGridComponent
             Exportable::make('export')
             ->striped()
             ->type(Exportable::TYPE_CSV),
-            Header::make()->includeViewOnTop('components.datatable')->showSearchInput(),
+            Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),

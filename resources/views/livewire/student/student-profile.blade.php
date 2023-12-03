@@ -45,8 +45,8 @@
                                         @click.away="isOpen = false" @keydown.escape="isOpen = false"
                                         @keydown="isOpen = true" type="text" id="studentName" name="studentName"
                                         placeholder="Type at least 3 words to search" />
-                                    <x-error fieldName="studentName" /> <!-- Use the correct field name here -->
-                                    <x-error fieldName="studentId" /> <!-- Use the correct field name here -->
+                                    <x-error fieldName="studentName" />
+                                    <x-error fieldName="studentId" />
 
                                     <span x-show="studentName !== ''" @click="studentName = ''; isOpen = false"
                                         class="absolute right-3 top-2 cursor-pointer text-red-600 font-bold">

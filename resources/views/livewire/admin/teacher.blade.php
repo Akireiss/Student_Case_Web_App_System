@@ -1,7 +1,15 @@
 <div>
     <div x-data="{ showTable: true, showForm: false }">
         <div x-show="showTable">
-            <div class="flex items-center justify-between my-2">
+            <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+                Staff
+            </h2>
+            <x-bread :breadcrumbs="[
+                ['url' => url('admin/dashboard'), 'label' => 'Admin'],
+                ['url' => url('admin/settings/teachers'), 'label' => 'Settings'],
+                ['url' => url('admin/settings/teachers'), 'label' => 'Staff'],
+            ]"/>
+            <div class="flex items-center justify-between mb-2">
                 <h4 class="text-lg font-semibold text-gray-600 dark:text-gray-300 flex-shrink-0">
                     {{-- Teacher --}}
                 </h4>

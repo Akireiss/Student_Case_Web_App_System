@@ -27,7 +27,7 @@ final class StudentProfileTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_CSV),
-            Header::make()->showSearchInput()->showToggleColumns()->includeViewOnTop('components.datatable'),
+            Header::make()->showSearchInput()->showToggleColumns(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -45,7 +45,8 @@ final class StudentProfileTable extends PowerGridComponent
                 'profile.*',
                 'barangay.barangay as barangay',
                 'municipal.municipality as municipal',
-                \DB::raw("CONCAT(classrooms.grade_level, ' ', classrooms.section) as classroom")
+               // 'classrooms.section as classroom',
+                 \DB::raw("CONCAT(classrooms.grade_level, ' ', classrooms.section) as classroom")
             );
     }
 
@@ -54,7 +55,8 @@ final class StudentProfileTable extends PowerGridComponent
         return [
             'barangay' => ['barangay'],
             'municipal' => ['municipality'],
-            'student' => ['first_name', 'last_name'],
+            'student' => ['first_name', 'last_name', ],
+            'students.classroom' => ['grade_level', 'section'],
         ];
     }
 
@@ -66,11 +68,11 @@ final class StudentProfileTable extends PowerGridComponent
         ->addColumn('full_name', function (Profile $model) {
             return $model->students->first_name . ' ' . $model->students->last_name;
         })
-        // ->addColumn('classroom', function (Profile $model) {
-        //     return "Grade: " . $model->students->classroom->grade_level . ' ' . $model->students->classroom->section;
-        // })
+        ->addColumn('classroom', function (Profile $model) {
+            return "Grade: " . $model->students->classroom->grade_level . ' ' . $model->students->classroom->section;
+        })
 
-        ->addColumn('classroom')
+        //->addColumn('classroom')
             ->addColumn('sex')
             ->addColumn('sex_lower', fn (Profile $model) => strtolower(e($model->sex)))
             ->addColumn('contact')
@@ -110,7 +112,7 @@ final class StudentProfileTable extends PowerGridComponent
             ->operators(['contains'])
             ->builder(function (Builder $query, $value) {
                 $searchValue = is_array($value) ? $value['value'] : $value;
-                return $query->where(DB::raw('CONCAT(section, " ", grade_level)'), 'like', "%{$searchValue}%");
+                return $query->where(DB::raw('CONCAT(grade_level, " ", section)'), 'like', "%{$searchValue}%");
             }),
             // Filter::select('classroom', 'classroom')
             // ->dataSource(Classroom::select('section')->distinct()->get())

@@ -6,20 +6,22 @@
     <title>Pdf</title>
 
     <style type="text/css">
-        * {
-            font-family: Verdana, Arial, sans-serif;
-        }
+
+body {
+        margin: 0;
+        padding: 0;
+    }
 
         .page-break {
             page-break-after: always;
         }
 
         table {
-            font-size: 12px;
-            border-collapse: collapse;
-            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 13px;
+        border-collapse: collapse;
+        font-family: 'Trebuchet MS', sans-serif;
+}
 
-        }
 
         table td {
             border: 1px solid black;
@@ -37,8 +39,15 @@
 
         .bold {
             font-weight: bold;
-            padding: 8px;
+            padding-bottom: 6px;
+            padding-top:6px;
         }
+        .header {
+            font-weight: bold;
+            padding-bottom: 12px;
+            padding-top: 10px;
+        }
+
 
         .checkbox {
             width: 12px;
@@ -74,15 +83,15 @@
 </head>
 
 <body>
-
     <table width="100%">
         <tbody>
             <tr>
-                <td class="bold">CZCMNHS INDIVIDUAL INVENTORY</td>
-
+                <td class="header">
+                    CZCMNHS INDIVIDUAL INVENTORY <span style="float: right; font:bold;  ">Guidance Form 1</span>
+                </td>
             </tr>
             <tr>
-                <td>Personal Profile</td>
+                <td class="bold">Personal Profile</td>
             </tr>
         </tbody>
     </table>
@@ -279,7 +288,7 @@
         <tbody>
             <tr>
                 <td width="79.5%"> List down the names of Siblings that are studying in CZCMNHS</td>
-                <td width="20%" class="bold">Medicine taken in</td>
+                <td width="20%">Medicine taken in</td>
 
             </tr>
         </tbody>
@@ -377,7 +386,7 @@
                 </td>
 
 
-                <td width="20%" class="bold">
+                <td width="20%">
                     Vitamins taken in
                 </td>
 
@@ -442,10 +451,9 @@
                         <td width="20%">
                             @if ($profile->vitamins->count() > 0)
                             2) {{ $profile->vitamins[1]->vitamins }}
-
-                        @else
+                            @else
                             2)
-                        @endif
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -466,10 +474,9 @@
                 <td width="20%">
                     @if ($profile->vitamins->count() > 0)
                     3) {{ $profile->vitamins[2]->vitamins }}
-                    <!-- Display other medicine attributes as needed -->
-                @else
+                    @else
                     3)
-                @endif
+                    @endif
                 </td>
 
             </tr>
@@ -488,7 +495,7 @@
 
                 </td>
 
-                <td width="20%" class="bold">
+                <td width="20%" >
                     Accident experienced
                 </td>
 
@@ -548,7 +555,7 @@
 
         <tbody>
             <tr>
-                <td width="79.5%">Educational Background:
+                <td width="79.5%" class="bold">Educational Background:
 
                 </td>
 
@@ -620,9 +627,10 @@
         </tbody>
     </table>
 
-    {{-- <div class="page-break"></div> --}}
+ {{-- <div class="page-break"></div> --}}
 
     {{-- Second Page --}}
+    <div class="page-break"></div>
     <table width="100%">
 
         <tbody>
@@ -777,10 +785,10 @@
 
         <tbody>
             <tr>
-                <td width="26%" class="center">Observed Behavior</td>
-                <td width="26%" class="center">Desired Behavior</td>
-                <td width="26%" class="center">Outcome</td>
-                <td width="21%" class="center">Date
+                <td width="26%" >Observed Behavior</td>
+                <td width="26%" >Desired Behavior</td>
+                <td width="26%" >Outcome</td>
+                <td width="21%">Date
                 </td>
             </tr>
 

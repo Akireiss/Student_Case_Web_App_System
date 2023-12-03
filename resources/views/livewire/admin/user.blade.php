@@ -1,4 +1,13 @@
 <div>
+    <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+        Account Information
+    </h2>
+    <x-bread :breadcrumbs="[
+        ['url' => url('adviser/dashboard'), 'label' => 'Adviser'],
+        ['url' => url('adviser/update-acc'), 'label' => 'Account Information'],
+    ]"/>
+
+
     <div class="mx-auto py-8">
 
         <div class="bg-white  rounded shadow-md p-10 px-4 md:p-8 mb-6">

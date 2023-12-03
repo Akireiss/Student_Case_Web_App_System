@@ -29,6 +29,9 @@ class PdfController extends Controller
 
         $pdf = Pdf::loadView('pdf.pdf', ['profile' => $profile]);
 
+        // Set the paper size to 'legal' (8.5x14 inches)
+        $pdf->setPaper('legal');
+
         return $pdf->stream();
     }
 

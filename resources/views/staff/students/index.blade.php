@@ -1,11 +1,18 @@
 @extends('layouts.dashboard.index')
 
 @section('content')
-<div class="flex justify-between items-center">
 
-    <div>
-        Table: Grade: {{ auth()->user()->classroom->grade_level }} {{ auth()->user()->classroom->section }} Students
-    </div>
+<h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
+    Students
+</h2>
+<x-bread :breadcrumbs="[
+    ['url' => url('adviser/dashboard'), 'label' => 'Adviser'],
+    ['url' => url('adviser/students'), 'label' => 'Students'],
+]"/>
+<div class="flex justify-between items-center">
+<div>
+
+</div>
     <div>
         <x-link href="{{ url('adviser/classroom/' . auth()->user()->classroom->id) }}">Reffer</x-link>
 
