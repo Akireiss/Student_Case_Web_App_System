@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use App\Models\AnecdotalOutcome;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ScheduledNotification;
+use Illuminate\Support\Facades\Response;
 
 class DashboardController extends Controller
 {
@@ -397,5 +399,47 @@ public function successfullAction(Request $request) {
     $successfulActions = $query->get();
 
     return response()->json($successfulActions);
+}
+
+public function notification() {
+    $user = Auth::user();
+    $currentTime = now();
+
+    // Paginate the notifications with a limit of 5 per page
+    $notifications = $user->unreadNotifications()
+        ->where('created_at', '<=', $currentTime)
+        ->paginate(5);
+
+    // Additional information about the total notifications
+    $totalNotifications = $user->unreadNotifications()->count();
+
+    return response()->json([
+        'notifications' => $notifications,
+        'total' => $totalNotifications,
+    ]);
+}
+
+
+
+public function read(Request $request, $notificationId) {
+    $user = Auth::user();
+
+    // Find the notification by ID
+    $notification = $user->notifications()->find($notificationId);
+
+    // Check if the notification is found
+    if ($notification) {
+        // Mark the notification as read
+        $notification->markAsRead();
+
+        // Get the updated list of unread notifications
+        $unreadNotifications = $user->unreadNotifications;
+
+        // Return the updated list as JSON
+        return Response::json(['notifications' => $unreadNotifications]);
+    } else {
+        // Return an error response if the notification is not found
+        return Response::json(['error' => 'Notification not found'], 404);
+    }
 }
 }

@@ -95,8 +95,6 @@
 });
 
 </script>
-</div>
-
 <style>
     #overflow {
         max-height: 240px; /* Set the maximum height for the scrollbar */
@@ -113,4 +111,6 @@
         scrollbar-height: calc(100% - var(--scroll-progress) * 100%);
     }
 </style>
+
+</div>
 

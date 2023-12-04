@@ -384,8 +384,9 @@
 
                         </div>
                         <div class="relative mb-3 px-4">
+                            <x-label>
                             Place of Work
-
+                            </x-label>
                             <x-input wire:model="father_work_address" />
                             <x-error fieldName="father_work_address" />
 
@@ -466,8 +467,8 @@
 
                         </div>
                         <div class="relative mb-3 px-4">
-                            Place of Work
-
+                            <x-label>  Place of Work
+                            </x-label>
                             <x-input wire:model="mother_work_address" />
                             <x-error fieldName="mother_work_address" />
 

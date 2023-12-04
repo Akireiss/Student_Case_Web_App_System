@@ -2,20 +2,18 @@
 
 namespace App\Notifications;
 
-use Carbon\Carbon;
-use App\Models\Anecdotal;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
-class StatusNotification extends Notification
+class CaseNotification extends Notification
 {
     use Queueable;
-
-    public function __construct($anecdotalData)
+public $anecdotalOutcome;
+    public function __construct($anecdotalOutcome)
     {
-    $this->anecdotal = $anecdotalData;
+    $this->anecdotalOutcome = $anecdotalOutcome;
     }
 
     public function via(object $notifiable): array
@@ -28,13 +26,11 @@ class StatusNotification extends Notification
     {
 
     // $createdDate = Carbon::parse($this->anecdotal->created_at);
-    $message = " Report to {$this->anecdotal->student->first_name}  {$this->anecdotal->student->last_name}
-     about
-    has been accepted";
+    $message = "The case for {$this->anecdotalOutcome->anecdotal->student->first_name}  {$this->anecdotalOutcome->anecdotal->student->last_name}
+has been finish.";
 
     return [
         'message' => $message,
     ];
     }
-
 }

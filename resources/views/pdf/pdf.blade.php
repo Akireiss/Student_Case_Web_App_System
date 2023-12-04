@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Pdf</title>
+    <title>{{ $profile->student->first_name}} {{ $profile->student->last_name }}</title>
 
     <style type="text/css">
 

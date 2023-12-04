@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ScheduledNotification;
 use App\Notifications\StatusNotification;
 use App\Notifications\AdminDelayedNotification;
+use App\Notifications\CaseNotification;
 
 class ReportUpdate extends Component
 {
@@ -41,10 +42,7 @@ class ReportUpdate extends Component
         $this->anecdotalData->update(['case_status' => 1]);
         $this->anecdotalData = $this->anecdotalData->fresh();
 
-
-            $this->showMeetingOutcomeForm = true;
-
-
+        $this->showMeetingOutcomeForm = true;
 
         $report = $this->anecdotalData->report->first();
 
@@ -54,7 +52,6 @@ class ReportUpdate extends Component
                 $user->notify(new StatusNotification($this->anecdotalData));
             }
         }
-
     }
 
 
@@ -67,20 +64,23 @@ class ReportUpdate extends Component
         $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;
         $this->action = $this->anecdotalData->actions->action;
 
-        if ($this->anecdotalData->case_status == 1 || $this->anecdotalData->case_status == 2
-        || $this->anecdotalData->case_status == 3) {
+        if (
+            $this->anecdotalData->case_status == 1 || $this->anecdotalData->case_status == 2
+            || $this->anecdotalData->case_status == 3
+        ) {
             $this->showMeetingOutcomeForm = true;
             $this->outcome = $this->anecdotalData->actions->outcome;
             $this->outcome_remarks = $this->anecdotalData->actions->outcome_remarks;
             $this->action = $this->anecdotalData->actions->action;
-
         }
     }
     public function update()
     {
         $this->validate();
-        $anecdotalOutcome = AnecdotalOutcome::where('anecdotal_id',
-        $this->anecdotalData->id)
+        $anecdotalOutcome = AnecdotalOutcome::where(
+            'anecdotal_id',
+            $this->anecdotalData->id
+        )
             ->firstOrFail();
 
         $anecdotalOutcome->update([
@@ -97,12 +97,18 @@ class ReportUpdate extends Component
             $this->anecdotalData->update(['case_status' => 4]);
         }
 
-
-
-
         $this->anecdotalData = $this->anecdotalData->fresh();
 
-        // Remider about the case
+        $report = $anecdotalOutcome->anecdotal->report->first();
+
+        if ($report) {
+            $user = $report->user;
+            if ($user) {
+                $user->notify(new CaseNotification($anecdotalOutcome));
+            }
+        }
+
+
         $user = Auth::user();
         $message = 'Reminder for ' . $anecdotalOutcome->anecdotal->students->first_name . '  ' . $anecdotalOutcome->anecdotal->students->last_name .
             'case, that resolved last ' . $anecdotalOutcome->updated_at->format('F j, Y');
@@ -118,6 +124,9 @@ class ReportUpdate extends Component
             'data' => json_encode($data),
         ]);
         $notification->created_at = $this->reminderDays;
+
+
+
         $notification->save();
         session()->flash('message', 'Updated Successfully');
     }
@@ -131,28 +140,22 @@ class ReportUpdate extends Component
 
     public function saveLetters()
     {
-        // Validate and store the uploaded files
         $this->validate([
             'letter' => 'nullable',
             'letter.*' => 'image|max:2048',
-            // Adjust max file size as needed
         ]);
 
         foreach ($this->letter as $file) {
-            $filename = $file->store('uploads', 'public'); // You may need to configure the storage path
+            $filename = $file->store('uploads', 'public');
 
-            // Create a new record in the 'anecdotalImages' table
             AnecdotalImages::create([
                 'anecdotal_id' => $this->anecdotalData->id,
                 'images' => $filename,
             ]);
         }
 
-        // Clear the uploaded files after saving
         $this->reset('letter');
 
         session()->flash('message', 'Letters have been saved successfully.');
     }
-
-
 }

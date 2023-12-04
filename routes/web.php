@@ -369,3 +369,6 @@ Route::get('/successfull-action', [DashboardController::class, 'successfullActio
 //Database
 Route::get('restore/database/corrupt', [RestoreController::class, 'index'])->name('database.restore');
 Route::post('restore/database/corrupt/database', [RestoreController::class, 'restore'])->name('restore.database');
+//Notofications
+Route::get('/fetch-notifications', [DashboardController::class, 'notification']);
+Route::post('/mark-as-read/{notificationId}', [DashboardController::class, 'read'])->name('mark-as-read');

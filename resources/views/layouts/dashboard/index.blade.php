@@ -38,7 +38,10 @@
                         <ul class="flex items-center flex-shrink-0 space-x-2">
                             @guest
                             @else
-                                <livewire:components.notification :userId="auth()->user()->id" />
+                                {{-- <livewire:components.notification :userId="auth()->user()->id" /> --}}
+                                   <!-- index.blade.php -->
+                    @include('admin.dashboard.notification')
+
                             @endguest
                             {{-- @include('includes.notification') --}}
                             <li>
