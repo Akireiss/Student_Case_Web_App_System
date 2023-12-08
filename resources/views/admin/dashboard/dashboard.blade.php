@@ -17,21 +17,10 @@
 
 
 
-
         {{-- Alerts --}}
         @foreach ($delayedNotif as $notification)
             <div class="bg-green-100 border border-green-400 text-black px-4 py-2 rounded relative my-3" role="alert">
                 <div class="flex space-x-4">
-                    <div>
-                        <h2 class="m-1 text-2xl font-semibold text-gray-700  mb-3">
-                            Repors
-                        </h2>
-                        <x-bread :breadcrumbs="[
-                            ['url' => url('admin/dashboard'), 'label' => 'Admin'],
-                            ['url' => url('admin/reports'), 'label' => 'Reports'],
-                        ]"/>
-                    </div>
-
                     <span class="block sm:inline">{{ $notification->data['message'] }}</span>
                     <span class="block sm:inline">
                         <a class="underline" href="{{ url('admin/student/recent-cases/' . $notification->data['link']) }}">

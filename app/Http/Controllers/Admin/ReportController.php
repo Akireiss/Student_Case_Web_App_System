@@ -42,7 +42,7 @@ class ReportController extends Controller
             return $anecdotal->created_at >= $latestOutcome->updated_at;
         });
 
-        return view('admin.reports.receent-cases', compact('anecdotalRecords'));
+        return view('admin.reports.receent-cases', compact('anecdotalRecords', 'students'));
     }
 
 

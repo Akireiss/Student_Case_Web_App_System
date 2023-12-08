@@ -22,32 +22,42 @@ class Student extends Component
             ->section('content');
 
     }
-
-    public function store()
+    public function updatedLrn()
     {
-        $this->validate();
-        $this->isSubmitting = true;
+        $this->validateOnly('lrn');
+    }
+    public function store()
+{
+    $this->validate();
 
-        $classroom = Classroom::find($this->classroom_id);
-        $department = in_array($classroom->grade_level, [7, 8, 9, 10]) ? 0 : 1;
+    $existingStudent = Students::where('lrn', $this->lrn)->first();
 
-        Students::create([
-            'first_name' => $this->first_name,
-            'middle_name' => $this->middle_name,
-            'last_name' => $this->last_name,
-            'lrn' => $this->lrn,
-            'classroom_id' => $this->classroom_id,
-            'gender' => $this->gender,
-            'status' => $this->status,
-            'department' => $department
-        ]);
-
-        $this->resetForm();
-        session()->flash('message', 'Student Successfully Added');
-        $this->isSubmitting = false;
+    if ($existingStudent) {
+        session()->flash('message', 'Student with the same lrn already exist.');
+        return;
     }
 
 
+    $this->isSubmitting = true;
+
+    $classroom = Classroom::find($this->classroom_id);
+    $department = in_array($classroom->grade_level, [7, 8, 9, 10]) ? 0 : 1;
+
+    Students::create([
+        'first_name' => $this->first_name,
+        'middle_name' => $this->middle_name,
+        'last_name' => $this->last_name,
+        'lrn' => $this->lrn,
+        'classroom_id' => $this->classroom_id,
+        'gender' => $this->gender,
+        'status' => $this->status,
+        'department' => $department
+    ]);
+
+    $this->resetForm();
+    session()->flash('message', 'Student Successfully Added');
+    $this->isSubmitting = false;
+}
     private function resetForm()
     {
         $this->first_name = '';

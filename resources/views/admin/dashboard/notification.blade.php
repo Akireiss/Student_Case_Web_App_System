@@ -10,7 +10,9 @@
                  <path stroke-linecap="round" stroke-linejoin="round"
                      d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
              </svg>
-
+             <span id="totalNotification" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none transform translate-x-1/2 -translate-y-1/2 rounded-full">
+                {{-- Insert Notification Count Here --}}
+            </span>
             </button>
         </div>
 
@@ -94,4 +96,24 @@
                 textInfo.text('Showing ' + start + ' to ' + end + ' of ' + total + ' Results');
             }
         });
+
+// Total Notification
+$(document).ready(function () {
+        // Fetch total notification count with AJAX
+        $.ajax({
+            url: '/fetch-total-notifications',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#totalNotification').text(data.total);
+
+                // green 0, red more than 0
+                var badgeColor = data.total > 0 ? 'bg-red-600 text-red-100' : 'bg-green-600 text-green-100';
+                $('#totalNotification').addClass(badgeColor);
+            },
+            error: function (error) {
+                console.error('Error fetching total notifications:', error);
+            }
+        });
+    });
     </script>

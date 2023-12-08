@@ -442,4 +442,12 @@ public function read(Request $request, $notificationId) {
         return Response::json(['error' => 'Notification not found'], 404);
     }
 }
+
+public function fetchTotalNotifications()
+    {
+        $user = Auth::user();
+        $totalNotifications = $user->unreadNotifications()->count();
+
+        return response()->json(['total' => $totalNotifications]);
+    }
 }

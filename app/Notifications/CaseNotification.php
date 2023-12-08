@@ -26,8 +26,9 @@ public $anecdotalOutcome;
     {
 
     // $createdDate = Carbon::parse($this->anecdotal->created_at);
-    $message = "The case for {$this->anecdotalOutcome->anecdotal->student->first_name}  {$this->anecdotalOutcome->anecdotal->student->last_name}
-has been finish.";
+    $message = "The case for {$this->anecdotalOutcome->anecdotal->student->first_name}
+    {$this->anecdotalOutcome->anecdotal->student->last_name}
+was done and the out is {$this->anecdotalOutcome->anecdotal->getStatusTextAttribute()}";
 
     return [
         'message' => $message,

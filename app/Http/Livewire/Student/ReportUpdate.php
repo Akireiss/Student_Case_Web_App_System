@@ -111,7 +111,7 @@ class ReportUpdate extends Component
 
         $user = Auth::user();
         $message = 'Reminder for ' . $anecdotalOutcome->anecdotal->students->first_name . '  ' . $anecdotalOutcome->anecdotal->students->last_name .
-            'case, that resolved last ' . $anecdotalOutcome->updated_at->format('F j, Y');
+            'case, that was in  ' . $anecdotalOutcome->updated_at->format('F j, Y');
 
         $data = [
             'message' => $message,

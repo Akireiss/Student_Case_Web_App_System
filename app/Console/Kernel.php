@@ -26,10 +26,21 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 
+        protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('students:delete-inactive')->daily();
+    }
 
-    protected function schedule(Schedule $schedule)
-{
-    $schedule->command(SendReminders::class)->everyMinute();
-}
+
+
+protected $commands = [
+    // ...
+    \App\Console\Commands\DeleteInactiveStudents::class,
+];
+
+//     protected function schedule(Schedule $schedule)
+// {
+//     $schedule->command(SendReminders::class)->everyMinute();
+// }
 
 }

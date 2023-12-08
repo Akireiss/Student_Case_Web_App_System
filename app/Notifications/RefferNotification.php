@@ -11,9 +11,13 @@ class RefferNotification extends Notification
 {
     use Queueable;
 
-    public function __construct($student)
+    public $student;
+    public $classroom;
+
+    public function __construct($student, $classroom)
     {
         $this->student = $student;
+        $this->classroom = $classroom;
     }
 
     public function via(object $notifiable): array
@@ -21,12 +25,9 @@ class RefferNotification extends Notification
         return ['database'];
     }
 
-
-    public function toArray(object $notifiable): array
+    public function toArray($notifiable): array
     {
-        $message = $this->student->first_name . ' ' . $this->student->last_name . ' has been referred to Grade:'
-        . $this->student->classroom->grade_level . ' ' .  $this->student->classroom->section;
-
+        $message = "{$this->student->first_name} {$this->student->last_name} has been referred to another classroom: {$this->classroom->grade_level} {$this->classroom->section}";
         return [
             'message' => $message,
         ];

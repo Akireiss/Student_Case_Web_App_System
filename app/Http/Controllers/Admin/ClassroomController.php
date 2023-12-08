@@ -13,23 +13,20 @@ class ClassroomController extends Controller
     public function edit(Classroom $classroom)
     {
         $employees = Employee::all();
-        $classrooms = Classroom::all();
+        $classrooms = Classroom::where('status', 0)->get();
 
-        $maxGradeLevel = $classroom->grade_level; // Assuming you have the current classroom's grade level
+        $maxGradeLevel = $classroom->grade_level;
         $higherClass = Classroom::where('grade_level', $maxGradeLevel + 1)
             ->orWhere('grade_level', $maxGradeLevel)
             ->get();
 
-
         return view('admin.classroom.edit', compact('classroom', 'employees', 'classrooms', 'higherClass'));
-
     }
 
     public function update(Request $request, Classroom $classroom)
     {
         $data = $request->validate([
             'classroom' => 'required',
-            // Add any other validation rules for other fields
             'employee_id' => 'required',
             'status' => 'required',
         ]);
@@ -39,27 +36,22 @@ class ClassroomController extends Controller
         return response()->json(['success' => 'Classroom updated successfully']);
     }
 
-
     public function updateStudents(Request $request, Classroom $classroom)
-{
-    $request->validate([
-        'students' => 'required|array',
-    ]);
+    {
+        $request->validate([
+            'students' => 'required|array',
+        ]);
 
-    $studentsData = $request->input('students');
+        $studentsData = $request->input('students');
 
-    foreach ($studentsData as $studentId => $data) {
-        $student = Students::find($studentId);
+        foreach ($studentsData as $studentId => $data) {
+            $student = Students::find($studentId);
 
-        if ($student) {
-            $student->classroom_id = $data['classroom_id'];
-            $student->save();
+            if ($student) {
+                $student->classroom_id = $data['classroom_id'];
+                $student->save();
+            }
         }
+        return response()->json(['message' => 'Students have been referred to the new classroom']);
     }
-
-    return response()->json(['message' => 'Students have been referred to the new classroom']);
-}
-
-
-
 }

@@ -32,10 +32,10 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof NotFoundHttpException) {
-            // Customize the file path as per your folder structure
-            return response()->view('components.404', [], 404);
-        }
+        // if ($exception instanceof NotFoundHttpException) {
+        //     // Customize the file path as per your folder structure
+        //     return response()->view('components.404', [], 404);
+        // }
 
         if ($exception instanceof QueryException && $this->isUnknownDatabaseException($exception)) {
             // Redirect to a common error page for database connection issues

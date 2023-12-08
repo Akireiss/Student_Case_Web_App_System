@@ -49,7 +49,7 @@ final class AnecdotaTable extends PowerGridComponent
                 'offenses.offenses',
                 'offenses.id as OffenseID',
                 'students.id as StudentID'
-            );
+            )->latest();
     }
 
 
