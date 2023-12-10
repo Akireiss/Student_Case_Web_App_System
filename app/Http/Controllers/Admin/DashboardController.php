@@ -32,31 +32,7 @@ class DashboardController extends Controller
             $notification->data = json_decode($notification->data, true);
         });
 
-        // $gradeLevels = ["7", "8", "9", "10", "11", "12"];
 
-        // $data = [];
-
-        // foreach ($gradeLevels as $gradeLevel) {
-        //     $classrooms = Classroom::where('grade_level', $gradeLevel)->pluck('id');
-        //     $offenses = Anecdotal::whereHas('students', function ($query) use ($classrooms) {
-        //         $query->whereIn('classroom_id', $classrooms);
-        //     })
-        //         ->select('case_status', DB::raw('COUNT(*) as count'))
-        //         ->groupBy('case_status')
-        //         ->pluck('count', 'case_status')
-        //         ->toArray();
-
-        //     $data[] = [
-        //         'grade_level' => $gradeLevel,
-        //         'pending' => $offenses[0] ?? 0,
-        //         'ongoing' => $offenses[1] ?? 0,
-        //         'resolved' => $offenses[2] ?? 0,
-        //         'follow_up' => $offenses[3] ?? 0,
-        //         'referral' => $offenses[4] ?? 0,
-        //     ];
-        // }
-
-        //
 
         $classrooms = Classroom::where('status', 0)->get();
 
@@ -387,7 +363,6 @@ class DashboardController extends Controller
             ->groupBy('action');
 
         if ($year !== 'All') {
-            // Calculate the start and end dates for the selected school year
             $yearParts = explode('-', $year);
             $startMonth = 6; // June
             $endMonth = 5;   // May
@@ -395,7 +370,6 @@ class DashboardController extends Controller
             $startDate = Carbon::create($yearParts[0], $startMonth, 1);
             $endDate = Carbon::create($yearParts[1], $endMonth, 31);
 
-            // Assuming you have a date field named 'created_at'
             $query->whereBetween('created_at', [$startDate, $endDate]);
         }
 
@@ -409,12 +383,10 @@ class DashboardController extends Controller
         $user = Auth::user();
         $currentTime = now();
 
-        // Paginate the notifications with a limit of 5 per page
         $notifications = $user->unreadNotifications()
             ->where('created_at', '<=', $currentTime)
             ->paginate(5);
 
-        // Additional information about the total notifications
         $totalNotifications = $user->unreadNotifications()->count();
 
         return response()->json([
@@ -428,19 +400,13 @@ class DashboardController extends Controller
     public function read(Request $request, $notificationId)
     {
         $user = Auth::user();
-
-        // Find the notification by ID
         $notification = $user->notifications()->find($notificationId);
 
-        // Check if the notification is found
         if ($notification) {
-            // Mark the notification as read
             $notification->markAsRead();
 
-            // Get the updated list of unread notifications
             $unreadNotifications = $user->unreadNotifications;
 
-            // Return the updated list as JSON
             return Response::json(['notifications' => $unreadNotifications]);
         } else {
             // Return an error response if the notification is not found

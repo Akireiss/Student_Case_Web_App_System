@@ -34,6 +34,8 @@ class ReportUpdate extends Component
         'outcome' => 'required',
         'outcome_remarks' => 'required',
         'action' => 'required',
+        'letter' => 'nullable',
+        'letter.*' => 'image',
     ];
 
 
@@ -101,6 +103,20 @@ class ReportUpdate extends Component
 
         $report = $anecdotalOutcome->anecdotal->report->first();
 
+        foreach ($this->letter as $file) {
+            $filename = $file->store('uploads', 'public');
+
+            AnecdotalImages::create([
+                'anecdotal_id' => $this->anecdotalData->id,
+                'images' => $filename,
+            ]);
+        }
+
+
+        $this->reset('letter');
+
+
+
         if ($report) {
             $user = $report->user;
             if ($user) {
@@ -144,18 +160,5 @@ class ReportUpdate extends Component
             'letter' => 'nullable',
             'letter.*' => 'image|max:2048',
         ]);
-
-        foreach ($this->letter as $file) {
-            $filename = $file->store('uploads', 'public');
-
-            AnecdotalImages::create([
-                'anecdotal_id' => $this->anecdotalData->id,
-                'images' => $filename,
-            ]);
-        }
-
-        $this->reset('letter');
-
-        session()->flash('message', 'Letters have been saved successfully.');
     }
 }

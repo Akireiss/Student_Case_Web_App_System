@@ -391,9 +391,9 @@
                                 @if ($anecdotalData->images->isNotEmpty())
                                     @foreach ($anecdotalData->images as $image)
                                         <div class="relative">
-                                            <a href="{{ asset('storage/' . $image->images) }}" target="_blank"
+                                            <a href="{{ asset('storage/uploads/' . $image->images) }}" target="_blank"
                                                 rel="noopener noreferrer">
-                                                <img src="{{ asset('storage/' . $image->images) }}"
+                                                <img src="{{ asset('storage/uploads/' . $image->images) }}"
                                                     alt="Anecdotal Image"
                                                     class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
                                             </a>
@@ -420,7 +420,7 @@
                                     Loading...
                                 </div>
                                 <x-button type="submit" wire:loading.attr="disabled"
-                                    wire:click="saveLetters">Submit</x-button>
+                                  >Submit</x-button>
                             </div>
                         @elseif ($anecdotalData->case_status === 2)
                             <div class="flex justify-end items-center mx-4">
@@ -458,7 +458,7 @@
     <script>
         document.getElementById('meetingOutcome').addEventListener('change', function () {
             var reminderDateInput = document.getElementById('reminderDate');
-            reminderDateInput.disabled = this.value !== '2'; // Disable if the outcome is not 'Resolved'
+            reminderDateInput.disabled = this.value !== '2';
         });
     </script>
 

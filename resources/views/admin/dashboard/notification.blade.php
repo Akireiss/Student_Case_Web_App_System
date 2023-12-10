@@ -2,7 +2,7 @@
     <x-slot name="trigger">
         <div class="flex items-center">
             <button type="button"
-                class="hover:bg-gray-100 border border-gray-300 p-2
+                class="hover:bg-gray-100 border-gray-300 p-2
                  bg-gray-50  rounded-md shadow-sm text-gray-800 flex items-center">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

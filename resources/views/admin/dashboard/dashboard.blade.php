@@ -69,7 +69,7 @@
                                 <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer"
                                     @click="currentGrid = 'totalStudents'; statusButtonText = 'Students'">Students</li>
                                 <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer"
-                                    @click="currentGrid = 'totalFMstudents'; statusButtonText = 'Cases'">Cases</li>
+                                    @click="currentGrid = 'totalFMstudents'; statusButtonText = 'Student Cases'">Student Cases</li>
                                 <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer"
                                     @click="currentGrid = 'totalStatusCases'; statusButtonText = 'Cases Status'">Cases
                                     Status</li>

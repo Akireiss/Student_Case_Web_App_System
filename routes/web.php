@@ -123,6 +123,13 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('student-profile/add', \App\Http\Livewire\Student\StudentProfile::class);
         });
 
+        Route::get('admin/report/history', function () {
+            return view('staff.report-history.index');
+        })->name('admin.history');
+        Route::get('admin/report/history/{report}/view', [ReportHistory::class, 'view'])->name('admin.report.view');
+        Route::get('admin/report/history/{report}/edit', ReportHistory::class)->name('admin.report.edit');
+
+
         Route::prefix('admin/settings')->group(function () {
             // Settings Area - Offenses
             Route::get('offenses', [OffensesController::class, 'index']);
@@ -157,11 +164,7 @@ Route::middleware(['auth', 'role'])->group(function () {
 
 
             // Report History
-            Route::get('report/history', function () {
-                return view('staff.report-history.index');
-            })->name('admin.history');
-            Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('admin.report.view');
-            Route::get('report/history/{report}/edit', ReportHistory::class)->name('admin.report.edit');
+
 
 
             Route::get('audit-trail', function () {
@@ -265,7 +268,7 @@ Route::middleware(['auth', 'role'])->group(function () {
         });
         Route::get('report/history/{report}/view', [ReportHistory::class, 'view'])->name('user.report.view');
         Route::get('report/history/{report}/edit', ReportHistory::class)->name('user.report.edit');
-
+        Route::get('update/account', User::class);
     });
 });
 

@@ -15,7 +15,7 @@ class RefferController extends Controller
 
 
     public function index(Classroom $classroom) {
-        $classrooms = Classroom::all()->where('status', 0)->get();
+        $classrooms = Classroom::where('status', 0)->get();
 
         $maxGradeLevel = $classroom->grade_level; // Assuming you have the current classroom's grade level
         $higherClass = Classroom::where('grade_level', $maxGradeLevel + 1)

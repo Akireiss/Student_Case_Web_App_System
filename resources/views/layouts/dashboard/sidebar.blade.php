@@ -151,10 +151,7 @@
                                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/offenses') }}">Offenses</a>
                             </li>
-                            <li
-                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                            <a class="w-full" href="{{ url('admin/settings/report/history') }}">Report History</a>
-                            </li>
+
                             <li
                                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/audit-trail') }}">Audit Trail</a>
@@ -169,11 +166,11 @@
                 </li>
                 <li
                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Report</a>
+                <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Yearly Report</a>
             </li>
                 <li
                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Generate Report</a>
+                <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Anecdotal Report</a>
 
             </li>
 
@@ -328,7 +325,37 @@
                     <span class="ml-4">Report History</span>
                     </a>
                 </li>
+
+
+                <li class="relative px-6 py-3">
+                    <span class="{{ request()->is('update/account') || request()->is('update/account/*') ? 'absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}"
+                        aria-hidden="true"></span>
+
+
+
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                         hover:text-gray-700 "
+                           href="{{ url('update/account') }}">
+
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                           class="w-5 h-5">
+                           <path fill-rule="evenodd"
+                               d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 00-2.282.819l-.922 1.597a1.875 1.875 0 00.432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 000 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 00-.432 2.385l.922 1.597a1.875 1.875 0 002.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 002.28-.819l.923-1.597a1.875 1.875 0 00-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 000-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 00-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 00-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 00-1.85-1.567h-1.843zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"
+                               clip-rule="evenodd" />
+                       </svg>
+
+                        <span class="ml-4">User Settings</span>
+                        </a>
+                    </li>
+
+
+
+
                 @endcan
+
+
+
+
 
 
                 {{-- End Access --}}
@@ -411,6 +438,28 @@
 
             @endcan
 
+
+            @can('admin-access')
+            <li class="relative px-6 py-3">
+                <span
+                    class=" {{ request()->is('admin/report/history') ||  request()->is('admin/report/history/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+         aria-hidden="true"></span>
+                <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+             hover:text-gray-700 "
+                    href="{{ url('admin/report/history') }}">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                        <path
+                            d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+                    </svg>
+
+
+
+
+                    <span class="ml-4">Report History</span>
+                </a>
+            </li>
+            @endcan
 
 
             <li class="relative px-6 py-3">
@@ -771,10 +820,7 @@
                                         Offenses
                                     </a>
                                 </li>
-                                <li
-                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                            <a class="w-full" href="{{ url('admin/settings/report/history') }}">Report History</a>
-                            </li>
+
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                     <a class="w-full" href="{{ url('admin/settings/audit-trail') }}">Audit Trail</a>
@@ -790,11 +836,11 @@
 
                         <li
                         class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                        <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Report</a>
+                        <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Yearly Report</a>
                     </li>
                                 <li
                                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                                <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Generate Report</a>
+                                <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Anecdotal Report</a>
 
                             </li>
 
@@ -870,6 +916,34 @@
                         </template>
                     </li>
                 @endcan
+
+
+
+
+                @can('admin-access')
+                <li class="relative px-6 py-3">
+                    <span
+                        class=" {{ request()->is('admin/report/history') ||  request()->is('admin/report/history/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+             aria-hidden="true"></span>
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                 hover:text-gray-700 "
+                        href="{{ url('admin/report/history') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="w-5 h-5">
+                            <path fill-rule="evenodd"
+                                d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z"
+                                clip-rule="evenodd" />
+                            <path
+                                d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
+                        </svg>
+
+
+                        <span class="ml-4">Report History</span>
+                    </a>
+                </li>
+                @endcan
+
+
 
                 <li class="relative px-6 py-3">
                     <span

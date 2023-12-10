@@ -44,16 +44,16 @@ class YearlyReport extends Component
     public $HsDrYear;
 
     public function mount()
-{
-    $currentYear = date('Y');
-    $this->ShCrYear = $currentYear . '-' . ($currentYear + 1);
-    $this->ShPrYear = $currentYear . '-' . ($currentYear + 1);
-    $this->ShDrYear = $currentYear . '-' . ($currentYear + 1);
-    $this->yearLevel = $currentYear . '-' . ($currentYear + 1);
+    {
+        $currentYear = date('Y');
+        $this->ShCrYear = $currentYear . '-' . ($currentYear + 1);
+        $this->ShPrYear = $currentYear . '-' . ($currentYear + 1);
+        $this->ShDrYear = $currentYear . '-' . ($currentYear + 1);
+        $this->yearLevel = $currentYear . '-' . ($currentYear + 1);
 
-    $this->HsDrYear = $currentYear . '-' . ($currentYear + 1);
-    $this->HsPrYear = $currentYear . '-' . ($currentYear + 1);
-}
+        $this->HsDrYear = $currentYear . '-' . ($currentYear + 1);
+        $this->HsPrYear = $currentYear . '-' . ($currentYear + 1);
+    }
 
 
     public function render()
@@ -122,19 +122,12 @@ class YearlyReport extends Component
         //End Senior High
 
 
-
-
-
-
-
-
-
         //High School
         $HsDropout = $this->HsTotalDropOut = Students::where('department', 0)->where('status', 1)->count();
 
-        // Promotion based on grade_level changes
+        // Promotion
         $HsPromotion = $this->HsTotalPromotion = Students::where(function ($query) {
-            // Check for Grade 7, 8, 9, 10 students updated to Grade 11 within the past year
+            // Grade 7, 8, 9, 10 students updated to Grade 11 within the past year
             $query->whereHas('classroom', function ($query) {
                 $query->whereIn('grade_level', [7, 8, 9, 10])
                     ->where('updated_at', '>=', now()->subYear());
@@ -158,8 +151,7 @@ class YearlyReport extends Component
         $this->HsDropOutRate = $HsEnrollment > 0 ? ($HsDropout / $HsEnrollment) * 100 : 0;
         //End School
 
-        return view('livewire.admin.yearly-report', [
-        ])
+        return view('livewire.admin.yearly-report', [])
             ->extends('layouts.dashboard.index')
             ->section('content');
     }
@@ -199,11 +191,7 @@ class YearlyReport extends Component
         ]);
 
         $rates = [];
-        //CR = 1
-        //PR = 2
-        //DR = 3
 
-        // Define the Completion Rate with its associated year
         $completionRate = [
             'Completters' => $this->ShTotalStudents,
             'Enrollment' => $this->ShTotalEnrollment,
@@ -213,10 +201,10 @@ class YearlyReport extends Component
             'type' => 1,
             'rate' => $completionRate,
             'year' => $this->ShCrYear,
-            // Include the year for Completion Rate
+
         ];
 
-        // Define the Promotion Rate with its associated year
+
         $promotionRate = [
             'Promotes' => $this->ShTotalPromotion,
             'Enrollment' => $this->ShTotalEnrollment,
@@ -226,10 +214,10 @@ class YearlyReport extends Component
             'type' => 2,
             'rate' => $promotionRate,
             'year' => $this->ShPrYear,
-            // Include the year for Promotion Rate
+
         ];
 
-        // Define the Drop Out Rate with its associated year
+
         $ShDropOutRate = [
             'Drop Out' => $this->ShTotalDropOut,
             'Enrollment' => $this->ShTotalEnrollment,
@@ -239,11 +227,10 @@ class YearlyReport extends Component
             'type' => 3,
             'rate' => $ShDropOutRate,
             'year' => $this->ShDrYear,
-            // Include the year for Drop Out Rate
+
         ];
 
-        // Save each rate type as a separate Yearly instance
-        // Save each rate type as a separate Yearly instance
+
         foreach ($rates as $rateData) {
             Yearly::create([
                 'data' => json_encode($rateData['rate']),
@@ -269,19 +256,7 @@ class YearlyReport extends Component
 
         $HsRates = [];
 
-        // Define the Completion Rate with its associated year
-        // $completionRate = [
-        //     'Completters' => $this->ShTotalStudents,
-        //     'Enrollment' => $this->ShTotalEnrollment,
-        //     'Percent Cr' => $this->ShCompletionPercent,
-        // ];
-        // $HsRates[] = [
-        //     'type' => 0,
-        //     'rate' => $completionRate,
-        //     'year' => $this->ShCrYear, // Include the year for Completion Rate
-        // ];
 
-        // Define the Promotion Rate with its associated year
         $HsPromotionRate = [
             'Promotes' => $this->HsTotalPromotion,
             'Enrollment' => $this->HsTotalEnrollment,
@@ -291,10 +266,10 @@ class YearlyReport extends Component
             'type' => 2,
             'rate' => $HsPromotionRate,
             'year' => $this->HsPrYear,
-            // Include the year for Promotion Rate
+
         ];
 
-        // Define the Drop Out Rate with its associated year
+
         $HsDropOutRate = [
             'Drop Out' => $this->HsTotalDropOut,
             'Enrollment' => $this->HsTotalEnrollment,
@@ -307,8 +282,7 @@ class YearlyReport extends Component
             // Include the year for Drop Out Rate
         ];
 
-        // Save each rate type as a separate Yearly instance
-        // Save each rate type as a separate Yearly instance
+
         foreach ($HsRates as $HsRateData) {
             Yearly::create([
                 'data' => json_encode($HsRateData['rate']),
@@ -321,7 +295,4 @@ class YearlyReport extends Component
 
         session()->flash('message', 'High school reports saved successfully.');
     }
-
-
-
 }
