@@ -270,180 +270,193 @@ class DashboardController extends Controller
 
     // Grade Level Bar Chart
 
-public function getBarChartData(Request $request)
-{
-    $selectedYear = $request->input('level_offense_year');
-    $gradeLevels = ["7", "8", "9", "10", "11", "12"];
-    $data = [];
+    public function getBarChartData(Request $request)
+    {
+        $selectedYear = $request->input('level_offense_year');
+        $gradeLevels = ["7", "8", "9", "10", "11", "12"];
+        $data = [];
 
-    if ($selectedYear === 'All') {
-        foreach ($gradeLevels as $gradeLevel) {
-            $offenses = Anecdotal::where('grade_level', 'LIKE', $gradeLevel . '%')
-                ->select('case_status', DB::raw('COUNT(*) as count'))
-                ->groupBy('case_status')
-                ->pluck('count', 'case_status')
-                ->toArray();
+        if ($selectedYear === 'All') {
+            foreach ($gradeLevels as $gradeLevel) {
+                $offenses = Anecdotal::where('grade_level', 'LIKE', $gradeLevel . '%')
+                    ->select('case_status', DB::raw('COUNT(*) as count'))
+                    ->groupBy('case_status')
+                    ->pluck('count', 'case_status')
+                    ->toArray();
 
-            $data[] = [
-                'grade_level' => $gradeLevel,
-                'pending' => $offenses[0] ?? 0,
-                'ongoing' => $offenses[1] ?? 0,
-                'resolved' => $offenses[2] ?? 0,
-                'follow_up' => $offenses[3] ?? 0,
-                'referral' => $offenses[4] ?? 0,
-            ];
+                $data[] = [
+                    'grade_level' => $gradeLevel,
+                    'pending' => $offenses[0] ?? 0,
+                    'ongoing' => $offenses[1] ?? 0,
+                    'resolved' => $offenses[2] ?? 0,
+                    'follow_up' => $offenses[3] ?? 0,
+                    'referral' => $offenses[4] ?? 0,
+                ];
+            }
+        } else {
+            // Validate the selected year (you may want to add more checks)
+            if (!preg_match('/^\d{4}-\d{4}$/', $selectedYear)) {
+                return response()->json(['error' => 'Invalid year format.']);
+            }
+
+            list($startYear, $endYear) = explode('-', $selectedYear);
+
+            $academicYearStart = '06-01'; // June 1st
+            $academicYearEnd = '05-31';   // May 31st
+
+            foreach ($gradeLevels as $gradeLevel) {
+                $offenses = Anecdotal::where('grade_level', 'LIKE', $gradeLevel . '%')
+                    ->where(function ($query) use ($startYear, $endYear, $academicYearStart, $academicYearEnd) {
+                        $query->whereRaw("YEAR(created_at) = $startYear AND created_at >= '$startYear-$academicYearStart'")
+                            ->orWhereRaw("YEAR(created_at) = $endYear AND created_at <= '$endYear-$academicYearEnd'");
+                    })
+                    ->select('case_status', DB::raw('COUNT(*) as count'))
+                    ->groupBy('case_status')
+                    ->pluck('count', 'case_status')
+                    ->toArray();
+
+                $data[] = [
+                    'grade_level' => $gradeLevel,
+                    'pending' => $offenses[0] ?? 0,
+                    'ongoing' => $offenses[1] ?? 0,
+                    'resolved' => $offenses[2] ?? 0,
+                    'follow_up' => $offenses[3] ?? 0,
+                    'referral' => $offenses[4] ?? 0,
+                ];
+            }
         }
-    } else {
-        // Validate the selected year (you may want to add more checks)
-        if (!preg_match('/^\d{4}-\d{4}$/', $selectedYear)) {
-            return response()->json(['error' => 'Invalid year format.']);
-        }
+
+        return response()->json($data);
+    }
+    //Additional Function
+
+    public function getClassroomData(Request $request)
+    {
+        $selectedYear = $request->input('level_offense_year');
+        list($startYear, $endYear) = explode('-', $selectedYear);
+
+        $academicYearStart = '06-01'; // June 1st
+        $academicYearEnd = '05-31';   // May 31st
+
+        $classroomData = Anecdotal::where(function ($query) use ($startYear, $endYear, $academicYearStart, $academicYearEnd) {
+            $query->whereRaw("YEAR(DATE_FORMAT(created_at, '%Y-%m-%d')) = $startYear AND created_at >= '$startYear-$academicYearStart'")
+                ->orWhereRaw("YEAR(DATE_FORMAT(created_at, '%Y-%m-%d')) = $endYear AND created_at <= '$endYear-$academicYearEnd'");
+        })
+            ->distinct('grade_level')
+            ->pluck('grade_level');
+
+        return response()->json(['classrooms' => $classroomData]);
+    }
+    public function getAnecdotalData(Request $request)
+    {
+        $selectedYear = $request->input('level_offense_year');
+        $selectedGradeLevel = $request->input('selected_grade_level');
 
         list($startYear, $endYear) = explode('-', $selectedYear);
 
         $academicYearStart = '06-01'; // June 1st
         $academicYearEnd = '05-31';   // May 31st
 
-        foreach ($gradeLevels as $gradeLevel) {
-            $offenses = Anecdotal::where('grade_level', 'LIKE', $gradeLevel . '%')
-                    ->where(function ($query) use ($startYear, $endYear, $academicYearStart, $academicYearEnd) {
-                        $query->whereRaw("YEAR(created_at) = $startYear AND created_at >= '$startYear-$academicYearStart'")
-                            ->orWhereRaw("YEAR(created_at) = $endYear AND created_at <= '$endYear-$academicYearEnd'");
-                    })
-                ->select('case_status', DB::raw('COUNT(*) as count'))
-                ->groupBy('case_status')
-                ->pluck('count', 'case_status')
-                ->toArray();
+        $anecdotalData = Anecdotal::where(function ($query) use ($startYear, $endYear, $academicYearStart, $academicYearEnd, $selectedGradeLevel) {
+            $query->whereRaw("YEAR(DATE_FORMAT(created_at, '%Y-%m-%d')) = $startYear AND created_at >= '$startYear-$academicYearStart'")
+                ->orWhereRaw("YEAR(DATE_FORMAT(created_at, '%Y-%m-%d')) = $endYear AND created_at <= '$endYear-$academicYearEnd'")
+                ->when($selectedGradeLevel, function ($query, $selectedGradeLevel) {
+                    return $query->where('grade_level', $selectedGradeLevel);
+                });
+        })
+            ->where('grade_level', $selectedGradeLevel) // Add this line to filter by classroom
+            ->groupBy('case_status')
+            ->selectRaw('count(*) as total, case_status')
+            ->pluck('total', 'case_status');
 
-            $data[] = [
-                'grade_level' => $gradeLevel,
-                'pending' => $offenses[0] ?? 0,
-                'ongoing' => $offenses[1] ?? 0,
-                'resolved' => $offenses[2] ?? 0,
-                'follow_up' => $offenses[3] ?? 0,
-                'referral' => $offenses[4] ?? 0,
-            ];
+        return response()->json(['anecdotalData' => $anecdotalData]);
+    }
+
+
+
+
+    //Succcesfull Actions
+
+    public function successfullAction(Request $request)
+    {
+        $year = $request->input('number_actions_year', 'All');
+
+        $query = DB::table('anecdotal_outcome')
+            ->select(DB::raw('count(*) as count, action as label'))
+            ->where('outcome', '=', 2)
+            ->groupBy('action');
+
+        if ($year !== 'All') {
+            // Calculate the start and end dates for the selected school year
+            $yearParts = explode('-', $year);
+            $startMonth = 6; // June
+            $endMonth = 5;   // May
+
+            $startDate = Carbon::create($yearParts[0], $startMonth, 1);
+            $endDate = Carbon::create($yearParts[1], $endMonth, 31);
+
+            // Assuming you have a date field named 'created_at'
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $successfulActions = $query->get();
+
+        return response()->json($successfulActions);
+    }
+
+    public function notification()
+    {
+        $user = Auth::user();
+        $currentTime = now();
+
+        // Paginate the notifications with a limit of 5 per page
+        $notifications = $user->unreadNotifications()
+            ->where('created_at', '<=', $currentTime)
+            ->paginate(5);
+
+        // Additional information about the total notifications
+        $totalNotifications = $user->unreadNotifications()->count();
+
+        return response()->json([
+            'notifications' => $notifications,
+            'total' => $totalNotifications,
+        ]);
+    }
+
+
+
+    public function read(Request $request, $notificationId)
+    {
+        $user = Auth::user();
+
+        // Find the notification by ID
+        $notification = $user->notifications()->find($notificationId);
+
+        // Check if the notification is found
+        if ($notification) {
+            // Mark the notification as read
+            $notification->markAsRead();
+
+            // Get the updated list of unread notifications
+            $unreadNotifications = $user->unreadNotifications;
+
+            // Return the updated list as JSON
+            return Response::json(['notifications' => $unreadNotifications]);
+        } else {
+            // Return an error response if the notification is not found
+            return Response::json(['error' => 'Notification not found'], 404);
         }
     }
 
-    return response()->json($data);
-}
-//Additional Function
+    public function markAllAsRead()
+    {
+        $user = Auth::user();
+        $user->unreadNotifications->markAsRead();
 
-public function getClassroomData(Request $request) {
-    $selectedYear = $request->input('level_offense_year');
-    list($startYear, $endYear) = explode('-', $selectedYear);
-
-    $academicYearStart = '06-01'; // June 1st
-    $academicYearEnd = '05-31';   // May 31st
-
-    $classroomData = Anecdotal::where(function ($query) use ($startYear, $endYear, $academicYearStart, $academicYearEnd) {
-        $query->whereRaw("YEAR(DATE_FORMAT(created_at, '%Y-%m-%d')) = $startYear AND created_at >= '$startYear-$academicYearStart'")
-            ->orWhereRaw("YEAR(DATE_FORMAT(created_at, '%Y-%m-%d')) = $endYear AND created_at <= '$endYear-$academicYearEnd'");
-    })
-    ->distinct('grade_level')
-    ->pluck('grade_level');
-
-    return response()->json(['classrooms' => $classroomData]);
-}
-public function getAnecdotalData(Request $request) {
-    $selectedYear = $request->input('level_offense_year');
-    $selectedGradeLevel = $request->input('selected_grade_level');
-
-    list($startYear, $endYear) = explode('-', $selectedYear);
-
-    $academicYearStart = '06-01'; // June 1st
-    $academicYearEnd = '05-31';   // May 31st
-
-    $anecdotalData = Anecdotal::where(function ($query) use ($startYear, $endYear, $academicYearStart, $academicYearEnd, $selectedGradeLevel) {
-        $query->whereRaw("YEAR(DATE_FORMAT(created_at, '%Y-%m-%d')) = $startYear AND created_at >= '$startYear-$academicYearStart'")
-            ->orWhereRaw("YEAR(DATE_FORMAT(created_at, '%Y-%m-%d')) = $endYear AND created_at <= '$endYear-$academicYearEnd'")
-            ->when($selectedGradeLevel, function ($query, $selectedGradeLevel) {
-                return $query->where('grade_level', $selectedGradeLevel);
-            });
-    })
-    ->where('grade_level', $selectedGradeLevel) // Add this line to filter by classroom
-    ->groupBy('case_status')
-    ->selectRaw('count(*) as total, case_status')
-    ->pluck('total', 'case_status');
-
-    return response()->json(['anecdotalData' => $anecdotalData]);
-}
-
-
-
-
-//Succcesfull Actions
-
-public function successfullAction(Request $request) {
-    $year = $request->input('number_actions_year', 'All');
-
-    $query = DB::table('anecdotal_outcome')
-        ->select(DB::raw('count(*) as count, action as label'))
-        ->where('outcome', '=', 2)
-        ->groupBy('action');
-
-    if ($year !== 'All') {
-        // Calculate the start and end dates for the selected school year
-        $yearParts = explode('-', $year);
-        $startMonth = 6; // June
-        $endMonth = 5;   // May
-
-        $startDate = Carbon::create($yearParts[0], $startMonth, 1);
-        $endDate = Carbon::create($yearParts[1], $endMonth, 31);
-
-        // Assuming you have a date field named 'created_at'
-        $query->whereBetween('created_at', [$startDate, $endDate]);
+        return response()->json(['message' => 'All notifications marked as read']);
     }
 
-    $successfulActions = $query->get();
-
-    return response()->json($successfulActions);
-}
-
-public function notification() {
-    $user = Auth::user();
-    $currentTime = now();
-
-    // Paginate the notifications with a limit of 5 per page
-    $notifications = $user->unreadNotifications()
-        ->where('created_at', '<=', $currentTime)
-        ->paginate(5);
-
-    // Additional information about the total notifications
-    $totalNotifications = $user->unreadNotifications()->count();
-
-    return response()->json([
-        'notifications' => $notifications,
-        'total' => $totalNotifications,
-    ]);
-}
-
-
-
-public function read(Request $request, $notificationId) {
-    $user = Auth::user();
-
-    // Find the notification by ID
-    $notification = $user->notifications()->find($notificationId);
-
-    // Check if the notification is found
-    if ($notification) {
-        // Mark the notification as read
-        $notification->markAsRead();
-
-        // Get the updated list of unread notifications
-        $unreadNotifications = $user->unreadNotifications;
-
-        // Return the updated list as JSON
-        return Response::json(['notifications' => $unreadNotifications]);
-    } else {
-        // Return an error response if the notification is not found
-        return Response::json(['error' => 'Notification not found'], 404);
-    }
-}
-
-public function fetchTotalNotifications()
+    public function fetchTotalNotifications()
     {
         $user = Auth::user();
         $totalNotifications = $user->unreadNotifications()->count();

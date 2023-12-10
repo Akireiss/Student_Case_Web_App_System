@@ -373,3 +373,6 @@ Route::post('restore/database/corrupt/database', [RestoreController::class, 'res
 Route::get('/fetch-notifications', [DashboardController::class, 'notification']);
 Route::post('/mark-as-read/{notificationId}', [DashboardController::class, 'read'])->name('mark-as-read');
 Route::get('/fetch-total-notifications', [DashboardController::class, 'fetchTotalNotifications'])->name('mark-as-read');
+//Mark all as read
+Route::post('/mark-all-as-read', [DashboardController::class, 'markAllAsRead'])->name('mark-all-as-read');
+Route::get('/fetch-all-notifications', [DashboardController::class, 'fetchAllNotifications']);

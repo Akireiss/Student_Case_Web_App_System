@@ -69,7 +69,7 @@ final class StudentProfileTable extends PowerGridComponent
             return $model->students->first_name . ' ' . $model->students->last_name;
         })
         ->addColumn('classroom', function (Profile $model) {
-            return "Grade: " . $model->students->classroom->grade_level . ' ' . $model->students->classroom->section;
+            return $model->students->classroom->grade_level . ' ' . $model->students->classroom->section;
         })
 
         //->addColumn('classroom')
@@ -114,6 +114,17 @@ final class StudentProfileTable extends PowerGridComponent
                 $searchValue = is_array($value) ? $value['value'] : $value;
                 return $query->where(DB::raw('CONCAT(grade_level, " ", section)'), 'like', "%{$searchValue}%");
             }),
+
+            // Filter::inputText('classroom')
+            // ->operators(['contains'])
+            // ->builder(function (Builder $query, $value) {
+            //     $searchValue = is_array($value) ? $value['value'] : $value;
+            //     return $query->where(function ($query) use ($searchValue) {
+            //         $query->where(DB::raw('CONCAT("Grade: ", grade_level, " ", section)'), 'like', "%{$searchValue}%")
+            //             ->orWhere('grade_level', 'like', "%{$searchValue}%");
+            //     });
+
+            // }),
             // Filter::select('classroom', 'classroom')
             // ->dataSource(Classroom::select('section')->distinct()->get())
             // ->optionValue('section')
