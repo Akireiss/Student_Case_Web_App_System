@@ -81,6 +81,10 @@ final class ActivityTable extends PowerGridComponent
     {
         return [
             Filter::datetimepicker('created_at', 'activity_log.created_at'),
+             Filter::select('event', 'event')
+            ->dataSource(Activity::select('event')->distinct()->get())
+            ->optionValue('event')
+            ->optionLabel('event'),
         ];
     }
 

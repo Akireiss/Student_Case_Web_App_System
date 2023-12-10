@@ -25,6 +25,7 @@ protected $fillable = [
     'email',
     'password',
     'role',
+    'status',
     'classroom_id'
 ];
 const ROLE_USER = 0;

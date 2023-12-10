@@ -30,7 +30,7 @@ final class YearlyReportTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->showSearchInput(),
+            Header::make(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -52,7 +52,7 @@ final class YearlyReportTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return YearlyReport::query();
+        return YearlyReport::query()->latest();
     }
 
     /*
@@ -95,23 +95,11 @@ final class YearlyReportTable extends PowerGridComponent
 
             ->addColumn('school_year')
             ->addColumn('type', fn(YearlyReport $model) => $model->getTypeTextAttribute() ?? 'No Data')
-            ->addColumn('created_at_formatted', fn (YearlyReport $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('created_at_formatted', function (YearlyReport $model) {
+                return Carbon::parse($model->created_at)->format('F j, Y');
+            });
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Include Columns
-    |--------------------------------------------------------------------------
-    | Include the columns added columns, making them visible on the Table.
-    | Each column can be configured with properties, filters, actions...
-    |
-    */
-
-     /**
-      * PowerGrid Columns.
-      *
-      * @return array<int, Column>
-      */
     public function columns(): array
     {
         return [
@@ -126,7 +114,8 @@ final class YearlyReportTable extends PowerGridComponent
 
             Column::make('Type', 'type'),
             Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
 
 
 
@@ -141,8 +130,17 @@ final class YearlyReportTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('category')->operators(['contains']),
-            Filter::inputText('school_year')->operators(['contains']),
+
+            Filter::select('category', 'category')
+            ->dataSource(YearlyReport::select('category')->distinct()->get())
+            ->optionValue('category')
+            ->optionLabel('category'),
+            Filter::select('school_year', 'school_year')
+            ->dataSource(YearlyReport::select('school_year')->distinct()->get())
+            ->optionValue('school_year')
+            ->optionLabel('school_year'),
+
+
             Filter::datetimepicker('created_at'),
         ];
     }

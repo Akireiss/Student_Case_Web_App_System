@@ -39,9 +39,16 @@
 
         @if (!request()->routeIs('admin.reports'))
             <div class="flex justify-end">
-                <x-link href="{{ url('admin/reports') }}">
-                    Back to default
-                </x-link>
+                <a class="hover:bg-gray-100 border border-gray-300 p-2 bg-gray-50  rounded-md shadow-sm text-gray-800 flex items-center" href="{{ url('admin/reports') }}">
+                    Default <span class="ml-1">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+
+                    </span>
+                </a>
             </div>
         @endif
     </div>

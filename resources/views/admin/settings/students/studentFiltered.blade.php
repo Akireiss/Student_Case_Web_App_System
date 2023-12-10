@@ -4,20 +4,40 @@
 <div>
     <div class="flex justify-end mt-4 space-x-2">
     @if (request()->routeIs('admin.settings.students.filtered.male'))
-    <x-link href="{{ url('admin/settings/students') }}">
-        Back To Defult
+    <a class="hover:bg-gray-100 border border-gray-300 p-2 bg-gray-50  rounded-md shadow-sm text-gray-800 flex items-center"  href="{{ url('admin/settings/students') }}">
+        Default <span class="ml-1">
+            <svg xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
 
-    </x-link>
+        </span>
+    </a>
     @endif
     @if (request()->routeIs('admin.settings.students.filtered.female'))
-    <x-link href="{{ url('admin/settings/students') }}">
-      Back To Defult
-    </x-link>
+    <a class="hover:bg-gray-100 border border-gray-300 p-2 bg-gray-50  rounded-md shadow-sm text-gray-800 flex items-center"  href="{{ url('admin/settings/students') }}">
+        Default <span class="ml-1">
+            <svg xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+
+        </span>
+    </a>
     @endif
     @if (request()->routeIs('admin.settings.students.filtered.active'))
-    <x-link href="{{ url('admin/settings/students') }}">
-       Back To Defult
-    </x-link>
+    <a class="hover:bg-gray-100 border border-gray-300 p-2 bg-gray-50  rounded-md shadow-sm text-gray-800 flex items-center"  href="{{ url('admin/settings/students') }}">
+        Default <span class="ml-1">
+            <svg xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+
+        </span>
+    </a>
     @endif
 
     </div>

@@ -36,53 +36,20 @@ final class UsersTable extends PowerGridComponent
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Datasource
-    |--------------------------------------------------------------------------
-    | Provides data to your Table using a Model or Collection
-    |
-    */
 
-    /**
-     * PowerGrid datasource.
-     *
-     * @return Builder<\App\Models\User>
-     */
     public function datasource(): Builder
     {
         return User::query();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Relationship Search
-    |--------------------------------------------------------------------------
-    | Configure here relationships to be used by the Search and Table Filters.
-    |
-    */
-
-    /**
-     * Relationship search.
-     *
-     * @return array<string, array<int, string>>
-     */
     public function relationSearch(): array
     {
-        return [];
+        return [
+
+        ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Add Column
-    |--------------------------------------------------------------------------
-    | Make Datasource fields available to be used as columns.
-    | You can pass a closure to transform/modify the data.
-    |
-    | ❗ IMPORTANT: When using closures, you must escape any value coming from
-    |    the database using the `e()` Laravel Helper function.
-    |
-    */
+
     public function addColumns(): PowerGridColumns
     {
         return PowerGrid::columns()
@@ -92,34 +59,39 @@ final class UsersTable extends PowerGridComponent
 
             ->addColumn('email')
             ->addColumn('role', fn (User $model) => $model->roleText)
-            ->addColumn('status', fn(User $model) => $model->getStatusTextAttribute() ?? 'No Data');
+            ->addColumn('classroom', function (User $model) {
+                $gradeLevel = optional($model->classroom)->grade_level;
+                $section = optional($model->classroom)->section;
 
+                $classroomText = "";
+
+                if ($gradeLevel !== null) {
+                    $classroomText .= "Grade: " . $gradeLevel;
+                }
+
+                if ($section !== null) {
+                    $classroomText .= ' ' . $section;
+                }
+
+                return $classroomText;
+            })
+
+
+            ->addColumn('status', fn(User $model) => $model->getStatusTextAttribute() ?? 'No Data');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Include Columns
-    |--------------------------------------------------------------------------
-    | Include the columns added columns, making them visible on the Table.
-    | Each column can be configured with properties, filters, actions...
-    |
-    */
 
-     /**
-      * PowerGrid Columns.
-      *
-      * @return array<int, Column>
-      */
     public function columns(): array
     {
         return [
             Column::make('Name', 'name')
-                ->sortable(),
+                ->sortable()->searchable(),
 
             Column::make('Email', 'email')
-                ->sortable(),
-            Column::make('Role', 'role'),
-            Column::make('Status', 'status')->sortable()
+                ->sortable()->searchable(),
+            Column::make('Role', 'role')->searchable(),
+            Column::make('Clasroom', 'classroom')->searchable(),
+            Column::make('Status', 'status')->sortable()->searchable()
 
         ];
     }
@@ -159,7 +131,8 @@ final class UsersTable extends PowerGridComponent
     {
        return [
            Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+               ->class('bg-gray-500 cursor-pointer text-white px-3 py-2  inline-flex
+               m-1 rounded text-sm')
                ->route('user.edit', function(\App\Models\User $model) {
                     return ['userId' => $model->id];
                }),

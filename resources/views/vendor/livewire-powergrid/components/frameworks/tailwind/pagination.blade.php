@@ -84,7 +84,9 @@
 
                                 @if ($page == $paginator->currentPage())
                                     <span
-                                        class="px-2 py-1 m-1 bg-green-400 text-center border-pg-primary-400 rounded cursor-pointer border-1 dark:bg-pg-primary-700 dark:text-white dark:text-pg-primary-300"
+                                        class="px-3 py-1 m-1 bg-gray-500 text-center
+                                        border-pg-primary-400 rounded cursor-pointer border-1 dark:bg-pg-primary-700
+                                        text-white dark:text-pg-primary-300"
                                     >{{ $page }}</span>
                                 @elseif (
                                     $page === $paginator->currentPage() + 1 ||

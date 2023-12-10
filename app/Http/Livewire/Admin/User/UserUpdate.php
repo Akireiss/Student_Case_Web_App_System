@@ -29,7 +29,8 @@ class UserUpdate extends Component
     public function render()
     {
         $classrooms = Classroom::where('status', 0)->get();
-        return view('livewire.admin.user.user-update', compact('classrooms'))->extends('layouts.dashboard.index')->section('content');
+        return view('livewire.admin.user.user-update',
+        compact('classrooms'))->extends('layouts.dashboard.index')->section('content');
     }
     public function updateUser()
     {
@@ -38,7 +39,7 @@ class UserUpdate extends Component
             'role' => 'required',
             'userName' => 'required',
             'status' => 'required',
-            'userPassword' => 'nullable|min:8', // Password is optional, but if provided, it must be at least 8 characters long
+            'userPassword' => 'nullable|min:8',
         ]);
 
         $data = [

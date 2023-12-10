@@ -1,9 +1,6 @@
 <div>
 
     <div class="mx-auto py-8">
-
-        {{-- <h3 class="font-semibold mb-6  text-gray-600">Add New User</h3> --}}
-
         <div class="bg-white  rounded shadow-sm p-10  px-4 md:p-8 mb-6 ">
 
             <form wire:submit.prevent="updateUser"
@@ -98,6 +95,7 @@
                             <div class="md:col-span-5">
                                 <x-label for="user_type" value="{{ __('Status') }}" />
                                 <x-select required id="user_type" wire:model="status">
+
                                     <option value="0">Active</option>
                                     <option value="1">Inactive</option>
                                 </x-select>
@@ -108,7 +106,7 @@
 
                         </div>
 
-                        <div class="flex justify-end items-center mt-5">
+                        <div class="flex justify-end items-center mt-5 space-x-2">
                             <x-text-alert />
                             <div wire:loading wire:target="updateUser" class="mx-4">
                                 Updating User...

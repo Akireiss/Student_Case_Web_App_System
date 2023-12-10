@@ -21,13 +21,7 @@ final class OFfensesTable extends PowerGridComponent
     public array $offenses = [];
     public array $status = [];
 
-    /*
-    |--------------------------------------------------------------------------
-    |  Features Setup
-    |--------------------------------------------------------------------------
-    | Setup Table's general features
-    |
-    */
+
     public function setUp(): array
     {
 
@@ -78,10 +72,11 @@ final class OFfensesTable extends PowerGridComponent
         $isToggleable = true;
         return [
             Column::make('Offenses', 'offenses')
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make('Description', 'description')
-                ->sortable(),
-
+                ->sortable()
+                ->searchable(),
             Column::make('Status', 'status'),
 
         ];
@@ -99,7 +94,10 @@ final class OFfensesTable extends PowerGridComponent
     {
         return [
             Filter::boolean('status')->label('Inactive', 'Active'),
+
         ];
+
+
     }
 
 

@@ -72,7 +72,7 @@
                                 d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V9.375zM6 12a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V12zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75zM6 15a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V15zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75zM6 18a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V18zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75z"
                                 clip-rule="evenodd" />
                         </svg>
-                        <span class="ml-4">Reports</span>
+                        <span class="ml-4">Student Anecdotal </span>
                     </a>
                 </li>
             @endcan
@@ -151,31 +151,9 @@
                                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/offenses') }}">Offenses</a>
                             </li>
-                            <li
-                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                            <a class="w-full" href="{{ url('admin/settings/report/history') }}">Report History</a>
-                            </li>
-                            <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                                <a class="w-full" href="{{ url('admin/settings/audit-trail') }}">Audit Trail</a>
-                            </li>
 
 
 
-
-                    <li
-                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                    <a class="w-full" href="{{ url('admin/settings/backup') }}">Back Up</a>
-                </li>
-                <li
-                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Report</a>
-            </li>
-                <li
-                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Generate Report</a>
-
-            </li>
 
                         </ul>
                     </template>
@@ -360,6 +338,116 @@
 
                 @can('admin-access')
 
+                <li class="relative px-6 py-3" x-data="{ isPagesMenuOpenAcc: false }">
+                    <button
+                        class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 text-gray-700
+                         hover:text-gray-700 "
+                        x-on:click="isPagesMenuOpenAcc = !isPagesMenuOpenAcc" aria-haspopup="true">
+                        <span class="inline-flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                <path fill-rule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zM12.75 12a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V18a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V12z" clip-rule="evenodd" />
+                                <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
+                              </svg>
+
+                            <span class="ml-4">Report Tools</span>
+                        </span>
+                        <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <template x-if="isPagesMenuOpenAcc">
+                        <ul x-show="isPagesMenuOpenAcc" x-transition:enter="transition-all ease-in-out duration-300"
+                            x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-xl"
+                            x-transition:leave="transition-all ease-in-out duration-300"
+                            x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
+                            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50  "
+                            aria-label="submenu">
+
+                </li>
+                @can('admin-access')
+                <li
+                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
+                <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Reports </a>
+                </li>
+                @endcan
+
+
+                @can('admin-access')
+                    <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
+                        <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Yearly Report</a>
+                    </li>
+                @endcan
+            </ul>
+            </template>
+            </li>
+
+        @endcan
+
+
+
+
+
+
+
+
+            @can('admin-access')
+            <li class="relative px-6 py-3" x-data="{ isPagesMenuOpen: false }">
+                <span
+                    class=" {{ request()->is('admin/system/tools/*') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+                        aria-hidden="true"></span>
+                <button
+                    class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 text-gray-700
+                     hover:text-gray-600"
+                    x-on:click="isPagesMenuOpen = !isPagesMenuOpen" aria-haspopup="true">
+                    <span class="inline-flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                            <path fill-rule="evenodd" d="M12 6.75a5.25 5.25 0 016.775-5.025.75.75 0 01.313 1.248l-3.32 3.319c.063.475.276.934.641 1.299.365.365.824.578 1.3.64l3.318-3.319a.75.75 0 011.248.313 5.25 5.25 0 01-5.472 6.756c-1.018-.086-1.87.1-2.309.634L7.344 21.3A3.298 3.298 0 112.7 16.657l8.684-7.151c.533-.44.72-1.291.634-2.309A5.342 5.342 0 0112 6.75zM4.117 19.125a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75h-.008a.75.75 0 01-.75-.75v-.008z" clip-rule="evenodd" />
+                            <path d="M10.076 8.64l-2.201-2.2V4.874a.75.75 0 00-.364-.643l-3.75-2.25a.75.75 0 00-.916.113l-.75.75a.75.75 0 00-.113.916l2.25 3.75a.75.75 0 00.643.364h1.564l2.062 2.062 1.575-1.297z" />
+                            <path fill-rule="evenodd" d="M12.556 17.329l4.183 4.182a3.375 3.375 0 004.773-4.773l-3.306-3.305a6.803 6.803 0 01-1.53.043c-.394-.034-.682-.006-.867.042a.589.589 0 00-.167.063l-3.086 3.748zm3.414-1.36a.75.75 0 011.06 0l1.875 1.876a.75.75 0 11-1.06 1.06L15.97 17.03a.75.75 0 010-1.06z" clip-rule="evenodd" />
+                          </svg>
+
+
+                        <span class="ml-4">System Tools</span>
+                    </span>
+                    <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <template x-if="isPagesMenuOpen">
+                    <ul x-show="isPagesMenuOpen" x-transition:enter="transition-all ease-in-out duration-300"
+                        x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-xl"
+                        x-transition:leave="transition-all ease-in-out duration-300"
+                        x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
+                        class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner
+                         bg-gray-50  "
+                        aria-label="submenu">
+
+
+                        <li
+                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
+                            <a class="w-full" href="{{ url('admin/settings/audit-trail') }}">Audit Trail</a>
+                        </li>
+
+
+                <li
+                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
+                <a class="w-full" href="{{ url('admin/settings/backup') }}">Back Up</a>
+            </li>
+
+
+
+                    </ul>
+                </template>
+            </li>
+        @endcan
+
+
+        @can('admin-access')
+
                     <li class="relative px-6 py-3" x-data="{ isPagesMenuOpenAcc: false }">
                         <button
                             class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 text-gray-700
@@ -389,6 +477,12 @@
                                 aria-label="submenu">
 
                     </li>
+                    <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
+                    <a class="w-full" href="{{ url('admin/settings/report/history') }}">Report History</a>
+                    </li>
+
+
                     @can('admin-access')
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                             <a class="w-full" href="{{ url('admin/update-acc') }}">Account Information</a>
@@ -410,8 +504,6 @@
                 </li>
 
             @endcan
-
-
 
             <li class="relative px-6 py-3">
                 <span
@@ -692,6 +784,26 @@
                     </li>
                 @endcan
 
+                {{-- User | Adviser | Access --}}
+                {{-- <li class="relative px-6 py-3">
+                    <span
+                        class=" {{ request()->is('adviser/report/history') ? ' absolute inset-y-0 left-0 w-1 bg-green-600 rounded-tr-lg rounded-br-lg' : '' }}
+             aria-hidden="true"></span>
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-700 transition-colors duration-150
+                     hover:text-gray-700 "
+                        href="{{ url('adviser/report/history') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="w-5 h-5">
+                            <path
+                                d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+                        </svg>
+
+
+                        <span class="ml-4">Report History</span>
+                    </a>
+                </li> --}}
+                {{-- End Access --}}
+
 
                 @can('adviser-access')
                     <li class="relative px-6 py-3">
@@ -771,32 +883,11 @@
                                         Offenses
                                     </a>
                                 </li>
-                                <li
-                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                            <a class="w-full" href="{{ url('admin/settings/report/history') }}">Report History</a>
-                            </li>
-                                <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                                    <a class="w-full" href="{{ url('admin/settings/audit-trail') }}">Audit Trail</a>
-
-                                </li>
 
 
-                            <li
-                            class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                            <a class="w-full" href="{{ url('admin/settings/backup') }}">Back Up</a>
-                        </li>
 
 
-                        <li
-                        class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                        <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Report</a>
-                    </li>
-                                <li
-                                class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
-                                <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Generate Report</a>
 
-                            </li>
 
 
 

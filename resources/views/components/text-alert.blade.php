@@ -1,4 +1,4 @@
-<div id="messageContainer">
+<div id="messageContainer mx-2">
     @if (session()->has('message'))
         <span class="text-green-500 ">
             {{ session('message') }}

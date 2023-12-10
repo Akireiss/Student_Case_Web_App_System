@@ -21,15 +21,22 @@ class LoginController extends Controller
 
     protected function authenticated()
     {
-        if(Auth::user()->role == '1'){
-            return redirect('admin/dashboard');
+        $user = Auth::user();
+
+        if ($user->status == '1') {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Your account is inactive.');
         }
-        elseif(Auth::user()->role == '2'){
+
+        if ($user->role == '1') {
+            return redirect('admin/dashboard');
+        } elseif ($user->role == '2') {
             return redirect('adviser/dashboard');
-        } elseif(Auth::user()->role == '0'){
+        } elseif ($user->role == '0') {
             return redirect('home');
-        }else{
+        } else {
             return redirect('home');
         }
     }
+
 }

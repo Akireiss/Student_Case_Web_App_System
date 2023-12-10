@@ -70,7 +70,7 @@
 
     </div>
 
-    <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
+    <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 px-10 ">
 
         <form wire:submit.prevent="saveReport">
             @forelse($groupedClassrooms as $gradeLevel => $classroom)
@@ -81,7 +81,7 @@
                     </h6>
 
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 ">
                         <div class="w-full px-4 hidden">
                             <div class="relative mb-3">
                                 {{-- Label --}}
@@ -411,8 +411,8 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 <x-label>Year Level</x-label>
-                                <x-input wire:model="HsPrYear" required/>
-                                <x-error fieldName="HsPrYear" />
+                                <x-input wire:model="HsPrYear" required />
+                                <x-error fieldName="HsPrYear"  />
                             </div>
                         </div>
                     </div>
@@ -470,12 +470,12 @@
                     </div>
 
 
-                    <div class="flex justify-end items-center mx-4">
+                    <div class="flex justify-end items-center mx-4 space-x-2">
                         <x-text-alert />
                         <div wire:loading wire:target="saveReportHs" class="mx-4">
                             Loading...
                         </div>
-                        <x-button type="submit" wire:loading.attr="disabled">Save </x-button>
+                        <x-button type="submit" wire:loading.attr="disabled">Save Report</x-button>
                     </div>
 
                 </form>

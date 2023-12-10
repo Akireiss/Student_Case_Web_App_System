@@ -43,6 +43,19 @@ class YearlyReport extends Component
     public $HsDropOutRate;
     public $HsDrYear;
 
+    public function mount()
+{
+    $currentYear = date('Y');
+    $this->ShCrYear = $currentYear . '-' . ($currentYear + 1);
+    $this->ShPrYear = $currentYear . '-' . ($currentYear + 1);
+    $this->ShDrYear = $currentYear . '-' . ($currentYear + 1);
+    $this->yearLevel = $currentYear . '-' . ($currentYear + 1);
+
+    $this->HsDrYear = $currentYear . '-' . ($currentYear + 1);
+    $this->HsPrYear = $currentYear . '-' . ($currentYear + 1);
+}
+
+
     public function render()
     {
         $gradeLevel = $this->selectedOption === 'Senior High' ? [11, 12] : [7, 8, 9, 10];
@@ -161,7 +174,6 @@ class YearlyReport extends Component
         $data = [];
 
         foreach ($this->groupedClassrooms as $gradeLevel => $classroom) {
-            // Add data from each classroom to the $data array
             $data[] = [
                 'grade_level' => $gradeLevel,
                 'male' => $this->selectedOption === 'High School' ? $classroom['total_hs_male'] : $classroom['total_sh_male'],
@@ -169,8 +181,6 @@ class YearlyReport extends Component
                 'total' => $classroom['total_students'],
             ];
         }
-
-        // Save the aggregated data as a single record
         Yearly::create([
             'data' => json_encode($data),
             'category' => $this->selectedOption,

@@ -21,6 +21,12 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
+                @if(session('error'))
+                <span class="text-red-500 text-sm mt-1" role="alert">
+        {{ session('error') }}
+                </span>
+@endif
+
             </div>
 
             <div class="mb-6 pt-3 rounded">
