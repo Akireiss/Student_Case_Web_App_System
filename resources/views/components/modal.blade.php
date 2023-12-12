@@ -45,16 +45,17 @@
                 </div>
 
                 <p class="mt-2 text-sm text-gray-500 ">
-                    Are you sure you want to Log Out?
+                    Are you sure you want to Loguut?
                 </p>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
                     <div class="flex justify-end mt-6">
-                        <button type="submit" class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform
+                        <button type="submit" class="font-semibold text-xs text-white uppercase px-3 py-2
+                         tracking-wide  transition-colors duration-200 transform
                          bg-red-500 rounded-md dark:bg-red-600 dark:hover:bg-red-700 dark:focus:bg-red-700
                          hover:bg-red-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
-                            Logout
+                           Logout
                         </button>
                     </div>
                 </form>
