@@ -79,6 +79,11 @@ body {
             text-align: center;
             /* Center align the content within all <td> elements */
         }
+        .footer{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 14px
+    }
     </style>
 </head>
 
@@ -765,16 +770,17 @@ body {
 
     <br>
 
-    <table width="100%">
+    <table width="100%" style="background-color: black">
 
         <tbody>
             <tr>
-                <td class="bold">
-                    Anecdotal Records
+                <td class="bold" style="color: white">
+                    ANECDOTAL (SUMMARY)
                 </td>
             </tr>
-
         </tbody>
+
+    </table>
 
 
 
@@ -785,34 +791,50 @@ body {
 
         <tbody>
             <tr>
-                <td width="26%" >Observed Behavior</td>
-                <td width="26%" >Desired Behavior</td>
-                <td width="26%" >Outcome</td>
-                <td width="21%">Date
-                </td>
+                <td width="21%" class="bold">Date</td>
+                <td width="26%" class="bold">Observed Behavior</td>
+                <td width="26%" class="bold">Desired Behavior</td>
+                <td width="26%" class="bold">Remarks/Follow Up</td>
             </tr>
-
         </tbody>
 
+        <tbody>
+            @if ($profile->student->anecdotal && $profile->student->anecdotal->count() > 0)
+                @foreach ($profile->student->anecdotal as $studentAnecdotal)
+                    <tr>
+                        <td>{{ $studentAnecdotal->created_at->format('F j, Y') }}</td>
+                        <td>{{ $studentAnecdotal->observation }}</td>
+                        <td>{{ $studentAnecdotal->desired }}</td>
+                        <td>{{ $studentAnecdotal->outcomes->outcome_remarks }}</td>
+
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td>No Anecdotal</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            @endif
+        </tbody>
+
+    </table>
 
 
-        @if ($profile->student->anecdotal)
-        @foreach ($profile->student->anecdotal as $studentAnecdotal )
+    <table width="100%">
+
 
         <tbody>
             <tr>
-                <td width="26%" >{{ $studentAnecdotal->observation }}</td>
-                <td width="26%" >{{ $studentAnecdotal->desired }}</td>
-                <td width="26%" >{{ $studentAnecdotal->outcome }}</td>
-                <td width="21%" >{{ $studentAnecdotal->created_at->format('F j, Y') }}</td>
-
+                <td width="21%" class="footer">
+                    Thank you for taking time to answer this survey. Rest assured that all of the
+                    information that you have shared with us shall be strictly treated as confidential and shall
+                    be handled with due respect. - Guidance office, CZCMNNHS
                 </td>
             </tr>
         </tbody>
-        @endforeach
-        @endif
-
-
     </table>
 
 

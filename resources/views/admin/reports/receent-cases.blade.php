@@ -8,8 +8,10 @@
             <div class="w-full mx-auto mt-6">
                 <div class="relative flex flex-col min-w-0 py-4 break-words w-full mb-6 shadow-md rounded-lg border-0 ">
 
-
-                    <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
+                    <div class="flex justify-end">
+                        <x-return onclick="window.history.back()">Back</x-return>
+                    </div>
+                        <div class="flex-auto px-6 py-2 lg:px-10  pt-0">
                         <h6 class="text-sm my-1  font-bold uppercase mb-1 ">
                             Recent Cases
                         </h6>

@@ -94,7 +94,7 @@
                                                     hover:text-green-500">Account</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ url('admin/settings/report/history') }}"
+                                                    <a href="{{ url('admin/report/history') }}"
                                                         class="block px-4 py-2
                                                 text-sm font-semibold text-gray-700
                                             hover:text-green-500">Report

@@ -23,9 +23,9 @@
 
             <ul id="notificationList" class="py-2 px-2 hover:bg-gray-200 cursor-pointer text-gray-600"></ul>
         </div>
-        <div class="flex justify-end mx-2 ">
+        <div class="flex justify-end mx-2">
 
-            <span id="text" class="mt-1  text-gray-700 mb-2 text-sm mx-2"></span>
+            <span id="text" class="mt-1 mx-2  text-gray-700 mb-2 text-xs "></span>
 
         </div>
     </x-slot>
@@ -66,10 +66,10 @@
 
             if (notifications.length > 0) {
                 $.each(notifications, function(index, notification) {
-                    var listItem = $('<li class="border-b border-gray-300 py-2 px-3 ">' + notification
+                    var listItem = $('<li class="border-b border-gray-300 py-2 px-3 text-sm">' + notification
                         .data.message + '</li>');
                     var markAsReadButton = $(
-                        '<p class="mark-as-read float-end flex justify-end text-end text-blue-500" data-notification-id="' +
+                        '<p class="mark-as-read float-end text-xs mt-1 flex justify-end text-end text-blue-500" data-notification-id="' +
                         notification.id + '">Mark as read</p>');
                     listItem.append(markAsReadButton);
                     notificationList.append(listItem);
@@ -91,7 +91,7 @@
                     });
                 });
             } else {
-                notificationList.append('<li class="mx-2">No new notifications</li>');
+                notificationList.append('<li class=" mx-2 md:mx-5 text-sm">No new notifications</li>');
             }
         }
 
@@ -106,7 +106,7 @@
         function addMarkAllAsReadButton() {
             var textInfoContainer = $('#text').parent();
             var markAllAsReadButton = $(
-                '<button id="markAllAsRead" class="mt-1 mx-2 text-blue-500">Mark all as read</button>'
+                '<button id="markAllAsRead" class="mt-1 mx-2 text-blue-500 text-xs mb-3">Mark all as read</button>'
                 );
 
             // Check if the button already exists to avoid duplication

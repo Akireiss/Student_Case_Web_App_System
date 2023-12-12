@@ -34,4 +34,6 @@
             Ongoing...
         </h6>
 
+        <x-modal/>
+
 @endsection
