@@ -385,7 +385,6 @@
                             @endif
 
                         </x-grid>
-
                         <div class="w-full px-4 mt-3">
                             <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2 mt-2 ">
                                 @if ($anecdotalData->images->isNotEmpty())
