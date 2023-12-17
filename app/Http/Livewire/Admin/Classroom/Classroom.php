@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Classroom;
 
+use App\Models\Classroom as ModelsClassroom;
 use Livewire\Component;
 use App\Models\Employee;
 
@@ -12,20 +13,17 @@ class Classroom extends Component
     public $employee_id;
     public $status;
 
+
     protected $rules = [
-            'employee_id' => 'required',
-            'section' => 'required',
-            'grade_level' => 'required',
-            'status' => 'required',
-        ];
+        'employee_id' => 'required',
+        'section' => 'required|unique:classrooms,section',
+        'grade_level' => 'required',
+        'status' => 'required',
+    ];
 
-
-    public function render()
+    public function updated($propertyName)
     {
-        $employees = Employee::pluck('employees', 'id');
-        return view('livewire.admin.classroom', compact('employees'))
-        ->extends('layouts.dashboard.index')
-        ->section('content');
+        $this->validateOnly($propertyName);
     }
 
     public function saveClassroom()
@@ -38,8 +36,18 @@ class Classroom extends Component
             'grade_level' => $this->grade_level,
             'status' => $this->status,
         ]);
+
         $this->resetFormFields();
         session()->flash('message', 'Classroom saved successfully.');
+    }
+
+
+    public function render()
+    {
+        $employees = Employee::pluck('employees', 'id');
+        return view('livewire.admin.classroom', compact('employees'))
+        ->extends('layouts.dashboard.index')
+        ->section('content');
     }
 
     private function resetFormFields()

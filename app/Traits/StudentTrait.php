@@ -15,7 +15,7 @@ trait StudentTrait
     protected $rules = [
         'first_name' => 'required|string',
         'last_name' => 'required|string',
-        'lrn' => 'required|numeric|unique:students,lrn',
+        'lrn' => 'nullable|numeric|unique:students,lrn',
         'classroom_id' => 'required',
         'status' => 'required',
     ];

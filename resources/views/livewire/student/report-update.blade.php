@@ -248,7 +248,7 @@
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
                                         <x-label>
-                                            Meeting Outcome
+                                            Meeting Outcome<x-required/>
                                         </x-label>
                                         <x-select wire:model="outcome" required id="meetingOutcome">
                                             <option value="2">Resolved</option>
@@ -262,7 +262,7 @@
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
                                         <x-label>
-                                            Meeting Outcome
+                                            Meeting Outcome<x-required/>
                                         </x-label>
                                         <x-input value="{{ $anecdotalData->outcomes->getActionTextAttribute() }}"
                                             disabled />
@@ -275,7 +275,7 @@
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
                                         <x-label>
-                                            Remarks (Short Description)
+                                            Remarks (Short Description)<x-required/>
                                         </x-label>
                                         <x-input wire:model="outcome_remarks" required />
                                         <x-error fieldName="outcome_remarks" />
@@ -391,13 +391,11 @@
                                 @if ($anecdotalData->images->isNotEmpty())
                                     @foreach ($anecdotalData->images as $image)
                                         <div class="relative">
-                                            <a href="{{ asset('storage/uploads/' . $image->images) }}" target="_blank"
-                                                rel="noopener noreferrer">
-                                                <img src="{{ asset('storage/uploads/' . $image->images) }}"
-                                                    alt="Anecdotal Image"
-                                                    class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
+                                            <a href="{{ Storage::url($image->images) }}" target="_blank" rel="noopener noreferrer">
+                                                <img src="{{ Storage::url($image->images) }}"
+                                                     alt="Anecdotal Image"
+                                                     class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
                                             </a>
-
                                         </div>
                                     @endforeach
                                 @else

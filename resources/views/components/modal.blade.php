@@ -1,5 +1,3 @@
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-
 <div x-data="{ modelOpen: false }">
         <button type="button"  @click="modelOpen =!modelOpen"
         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-700 text-gray-700">
@@ -45,7 +43,7 @@
                 </div>
 
                 <p class="mt-2 text-sm text-gray-500 ">
-                    Are you sure you want to Loguut?
+                    Are you sure you want to Logout?
                 </p>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">

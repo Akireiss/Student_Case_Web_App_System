@@ -24,7 +24,7 @@
                             <div class="w-full px-1 md:px-4">
                                 <div x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
                                     <x-label for="studentName">
-                                        Student Name
+                                        Student Name  <x-required/>
                                     </x-label>
                                     <div class="relative">
                                         <x-input required wire:model.debounce.300ms="studentName" @focus="isOpen = true"
@@ -142,16 +142,17 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Referred By
+                                        Referred By <x-required/>
                                     </x-label>
                                     <x-input type="text" name="offenses" placeholder="{{ Auth()->user()->name }}"
                                         wire:model="user_id" value="{{ Auth()->user()->id }}" disabled />
                                 </div>
                             </div>
 
+
                             <div class="w-full px-1 md:px-4">
                                 <x-label>
-                                    Offense
+                                    Offense  <x-required/>
                                 </x-label>
                                 <x-select name="offense_id" wire:model="offense_id" required>
                                     @if ($offenses)
@@ -174,7 +175,7 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Observation
+                                        Observation <x-required/>
                                     </x-label>
                                     <x-input require type="text" name="observation" wire:model="observation" />
                                     <x-error fieldName="observation" />
@@ -185,7 +186,7 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Desired
+                                        Desired <x-required/>
                                     </x-label>
                                     <x-input type="text" name="desired" wire:model="desired" />
                                     <x-error fieldName="desired" />
@@ -196,7 +197,7 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Outcome
+                                        Outcome <x-required/>
                                     </x-label>
                                     <x-input type="text" name="outcome" wire:model="outcome" />
                                     <x-error fieldName="outcome" />
@@ -217,7 +218,7 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Gravity of offense
+                                        Gravity of offense  <x-required/>
                                     </x-label>
                                     <x-select name="gravity" wire:model="gravity" required>
                                         <option value="0">Low Severity</option>
@@ -265,7 +266,7 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         <h6 class="text-sm mt-4 px-1 md:px-4 font-bold uppercase">
 
 
-                            Actions Taken <x-error fieldName="selectedActions" />
+                            Actions Taken <x-required/> <x-error fieldName="selectedActions" />
                         </h6>
 
                         <x-grid columns="3" gap="4" px="0" mt="4">

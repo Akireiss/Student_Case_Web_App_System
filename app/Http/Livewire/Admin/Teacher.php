@@ -17,6 +17,11 @@ class Teacher extends Component
             ->section('content');
     }
 
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
     public function store()
     {
         $this->validate();

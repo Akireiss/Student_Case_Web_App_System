@@ -38,7 +38,7 @@
                         <div class="w-full px-4">
                             <div x-data="{ isOpen: @entangle('isOpen'), studentName: @entangle('studentName') }">
                                 <x-label for="studentName">
-                                    First Name
+                                    First Name <x-required/>
                                 </x-label>
                                 <div class="relative">
                                     <x-input required wire:model.debounce.100ms="studentName" @focus="isOpen = true"
@@ -86,7 +86,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Last Name
+                                Last Name <x-required/>
                             </x-label>
                             <x-input wire:model="last_name" readonly />
 
@@ -94,7 +94,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Middle Name
+                                Middle Name <x-required/>
                             </x-label>
                             <x-input wire:model="middle_name" disabled />
                             <x-error fieldName="m_name" />
@@ -130,7 +130,7 @@
 
                             <div class="relative mb-3">
                                 <x-label>
-                                    Age
+                                    Age <x-required/>
                                 </x-label>
                                 <x-input wire:model="age" type="number" />
                                 <x-error fieldName="age" />
@@ -143,7 +143,7 @@
 
                             <div class="relative mb-3">
                                 <x-label>
-                                    Sex
+                                    Sex <x-required/>
                                 </x-label>
                                 <x-select wire:model="sex">
                                     <option>Male</option>
@@ -158,7 +158,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Birthdate
+                                Birthdate <x-required/>
                             </x-label>
                             <x-input type="date" wire:model="birthdate" />
                             <x-error fieldName="birthdate" />
@@ -169,7 +169,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Contact Number
+                                Contact Number <x-required/>
                             </x-label>
                             <x-input wire:model="contact" type="number" />
                             <x-error fieldName="contact" />
@@ -180,7 +180,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Birth Order
+                                Birth Order <x-required/>
                             </x-label>
                             <x-select wire:model="birth_order">
                                 <option>Eldest</option>
@@ -205,7 +205,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Religion
+                                Religion <x-required/>
                             </x-label>
                             <x-input wire:model="religion" />
                             <x-error fieldName="religion" />
@@ -216,7 +216,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                4Ps Receipient:
+                                4Ps Receipient: <x-required/>
                             </x-label>
                             <x-select wire:model="four_ps">
                                 <option value="0">Yes</option>
@@ -240,7 +240,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Place of birth
+                                Place of birth <x-required/>
                             </x-label>
                             <x-input wire:model="birth_place" />
                             <x-error fieldName="birth_place" />
@@ -315,7 +315,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Name
+                                Name <x-required/>
                             </x-label>
                             <x-input wire:model="father_name" />
                             <x-error fieldName="father_name" />
@@ -336,7 +336,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Occupation
+                                Occupation <x-required/>
                             </x-label>
                             <x-input wire:model="father_occupation" />
                             <x-error fieldName="father_occupation" />
@@ -345,7 +345,7 @@
 
                         <div x-data="{ phoneNumber: '' }" class="relative mb-3 px-4">
                             <x-label>
-                                Contact No.
+                                Contact No. <x-required/>
                             </x-label>
                             <x-input wire:model="father_contact" type="number" />
                             <x-error fieldName="father_contact" />
@@ -402,7 +402,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Name
+                                Name <x-required/>
                             </x-label>
                             <x-input wire:model="mother_name" />
                             <x-error fieldName="mother_name" />
@@ -421,7 +421,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Occupation
+                                Occupation <x-required/>
                             </x-label>
                             <x-input wire:model="mother_occupation" />
                             <x-error fieldName="mother_occupation" />
@@ -430,7 +430,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Contact No.
+                                Contact No. <x-required/>
                             </x-label>
                             <x-input wire:model="mother_contact" type="number" />
                             <x-error fieldName="mother_contact" />
@@ -535,7 +535,7 @@
 
         <div x-data="{ selected: @entangle('living_with') }">
             <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
-                You are currently living with:
+                You are currently living with: <x-required/>
                 <x-error fieldName="living_with" />
             </h6>
             <x-grid columns="4" gap="4" px="4" mt="2">
@@ -551,7 +551,7 @@
         </div>
 
         <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
-            Parent are currently:
+            Parent are currently: <x-required/>
             <x-error fieldName="living_with" />
         </h6>
         <x-grid columns="3" gap="4" px="0" mt="0">
@@ -623,7 +623,7 @@
 
 
         <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
-            Educational Background
+            Educational Background <x-required/>
         </h6>
 
         <x-grid columns="3" gap="4" px="0" mt="0">
@@ -722,7 +722,7 @@
 
         <div x-data="{ plans: @entangle('plans') }">
             <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
-                What do you plan to do after graduating Senior High School?
+                What do you plan to do after graduating Senior High School? <x-required/>
                 <x-error fieldName="plans" />
 
             </h6>
@@ -801,7 +801,7 @@
             <x-grid columns="2" gap="4" px="0" mt="0">
                 <div class="relative mb-3 px-4">
                     <x-label>
-                        Do you have a disability?
+                        Do you have a disability? <x-required/>
                     </x-label>
                     <x-select x-on:change="hasDisability === 'Yes' ? $refs.disabilityInput.focus() : null"
                         wire:model="hasDisability">
@@ -821,7 +821,7 @@
 
                 <div class="relative mb-3 px-4">
                     <x-label>
-                        Do you have a food allergy?
+                        Do you have a food allergy? <x-required/>
                     </x-label>
                     <x-select x-on:change="hasFoodAllergy === 'Yes' ? $refs.foodAllergyInput.focus() : null"
                         wire:model="hasFoodAllergy">

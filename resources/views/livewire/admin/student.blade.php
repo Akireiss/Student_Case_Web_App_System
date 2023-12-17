@@ -44,7 +44,7 @@
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label>First Name</x-label>
+                                    <x-label>First Name <x-required/></x-label>
                                     <x-input type="text" name="first_name" wire:model="first_name" required />
                                     <x-error fieldName="first_name" />
                                 </div>
@@ -52,7 +52,7 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label>Middle Name</x-label>
+                                    <x-label>Middle Name<x-required/></x-label>
                                     <x-input type="text" name="middle_name" wire:model="middle_name" required />
                                     <x-error fieldName="middle_name" />
                                 </div>
@@ -61,7 +61,7 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label>Last Name</x-label>
+                                    <x-label>Last Name<x-required/></x-label>
                                     <x-input type="text" name="last_name" wire:model="last_name" required />
                                     <x-error fieldName="last_name" />
                                 </div>
@@ -73,7 +73,7 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label>Learners Reference Number</x-label>
+                                    <x-label>Learners Reference Number<x-required/></x-label>
                                     <x-input type="number" name="lrn" wire:model="lrn" required />
                                     <x-error fieldName="lrn" />
                                 </div>
@@ -82,7 +82,7 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label>Gender</x-label>
+                                    <x-label>Gender<x-required/></x-label>
                                     <x-select name="gender" wire:model="gender" required>
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>
@@ -99,7 +99,7 @@
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
-                                <x-label>Classrooom</x-label>
+                                <x-label>Classrooom<x-required/></x-label>
                                 <x-select name="classroom_id" wire:model="classroom_id" required>
                                     @foreach ($classrooms as $classroom)
                                         <option value="{{ $classroom->id }}">Grade:{{ $classroom->grade_level }}
@@ -114,7 +114,7 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label>Status</x-label>
+                                    <x-label>Status<x-required/></x-label>
                                     <x-select name="status" wire:model="status" required>
                                         <option value="0">Active</option>
                                         <option value="1">Inactive</option>

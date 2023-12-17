@@ -112,6 +112,15 @@ class ReportUpdate extends Component
             ]);
         }
 
+        //   foreach ($this->letter as $file) {
+        //     // Move the uploaded file to the public/uploads directory
+        //     $filename = $file->storeAs('public/uploads', $file->getClientOriginalName());
+
+        //     AnecdotalImages::create([
+        //         'anecdotal_id' => $this->anecdotalData->id,
+        //         'images' => 'uploads/' . $file->getClientOriginalName(),
+        //     ]);
+        // }
 
         $this->reset('letter');
 

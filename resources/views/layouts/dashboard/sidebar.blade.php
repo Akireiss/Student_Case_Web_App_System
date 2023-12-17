@@ -164,10 +164,10 @@
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                     <a class="w-full" href="{{ url('admin/settings/backup') }}">Back Up</a>
                 </li>
-                <li
+                {{-- <li
                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                 <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Yearly Report</a>
-            </li>
+            </li> --}}
                 <li
                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                 <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Anecdotal Report</a>
@@ -819,10 +819,10 @@
                         </li>
 
 
-                        <li
+                        {{-- <li
                         class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                         <a class="w-full" href="{{ url('admin/settings/yearly-report') }}">Yearly Report</a>
-                    </li>
+                    </li> --}}
                                 <li
                                 class="px-2 py-1 transition-colors duration-150 hover:text-gray-700 ">
                                 <a class="w-full" href="{{ url('admin/settings/generate-report') }}">Anecdotal Report</a>

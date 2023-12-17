@@ -17,7 +17,7 @@ trait ProfileValidationTrait
         'mother_tongue' => 'nullable',
         'four_ps' => 'required',
         'birth_order' => 'required',
-        'number_of_siblings' => 'required',
+        'number_of_siblings' => 'nullable',
         'selectedBarangay' => 'required',
         'selectedCity' => 'required',
         'selectedMunicipality' => 'required',

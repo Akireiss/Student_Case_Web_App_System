@@ -12,30 +12,33 @@
         <x-bread :breadcrumbs="[
             ['url' => url('admin/dashboard'), 'label' => 'Admin'],
             ['url' => url('admin/dashboard'), 'label' => 'Dashboard'],
-        ]"/>
+        ]" />
 
 
 
-@foreach ($delayedNotif as $notification)
-<div class="bg-red-100 border border-red-400 text-black px-4 py-2 rounded relative my-3 ">
-    <div class="flex flex-col sm:flex-row justify-between items-center">
-        <span class="block sm:inline mb-2 sm:mb-0 pr-4">{{ $notification->data['message'] }}</span>
-        <span class="block sm:inline">
-            <a class="hover:underline px-6 py-1 " href="{{ url('admin/student/recent-cases/' . $notification->data['link']) }}">
-                View Recent Cases
-            </a>
-        </span>
-    </div>
-    <span class="absolute top-0 bottom-0 right-0 px-2 py-2">
-        <button type="button" class="mark-as-read" data-notification-id="{{ $notification->id }}">
-            <svg class="fill-current h-6 w-6 text-black" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <title>Close</title>
-                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-            </svg>
-        </button>
-    </span>
-</div>
-@endforeach
+        @foreach ($delayedNotif as $notification)
+            <div class="bg-red-100 border border-red-400 text-black px-4 py-2 rounded relative my-3 ">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
+                    <span class="block sm:inline mb-2 sm:mb-0 pr-4">{{ $notification->data['message'] }}</span>
+                    <span class="block sm:inline">
+                        <a class="hover:underline px-6 py-1 "
+                            href="{{ url('admin/student/recent-cases/' . $notification->data['link']) }}">
+                            View Recent Cases
+                        </a>
+                    </span>
+                </div>
+                <span class="absolute top-0 bottom-0 right-0 px-2 py-2">
+                    <button type="button" class="mark-as-read" data-notification-id="{{ $notification->id }}">
+                        <svg class="fill-current h-6 w-6 text-black" role="button" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20">
+                            <title>Close</title>
+                            <path
+                                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                        </svg>
+                    </button>
+                </span>
+            </div>
+        @endforeach
 
 
 
@@ -67,7 +70,8 @@
                                 <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer"
                                     @click="currentGrid = 'totalStudents'; statusButtonText = 'Students'">Students</li>
                                 <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer"
-                                    @click="currentGrid = 'totalFMstudents'; statusButtonText = 'Student Cases'">Student Cases</li>
+                                    @click="currentGrid = 'totalFMstudents'; statusButtonText = 'Student Cases'">Student
+                                    Cases</li>
                                 <li class="py-2 px-3 hover:bg-gray-200 cursor-pointer"
                                     @click="currentGrid = 'totalStatusCases'; statusButtonText = 'Cases Status'">Cases
                                     Status</li>
@@ -167,10 +171,10 @@
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25
-                                                            0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
-                                                             0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
-                                                              1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
-                                                               0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                                                                0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
+                                                                 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
+                                                                  1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
+                                                                   0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
                         </svg>
 
 
@@ -211,8 +215,8 @@
                             viewBox="0 0 320 512" fill="white">
                             <path
                                 d="M160 0a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM88 384H70.2c-10.9 0-18.6-10.7-15.2-21.1L93.3 248.1 59.4 304.5c-9.1
-                                                            15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l53.6-89.2c20.3-33.7 56.7-54.3 96-54.3h11.6c-39.3 0 75.7 20.6 96 54.3l53.6 89.2c9.1
-                                                            15.1 4.2 34.8-10.9 43.9s-34.8 4.2-43.9-10.9l-33.9-56.3L265 362.9c3.5 10.4-4.3 21.1-15.2 21.1H232v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V384H152v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V384z" />
+                                                                15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l53.6-89.2c20.3-33.7 56.7-54.3 96-54.3h11.6c-39.3 0 75.7 20.6 96 54.3l53.6 89.2c9.1
+                                                                15.1 4.2 34.8-10.9 43.9s-34.8 4.2-43.9-10.9l-33.9-56.3L265 362.9c3.5 10.4-4.3 21.1-15.2 21.1H232v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V384H152v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V384z" />
                         </svg>
                     </div>
 
@@ -266,10 +270,10 @@
                             stroke="currentColor" class="w-5 h-5 text-yellow-500">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25
-                                                            0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
-                                                             0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
-                                                              1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
-                                                               0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                                                                0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664
+                                                                 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0
+                                                                  1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621
+                                                                   0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
                         </svg>
 
 
@@ -398,7 +402,8 @@
                                 class="border border-gray-300 p-2 bg-gray-50
                                 rounded-md shadow-sm w-full text-gray-800 hover:bg-gray-100">
                                 <option value="All">All</option>
-                                <option selected value="{{ date('Y') }}-{{ date('Y') + 1 }}">{{ date('Y') }}-{{ date('Y') + 1 }}</option>
+                                <option selected value="{{ date('Y') }}-{{ date('Y') + 1 }}">
+                                    {{ date('Y') }}-{{ date('Y') + 1 }}</option>
                                 <option value="2021-2022">2021-2022</option>
 
                                 <option value="2022-2023">2022-2023</option>

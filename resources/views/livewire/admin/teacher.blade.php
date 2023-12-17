@@ -48,7 +48,7 @@
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
-                                        <x-label>Name</x-label>
+                                        <x-label>Name <x-required/></x-label>
                                         <x-input type="text" name="employees" wire:model="employees" required />
                                         @error('employees')
                                             <span class="text-red-500">{{ $message }}</span>
@@ -58,18 +58,16 @@
 
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
-                                        <x-label>Refference Number</x-label>
+                                        <x-label>Refference Number<x-required/></x-label>
                                         <x-input type="number" name="refference_number" wire:model="refference_number"
                                             required />
-                                        @error('refference_number')
-                                            <span class="text-red-500">{{ $message }}</span>
-                                        @enderror
+                                            <x-error fieldName="refference_number" />
                                     </div>
                                 </div>
 
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
-                                        <x-label>Status</x-label>
+                                        <x-label>Status<x-required/></x-label>
                                         <x-select name="status" wire:model="status" required>
                                             <option value="0">Active</option>
                                             <option value="1">Inactive</option>

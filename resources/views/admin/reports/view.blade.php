@@ -254,26 +254,26 @@
 
                         <div class="w-full px-4">
                             <x-label>Promissory note</x-label>
-                            <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2 mt-2 ">
-                                @if ($anecdotal->images->isNotEmpty())
-                                    @foreach ($anecdotal->images as $image)
-                                        <div class="relative">
-                                            <a href="{{ asset('storage/' . $image->images) }}" target="_blank"
-                                                rel="noopener noreferrer">
-                                                <img src="{{ asset('storage/' . $image->images) }}"
-                                                    alt="Anecdotal Image"
-                                                    class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
-                                            </a>
-
+                            <div class="w-full mt-3">
+                                <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2 mt-2 ">
+                                    @if ($anecdotal->images->isNotEmpty())
+                                        @foreach ($anecdotal->images as $image)
+                                            <div class="relative">
+                                                <a href="{{ Storage::url($image->images) }}" target="_blank" rel="noopener noreferrer">
+                                                    <img src="{{ Storage::url($image->images) }}"
+                                                         alt="Anecdotal Image"
+                                                         class="w-32 h-32 object-cover border border-gray-200 rounded cursor-pointer">
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div>
+                                            <p class="text-md text-red-500">No Images Uploaded</p>
                                         </div>
-                                    @endforeach
-                                @else
-                                    <div>
-                                        <p class="text-sm text-red-500 text-left">
-                                            No promissory note uploaded</p>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
+
                         </div>
 
 

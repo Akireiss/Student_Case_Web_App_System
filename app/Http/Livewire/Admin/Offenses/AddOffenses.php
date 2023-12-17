@@ -19,15 +19,22 @@ class AddOffenses extends Component
             ->extends('layouts.dashboard.index')
             ->section('content');
     }
+    protected $rules = [
+        'offenses' => 'required|unique:offenses,offenses',
+        'category' => 'required',
+        'status' => 'required|in:0,1',
+        'description' => 'required|string',
+    ];
+
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
     public function create()
     {
-        $this->validate([
-            'offenses' => 'required|string',
-            'category' => 'required',
-            'status' => 'required|in:0,1',
-            'description' => 'required|string',
-        ]);
+        $this->validate();
 
         // Save the offense to the database
         Offenses::create([

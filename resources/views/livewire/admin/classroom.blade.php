@@ -46,7 +46,9 @@
                         <div class="w-full px-4">
                             <div class="relative mb-3">
                                 {{-- Label --}}
-                                <x-label>Grade Level</x-label>
+                                <x-label>Grade Level <x-required/>
+
+                                </x-label>
                                 {{-- Input Select --}}
                                 <x-select wire:model="grade_level" required>
                                         <option value="7">7</option>
@@ -63,7 +65,7 @@
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
-                                <x-label>Section</x-label>
+                                <x-label>Section <x-required/></x-label>
                                 <x-input wire:model="section"/>
                                 <x-error fieldName="section" />
 
@@ -72,7 +74,7 @@
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
-                                <x-label>Adviser</x-label>
+                                <x-label>Adviser <x-required/></x-label>
                                 <x-select wire:model="employee_id" required>
                                     @foreach ($employees as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}</option>
@@ -85,7 +87,7 @@
 
                         <div class="w-full px-4">
                             <div class="relative mb-3">
-                                <x-label>Status</x-label>
+                                <x-label>Status <x-required/></x-label>
                                 <x-select wire:model="status" required>
                                     <option value="0">Active</option>
                                     <option value="1">Inactive</option>

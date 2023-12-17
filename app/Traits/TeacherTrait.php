@@ -9,7 +9,7 @@ trait TeacherTrait
 
     protected $rules = [
         'employees' => 'required|string|max:255',
-        'refference_number' => 'required|max:11',
+        'refference_number' => 'required|unique:employees,refference_number',
         'status' => 'required|in:0,1',
     ];
 }

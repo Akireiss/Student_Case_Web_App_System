@@ -34,7 +34,7 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label for="section">Department</x-label>
+                                    <x-label for="section">Department<x-required/></x-label>
                                     <x-select name="department" id="departmentSelect">
                                         <!-- Options for offense categories -->
                                         <option value="All">All</option>
@@ -47,7 +47,7 @@
 
                             <div class="w-full px-4" id="highSchoolSelect" style="display: none;">
                                 <div class="relative mb-3">
-                                    <x-label>High Schools</x-label>
+                                    <x-label>High Schools<x-required/></x-label>
                                     {{-- <x-select name="highSchool"> --}}
                                         <!-- Options for classrooms -->
                                         <x-input name="highSchool" value="All" readonly>All Classroom</x-input>
@@ -61,7 +61,7 @@
 
                             <div class="w-full px-4" id="seniorHighSelect" style="display: none;">
                                 <div class="relative mb-3">
-                                    <x-label>Senior High</x-label>
+                                    <x-label>Senior High<x-required/></x-label>
                                     {{-- <x-select name="SeniorHigh" > --}}
                                         <!-- Options for classrooms -->
                                         <x-input name="SeniorHigh" value="All" readonly>All Classroom</x-input>
@@ -78,7 +78,7 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label for="section">School Year: <span class="text-green-500 text-sm">June(this
+                                    <x-label for="section">School Year:<x-required/> <span class="text-green-500 text-sm">June(this
                                             year)-May(next-year)</span></x-label>
                                     <x-select name="year" required>
                                         {{-- <option value="All">All Year</option> --}}
@@ -91,7 +91,7 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label for="section">Status</x-label>
+                                    <x-label for="section">Status<x-required/></x-label>
                                     <x-select name="status" required>
                                         <option value="All">All</option>
                                         <option value="0">Pending</option>
