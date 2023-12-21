@@ -1,6 +1,6 @@
 function updateChart() {
     $.ajax({
-        url: '/get-successful-actions', // Update this URL to match your route
+        url: '/get-successful-actions',
         method: 'GET',
         success: function (data) {
             var labels = [];
@@ -8,10 +8,10 @@ function updateChart() {
             var percentages = [];
 
             data.forEach(function (item) {
-                labels.push(item.label); // Use 'item.label' as the label
+                labels.push(item.label);
                 dataCounts.push(item.count);
 
-                // Calculate the percentage and round it to two decimal places
+
                 var percentage = ((item.count / data.reduce((acc, curr) => acc + curr.count, 0)) * 100).toFixed(2);
                 percentages.push(percentage + '%');
             });
@@ -43,7 +43,7 @@ function updateChart() {
                         }
                     },
                     legend: {
-                        position: "bottom", // Align legend to the bottom
+                        position: "bottom",
                     },
                 },
             });
@@ -54,8 +54,6 @@ function updateChart() {
     });
 }
 
-// Initial chart rendering
+
 updateChart();
 
-// Uncomment this line to update the chart periodically (e.g., every 10 seconds)
-// setInterval(updateChart, 10000);

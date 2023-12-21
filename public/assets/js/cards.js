@@ -20,50 +20,17 @@ $(document).ready(function() {
             }
         });
     }
-
     updateDashboardData();
-
-    setInterval(function() {
-        updateDashboardData();
-    }, 1000);
 });
 
 
-//Weekly Alert
 function showAlert(alertId) {
     $('#' + alertId).removeClass('hidden-alert-weekly');
 }
 
-// Function to hide the alert
 function hideAlert(alertId) {
     $('#' + alertId).addClass('hidden-alert-weekly');
 }
-
-// function updateWeeklyReportCount() {
-//     $.ajax({
-//         url: '/get-weekly-report-count',
-//         method: 'GET',
-//         dataType: 'json',
-//         success: function(data) {
-//             $('#weekly-report-count').text(data.weeklyReportCount);
-//             if (data.weeklyReportCount === 0) {
-//                 $('#weekly-alert').removeClass('bg-red-500').addClass('bg-green-500');
-//             } else {
-//                 $('#weekly-alert').removeClass('bg-green-500').addClass('bg-red-400');
-//             }
-//         },
-//         error: function() {
-//             console.log('Failed to fetch weekly report count.');
-//         }
-//     });
-// }
-
-// // Update every 1 hour (3600000 milliseconds)
-// setInterval(updateWeeklyReportCount, 1000);
-
-
-
-//resolved cases
 
 function updateResolvedCasesCount() {
     $.ajax({
@@ -79,12 +46,8 @@ function updateResolvedCasesCount() {
     });
 }
 
-// Update resolved cases count initially and every hour
 updateResolvedCasesCount();
-setInterval(updateResolvedCasesCount, 1000);
 
-
-//Monthly
 function updateMonthlyReportCount() {
     $.ajax({
         url: '/get-monthly-report-count',
@@ -98,8 +61,4 @@ function updateMonthlyReportCount() {
     });
 }
 
-// Call the function initially to populate the count
 updateMonthlyReportCount();
-
-// Set up a timer to update the count periodically (e.g., every 30 seconds)
-setInterval(updateMonthlyReportCount, 30000);

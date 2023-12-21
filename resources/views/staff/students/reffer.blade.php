@@ -48,6 +48,7 @@
                     <span class="text-red-500">Please review the reffered student before reloading the page</span>
 
                     <span id="alertMessage" class="text-green-500 mx-4"></span>
+                    <span id="loadingMessage" class="text-green-500 mx-2"></span>
 
 
                     <x-buttontype id="updateStudentsButton">Submit</x-buttontype>
@@ -90,6 +91,47 @@
                 error: function (error) {
                     console.log('Error:', error);
                     alert('An error occurred while updating students');
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#updateStudentsButton').click(function () {
+            // Show loading message
+            $('#loadingMessage').text('Loading...');
+
+            $.ajax({
+                type: 'POST',
+                url: $('#updateStudentsForm').attr('action'),
+                data: $('#updateStudentsForm').serialize(),
+                success: function (response) {
+                    // Clear previous success messages
+                    $('#successMessage').empty();
+
+                    if (response.success && response.success.length > 0) {
+                        response.success.forEach(function (message) {
+                            $('#successMessage').append('<span class="text-green-500 mx-4">' + message + '</span>');
+                        });
+
+                        // Show alert message
+                        $('#alertMessage').text('Students have been referred successfully.');
+                        setTimeout(function () {
+                            $('#alertMessage').text('');
+                        }, 5000);
+                    }
+
+                    // Hide loading message on success
+                    $('#loadingMessage').text('');
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                    alert('An error occurred while updating students');
+
+                    // Hide loading message on error
+                    $('#loadingMessage').text('');
                 }
             });
         });

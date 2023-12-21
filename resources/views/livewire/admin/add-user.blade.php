@@ -4,7 +4,7 @@
 
         {{-- <h3 class="font-semibold mb-6  text-gray-600">Add New User</h3> --}}
 
-        <div class="bg-white  rounded shadow-lg p-10  px-4 md:p-8 mb-6 ">
+        <div class="bg-white  rounded shadow-md p-10  px-4 md:p-8 mb-6 ">
 
             <form wire:submit.prevent="store"
             x-data="{ showPassword: false, passwordMismatch: false }"

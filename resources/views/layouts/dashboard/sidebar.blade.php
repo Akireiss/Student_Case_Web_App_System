@@ -482,7 +482,7 @@
 
             <li class="relative px-6 py-3">
 
-               {{-- <x-modal/> --}}
+               <x-modal/>
 
 
             </li>
@@ -951,7 +951,7 @@
 
 
                 <li class="relative px-6 py-3">
-                    {{-- <x-modal/> --}}
+                    <x-modal/>
 
                 </li>
 

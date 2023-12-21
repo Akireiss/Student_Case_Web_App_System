@@ -453,12 +453,12 @@
 
                 <div>
 
-                    <div class="flex justify-between items-center mb-4">
+                    <div class="flex justify-between items-center mb-4 px-4">
                         <h6 class=" px-4 text-sm font-bold uppercase">
                             Siblings' Information
                         </h6>
 
-                        <x-button wire:click="addSibling">Add</x-button>
+                        <x-buttontype wire:click="addSibling">Add</x-buttontype>
                     </div>
 
 
@@ -635,7 +635,7 @@
                         Name some of you award
                     </h6>
 
-                    <x-button wire:click="addReward">Add</x-button>
+                    <x-buttontype wire:click="addReward">Add</x-buttontype>
                 </div>
 
 
@@ -916,7 +916,7 @@
 
                 </x-grid>
 
-                <div class="flex justify-end items-center">
+                <div class="flex justify-end items-center mx-4">
                     <x-text-alert />
                     <div wire:loading wire:target="update" class="mx-4">
                         Loading..

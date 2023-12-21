@@ -132,6 +132,7 @@
                     <div class="flex justify-end items-center">
                         <span class="text-red-500">Please review the reffered student before reloading the page</span>
                         <span id="successMessage" class="text-green-500 mx-4"></span>
+                        <span id="loadingMessage" class="text-green-500 mx-4"></span>
                         <x-button id="updateStudentsButton" type="submit">Submit</x-button>
                     </div>
 
@@ -191,5 +192,34 @@
             });
         });
     </script>
+<script>
+    $(document).ready(function () {
+        $('#updateStudentsForm').submit(function (e) {
+            e.preventDefault();
+
+            $('#loadingMessage').text('Loading...');
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function (response) {
+                    $('#successMessage').text(response.message);
+                    setTimeout(function () {
+                        $('#successMessage').text('');
+                    }, 5000);
+
+                    $('#loadingMessage').text('');
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                    alert('An error occurred while updating students');
+
+                    $('#loadingMessage').text('');
+                }
+            });
+        });
+    });
+</script>
 
 @endsection
