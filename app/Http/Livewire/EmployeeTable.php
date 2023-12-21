@@ -59,12 +59,12 @@ final class EmployeeTable extends PowerGridComponent
         return [
             Column::make('Employees', 'employees')
                 ->sortable()
-                ->editOnClick()
+                // ->editOnClick()
                 ->searchable(),
 
             Column::make('Refference number', 'refference_number')
-                ->sortable()
-                ->editOnClick(),
+                ->sortable(),
+                // ->editOnClick(),
 
             Column::make('Status', 'status')
                 ->sortable(),

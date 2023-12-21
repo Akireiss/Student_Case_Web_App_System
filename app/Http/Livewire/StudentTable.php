@@ -85,14 +85,14 @@ final class StudentTable extends PowerGridComponent
         return [
             Column::make('First name', 'first_name')
                 ->sortable()
-                ->withCount('Total Students', true, false)
+                ->withCount('Total Students', true, false),
 
-                ->editOnClick(),
+                // ->editOnClick(),
 
 
             Column::make('Last name', 'last_name')
                 ->sortable()
-                ->editOnClick()
+                // ->editOnClick(),
                 ->searchable(),
 
             Column::make('Gender', 'gender', 'students.gender'),
@@ -107,9 +107,9 @@ final class StudentTable extends PowerGridComponent
                 ->sortable(),
 
 
-            // Column::make('Lrn', 'lrn')
+            Column::make('Lrn', 'lrn')
             //     ->editOnClick()
-            //     ->sortable(),
+                ->sortable(),
 
 
             Column::make('Status', 'status', 'students.status')

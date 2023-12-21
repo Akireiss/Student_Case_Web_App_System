@@ -63,19 +63,19 @@ final class StudentTable extends PowerGridComponent
         return [
             Column::make('First name', 'first_name')
                 ->sortable()
-                ->editOnClick()
+                // ->editOnClick()
                 ->searchable(),
 
 
             Column::make('Last name', 'last_name')
                 ->sortable()
-                ->editOnClick()
+                // ->editOnClick()
                 ->searchable(),
 
             Column::make('Lrn', 'lrn')
                 ->sortable()
-                ->searchable()
-                ->editOnClick(),
+                ->searchable(),
+                // ->editOnClick(),
 
 
             Column::make('Status', 'status')

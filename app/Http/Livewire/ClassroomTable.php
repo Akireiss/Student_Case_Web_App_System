@@ -71,12 +71,12 @@ final class ClassroomTable extends PowerGridComponent
                 ->sortable(),
             Column::make('Grade level', 'grade_level')
                 ->sortable()
-                ->searchable()
-                ->editOnClick(),
+                ->searchable(),
+                // ->editOnClick(),
             Column::make('Section', 'section')
                 ->sortable()
-                ->searchable()
-                ->editOnClick(),
+                ->searchable(),
+                // ->editOnClick(),
             Column::make('Total Offense', 'anecdotal_count'),
             Column::make('Status', 'status')
                 ->sortable()

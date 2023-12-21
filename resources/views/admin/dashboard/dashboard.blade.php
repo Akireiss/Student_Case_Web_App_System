@@ -29,7 +29,8 @@
                 </div>
                 <span class="absolute top-0 bottom-0 right-0 px-2 py-2">
                     <button type="button" class="mark-as-read" data-notification-id="{{ $notification->id }}">
-                        <svg class="fill-current h-6 w-6 text-black" role="button" xmlns="http://www.w3.org/2000/svg"
+                        <svg class="fill-current h-6 w-6 text-black"
+                        role="button" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20">
                             <title>Close</title>
                             <path
@@ -529,19 +530,19 @@
                 $.ajax({
                     type: 'GET',
                     url: '/fetch-new-notifications',
-                    success: function(data) {}
+                    success: function(data) {
+
+                    }
                 });
             }
 
             fetchNewNotifications();
 
-            var refreshInterval = 30000; // 30 seconds
+            var refreshInterval = 30000;
             setInterval(fetchNewNotifications, refreshInterval);
 
-            $('.mark-as-read').click(function() {
-                var notificationId = $(this).data('notification-id');
-                var notificationElement = $(this).closest('.bg-green-100');
-
+            // Function to mark notification as read
+            function markNotificationAsRead(notificationId, notificationElement) {
                 $.ajax({
                     type: 'POST',
                     url: '/mark-notification-read/' + notificationId,
@@ -549,14 +550,21 @@
                         '_token': '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        notificationElement.fadeOut(); // Remove the notification from view
+                        notificationElement.fadeOut();
                     }
                 });
+            }
+
+            $('.mark-as-read').click(function() {
+                var notificationId = $(this).data('notification-id');
+                var notificationElement = $(this).closest('.bg-red-100');
+
+                markNotificationAsRead(notificationId, notificationElement);
             });
 
             $('.close-notification').click(function() {
-                var notificationElement = $(this).closest('.bg-green-100');
-                notificationElement.fadeOut(); // Remove the notification from view
+                var notificationElement = $(this).closest('.bg-red-100');
+                notificationElement.fadeOut();
             });
         });
     </script>
