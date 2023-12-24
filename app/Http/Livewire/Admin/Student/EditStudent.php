@@ -9,9 +9,22 @@ use Livewire\Component;
 
 class EditStudent extends Component
 {
-    use StudentTrait;
-    public $student;
+    public $status;
+    public $first_name;
+    public $middle_name;
+    public $last_name;
+    public $lrn;
+    public $classroom_id;
+    public $gender;
 
+    public $student;
+    protected $rules = [
+        'first_name' => 'required|string',
+        'last_name' => 'required|string',
+        'lrn' => 'nullable|numeric',
+        'classroom_id' => 'required',
+        'status' => 'required',
+    ];
     public function mount($student)
     {
         $this->student = $student;

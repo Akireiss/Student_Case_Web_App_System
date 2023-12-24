@@ -53,6 +53,9 @@
                                         Guest
                                     </div>
                                 @else
+
+
+                                @if (auth()->user()->role === 1)
                                 <li class="relative">
                                     <!-- Button with dropdown trigger -->
                                     <x-dropdown>
@@ -120,6 +123,146 @@
                                         </x-slot>
                                     </x-dropdown>
                                 </li>
+
+                                @elseif (auth()->user()->role === 2)
+                                <li class="relative">
+                                    <!-- Button with dropdown trigger -->
+                                    <x-dropdown>
+                                        <x-slot name="trigger">
+                                            <div class="flex justify-end my-2">
+                                                <button type="button" class="flex items-center space-x-3 text-black">
+                                                    {{ auth()->user()->name }}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                      </svg>
+
+                                                </button>
+                                            </div>
+
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <div class="px-4 py-3 text-sm font-semibold text-gray-700
+                                            hover:text-gray-700">
+                                              <div> {{ auth()->user()->getRoleTextAttribute() }}</div>
+                                              <div class="text-sm font-semibold text-gray-700
+                                              hover:text-gray-700">
+                                                  {{ auth()->user()->email }}
+                                              </div>
+                                            </div>
+<hr>
+
+                                            <ul class="text-sm font-semibold text-gray-700
+                                                hover:text-gray-700">
+                                                <li>
+                                                    <a href="{{ url('adviser/dashboard') }}" class="block px-4 py-2 text-sm font-semibold
+                                                     text-gray-700 hover:text-green-500">
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="{{ url('adviser/update-acc') }}"
+                                                        class="block px-4 py-2  text-sm font-semibold text-gray-700
+                                                    hover:text-green-500">Account</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ url('adviser/report/history') }}"
+                                                        class="block px-4 py-2
+                                                text-sm font-semibold text-gray-700
+                                            hover:text-green-500">Report
+                                                        History</a>
+                                                </li>
+                                            </ul>
+                                            <hr>
+                                            <div class="py-2">
+
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                    class="block  py-2  text-sm font-semibold text-gray-700
+                                                    hover:text-green-500" >
+
+                                                    <span class="ml-4">Log Out</span>
+                                                </button>
+                                                </form>
+
+
+
+                                            </div>
+                                        </x-slot>
+                                    </x-dropdown>
+                                </li>
+
+                                @else
+                                <li class="relative">
+                                    <!-- Button with dropdown trigger -->
+                                    <x-dropdown>
+                                        <x-slot name="trigger">
+                                            <div class="flex justify-end my-2">
+                                                <button type="button" class="flex items-center space-x-3 text-black">
+                                                    {{ auth()->user()->name }}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                      </svg>
+
+                                                </button>
+                                            </div>
+
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <div class="px-4 py-3 text-sm font-semibold text-gray-700
+                                            hover:text-gray-700">
+                                              <div> {{ auth()->user()->getRoleTextAttribute() }}</div>
+                                              <div class="text-sm font-semibold text-gray-700
+                                              hover:text-gray-700">
+                                                  {{ auth()->user()->email }}
+                                              </div>
+                                            </div>
+<hr>
+
+                                            <ul class="text-sm font-semibold text-gray-700
+                                                hover:text-gray-700">
+                                                <li>
+                                                    <a href="{{ url('home') }}" class="block px-4 py-2 text-sm font-semibold
+                                                     text-gray-700 hover:text-green-500">
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="{{ url('update/account') }}"
+                                                        class="block px-4 py-2  text-sm font-semibold text-gray-700
+                                                    hover:text-green-500">Account</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ url('report/history') }}"
+                                                        class="block px-4 py-2
+                                                text-sm font-semibold text-gray-700
+                                            hover:text-green-500">Report
+                                                        History</a>
+                                                </li>
+                                            </ul>
+                                            <hr>
+                                            <div class="py-2">
+
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                    class="block  py-2  text-sm font-semibold text-gray-700
+                                                    hover:text-green-500" >
+
+                                                    <span class="ml-4">Log Out</span>
+                                                </button>
+                                                </form>
+
+
+
+                                            </div>
+                                        </x-slot>
+                                    </x-dropdown>
+                                </li>
+
+                                @endif
 
                             @endguest
 
