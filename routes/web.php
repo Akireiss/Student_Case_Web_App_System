@@ -246,7 +246,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::get('students/{student}/edit', ReferStudent::class)->name('adviser.students.edit');
             Route::get('students/{student}/view', [ReferStudent::class, 'view'])->name('adviser.students.view');
 
-            Route::get('classroom/{classroom}', [RefferController::class, 'index']);
+            Route::get('students/{classroom}', [RefferController::class, 'index']);
 
             Route::put('/students/{classroom}', [RefferController::class, 'update'])->name('studentsClassroom.update');
 

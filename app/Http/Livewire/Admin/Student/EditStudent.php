@@ -48,15 +48,15 @@ class EditStudent extends Component
         return view('admin.settings.students.view', compact('student'));
     }
 
-    public function deleteStudent($studentId)
-    {
-        $student = Students::find($studentId);
-        if (!$student) {
-            return redirect()->to('admin/settings/students');
-        }
-        $student->delete();
+    // public function deleteStudent($studentId)
+    // {
+    //     $student = Students::find($studentId);
+    //     if (!$student) {
+    //         return redirect()->to('admin/settings/students');
+    //     }
+    //     $student->delete();
 
-    }
+    // }
 
 
     public function render()

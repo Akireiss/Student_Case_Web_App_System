@@ -43,10 +43,13 @@ px-4 py-5 tracking-wide bg-white  md:px-8  ">
 
             @auth
             @if (auth()->user()->role === 1)
-                <a href="admin/dashboard" class="hover:text-gray-900"><span>Dashboard</span></a>
-            @else
-                <a href="adviser/dashboard" class="hover:text-gray-900"><span>Dashboard</span></a>
-            @endif
+            <a href="admin/dashboard" class="hover:text-gray-900"><span>Dashboard</span></a>
+        @elseif (auth()->user()->role === 2)
+            <a href="adviser/dashboard" class="hover:text-gray-900"><span>Dashboard</span></a>
+        @else
+            <a href="home" class="hover:text-gray-900"><span>Dashboard</span></a>
+        @endif
+
         @endauth
 
 
@@ -92,10 +95,20 @@ Login
                 Dashboard
             </a>
             </div>
-            @else
+            @elseif (auth()->user()->role === 2)
 
             <div class="mr-3">
                 <a href="adviser/dashboard"
+                class="inline-block px-4 no-underline font-semibold text-gray-700
+                hover:text-gray-700
+                hover:border-b hover:border-green-500">
+                Dashboard
+            </a>
+            </div>
+
+            @else
+            <div class="mr-3">
+                <a href="home"
                 class="inline-block px-4 no-underline font-semibold text-gray-700
                 hover:text-gray-700
                 hover:border-b hover:border-green-500">

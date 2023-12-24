@@ -14,7 +14,7 @@
 
 </div>
     <div>
-        <x-link href="{{ url('adviser/classroom/' . auth()->user()->classroom->id) }}">Reffer</x-link>
+        <x-link href="{{ url('adviser/students/' . auth()->user()->classroom->id) }}">Reffer</x-link>
 
     </div>
 </div>

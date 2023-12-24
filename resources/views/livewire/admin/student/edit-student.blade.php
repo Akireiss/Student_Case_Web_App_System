@@ -8,7 +8,7 @@ Back
             </x-link>
         </x-slot>
 
-        <form wire:submit="update">
+        <form wire:submit.prevent="update">
             <h6 class="text-sm mt-3 mb-2 px-4 font-bold uppercase">
                 Edit Student
             </h6>
