@@ -36,18 +36,8 @@ class DashboardController extends Controller
 
         $classrooms = Classroom::where('status', 0)->get();
 
-        return view('admin.dashboard.dashboard', compact('delayedNotif', 'classrooms'));
-    }
 
-    public function markAsRead(Request $request, ScheduledNotification $notification)
-    {
-        $notification->update(['read_at' => now()]);
 
-        return response()->json(['message' => 'Notification marked as read']);
-    }
-
-    public function getDashboardData(Request $request)
-    {
         $totalStudents = Students::where('status', 0)->count();
         $totalMale = Students::where('status', 0)->where('gender', 0)->count();
         $totalFemale = Students::where('status', 0)->where('gender', 1)->count();
@@ -68,18 +58,31 @@ class DashboardController extends Controller
             $query->where('gender', 1)->where('status', 0);
         })->count();
 
-        return response()->json([
-            'totalStudents' => $totalStudents,
-            'totalCases' => $totalCases,
-            'pendingCases' => $pendingCases,
-            'resolvedCases' => $resolvedCases,
-            'ongoingCases' => $ongoingCases,
-            'totalMale' => $totalMale,
-            'totalFemale' => $totalFemale,
-            'maleCases' => $maleCases,
-            'femaleCases' => $femaleCases,
+
+
+        return view('admin.dashboard.dashboard',[
+        'delayedNotif' => $delayedNotif,
+         'classrooms' => $classrooms,
+         'totalStudents' => $totalStudents,
+         'totalCases' => $totalCases,
+         'pendingCases' => $pendingCases,
+         'resolvedCases' => $resolvedCases,
+         'ongoingCases' => $ongoingCases,
+         'totalMale' => $totalMale,
+         'totalFemale' => $totalFemale,
+         'maleCases' => $maleCases,
+         'femaleCases' => $femaleCases
         ]);
     }
+
+    public function markAsRead(Request $request, ScheduledNotification $notification)
+    {
+        $notification->update(['read_at' => now()]);
+
+        return response()->json(['message' => 'Notification marked as read']);
+    }
+
+
 
     public function getOffenseCounts()
     {
@@ -169,54 +172,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    //*Resolved Cases
-    public function getResolvedCases()
-    {
-        $twoWeeksAgo = Carbon::now()->subWeeks(2);
-        $resolvedCount = Anecdotal::where('case_status', 2)
-            ->where('case_status', 2)
-            ->where('updated_at', '>', $twoWeeksAgo)
-            ->count();
-        return response()->json(['resolvedCount' => $resolvedCount]);
-    }
-    // public function getSuccessfulActions(Request $request)
-    // {
-    //     $year = $request->input('year', 'All');
-
-    //     $query = DB::table('anecdotal_outcome')
-    //         ->select(DB::raw('count(*) as count, action as label'))
-    //         ->where('outcome', '=', 2)
-    //         ->groupBy('action');
-
-    //     if ($year !== 'All') {
-    //         // Calculate the start and end dates for the selected school year
-    //         $yearParts = explode('-', $year);
-    //         $startMonth = 6; // June
-    //         $endMonth = 5;   // May
-
-    //         $startDate = Carbon::create($yearParts[0], $startMonth, 1);
-    //         $endDate = Carbon::create($yearParts[1], $endMonth, 31);
-
-    //         // Assuming you have a date field named 'created_at'
-    //         $query->whereBetween('created_at', [$startDate, $endDate]);
-    //     }
-
-    //     $successfulActions = $query->get();
-
-    //     return response()->json($successfulActions);
-    // }
-
-
-    // public function getSuccessfulActions()
-    // {
-    //     $successfulActions = DB::table('anecdotal_outcome')
-    //         ->select(DB::raw('count(*) as count, action as label'))
-    //         ->where('outcome', '=', 2)
-    //         ->groupBy('action') // Group by 'action' instead of 'outcome'
-    //         ->get();
-
-    //     return response()->json($successfulActions);
-    // }
 
 
     public function getOngoingCases()
@@ -227,7 +182,7 @@ class DashboardController extends Controller
             ->join('students', 'anecdotal.student_id', '=', 'students.id')
             ->select('anecdotal.*', 'students.first_name', 'students.middle_name', 'students.last_name', 'students.lrn', 'students.status')
             ->where('anecdotal.case_status', 1)
-            ->where('anecdotal.updated_at', '>', $oneWeekAgo)
+            ->where('anecdota   l.updated_at', '>', $oneWeekAgo)
             ->get();
 
         $resolvedCases = DB::table('anecdotal')

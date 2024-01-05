@@ -34,6 +34,7 @@ use App\Http\Livewire\Admin\Offenses\EditOffense;
 use App\Http\Controllers\Admin\OffensesController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ExportStudentController;
 use App\Http\Livewire\Admin\Dashboard\ResolvedCases;
 use App\Http\Controllers\Student\StudentDataController;
 use App\Http\Controllers\Admin\StudentProfileController;
@@ -121,6 +122,16 @@ Route::middleware(['auth', 'role'])->group(function () {
                 ->name('admin.profile.show');
 
             Route::get('student-profile/add', \App\Http\Livewire\Student\StudentProfile::class);
+
+            //export student
+            Route::get('export/student', [ExportStudentController::class, 'index']);
+            Route::post('students/store/export',  [ExportStudentController::class, 'store'])->name('students.store.export');
+// routes/web.php
+// routes/web.php
+Route::get('/students/export', [ExportStudentController::class, 'export'])->name('students.export');
+Route::get('/students/export/excel', [ExportStudentController::class, 'exportExcel'])->name('students.export.excel');
+
+
         });
 
         Route::get('admin/report/history', function () {
@@ -375,7 +386,8 @@ Route::post('restore/database/corrupt/database', [RestoreController::class, 'res
 //Notofications
 Route::get('/fetch-notifications', [DashboardController::class, 'notification']);
 Route::post('/mark-as-read/{notificationId}', [DashboardController::class, 'read'])->name('mark-as-read');
-Route::get('/fetch-total-notifications', [DashboardController::class, 'fetchTotalNotifications'])->name('mark-as-read');
+// Route::get('/fetch-total-notifications', [DashboardController::class, 'fetchTotalNotifications'])->name('mark-as-read');
+Route::get('/fetch-total-notifications', [DashboardController::class, 'fetchTotalNotifications']);
 //Mark all as read
 Route::post('/mark-all-as-read', [DashboardController::class, 'markAllAsRead'])->name('mark-all-as-read');
 Route::get('/fetch-all-notifications', [DashboardController::class, 'fetchAllNotifications']);

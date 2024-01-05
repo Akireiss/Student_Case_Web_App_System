@@ -105,8 +105,8 @@
                         <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Total Active Students
                         </p>
-                        <p class="text-3xl font-semibold text-gray-700 " id="total-students">
-
+                        <p class="text-3xl font-semibold text-gray-700 ">
+                            {{ $totalStudents }}
                         </p>
                     </div>
                 </a>
@@ -128,8 +128,8 @@
                         <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Total Active Male
                         </p>
-                        <p class="text-3xl font-semibold text-gray-700 " id="total-male">
-
+                        <p class="text-3xl font-semibold text-gray-700 " >
+                                    {{ $totalMale }}
                         </p>
                     </div>
                 </a>
@@ -151,8 +151,8 @@
                         <p class="mb-2 text-lg font-medium text-gray-600">
                             Total Active Female
                         </p>
-                        <p class="text-3xl font-semibold text-gray-700 " id="total-female">
-
+                        <p class="text-3xl font-semibold text-gray-700 " >
+                        {{ $totalFemale }}
                         </p>
                     </div>
                 </a>
@@ -185,7 +185,8 @@
                         <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Total Cases
                         </p>
-                        <p class="text-3xl font-semibold text-gray-700 " id="total-cases">
+                        <p class="text-3xl font-semibold text-gray-700 " >
+                            {{ $totalCases }}
                         </p>
                     </div>
                 </a>
@@ -202,8 +203,8 @@
                         <p class="mb-2 text-lg font-medium text-gray-600">
                             Male Cases
                         </p>
-                        <p class="text-3xl font-semibold text-gray-700" id="maleCases">
-
+                        <p class="text-3xl font-semibold text-gray-700" >
+                            {{ $maleCases }}
                         </p>
                     </div>
                 </a>
@@ -225,8 +226,9 @@
                         <p class="mb-2 text-lg font-medium text-gray-600">
                             Female Cases
                         </p>
-                        <p id="femaleCases" class="text-3xl font-semibold text-gray-700">
+                        <p  class="text-3xl font-semibold text-gray-700">
 
+                            {{ $femaleCases }}
                         </p>
                     </div>
                 </a>
@@ -257,8 +259,8 @@
                         <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Pending Cases
                         </p>
-                        <p id="pending-cases" class="text-3xl font-semibold text-gray-700 ">
-
+                        <p  class="text-3xl font-semibold text-gray-700 ">
+                        {{ $pendingCases }}
                         </p>
                     </div>
                 </a>
@@ -284,7 +286,8 @@
                         <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Ongoing
                         </p>
-                        <p class="text-3xl font-semibold text-gray-700 " id="ongoingCases">
+                        <p class="text-3xl font-semibold text-gray-700 ">
+                            {{ $ongoingCases }}
                         </p>
                     </div>
                 </a>
@@ -306,8 +309,8 @@
                         <p class="mb-2 text-xl font-medium text-gray-600 ">
                             Resolved Cases
                         </p>
-                        <p id="resolved-cases" class="text-3xl font-semibold text-gray-700 ">
-
+                        <p class="text-3xl font-semibold text-gray-700 ">
+                            {{ $resolvedCases }}
                         </p>
                     </div>
                 </a>

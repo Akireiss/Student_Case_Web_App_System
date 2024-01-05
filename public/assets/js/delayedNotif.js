@@ -10,7 +10,7 @@ $(document).ready(function() {
 
     fetchNewNotifications();
 
-    var refreshInterval = 30000; // 30 seconds
+    var refreshInterval = 1000000;
     setInterval(fetchNewNotifications, refreshInterval);
 
     $('.mark-as-read').click(function() {

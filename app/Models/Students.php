@@ -17,16 +17,8 @@ class Students extends Model
     protected $table = 'students';
 
 
-    protected $fillable = [
-        'classroom_id',
-        'first_name',
-        'middle_name',
-        'last_name',
-        'lrn',
-        'gender',
-        'status',
-        'department'
-    ];
+    protected $fillable = ['first_name', 'middle_name',
+    'last_name', 'gender', 'classroom_id', 'department', 'lrn'];
     public function classroom()
 {
     return $this->belongsTo(Classroom::class, 'classroom_id');
