@@ -58,3 +58,4 @@ class YearlyReport extends Model
     }
 
 }
+
