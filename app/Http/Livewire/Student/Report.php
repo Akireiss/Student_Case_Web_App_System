@@ -47,7 +47,7 @@ class Report extends Component
         'outcome' => 'nullable',
         'letter' => 'nullable',
         'selectedActions' => 'required',
-        'story' => 'required',
+        'story' => 'nullable    ',
     ];
 
     protected $messages = [

@@ -39,11 +39,12 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
     {
         return [
             'first_name'   => 'required',
+            'middle_name'    => 'required',
             'last_name'    => 'required',
-            'gender'       => 'required',
-            'classroom_id' => 'required',
-            'department'   => 'required',
-            'lrn'          => 'required',
+            'gender'       => 'nullable',
+            'classroom_id' => 'nullable',
+            'department'   => 'nullable',
+            'lrn'          => 'nullable',
         ];
     }
 
@@ -54,9 +55,9 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
     {
         return [
             'first_name.required'   => 'First name is required.',
+            'middle_name.required'    => 'Middle name is missing.',
             'last_name.required'    => 'Last name is required.',
             'gender.required'       => 'Gender is required.',
-            'classroom_id.required' => 'Classroom ID is required.',
             'department.required'   => 'Department is required.',
             'lrn.required'          => 'LRN is required.',
         ];

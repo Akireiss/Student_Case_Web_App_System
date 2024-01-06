@@ -275,7 +275,7 @@
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
                                         <x-label>
-                                            Remarks (Short Description)<x-required/>
+                                            Remarks (Short Description)
                                         </x-label>
                                         <x-input wire:model="outcome_remarks" required />
                                         <x-error fieldName="outcome_remarks" />
@@ -304,7 +304,7 @@
                                 <div class="w-full px-4">
                                     <div class="relative mb-3">
                                         <x-label>
-                                            Action Taken
+                                            Action Taken <x-required/>
                                         </x-label>
                                         <x-select name="action_id" wire:model="action" required>
                                             <option value="Parent Guidance Meeting">Parent Guidance Meeting</option>
@@ -389,7 +389,10 @@
                             <div x-data="{ isZoomed: false }" x-clock class="flex space-x-2 mt-2 ">
                                 @if ($anecdotalData->images->isNotEmpty())
                                     @foreach ($anecdotalData->images as $image)
+
                                         <div class="relative">
+                                    <x-label>Images</x-label>
+
                                             <a href="{{ Storage::url($image->images) }}" target="_blank" rel="noopener noreferrer">
                                                 <img src="{{ Storage::url($image->images) }}"
                                                      alt="Anecdotal Image"
@@ -399,7 +402,9 @@
                                     @endforeach
                                 @else
                                     <div>
-                                        <p class="text-md text-red-500">No Images Uploaded</p>
+                                        <p class="text-md text-red-500">
+                                            No Uplods Image Yet.
+                                        </p>
                                     </div>
                                 @endif
                             </div>

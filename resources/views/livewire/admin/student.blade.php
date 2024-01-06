@@ -17,7 +17,7 @@
                 <div class="flex justify-end mt-4 space-x-2">
 
                     <x-link href="{{ url('admin/export/student') }}" >
-                        Export
+                    Import
                     </x-link>
 
                     <x-button x-on:click="showTable = false; showForm = true">
@@ -76,8 +76,8 @@
 
                             <div class="w-full px-4">
                                 <div class="relative mb-3">
-                                    <x-label>Learners Reference Number<x-required/></x-label>
-                                    <x-input type="number" name="lrn" wire:model="lrn" required />
+                                    <x-label>Learners Reference Number</x-label>
+                                    <x-input type="number" name="lrn" wire:model="lrn" />
                                     <x-error fieldName="lrn" />
                                 </div>
                             </div>

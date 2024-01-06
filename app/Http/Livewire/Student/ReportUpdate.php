@@ -32,7 +32,7 @@ class ReportUpdate extends Component
 
     protected $rules = [
         'outcome' => 'required',
-        'outcome_remarks' => 'required',
+        'outcome_remarks' => 'nullable',
         'action' => 'required',
         'letter' => 'nullable',
         'letter.*' => 'image',

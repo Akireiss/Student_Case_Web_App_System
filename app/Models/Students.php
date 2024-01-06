@@ -19,6 +19,11 @@ class Students extends Model
 
     protected $fillable = ['first_name', 'middle_name',
     'last_name', 'gender', 'classroom_id', 'department', 'lrn'];
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
     public function classroom()
 {
     return $this->belongsTo(Classroom::class, 'classroom_id');
@@ -144,8 +149,5 @@ public function grade_level()
     protected $appends = ['full_name'];
 
     //important function for the table -joshua
-    public function getFullNameAttribute()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
+
 }

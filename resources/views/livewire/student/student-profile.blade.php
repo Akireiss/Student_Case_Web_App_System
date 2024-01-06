@@ -118,7 +118,7 @@
                             <x-label>
                                 Nickname
                             </x-label>
-                            <x-input wire:model="nickname" />
+                            <x-input wire:model="nickname"  required/>
                             <x-error fieldName="nickname" />
 
                         </div>
@@ -145,7 +145,7 @@
                                 <x-label>
                                     Sex <x-required/>
                                 </x-label>
-                                <x-select wire:model="sex">
+                                <x-select wire:model="sex" required>
                                     <option>Male</option>
                                     <option>Female</option>
                                 </x-select>
@@ -160,7 +160,7 @@
                             <x-label>
                                 Birthdate <x-required/>
                             </x-label>
-                            <x-input type="date" wire:model="birthdate" />
+                            <x-input type="date" wire:model="birthdate" required/>
                             <x-error fieldName="birthdate" />
 
                         </div>
@@ -171,7 +171,7 @@
                             <x-label>
                                 Contact Number <x-required/>
                             </x-label>
-                            <x-input wire:model="contact" type="number" />
+                            <x-input wire:model="contact" type="number" required/>
                             <x-error fieldName="contact" />
 
                         </div>
@@ -182,7 +182,7 @@
                             <x-label>
                                 Birth Order <x-required/>
                             </x-label>
-                            <x-select wire:model="birth_order">
+                            <x-select wire:model="birth_order" required>
                                 <option>Eldest</option>
                                 <option>Middle</option>
                                 <option>Youngest</option>
@@ -195,9 +195,9 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Number of Siblings
+                                Number of Siblings <x-required/>
                             </x-label>
-                            <x-input wire:model="number_of_siblings" type="number" />
+                            <x-input wire:model="number_of_siblings" type="number"  required/>
                             <x-error fieldName="number_of_siblings" />
 
                         </div>
@@ -207,7 +207,7 @@
                             <x-label>
                                 Religion <x-required/>
                             </x-label>
-                            <x-input wire:model="religion" />
+                            <x-input wire:model="religion" required />
                             <x-error fieldName="religion" />
 
                         </div>
@@ -218,7 +218,7 @@
                             <x-label>
                                 4Ps Receipient: <x-required/>
                             </x-label>
-                            <x-select wire:model="four_ps">
+                            <x-select wire:model="four_ps" required>
                                 <option value="0">Yes</option>
                                 <option value="1">No</option>
                             </x-select>
@@ -230,9 +230,9 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Mother Tongue
+                                Mother Tongue <x-required/>
                             </x-label>
-                            <x-input wire:model="mother_tongue" />
+                            <x-input wire:model="mother_tongue" required />
                             <x-error fieldName="mother_tongue" />
 
                         </div>
@@ -242,7 +242,7 @@
                             <x-label>
                                 Place of birth <x-required/>
                             </x-label>
-                            <x-input wire:model="birth_place" />
+                            <x-input wire:model="birth_place" required/>
                             <x-error fieldName="birth_place" />
 
 
@@ -260,7 +260,7 @@
                     <x-grid columns="3" gap="4" px="0" mt="0">
 
                         <div class="relative mb-3 px-4">
-                            <x-label>Province</x-label>
+                            <x-label>Province<x-required/> </x-label>
                             <x-select wire:model="selectedCity" required>
                                 @foreach ($provinces as $province)
                                     <option value="{{ $province->id }}">{{ $province->province }}</option>
@@ -271,7 +271,7 @@
                         </div>
 
                         <div class="relative mb-3 px-4">
-                            <x-label>Municipality</x-label>
+                            <x-label>Municipality<x-required/></x-label>
                             <x-select wire:model="selectedMunicipality" required>
                                 @foreach ($municipalities as $municipality)
                                     <option value="{{ $municipality->id }}">{{ $municipality->municipality }}
@@ -283,7 +283,7 @@
                         </div>
 
                         <div class="relative mb-3 px-4">
-                            <x-label>Barangay</x-label>
+                            <x-label>Barangay<x-required/></x-label>
                             <x-select wire:model="selectedBarangay" required>
                                 @foreach ($barangays as $barangay)
                                     <option value="{{ $barangay->id }}">
@@ -317,7 +317,7 @@
                             <x-label>
                                 Name <x-required/>
                             </x-label>
-                            <x-input wire:model="father_name" />
+                            <x-input wire:model="father_name"  required/>
                             <x-error fieldName="father_name" />
 
                         </div>
@@ -345,7 +345,7 @@
 
                         <div x-data="{ phoneNumber: '' }" class="relative mb-3 px-4">
                             <x-label>
-                                Contact No. <x-required/>
+                                Contact No.
                             </x-label>
                             <x-input wire:model="father_contact" type="number" />
                             <x-error fieldName="father_contact" />
@@ -404,7 +404,7 @@
                             <x-label>
                                 Name <x-required/>
                             </x-label>
-                            <x-input wire:model="mother_name" />
+                            <x-input wire:model="mother_name" required/>
                             <x-error fieldName="mother_name" />
 
                         </div>
@@ -430,7 +430,7 @@
 
                         <div class="relative mb-3 px-4">
                             <x-label>
-                                Contact No. <x-required/>
+                                Contact No.
                             </x-label>
                             <x-input wire:model="mother_contact" type="number" />
                             <x-error fieldName="mother_contact" />
@@ -568,9 +568,9 @@
 
             <div class="relative mb-3 px-4">
                 <x-label>
-                    Guardian's Name
+                    Guardian's Name <x-required/>
                 </x-label>
-                <x-input wire:model="guardian_name" />
+                <x-input wire:model="guardian_name" required />
                 <x-error fieldName="guardian_name" />
 
             </div>
@@ -578,9 +578,9 @@
 
             <div class="relative mb-3 px-4">
                 <x-label>
-                    Relationship with the guardian
+                    Relationship with the guardian <x-required/>
                 </x-label>
-                <x-input wire:model="relationship" />
+                <x-input wire:model="relationship" required/>
                 <x-error fieldName="relationship" />
 
             </div>
@@ -590,9 +590,9 @@
 
             <div class="relative mb-3 px-4">
                 <x-label>
-                    Contact No.
+                    Contact No. <x-required/>
                 </x-label>
-                <x-input wire:model="guardian_contact" type="number" />
+                <x-input wire:model="guardian_contact" type="number"  required/>
                 <x-error fieldName="guardian_contact" />
 
             </div>
@@ -611,9 +611,9 @@
 
             <div class="relative mb-3 px-4">
                 <x-label>
-                    Addresss
+                    Address  <x-required/>
                 </x-label>
-                <x-input wire:model="guardian_address" />
+                <x-input wire:model="guardian_address" required/>
                 <x-error fieldName="guardian_address" />
 
             </div>
@@ -803,7 +803,7 @@
                     <x-label>
                         Do you have a disability? <x-required/>
                     </x-label>
-                    <x-select x-on:change="hasDisability === 'Yes' ? $refs.disabilityInput.focus() : null"
+                    <x-select x-on:change="hasDisability === 'Yes' ? $refs.disabilityInput.focus() : null" required
                         wire:model="hasDisability">
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>
@@ -823,7 +823,7 @@
                     <x-label>
                         Do you have a food allergy? <x-required/>
                     </x-label>
-                    <x-select x-on:change="hasFoodAllergy === 'Yes' ? $refs.foodAllergyInput.focus() : null"
+                    <x-select x-on:change="hasFoodAllergy === 'Yes' ? $refs.foodAllergyInput.focus() : null" required
                         wire:model="hasFoodAllergy">
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>

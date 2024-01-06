@@ -118,7 +118,7 @@
 
                             <div class="w-full px-1 md:px-4">
                                 <x-label>
-                                    Classroom
+                                    Classroom<x-required/>
                                 </x-label>
                                 <x-input disabled :value="$classroom && $classroom->section
                                     ? 'Grade: ' . $classroom->grade_level . ' ' . $classroom->section
@@ -175,9 +175,9 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Observation <x-required/>
+                                        Observation
                                     </x-label>
-                                    <x-input require type="text" name="observation" wire:model="observation" />
+                                    <x-input type="text" name="observation" wire:model="observation" />
                                     <x-error fieldName="observation" />
 
                                 </div>
@@ -186,7 +186,7 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Desired <x-required/>
+                                        Desired
                                     </x-label>
                                     <x-input type="text" name="desired" wire:model="desired" />
                                     <x-error fieldName="desired" />
@@ -197,7 +197,7 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Outcome <x-required/>
+                                        Outcome
                                     </x-label>
                                     <x-input type="text" name="outcome" wire:model="outcome" />
                                     <x-error fieldName="outcome" />
@@ -253,7 +253,7 @@
                         <div class="w-full px-1 md:px-4">
 
                             <x-label>Story</x-label>
-                            <textarea id="message" rows="4" wire:model="story" required
+                            <textarea id="message" rows="4" wire:model="story"
                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Write the story behind the report here"></textarea>
