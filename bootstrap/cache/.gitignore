@@ -1,3 +1,2 @@
-git add app/bootstrap
-git commit -m "Include app/bootstrap folder in version control"
-git push origin master  # Replace "master" with your branch name if it's different
+*
+!.gitignore
