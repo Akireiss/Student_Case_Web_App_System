@@ -56,6 +56,7 @@ class YearlyReport extends Model
     {
         return "Yearly report has been {$eventName}";
     }
+    //
 
 }
 
