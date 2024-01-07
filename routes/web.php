@@ -39,7 +39,6 @@ use App\Http\Livewire\Admin\Dashboard\ResolvedCases;
 use App\Http\Controllers\Student\StudentDataController;
 use App\Http\Controllers\Admin\StudentProfileController;
 use App\Http\Livewire\Student\Profile\StudentProfileUpdate;
-use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
