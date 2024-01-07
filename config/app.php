@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Redis;
 return [
 
     /*
@@ -169,6 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Illuminate\Support\Facades\Redis::class,
     ])->toArray(),
 
     /*
