@@ -5,7 +5,6 @@ namespace App\Providers;
 use Google\Client;
 use Google_Client;
 use Google\Service\Drive;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,11 +23,5 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
 
-     public function boot()
-     {
-         if ($this->app->environment('production')) {
-             URL::forceScheme('https');
-         }
-     }
 
 }
