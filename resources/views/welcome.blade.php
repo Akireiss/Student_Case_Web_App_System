@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>CZCMNHS</title>
     <link rel="icon" href="{{ asset('assets/image/logo.png') }}" type="image/x-icon">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
 
     <script src="https://cdn.tailwindcss.com"></script>
