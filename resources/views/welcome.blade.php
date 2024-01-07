@@ -22,7 +22,7 @@
         <p class="text-lg md:text-xl uppercase tracking-wider text-gray-600 font-semibold">CASTOR Z. CONCEPCION MEMORIAL NATIONAL HIGH SCHOOL</p>
         <h1 class="text-left lg:text-4xl font-extrabold leading-tight  text-gray-700
         hover:text-gray-700">
-            A Happy School,
+            A Happy School,dsadsadasdsa
             Sustaining Excellence.
         </h1>
     </div>
