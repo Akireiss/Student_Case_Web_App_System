@@ -291,6 +291,7 @@
         @stack('modals')
         @stack('scripts')
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
         <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
         <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
         <script src="{{ asset('assets/js/actionspiechart.js ') }}" defer></script>
@@ -325,7 +326,7 @@
         <script src="{{ asset('assets/js/classroom.js') }}"></script>
         <script src="{{ asset('assets/js/select.js') }}"></script>
 
-
+        <script src="{{ asset('/js/chart.js') }}"></script>
         @livewireScripts
         <script>
             const dropdownButton = document.getElementById('dropdown');
