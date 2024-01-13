@@ -290,6 +290,8 @@
         @yield('script')
         @stack('modals')
         @stack('scripts')
+<!-- Include jQuery from CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
         <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
