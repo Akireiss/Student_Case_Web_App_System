@@ -30,10 +30,70 @@
 
         @endif
 
-        <h6 class="text-sm my-1 px-4 font-bold uppercase mt-3">
-            Ongoing...
-        </h6>
+        <div class="flex flex-col lg:flex-row space-y-4 lg:space-x-2">
+            <!-- Manual Backup Form -->
+            <div class="flex-1 lg:w-1/2 mt-4">
+                <div class="bg-white p-4 shadow rounded-lg mt-4">
+                    <h6 class="text-md my-1 font-bold uppercase mt-1">How To Report Student</h6>
+                    <article class="prose lg:prose-xl">
+                        <h3 class="text-md font-bold mb-2 mt-5">Step 1: Student Information</h3>
+                        <p>
+                            First, you need to type at least three (3) letters of the student name you want to report to search.
+                        </p>
 
-        <x-modal/>
+                        <h3 class="text-md font-bold mb-2 mt-5">Step 2: Case Information</h3>
+                        <p>
+                            This is the designated space where pertinent information regarding the student's case will be entered, allowing for a comprehensive overview and thorough documentation of the details
+                        </p>
+
+                        <h3 class="text-md font-bold mb-2 mt-5">Step 3: Additional Information</h3>
+                        <p>
+                            This section includes additional information about the student's case, providing insights into the severity or importance of the situation.
+                        </p>
+
+                        <h3 class="text-md font-bold mb-2 mt-5">Step 4: Actions Taken</h3>
+                        <p>
+                            This section enables the reporter to choose and review their recent actions with the student before initiating a report or referral to the Guidance Counselor or Admin.
+                        </p>
+                    </article>
+                </div>
+            </div>
+
+            <div class="flex-1 lg:w-1/2">
+                <div class="bg-white p-4 shadow rounded-lg mt-4">
+                    <h6 class="text-md my-1 font-bold uppercase mt-1">How To Edit Reported Student
+
+                    </h6>
+                    <article class="prose lg:prose-xl">
+                        <h3 class="text-md font-bold mb-2 mt-5">Step 1: Go To
+                            @if (auth()->user()->role == 1)
+                                <a href="{{ url('admin/report/history') }}"><span class="underline">Report History</span></a>
+                            @endif
+
+                            @if (auth()->user()->role == 2)
+                                <a href="{{ url('adviser/report/history') }}"><span class="underline">Report History</span></a>
+                            @endif
+
+                            @if (auth()->user()->role == 0)
+                                <a href="{{ url('report-history') }}"><span class="underline">Report History</span></a>
+                            @endif
+                        </h3>
+
+                        <p>
+                         After going to report history, click edit and it will redirect to page
+                        </p>
+                        <h3 class="text-md font-bold mb-2 mt-5">Step 2: Click Submit</h3>
+                        <p>
+
+                            After Clicking the submit you can now view the changes
+                        </p>
+
+                    </article>
+                </div>
+            </div>
+        </div>
+
+
+
 
 @endsection
