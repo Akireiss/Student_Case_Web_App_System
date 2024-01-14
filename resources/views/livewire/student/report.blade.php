@@ -173,21 +173,38 @@
 
                         <x-grid columns="3" gap="4" px="0" mt="4">
                             <div class="w-full px-1 md:px-4">
-                                <div class="relative mb-3">
                                     <x-label>
-                                        Observation
+                                        Observation <span id="popover-trigger" class="cursor-pointer text-red-500">?</span>
                                     </x-label>
+
+
+                                    <div id="popover" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+
+                                        <div class="px-3 py-2">
+                                            <p>Your obervation from that student</p>
+                                        </div>
+                                        <div data-popper-arrow></div>
+                                    </div>
+
+
                                     <x-input type="text" name="observation" wire:model="observation" />
                                     <x-error fieldName="observation" />
 
                                 </div>
-                            </div>
+
 
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Desired
+                                        Desired <span id="desired-popover-trigger" class="cursor-pointer text-red-500">?</span>
                                     </x-label>
+                                    <div id="desired-popover" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+
+                                        <div class="px-3 py-2">
+                                            <p>Your desired thing that you want to happen to that student</p>
+                                        </div>
+                                        <div data-popper-arrow></div>
+                                    </div>
                                     <x-input type="text" name="desired" wire:model="desired" />
                                     <x-error fieldName="desired" />
 
@@ -197,8 +214,16 @@
                             <div class="w-full px-1 md:px-4">
                                 <div class="relative mb-3">
                                     <x-label>
-                                        Outcome
+                                        Outcome <span id="outcome-popover-trigger" class="cursor-pointer text-red-500">?</span>
                                     </x-label>
+
+                                    <div id="outcome-popover" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+
+                                        <div class="px-3 py-2">
+                                            <p>The outcome you want happen.</p>
+                                        </div>
+                                        <div data-popper-arrow></div>
+                                    </div>
                                     <x-input type="text" name="outcome" wire:model="outcome" />
                                     <x-error fieldName="outcome" />
 
@@ -298,8 +323,64 @@ rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const trigger = document.getElementById('popover-trigger');
+            const popover = document.getElementById('popover');
+
+            trigger.addEventListener('click', function () {
+                popover.classList.toggle('invisible');
+                popover.classList.toggle('opacity-0');
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!popover.contains(event.target) && !trigger.contains(event.target)) {
+                    popover.classList.add('invisible');
+                    popover.classList.add('opacity-0');
+                }
+            });
+        });
+    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const desiredPopoverTrigger = document.getElementById('desired-popover-trigger');
+        const desiredPopover = document.getElementById('desired-popover');
+
+        desiredPopoverTrigger.addEventListener('click', function () {
+            desiredPopover.classList.toggle('invisible');
+            desiredPopover.classList.toggle('opacity-0');
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!desiredPopover.contains(event.target) && !desiredPopoverTrigger.contains(event.target)) {
+                desiredPopover.classList.add('invisible');
+                desiredPopover.classList.add('opacity-0');
+            }
+        });
 
 
 
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const outcomePopoverTrigger = document.getElementById('outcome-popover-trigger');
+        const outcomePopover = document.getElementById('outcome-popover');
+
+        outcomePopoverTrigger.addEventListener('click', function () {
+            outcomePopover.classList.toggle('invisible');
+            outcomePopover.classList.toggle('opacity-0');
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!outcomePopover.contains(event.target) && !outcomePopoverTrigger.contains(event.target)) {
+                outcomePopover.classList.add('invisible');
+                outcomePopover.classList.add('opacity-0');
+            }
+        });
+    });
+</script>
 
 </div>
+
+

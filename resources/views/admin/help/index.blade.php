@@ -38,7 +38,7 @@
                     <article class="prose lg:prose-xl">
                         <h3 class="text-md font-bold mb-2 mt-5">Step 1: Student Information</h3>
                         <p>
-                            First, you need to type at least three (3) letters of the student name you want to report to search.
+                            First, you need to type at least three (3) letters of the student name you want to report to search. After clicking the student name it will automatically show the student classroom.
                         </p>
 
                         <h3 class="text-md font-bold mb-2 mt-5">Step 2: Case Information</h3>

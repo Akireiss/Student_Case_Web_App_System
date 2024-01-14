@@ -15,10 +15,10 @@
                     {{-- List Of Students --}}
                 </h6>
                 <div class="flex justify-end mt-4 space-x-2">
-
+{{--
                     <x-link href="{{ url('admin/export/student') }}" >
                     Import
-                    </x-link>
+                    </x-link> --}}
 
                     <x-button x-on:click="showTable = false; showForm = true">
                         Add
