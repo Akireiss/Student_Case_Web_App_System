@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/get-chart-data', [Chart::class, 'getChartData']);
+// Route::get('/get-chart-data', [Chart::class, 'getChartData']);
