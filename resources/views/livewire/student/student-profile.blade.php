@@ -6,9 +6,12 @@
 
             @if (auth()->check())
                 @if (auth()->user()->role === 1)
+                <div class="px-6 mx-4">
+
                     <x-slot name="actions">
                         <x-link href="{{ url('admin/student-profile') }}">Back</x-link>
                     </x-slot>
+                </div>
                 @endif
 
                 @if (auth()->user()->role === 2)
