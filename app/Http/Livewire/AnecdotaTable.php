@@ -113,10 +113,10 @@ final class AnecdotaTable extends PowerGridComponent
                 }),
             Filter::inputText('students.first_name')->operators(['contains']),
             Filter::inputText('students.last_name')->operators(['contains']),
-            Filter::datetimepicker('created_at_formatted', 'anecdotal.created_at')
-                ->params([
-                    'only_future' => false,
-                ]),
+            // Filter::datetimepicker('created_at_formatted', 'anecdotal.created_at')
+            //     ->params([
+            //         'only_future' => false,
+            //     ]),
 
             Filter::select('case_status', 'case_status')
                 ->dataSource(Anecdotal::codes())
