@@ -12,14 +12,43 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 
 class HelpController extends Controller
 {
-    // public function index()
-    // {
-    //     return view('admin.help.index');
-    // }
 
+
+    public function downloadPdf()
+    {
+        $file = public_path('pdf/admin.pdf');
+
+        return Response::download($file, 'admin.pdf', [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="admin.pdf"',
+        ]);
+    }
+
+    public function downloadPdfAdviser()
+    {
+        $file = public_path('pdf/adviser.pdf');
+
+        return Response::download($file, 'adviser.pdf', [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="adviser.pdf"',
+        ]);
+
+    }
+
+    public function downloadPdfUser()
+    {
+        $file = public_path('pdf/user.pdf');
+
+        return Response::download($file, 'user.pdf', [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="user.pdf"',
+        ]);
+
+    }
 
     public function show(Activity $activity)
     {

@@ -391,3 +391,7 @@ Route::get('/fetch-total-notifications', [DashboardController::class, 'fetchTota
 //Mark all as read
 Route::post('/mark-all-as-read', [DashboardController::class, 'markAllAsRead'])->name('mark-all-as-read');
 Route::get('/fetch-all-notifications', [DashboardController::class, 'fetchAllNotifications']);
+//Help Route
+Route::get('download-pdf/admin', [HelpController::class, 'downloadPdf'])->name('admin.download.pdf');
+Route::get('download-pdf/adviser', [HelpController::class, 'downloadPdfAdviser'])->name('adviser.download.pdf');
+Route::get('download-pdf/user', [HelpController::class, 'downloadPdfUser'])->name('user.download.pdf');
