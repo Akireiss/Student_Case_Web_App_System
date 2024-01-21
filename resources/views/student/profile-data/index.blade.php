@@ -26,7 +26,7 @@
                                     border-none"> --}}
                                     <div class="shadow-md rounded-md  h-auto align-middle
                                     border-none">
-                                        {!! QrCode::size(200)->generate(url('student/lrn' . $form->id)); !!}
+                                        {!! QrCode::size(200)->generate(url('student/lrn' . $form->id)) !!}
                                     </div>
                                 @else
                                     <div>
